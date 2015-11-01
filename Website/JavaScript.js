@@ -1,4 +1,5 @@
-﻿var foo;
+﻿alert("hello world");
+var foo;
 console.log("hello world");
 var aray = [];
 Array[1] = "je";
