@@ -30,14 +30,16 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebSite", "http://localhost
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 1
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://sunnygb.visualstudio.com/defaultcollection
+		SccWebProject0 = true
+		SccProjectUniqueName0 = http://localhost:22263
+		SccProjectName0 = .
+		SccAuxPath0 = https://sunnygb.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
-		SccWebProject1 = true
-		SccProjectUniqueName1 = http://localhost:22263
-		SccLocalPath1 = .
-		SccProjectEnlistmentChoice1 = 2
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectEnlistmentChoice0 = 2
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
