@@ -85,3 +85,70 @@
     border-top-color: black;
     margin: 0px;
 }
+.box1 {
+   
+    background-color: white;
+    width: 500px;
+    padding: 0px;
+        border-style: solid;
+
+    
+    border-top-color: black;
+    margin: 0px;
+}
+.box2 {
+   
+    background-color: #007AF4;
+    width: 100px;
+    padding: 0px;
+        border-style: solid;
+
+    
+    border-top-color: black;
+    margin: 0px;
+}
+#headerss {
+    clear: both;
+    float: left;
+    width: 100%;
+    background: burlywood;
+    height: 42px;
+    margin-top: 100px;
+}
+#headerss ul {
+    list-style: none;
+}
+#headerss ul li a {
+    float: left;
+    text-decoration: none;
+    color: white;
+    padding: 0px 40px;
+    text-align: center;
+    height: 42px;
+    line-height: 42px;
+}
+#headerss ul li a:hover {
+    background: pink;
+}
+#headerss ul li a.active {
+        background: pink;
+
+}
+.ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.li {
+    float: left;
+     display: inline;
+    padding-left: 80px;
+}
+
+.a {
+    display: block;
+    width: 60px;
+    background-color: #dddddd;
+}
