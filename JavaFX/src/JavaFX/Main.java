@@ -45,7 +45,6 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             primeryStage.setScene(scene);
             primeryStage.show();
-            System.out.printf("Hello World");
 
         } catch (Exception e) {
             e.printStackTrace();
