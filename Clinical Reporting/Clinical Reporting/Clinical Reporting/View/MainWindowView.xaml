@@ -1,13 +1,28 @@
-﻿<Window x:Class="Clinical_Reporting.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clinical_Reporting"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="Clinical_Reporting.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-        
-    </Grid>
+        Title="MainWindow" Width="1128" Height="720" 
+         WindowStyle="SingleBorderWindow" SnapsToDevicePixels="True">
+    <DockPanel x:Name="mainPanel">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="96" Background="#FF191719" />
+        <dxlc:TileLayoutControl DockPanel.Dock="Left" Width="178" Height="auto" Background="#FF151414" >
+            <dxlc:Tile Header="Add Patient" Margin="-105,-103,330,103" Size="Small" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
+                <Image x:Name="image" StretchDirection="Both" Stretch="None" Source="/Clinical Reporting;component/Images/Patient_Icon.png"/>
+            </dxlc:Tile>
+            <dxlc:Tile Header="Backup" Margin="-489,214,714,-214" Size="Small" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
+                <Image x:Name="image2" Source="/Clinical Reporting;component/Images/save 2.png" Stretch="None" Margin="0,0,0,2"/>
+            </dxlc:Tile>
+            <dxlc:Tile Header="Search Patient" Margin="-104,-105,329,105" Size="Small" HorizontalAlignment="Right" Width="150" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
+                <Image x:Name="image1" Source="/Clinical Reporting;component/Images/Research_Icon.png" Stretch="None"/>
+            </dxlc:Tile>
+            <dxlc:Tile Header="Tile" Margin="-488,211,713,-211" Size="ExtraSmall"/>
+            <dxlc:Tile Header="Tile" Margin="-715,212,940,-212" Size="ExtraSmall"/>
+        </dxlc:TileLayoutControl>
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Width="auto" Height="auto"  Background="Tomato"  VerticalAlignment="Bottom"/>
+    </DockPanel>
 </Window>
