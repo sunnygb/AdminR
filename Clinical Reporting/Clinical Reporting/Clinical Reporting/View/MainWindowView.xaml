@@ -8,21 +8,71 @@
         mc:Ignorable="d"
         Title="MainWindow" Width="1128" Height="720" 
          WindowStyle="SingleBorderWindow" SnapsToDevicePixels="True">
+    <Window.Resources>
+        <Storyboard x:Key="MouseEnterT1">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="tile">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF0050DC"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MouseEnterT2">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="tile2">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF0050DC"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MouseEnterT3">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="Tile3">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF0050DC"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MoseLeavet1"/>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="tile">
+            <BeginStoryboard x:Name="MouseEnterT1_BeginStoryboard" Storyboard="{StaticResource MouseEnterT1}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="tile2">
+            <BeginStoryboard x:Name="MouseEnterT2_BeginStoryboard" Storyboard="{StaticResource MouseEnterT2}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="Tile3">
+            <BeginStoryboard x:Name="MouseEnterT3_BeginStoryboard" Storyboard="{StaticResource MouseEnterT3}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="tile">
+            <RemoveStoryboard BeginStoryboardName="MouseEnterT1_BeginStoryboard"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="Tile3">
+            <RemoveStoryboard BeginStoryboardName="MouseEnterT1_BeginStoryboard"/>
+            <RemoveStoryboard BeginStoryboardName="MouseEnterT3_BeginStoryboard"/>
+            <RemoveStoryboard BeginStoryboardName="MouseEnterT3_BeginStoryboard"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="tile2">
+            <RemoveStoryboard BeginStoryboardName="MouseEnterT2_BeginStoryboard"/>
+            <RemoveStoryboard BeginStoryboardName="MouseEnterT2_BeginStoryboard"/>
+        </EventTrigger>
+    </Window.Triggers>
     <DockPanel x:Name="mainPanel">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="96" Background="#FF191719" />
-        <dxlc:TileLayoutControl DockPanel.Dock="Left" Width="178" Height="auto" Background="#FF151414" >
-            <dxlc:Tile Header="Add Patient" Margin="-105,-103,330,103" Size="Small" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
-                <Image x:Name="image" StretchDirection="Both" Stretch="None" Source="/Clinical Reporting;component/Images/Patient_Icon.png"/>
-            </dxlc:Tile>
-            <dxlc:Tile Header="Backup" Margin="-489,214,714,-214" Size="Small" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
-                <Image x:Name="image2" Source="/Clinical Reporting;component/Images/save 2.png" Stretch="None" Margin="0,0,0,2"/>
-            </dxlc:Tile>
-            <dxlc:Tile Header="Search Patient" Margin="-104,-105,329,105" Size="Small" HorizontalAlignment="Right" Width="150" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
-                <Image x:Name="image1" Source="/Clinical Reporting;component/Images/Research_Icon.png" Stretch="None"/>
-            </dxlc:Tile>
-            <dxlc:Tile Header="Tile" Margin="-488,211,713,-211" Size="ExtraSmall"/>
-            <dxlc:Tile Header="Tile" Margin="-715,212,940,-212" Size="ExtraSmall"/>
-        </dxlc:TileLayoutControl>
-        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Width="auto" Height="auto"  Background="Tomato"  VerticalAlignment="Bottom"/>
+        <Border DockPanel.Dock="Top" Height="109"  BorderBrush="black" BorderThickness="6" Padding="1" >
+            <StackPanel x:Name="stackPanel1"  Width="auto"  Background="white" Height="109"  />
+        </Border>
+        <StackPanel DockPanel.Dock="Left" Background="#FF151414" Height="auto">
+            <dxlc:TileLayoutControl  ScrollBars="None"  Width="178" Height="593"  DragScrolling="False" AllowItemMoving="False" Focusable="True" >
+                <dxlc:Tile x:Name="tile" Header="Add Patient"  Margin="-105,-103,330,103" Size="Small" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center" Background="#FF00ABDC">
+                    <Image x:Name="image" Source="/Clinical Reporting;component/Images/Patient_Icon.png" Stretch="None"/>
+
+                </dxlc:Tile>
+                <dxlc:Tile x:Name="Tile3" Header="Backup" Margin="-489,214,714,-214" Size="Small" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
+                    <Image x:Name="image2" Source="/Clinical Reporting;component/Images/save 2.png" Stretch="None" Margin="0,0,0,2"/>
+                </dxlc:Tile>
+                <dxlc:Tile x:Name="tile2" Header="Search Patient" Margin="-104,-105,329,105" Size="Small" HorizontalAlignment="Right" Width="150" FontSize="18" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center">
+                    <Image x:Name="image1" Source="/Clinical Reporting;component/Images/Research_Icon.png" Stretch="None"/>
+                </dxlc:Tile>
+                <dxlc:Tile x:Name="tile3" Header="Tile" Margin="-488,211,713,-211" Size="ExtraSmall"/>
+                <dxlc:Tile x:Name="tile4" Header="Tile" Margin="-715,212,940,-212" Size="ExtraSmall"/>
+            </dxlc:TileLayoutControl>
+        </StackPanel>
+        <Border BorderBrush="black" Width="auto" Height="auto" BorderThickness="0,7,10,10">
+            <StackPanel x:Name="stackPanel" DockPanel.Dock="Right" Orientation="Horizontal" Width="auto" Height="auto"   Background="#FF7967A8"  >
+                <local:PatientPanelView Width="auto" Height="auto" />
+            </StackPanel>
+        </Border>
     </DockPanel>
 </Window>
