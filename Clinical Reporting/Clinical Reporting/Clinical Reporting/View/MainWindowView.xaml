@@ -71,20 +71,21 @@
 
                 </dxlc:Tile>
                 <dxlc:Tile x:Name="Tile3" Header="Backup" Margin="-470.2,146.6,695,-146.6" Size="Small" HorizontalAlignment="Right" Width="120" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center" VerticalHeaderAlignment="Bottom" Focusable="False" IsManipulationEnabled="True" Height="120">
-                    <Image x:Name="image2" Source="/Clinical Reporting;component/Images/save 2.png" Stretch="Fill" Width="60" Height="60" Margin="0,0,0,2"/>
+                    <Image x:Name="image2" Source="/Clinical Reporting;component/Images/save 2.png" Stretch="Fill" Width="58" Height="58" Margin="0,0,0,2"/>
                 </dxlc:Tile>
-                <dxlc:Tile x:Name="tile2" Header="Search Patient" Margin="-115,-108,338.2,179.2" Size="Small" HorizontalAlignment="Right" Width="120" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center" VerticalHeaderAlignment="Bottom" Focusable="False" IsManipulationEnabled="True" Height="120">
+                <dxlc:Tile x:Name="tile2" Header="Search Patient" Margin="-115,-109,338,180" Size="Small" HorizontalAlignment="Right" Width="120" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center" VerticalHeaderAlignment="Bottom" Focusable="False" IsManipulationEnabled="True" Height="120">
                     <Image x:Name="image1" Source="/Clinical Reporting;component/Images/Research_Icon.png" Stretch="Fill" Width="60" Height="60"/>
                 </dxlc:Tile>
-                <dxlc:Tile x:Name="tile3" Header="Tile" Margin="-496.4,212.6,720.8,-213" Size="ExtraSmall"/>
-                <dxlc:Tile x:Name="tile4" Header="Tile" Margin="-723,212.6,948.2,-213" Size="ExtraSmall"/>
+                <dxlc:Tile x:Name="tile3" Header="Tile" Margin="-468,142,691,-142" Size="ExtraSmall" Height="50" Width="58"/>
+                <dxlc:Tile x:Name="tile4" Header="Tile" Margin="-697,142,946,-192" Size="ExtraSmall" Width="58" Height="50"/>
             </dxlc:TileLayoutControl>
         </StackPanel>
 
         <Border BorderBrush="black" Width="auto" Height="auto" BorderThickness="0,5,5,5">
-            <StackPanel x:Name="stackPanel" DockPanel.Dock="Right" Orientation="Horizontal" Width="990" Height="auto"   Background="#FF7967A8" Margin="0,0.2,0,-0.4"  >
-                <local:PatientPanelView Width="auto" Height="auto" />
-            </StackPanel>
+            <Grid x:Name="stackPanel" DockPanel.Dock="Right"  Height="auto"   Background="#FF7967A8" Margin="0,0.2,0,-0.4"  >
+               
+                
+            </Grid>
         </Border>
 
     </DockPanel>
