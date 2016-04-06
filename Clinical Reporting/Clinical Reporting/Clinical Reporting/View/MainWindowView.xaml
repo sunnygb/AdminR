@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow
+﻿<controls:MetroWindow xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:Clinical_Reporting"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"   
         xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
-        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="Clinical_Reporting.MainWindow"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" 
+                      xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                      xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="Clinical_Reporting.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Width="1128" Height="720" 
-        WindowStyle="SingleBorderWindow" SnapsToDevicePixels="True">
+        WindowStyle="SingleBorderWindow" SnapsToDevicePixels="True" Background="#FF00BDE3">
+
+
     <!--#region Blend-->
     <Window.Resources>
         <!--#region Blend Items-->
         <Storyboard x:Key="MouseEnterT1">
-            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="tile">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="PatientTile">
                 <EasingColorKeyFrame KeyTime="0" Value="#FF0050DC"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
@@ -31,7 +35,7 @@
         <Storyboard x:Key="MoseLeavet1"/>
     </Window.Resources>
     <Window.Triggers>
-        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="tile">
+        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="PatientTile">
             <BeginStoryboard x:Name="MouseEnterT1_BeginStoryboard" Storyboard="{StaticResource MouseEnterT1}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="tile2">
@@ -40,7 +44,7 @@
         <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="Tile3">
             <BeginStoryboard x:Name="MouseEnterT3_BeginStoryboard" Storyboard="{StaticResource MouseEnterT3}"/>
         </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="tile">
+        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="PatientTile">
             <RemoveStoryboard BeginStoryboardName="MouseEnterT1_BeginStoryboard"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="Tile3">
@@ -66,7 +70,7 @@
         <StackPanel DockPanel.Dock="Left" Background="#FF151414">
 
             <dxlc:TileLayoutControl  ScrollBars="None"  Width="130" Height="593"  DragScrolling="False" AllowItemMoving="False" Focusable="True" >
-                <dxlc:Tile x:Name="tile" Header="Add Patient"  Margin="-115,-105,340,105" Size="Small" HorizontalAlignment="Right" Width="120" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center" VerticalHeaderAlignment="Bottom" Focusable="False" IsManipulationEnabled="True" Height="120">
+                <dxlc:Tile x:Name="PatientTile" Header="Add Patient"  Margin="-115,-105,340,105" Size="Small" HorizontalAlignment="Right" Width="120" FontFamily="Segoe WP Semibold" HorizontalHeaderAlignment="Center" VerticalHeaderAlignment="Bottom" IsManipulationEnabled="True" Height="120" Click="PatientTile_Click" ClipToBounds="True" HorizontalContentAlignment="Stretch" Focusable="False">
                     <Image x:Name="image" Source="/Clinical Reporting;component/Images/Patient_Icon.png" Stretch="Fill" Width="60" Height="60"/>
 
                 </dxlc:Tile>
@@ -82,11 +86,14 @@
         </StackPanel>
 
         <Border BorderBrush="black" Width="auto" Height="auto" BorderThickness="0,5,5,5">
-            <Grid x:Name="stackPanel" DockPanel.Dock="Right"  Height="auto"   Background="#FF7967A8" Margin="0,0.2,0,-0.4"  >
-               
-                
+            <Grid x:Name="CentreGrid" DockPanel.Dock="Right"  Height="auto"   Background="#FF7967A8" Margin="0,0.2,0,-0.4"  >
+                <Frame Name="navigationPanel" NavigationUIVisibility="Hidden">
+
+                </Frame>
             </Grid>
         </Border>
 
     </DockPanel>
+
+
 </controls:MetroWindow>

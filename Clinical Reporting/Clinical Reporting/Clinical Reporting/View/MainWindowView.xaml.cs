@@ -11,12 +11,19 @@ namespace Clinical_Reporting
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+       
+
+       
+
+        private void PatientTile_Click(object sender, System.EventArgs e)
         {
+            var addParientPage = new AddPatientPage();
+            navigationPanel.NavigationService.Navigate(addParientPage);
 
         }
+
+            
     }
 }
