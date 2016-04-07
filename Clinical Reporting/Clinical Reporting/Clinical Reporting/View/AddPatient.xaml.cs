@@ -12,20 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ViewModel.Patient;
 
-namespace Clinical_Reporting
+namespace Clinical_Reporting.View
 {
     /// <summary>
-    /// Interaction logic for AddPatientPage.xaml
+    /// Interaction logic for AddPatient.xaml
     /// </summary>
-    public partial class AddPatientPage : Page
+    public partial class AddPatient :UserControl
     {
-        public AddPatientPage()
+        public AddPatient()
         {
-            this.DataContext = new PatientViewModel();
             InitializeComponent();
         }
 
+      
     }
 }

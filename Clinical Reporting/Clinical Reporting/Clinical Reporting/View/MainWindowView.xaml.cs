@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using Clinical_Reporting.View;
+using MahApps.Metro.Controls;
 using System.Windows;
 
 namespace Clinical_Reporting
@@ -19,7 +20,7 @@ namespace Clinical_Reporting
 
         private void PatientTile_Click(object sender, System.EventArgs e)
         {
-            var addParientPage = new AddPatientPage();
+            var addParientPage = new AddPatient();
             navigationPanel.NavigationService.Navigate(addParientPage);
 
         }

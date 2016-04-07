@@ -106,7 +106,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View\AddPatientPage.xaml">
+    <Page Include="View\AddPatient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,9 +114,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="View\AddPatientPage.xaml.cs">
-      <DependentUpon>AddPatientPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -170,6 +167,9 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\PatientViewModel.cs" />
+    <Compile Include="View\AddPatient.xaml.cs">
+      <DependentUpon>AddPatient.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -217,6 +217,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="plus.png" />
     <Resource Include="Images\Back_Icon.png" />
     <Resource Include="Images\Next_Icon.png" />
     <Resource Include="Images\Prev_Icon.png" />
