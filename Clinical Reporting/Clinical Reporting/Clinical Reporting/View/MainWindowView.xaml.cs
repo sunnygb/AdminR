@@ -1,6 +1,7 @@
-﻿using Clinical_Reporting.View;
+﻿
 using MahApps.Metro.Controls;
 using System.Windows;
+using Clinical_Reporting.View;
 
 namespace Clinical_Reporting
 {

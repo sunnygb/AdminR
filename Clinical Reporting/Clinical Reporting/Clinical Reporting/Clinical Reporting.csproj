@@ -44,6 +44,7 @@
   <ItemGroup>
     <Reference Include="DevExpress.Data.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Mvvm.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Controls.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Core.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.LayoutControl.v15.2, Version=15.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -92,9 +93,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Telerik.Windows.Cloud, Version=2016.1.217.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
-    <Reference Include="Telerik.Windows.Cloud.Controls, Version=2016.1.217.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
-    <Reference Include="Telerik.Windows.Controls, Version=2016.1.217.45, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
@@ -107,13 +105,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="View\AddPatient.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MainWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Services\Implementations\DoctorRepository.cs" />
+    <Compile Include="Services\Implementations\PatientRepository.cs" />
+    <Compile Include="Services\Interfaces\IELISA_TBRepository.cs" />
+    <Compile Include="Services\Interfaces\IELISA_HCVRepository.cs" />
+    <Compile Include="Services\Interfaces\IBiochemistryRepositoy.cs" />
+    <Compile Include="Services\Interfaces\IBloodGroupRepository.cs" />
+    <Compile Include="Services\Interfaces\IDoctorRepository.cs" />
+    <Compile Include="Services\Interfaces\IELISA_HBSAGRepositoy.cs" />
+    <Compile Include="Services\Interfaces\IHaematologyRepository.cs" />
+    <Compile Include="Services\Interfaces\IPatientRepository.cs" />
+    <Compile Include="Services\Interfaces\ISemenAnalysisRepository.cs" />
+    <Compile Include="Services\Interfaces\ISerologyRepository.cs" />
+    <Compile Include="Services\Interfaces\IUrineExaminationRepository.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -217,7 +228,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="plus.png" />
     <Resource Include="Images\Back_Icon.png" />
     <Resource Include="Images\Next_Icon.png" />
     <Resource Include="Images\Prev_Icon.png" />
@@ -225,6 +235,7 @@
     <Resource Include="Images\System_Icon.png" />
     <Resource Include="Images\Patient_Icon.png" />
     <Resource Include="Images\save 2.png" />
+    <Resource Include="Images\plus.png" />
     <Resource Include="Images\user 1.png" />
     <Content Include="Model\Database.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
