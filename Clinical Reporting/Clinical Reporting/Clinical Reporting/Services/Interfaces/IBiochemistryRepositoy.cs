@@ -10,10 +10,10 @@ namespace Clinical_Reporting.Services
     interface IBiochemistryRepositoy
     {
         Task<List<Biochemistry>> GetAllBiochemistryAsync();
-        Task<Biochemistry> GetBiochemistryAsync(long PatientID);
-        Task<Biochemistry> AddBiochemistryAsync(Biochemistry patient);
-        Task<Biochemistry> UpdateBiochemistryAsync(Biochemistry patient);
-        Task DeleteBiochemistryAsync(long patientID);
+        Task<List<Biochemistry>> GetBiochemistryAsync(long patientID);
+        Task<Biochemistry> AddBiochemistryAsync(Biochemistry biochemistry);
+        Task<Biochemistry> UpdateBiochemistryAsync(Biochemistry biochemistry);
+        Task DeleteBiochemistryAsync(long biochemistryID);
         
 
 

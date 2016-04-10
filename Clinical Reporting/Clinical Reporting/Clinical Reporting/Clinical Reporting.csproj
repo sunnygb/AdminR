@@ -113,8 +113,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Services\Implementations\BiochemistryRepositor.cs" />
+    <Compile Include="Services\Implementations\BloodgroupRepository.cs" />
     <Compile Include="Services\Implementations\DoctorRepository.cs" />
+    <Compile Include="Services\Implementations\ELISA_HBSAGRepository.cs" />
+    <Compile Include="Services\Implementations\ELISA_HCVRepository.cs" />
+    <Compile Include="Services\Implementations\ELISA_TBRepository.cs" />
+    <Compile Include="Services\Implementations\HaematologyRepository.cs" />
     <Compile Include="Services\Implementations\PatientRepository.cs" />
+    <Compile Include="Services\Implementations\SemenAnalysisRepository.cs" />
+    <Compile Include="Services\Implementations\SerologyRepository.cs" />
+    <Compile Include="Services\Implementations\UrineExaminationRepository.cs" />
     <Compile Include="Services\Interfaces\IELISA_TBRepository.cs" />
     <Compile Include="Services\Interfaces\IELISA_HCVRepository.cs" />
     <Compile Include="Services\Interfaces\IBiochemistryRepositoy.cs" />

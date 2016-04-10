@@ -10,9 +10,9 @@ namespace Clinical_Reporting.Services
     interface IHaematologyRepository
     {
         Task<List<Haematology>> GetAllHaematologyAsync();
-        Task<Haematology> GetHaematologyAsync(long PatientID);
-        Task<Haematology> AddHaematologyAsync(Haematology Haematology);
-        Task<Haematology> UpdateHaematologyAsync(Haematology Haematology);
-        Task DeleteHaematologyAsync(long HaematologyID);
+        Task<List<Haematology>> GetHaematologyAsync(long patientID);
+        Task<Haematology> AddHaematologyAsync(Haematology haematology);
+        Task<Haematology> UpdateHaematologyAsync(Haematology haematology);
+        Task DeleteHaematologyAsync(long haematologyID);
     }
 }

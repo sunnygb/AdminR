@@ -10,9 +10,9 @@ namespace Clinical_Reporting.Services
     interface ISemenAnalysisRepository
     {
         Task<List<SemenAnalysi>> GetAllSemenAnalysisAsync();
-        Task<SemenAnalysi> GetSemenAnalysisAsync(long PatientID);
-        Task<SemenAnalysi> AddSemenAnalysisAsync(SemenAnalysi SemenAnalysis);
-        Task<SemenAnalysi> UpdateSemenAnalysisAsync(SemenAnalysi SemenAnalysis);
-        Task DeleteSemenAnalysisAsync(long SemenAnalysisID);
+        Task<List<SemenAnalysi>> GetSemenAnalysisAsync(long patientID);
+        Task<SemenAnalysi> AddSemenAnalysisAsync(SemenAnalysi semenAnalysis);
+        Task<SemenAnalysi> UpdateSemenAnalysisAsync(SemenAnalysi semenAnalysis);
+        Task DeleteSemenAnalysisAsync(long semenAnalysisID);
     }
 }

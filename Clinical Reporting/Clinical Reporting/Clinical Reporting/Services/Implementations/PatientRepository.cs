@@ -34,6 +34,7 @@ namespace Clinical_Reporting.Services.Implementations
                 var SemenAnalysi = _context.Patients.Include("SemenAnalysi").FirstOrDefault(x => x.PatientID == patientID);
                 var Serology = _context.Patients.Include("Serology").FirstOrDefault(x => x.PatientID == patientID);
                 var UrineExamination = _context.Patients.Include("UrineExamination").FirstOrDefault(x => x.PatientID == patientID);
+
                 foreach (var item in Biochemistry.Biochemistries)
                 {
                     _context.Biochemistries.Remove(item);
@@ -73,6 +74,7 @@ namespace Clinical_Reporting.Services.Implementations
                 {
                     _context.UrineExaminations.Remove(item);
                 }
+                if(patient!=null)
                 _context.Patients.Remove(patient);
              await   _context.SaveChangesAsync();
                 scope.Complete();

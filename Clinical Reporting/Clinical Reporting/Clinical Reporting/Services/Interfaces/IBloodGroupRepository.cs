@@ -10,10 +10,10 @@ namespace Clinical_Reporting.Services
     interface IBloodGroupRepository
     {
         Task<List<BloodGroup>> GetAllBloodGroupAsync();
-        Task<BloodGroup> GetBloodGroupAsync(long PatientID);
-        Task<BloodGroup> AddBloodGroupAsync(BloodGroup BloodGroupnt);
-        Task<BloodGroup> UpdateBloodGroupAsync(BloodGroup BloodGroup);
-        Task DeleteBloodGrouptAsync(long BloodGroup_ID);
+        Task<List<BloodGroup>> GetBloodGroupAsync(long patientID);
+        Task<BloodGroup> AddBloodGroupAsync(BloodGroup bloodGroupnt);
+        Task<BloodGroup> UpdateBloodGroupAsync(BloodGroup bloodGroup);
+        Task DeleteBloodGrouptAsync(long bloodGroup_ID);
 
 
     }

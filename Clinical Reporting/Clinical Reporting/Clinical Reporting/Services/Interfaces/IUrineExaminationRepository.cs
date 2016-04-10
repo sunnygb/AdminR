@@ -10,7 +10,7 @@ namespace Clinical_Reporting.Services
     interface IUrineExaminationRepository
     {
         Task<List<UrineExamination>> GetAllUrineExaminationAsync();
-        Task<UrineExamination> GetUrineExaminationAsync(long patientID);
+        Task<List<UrineExamination>> GetUrineExaminationAsync(long patientID);
         Task<UrineExamination> AddUrineExaminationAsync(UrineExamination urineExamination);
         Task<UrineExamination> UpdateUrineExaminationAsync(UrineExamination urineExamination);
         Task DeleteUrineExaminationAsync(long urineExaminationID);
