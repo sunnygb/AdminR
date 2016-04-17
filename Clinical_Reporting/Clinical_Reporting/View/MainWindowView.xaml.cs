@@ -2,6 +2,11 @@
 using MahApps.Metro.Controls;
 using System.Windows;
 using Clinical_Reporting.View;
+using System;
+using System.Configuration;
+using Clinical_Reporting.Model;
+using System.IO;
+using System.Reflection;
 
 namespace Clinical_Reporting
 {
@@ -12,20 +17,20 @@ namespace Clinical_Reporting
     {
         public MainWindow()
         {
+            onload();
             InitializeComponent();
         }
 
-       
+        private void onload()
+        {
 
-       
+           
+        }
 
-        private void PatientTile_Click(object sender, System.EventArgs e)
+        private void PatientTile_Click(object sender, EventArgs e)
         {
             var addParientPage = new AddPatient();
             navigationPanel.NavigationService.Navigate(addParientPage);
-
         }
-
-            
     }
 }

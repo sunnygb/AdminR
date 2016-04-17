@@ -14,17 +14,38 @@ using System.Collections.ObjectModel;
 using Clinical_Reporting.Services.Implementations;
 using Clinical_Reporting.Services;
 using System.Data.SQLite;
+using System.Windows;
 
 namespace Clinical_Reporting.ViewModel
 {
     public class AddPatientViewModel : ViewModelBase
     {
+
+        #region PrivateFeilds
         private Patient _patient;
-        private PatientViewModel patientVM;
-        private DoctorViewModel doctorVM;
-        
-        private IDoctorRepository _repoDoc= new DoctorRepository();
+        private Doctor _selectedDoctor;
+        private bool _isMale;
+        private ObservableCollection<Doctor> _doctors;
+        private IDoctorRepository _repoDoc = new DoctorRepository();
         private IPatientRepository _repoPatient = new PatientRepository();
+        #endregion
+
+       
+        #region Constructor
+        public AddPatientViewModel()
+        {
+            SaveCommand = new RelayCommand(Savebtn);
+            patient = new Patient();
+            patient.PatientID = (long)GetNextIDAsync().Result;
+            doctors = new ObservableCollection<Doctor>(_repoDoc.GetAllDoctorsAsync().Result);
+            _selectedDoctor = doctors.First();
+
+
+        }
+        #endregion
+
+        #region GetterSetters
+        public Doctor selectedDoctor { get { return _selectedDoctor; } set { _selectedDoctor = value; } }
         public Patient patient
         {
 
@@ -35,8 +56,7 @@ namespace Clinical_Reporting.ViewModel
                 Set(() => patient, ref _patient, value);
             }
         }
-
-        private ObservableCollection<Doctor> _doctors;
+        
         public ObservableCollection<Doctor> doctors
         {
             get { return _doctors; }
@@ -47,49 +67,29 @@ namespace Clinical_Reporting.ViewModel
             }
 
         }
-
         public RelayCommand SaveCommand { get; private set; }
-        public  void Savebtn()
+        public bool IsMale { get { return _isMale; }set { _isMale = value; } }
+        #endregion
+
+
+        #region OtherFunctions
+        public void Savebtn()
         {
             Console.WriteLine("Save Button Clicked");
-            //if (IsInDesignModeStatic)
-            //{
-            //    return;
-            //}
-            //try
-            //{
-            //   doctors= await 
 
-
-
-            //}
-            //catch ( ArgumentException e ){
-
-            
-            
-            
-            //    Console.WriteLine(e.Message);
-            //}
-           
+            _patient.Doctor = _selectedDoctor;
+            _repoPatient.AddPatientAsync(_patient);
+            MessageBox.Show("Patient successfully Saved");
         }
-        public AddPatientViewModel()
-        {
-            SaveCommand = new RelayCommand(Savebtn);
-           patient= new Patient();
-            patient.PatientID = GetNextID();
-           doctors = new ObservableCollection <Doctor>(_repoDoc.GetAllDoctorsAsync().Result);
-        
-
-        }
-        public long GetNextID()
+        public async Task<long> GetNextIDAsync()
         {
             long nextID;
-            using (SQLiteConnection con = new SQLiteConnection("Data Source=C:/Users/Sunny/Documents/Visual Studio 2015/Projects/Clinical_Reporting/Clinical_Reporting/Database/ProjectDB.db3;Version=3"))
+            using (SQLiteConnection con = new SQLiteConnection("Data Source=./ProjectDB.db3;Version=3"))
             {
                 con.Open();
                 using (SQLiteCommand command = new SQLiteCommand("select seq from sqlite_sequence where name='Patient'", con))
                 {
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (  SQLiteDataReader  reader  =(SQLiteDataReader) await command.ExecuteReaderAsync())
                     {
 
                         reader.Read();
@@ -102,7 +102,8 @@ namespace Clinical_Reporting.ViewModel
             }
             return nextID;
 
-        }
+        } 
+        #endregion
 
 
     }

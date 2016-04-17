@@ -10,7 +10,10 @@
              x:Class="Clinical_Reporting.View.AddPatient"
              mc:Ignorable="d"
              d:DesignHeight="556"
-             d:DesignWidth="990">
+             d:DesignWidth="990"
+             d:DataContext="{d:DesignInstance Type=ViewModel:AddPatientViewModel,IsDesignTimeCreatable=True}">
+    
+             
     <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -46,6 +49,7 @@
                       FontFamily="Segoe UI Black"
                       BorderBrush="#CCEFF5F7">
                 <TextBox FontSize="20"
+                         Text="{Binding patient.Name}"
                          controll:TextBoxHelper.Watermark="Patient's First Name"
                          controll:TextBoxHelper.UseFloatingWatermark="True"
                          controll:TextBoxHelper.IsWaitingForData="True"
@@ -62,7 +66,7 @@
                                  Margin="0,0,0,10"
                                  FontSize="16"
                                  FontWeight="Bold"
-                                 IsChecked="True" />
+                                 IsChecked="{Binding IsMale}" />
                     <RadioButton Content="Female"
                                  FontSize="16"
                                  FontWeight="Bold" />
@@ -76,11 +80,19 @@
                       BorderBrush="#CCEFF4F5">
                 <StackPanel Orientation="Horizontal">
                     <ComboBox ItemsSource="{Binding doctors}"
-                              Text="{Binding DoctorName}"
+                              
                               Width="200"
                               Margin="0,0,10,0"
                               FontSize="20"
-                              FontFamily="Arial Rounded MT Bold">
+                              FontFamily="Arial Rounded MT Bold"
+                            SelectedItem="{Binding selectedDoctor}" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Margin="5"
+                                    Text="{Binding DoctorName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                    
                     <Button Width="40"
@@ -104,6 +116,7 @@
                       FontFamily="Segoe UI Black"
                       BorderBrush="#CCE4F0F5">
                 <TextBox x:Name="textBox"
+                         Text="{Binding patient.Name}"
                          FontSize="20"
                          controll:TextBoxHelper.Watermark="Patient's Last Name"
                          controll:TextBoxHelper.UseFloatingWatermark="True"

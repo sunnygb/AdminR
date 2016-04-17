@@ -10,15 +10,31 @@
 namespace Clinical_Reporting.Model
 {
     using System;
+    using System.Configuration;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.IO;
+    using System.Reflection;
     public partial class DatabaseContainer : DbContext
     {
         public DatabaseContainer()
-            : base("name=DatabaseContainer")
+            : base("DatabaseContainer")
         {
+            //var str = AppDomain.CurrentDomain.GetData("DataDirectory");
+            //AppDomain.CurrentDomain.SetData("DataDirectory", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            //var test = AppDomain.CurrentDomain.GetData("DataDirectory");
+            //var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //config.ConnectionStrings.ConnectionStrings["DatabaseContainer"].ConnectionString = "metadata=res://*/Model.Model.csdl|res://*/Model.Model.ssdl|res://*/Model.Model.msl;provider=System.Data.SQLite.EF6;provider connection string=&quot;data source=" + Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Database\\ProjectDB.db3";
+            //config.Save(ConfigurationSaveMode.Modified, true);
+            //ConfigurationManager.RefreshSection("connectionStrings");
+            //config.ConnectionStrings["DatabaseContainer"].ConnectionString;
+            //constr.Replace("DataDirectory|", Environment.CurrentDirectory);
+            //var conStr1 = ConfigurationManager.ConnectionStrings["DatabaseContainer"].ConnectionString;
+       
+
         }
+       
+       
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
