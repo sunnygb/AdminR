@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using GalaSoft.MvvmLight;
 using Clinical_Reporting.ViewModel;
 using Clinical_Reporting.Model;
@@ -24,7 +23,6 @@ namespace Clinical_Reporting.ViewModel
         #region PrivateFeilds
         private Patient _patient;
         private Doctor _selectedDoctor;
-        private bool _isMale;
         private ObservableCollection<Doctor> _doctors;
         private IDoctorRepository _repoDoc = new DoctorRepository();
         private IPatientRepository _repoPatient = new PatientRepository();
@@ -34,15 +32,15 @@ namespace Clinical_Reporting.ViewModel
         #region Constructor
         public AddPatientViewModel()
         {
+            getDoctorListAsync();
             SaveCommand = new RelayCommand(Savebtn);
             patient = new Patient();
             patient.PatientID = (long)GetNextIDAsync().Result;
-            doctors = new ObservableCollection<Doctor>(_repoDoc.GetAllDoctorsAsync().Result);
+            _patient.Sex = "Male";
             _selectedDoctor = doctors.First();
-
-
         }
         #endregion
+
 
         #region GetterSetters
         public Doctor selectedDoctor { get { return _selectedDoctor; } set { _selectedDoctor = value; } }
@@ -68,7 +66,6 @@ namespace Clinical_Reporting.ViewModel
 
         }
         public RelayCommand SaveCommand { get; private set; }
-        public bool IsMale { get { return _isMale; }set { _isMale = value; } }
         #endregion
 
 
@@ -102,7 +99,13 @@ namespace Clinical_Reporting.ViewModel
             }
             return nextID;
 
-        } 
+        }
+        public async void getDoctorListAsync()
+        {
+            doctors =  new ObservableCollection<Doctor>(_repoDoc.GetAllDoctorsAsync().Result);
+            await Task.Delay(1000);
+
+        }
         #endregion
 
 

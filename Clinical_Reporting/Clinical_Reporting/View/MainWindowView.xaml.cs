@@ -7,6 +7,7 @@ using System.Configuration;
 using Clinical_Reporting.Model;
 using System.IO;
 using System.Reflection;
+using System.Windows.Navigation;
 
 namespace Clinical_Reporting
 {
@@ -20,6 +21,8 @@ namespace Clinical_Reporting
             onload();
             InitializeComponent();
         }
+
+        public NavigatedEventHandler navigationPanel_Navigated { get; private set; }
 
         private void onload()
         {

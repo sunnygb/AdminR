@@ -117,6 +117,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\MaleFemaleConverter.cs" />
     <Compile Include="Model\Biochemistry.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

@@ -31,9 +31,12 @@ namespace Clinical_Reporting.Model
         public long PatientID { get; set; }
         public string Name { get; set; }
         public string Age { get; set; }
-        public string Sex { get; set; }
+        public string Sex { get;set; }
         public long Ref_by { get; set; }
-    
+
+
+
+#pragma region Collection
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Biochemistry> Biochemistries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,6 +55,8 @@ namespace Clinical_Reporting.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Serology> Serologies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UrineExamination> UrineExaminations { get; set; }
+        public virtual ICollection<UrineExamination> UrineExaminations { get; set; }                    
+#pragma endregion
+
     }
 }

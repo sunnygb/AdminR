@@ -7,13 +7,15 @@
              xmlns:local="clr-namespace:Clinical_Reporting.View"
              xmlns:Model="clr-namespace:Clinical_Reporting.Model"
              xmlns:ViewModel="clr-namespace:Clinical_Reporting.ViewModel"
+             xmlns:converter="clr-namespace:Clinical_Reporting.Converters"
              x:Class="Clinical_Reporting.View.AddPatient"
              mc:Ignorable="d"
              d:DesignHeight="556"
              d:DesignWidth="990"
              d:DataContext="{d:DesignInstance Type=ViewModel:AddPatientViewModel,IsDesignTimeCreatable=True}">
-    
-             
+    <UserControl.Resources>
+        <converter:MaleFemaleConverter x:Key="MaleFemaleConverter" />
+    </UserControl.Resources>
     <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -66,7 +68,7 @@
                                  Margin="0,0,0,10"
                                  FontSize="16"
                                  FontWeight="Bold"
-                                 IsChecked="{Binding IsMale}" />
+                                 IsChecked="{Binding patient.Sex,Converter={StaticResource MaleFemaleConverter}}" />
                     <RadioButton Content="Female"
                                  FontSize="16"
                                  FontWeight="Bold" />
