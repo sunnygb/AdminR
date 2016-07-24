@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>info.png</file>
+        <file>menu.png</file>
+        <file>pan.png</file>
+        <file>plus.png</file>
+        <file>trash.png</file>
+        <file>TV_stand.png</file>
+        <file>coollogo_com-77234039 (1).png</file>
+        <file>futuro_icons_64px_489.png</file>
+    </qresource>
+</RCC>
