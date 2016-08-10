@@ -38,7 +38,7 @@ namespace AdmissionAndResult
         private void Add_Student_Click(object sender, RoutedEventArgs e)
         {
 
-            //SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\ProjectDB.db");
+            //SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
             
             mainStack.NavigationService.Navigate(admitForm);
         }
