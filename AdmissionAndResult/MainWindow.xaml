@@ -137,7 +137,7 @@
                    HorizontalAlignment="Left"
                    ClipToBounds="True"
                    OpacityMask="#FFE41414"
-                   Source="Images/pic.png">
+                   Source="Images/pic - Copy.png">
                 <Image.ContextMenu>
                     <ContextMenu />
                 </Image.ContextMenu>
