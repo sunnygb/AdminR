@@ -38,8 +38,8 @@ namespace AdmissionAndResult
         private void Add_Student_Click(object sender, RoutedEventArgs e)
         {
 
-            //SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
-            
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
+            var admin = conn.Get<Admin>(1);
             mainStack.NavigationService.Navigate(admitForm);
         }
 

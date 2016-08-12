@@ -30,6 +30,11 @@ namespace AdmissionAndResult.Views
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
+           
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
             OpenFileDialog op = new OpenFileDialog();
             op.Title = "Select a picture";
             op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
@@ -40,6 +45,8 @@ namespace AdmissionAndResult.Views
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
         }
+
+       
 
        
     }

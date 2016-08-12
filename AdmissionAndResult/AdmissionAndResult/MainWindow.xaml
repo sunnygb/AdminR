@@ -3,15 +3,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:AdmissionAndResult"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
-        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-        x:Class="AdmissionAndResult.MainWindow"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+
+
+    x:Class="AdmissionAndResult.MainWindow"
         Title="MainWindow"
         Width="1180.737"
         Height="670.052"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        mc:Ignorable="d">
+        mc:Ignorable="d"
+        
+        
+        >
     <DockPanel Background="#FF055061"
                LastChildFill="False">
         <StackPanel Width="156"
@@ -24,15 +36,18 @@
                    Height="24"
                    Margin="0,6,0,0"
                    Background="White"
+                   materialDesign:ShadowAssist.ShadowDepth="Depth4"
                    Content="Navigation"
                    FontFamily="Segoe UI Semibold"
                    FontSize="9"
                    FontWeight="Bold"
                    Foreground="#FF9C9999" />
             <Button x:Name="Add_Student"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
                     Height="57"
                     Background="White"
                     BorderBrush="White"
+                    Margin="4"
                     Click="Add_Student_Click">
                 <StackPanel Width="146"
                             Orientation="Horizontal">
@@ -43,7 +58,7 @@
                     <Label Width="92"
                            Height="40"
                            BorderThickness="0,9,0,0"
-                           Content="Add Student"
+                           Content="Register"
                            FontFamily="Segoe UI Semibold"
                            FontWeight="Bold" />
                 </StackPanel>
@@ -54,6 +69,7 @@
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
+                    Margin="4"
                     Click="btnsearch_Click">
                 <StackPanel Width="146"
                             Orientation="Horizontal">
@@ -76,6 +92,7 @@
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
+                    Margin="4"
                     Click="Agents_Click">
 
                 <StackPanel Width="147"
@@ -86,8 +103,7 @@
                            Margin="0,16,15,14"
                            Source="Images/suitcase 4.png" />
                     <Label Width="60"
-                           Height="36"
-                           Margin="0,10,0,11"
+                           Margin="0,10"
                            BorderThickness="0,9,0,0"
                            Content="Agents"
                            FontFamily="Segoe UI Semibold"
@@ -98,7 +114,7 @@
             </Button>
             <Button x:Name="btnMerit"
                     Height="57"
-                    Margin="0,4,0,0"
+                    Margin="4"
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
