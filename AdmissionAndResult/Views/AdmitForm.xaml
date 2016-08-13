@@ -12,11 +12,11 @@
              mc:Ignorable="d">
     
     <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth4"
-                         Margin="10,10,10,0" 
-                         Height="313">
+                         Margin="10,10,10,0" Height="425" 
+                         >
         <StackPanel
                     Margin="10,0,10,-8"
-                    Opacity="5"
+                   
                     OpacityMask="Black"
                     Orientation="Vertical">
 
@@ -46,7 +46,7 @@
 
                     </materialDesign:Card>
            
-                <materialDesign:Card 
+                <!--<materialDesign:Card 
                         Width="201" Height="35" 
                         Background="#FFFF5722" 
                         Foreground="#FFFDF3F3"
@@ -67,18 +67,17 @@
 
 
 
-                </materialDesign:Card>
+                </materialDesign:Card>-->
                 <TextBox 
-               materialDesign:HintAssist.Hint="Name" 
-                     Height="28" Width="111"
-                    Margin="18,0,0,0"
+               materialDesign:HintAssist.Hint="Form No." 
+                     materialDesign:HintAssist.IsFloating="True"
+                     Margin="328,0,0,0"
+                    FontFamily="Segoe WP Semibold"
+                  
+                     Width="94" Height="34"
                          />
             </StackPanel>
-               
-
-
-
-
+            
                 <StackPanel Width="887"
                             Height="120"
                             Orientation="Horizontal">
@@ -141,13 +140,229 @@
 
 
             <Grid>
-                
-                
-                <materialDesign:PackIcon Kind="Account" Height="15" Margin="10,8,0,0" Width="15"  />
-                <TextBox x:Name="NameTextBox"
-               materialDesign:HintAssist.Hint="Name"
-                         Margin="30,0,0,0"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" MinWidth="240" />
+                    <ColumnDefinition Width="auto" MinWidth="240" />
+                    <ColumnDefinition Width="auto" MinWidth="352" />
+                   
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" 
+                            Grid.Column="0"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a1,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a1"
+               materialDesign:HintAssist.Hint="Full Name"
+                             materialDesign:HintAssist.IsFloating="True"
+                         
+                             Margin="10,0,0,0"
+                             Width="160"
                          />
+                </StackPanel>
+                <StackPanel Grid.Column="1"
+                            Grid.Row="0"
+                            Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="30,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a2,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a2"
+               materialDesign:HintAssist.Hint="Father's Name"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="160"
+                         />
+                </StackPanel>
+                <StackPanel Grid.Row="0" 
+                            Grid.Column="2"
+                          Orientation="Horizontal" 
+                            Margin="30,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a3,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a3"
+               materialDesign:HintAssist.Hint="Father's Occupation"
+                             materialDesign:HintAssist.IsFloating="True"
+                         
+                             Margin="10,0,0,0"
+                             Width="220"
+                         />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" 
+                            Grid.Column="0"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a4,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a4"
+               materialDesign:HintAssist.Hint="Phone Number"
+                             materialDesign:HintAssist.IsFloating="True"
+                         
+                             Margin="10,0,0,0"
+                             Width="160"
+                         />
+                </StackPanel>
+                <StackPanel Grid.Row="1" 
+                            Grid.Column="1"
+                          Orientation="Horizontal" >
+                <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="30,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a5,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a5"
+               materialDesign:HintAssist.Hint="Email Address"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="160"
+                         />
+                </StackPanel>
+                <StackPanel Grid.Row="1" 
+                            Grid.Column="2"
+                          Orientation="Horizontal" 
+                            Margin="30,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a6,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a6"
+               materialDesign:HintAssist.Hint="Father's Number"
+                             materialDesign:HintAssist.IsFloating="True"
+                         
+                             Margin="10,0,0,0"
+                             Width="220"
+                         />
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" 
+                            Grid.ColumnSpan="2"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a7,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a7"
+               materialDesign:HintAssist.Hint="Postal Address"
+                             materialDesign:HintAssist.IsFloating="True"
+                         
+                             Margin="10,0,0,0"
+                             Width="397"
+                         />
+                </StackPanel>
+                <StackPanel Grid.Row="3" 
+                            Grid.ColumnSpan="2"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a8,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a8"
+               materialDesign:HintAssist.Hint="Permanent Address"
+                             materialDesign:HintAssist.IsFloating="True"
+                         
+                             Margin="10,0,0,0"
+                             Width="397"
+                         />
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" 
+                            Grid.Column="0"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a9,
+                                                      Path=BorderBrush}"/>
+                    <DatePicker x:Name="a9" 
+                                Width="160" 
+                                HorizontalAlignment="Left" 
+                                Margin="10 16 0 0" 
+                        materialDesign:HintAssist.Hint="Date Of Birth"
+                                   materialDesign:HintAssist.IsFloating="True"
+                         
+                             >
+                        
+                    </DatePicker>
+                </StackPanel>
+                <StackPanel Grid.Row="4" 
+                            Grid.Column="1"
+                          Orientation="Horizontal" 
+                            Margin="30,0,0,0">
+                    <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a9,
+                                                      Path=BorderBrush}"/>
+                    <ComboBox MinWidth="72"
+                          Margin="16 0 0 0"
+                          materialDesign:HintAssist.Hint="Blood Group"
+                              materialDesign:HintAssist.IsFloating="True"
+                              Width="150"
+                          >
+
+
+                    </ComboBox>
+
+                </StackPanel>
+                <StackPanel Grid.Column="2"
+                            Grid.Row="4"
+                            Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Account" 
+                                        Height="15" 
+                                         Margin="42,17,0,0"
+                                         Width="15"   
+                                          Foreground="{Binding ElementName=a10,
+                                                      Path=BorderBrush}"/>
+                    <TextBox x:Name="a10"
+               materialDesign:HintAssist.Hint="CNIC"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                           Width="220"
+                         />
+                </StackPanel>
+                
+
             </Grid>
 
         </StackPanel>
