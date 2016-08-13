@@ -120,6 +120,15 @@
     <Compile Include="Views\AgentsForm.xaml.cs">
       <DependentUpon>AgentsForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Degrees\BatchlorForm.xaml.cs">
+      <DependentUpon>BatchlorForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Degrees\MSForm.xaml.cs">
+      <DependentUpon>MSForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Degrees\PHDForm.xaml.cs">
+      <DependentUpon>PHDForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MeritForm.xaml.cs">
       <DependentUpon>MeritForm.xaml</DependentUpon>
     </Compile>
@@ -144,6 +153,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AgentsForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Degrees\BatchlorForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Degrees\MSForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Degrees\PHDForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

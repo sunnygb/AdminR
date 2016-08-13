@@ -12,8 +12,9 @@ namespace Model
     using System;
     using System.Collections.Generic;
     using Dapper;
+    using System.ComponentModel;
     [Table("Student")]
-    public partial class Student
+    public partial class Student:IDataErrorInfo
     {
     
         [Key]
@@ -38,5 +39,30 @@ namespace Model
         public virtual Qualification Qualification { get; set; }
         public virtual IEnumerable<Selected_Student> Selected_Student { get; set; }
         public virtual IEnumerable<Verifying_Agent> Verifying_Agent { get; set; }
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            { 
+            switch(columnName)
+            {
+                case "Student_Name":
+                    if(string.IsNullOrEmpty(Student_Name))
+                    {
+                        return "Student Name is Required";
+                    }
+                    break;
+              
+
+            }
+             return "";
+            }
+            
+        }
     }
 }

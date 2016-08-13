@@ -19,6 +19,7 @@ namespace Model
    
         [Key]
         public long Course_Id { get; set; }
+        public long Department_ID { get; set; }
         public string Course_Name { get; set; }
         public long Student_Id { get; set; }
         public virtual Student Student { get; set; }

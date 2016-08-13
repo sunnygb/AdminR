@@ -39,8 +39,9 @@ namespace AdmissionAndResult
         {
 
             SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
-            var admin = conn.Get<Admin>(1);
+            
             mainStack.NavigationService.Navigate(admitForm);
+
         }
 
         private void btnMerit_Click(object sender, RoutedEventArgs e)

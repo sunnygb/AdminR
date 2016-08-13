@@ -13,25 +13,35 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Model;
+using AdmissionAndResult.Views.Degrees;
+using System.Collections.ObjectModel;
 
 namespace AdmissionAndResult.Views
 {
-    /// <summary>
-    /// Interaction logic for AdmitForm.xaml
-    /// </summary>
+
     public partial class AdmitForm : UserControl
     {
+        private PHDForm phdForm;
+        private MSForm msForm;
+        private BatchlorForm batForm;
+
+
         public AdmitForm()
         {
+            ObservableCollection<string> ob = new ObservableCollection<string>();
+            ob.Add("Batchlor");
+            ob.Add("Master");
+            ob.Add("PHD");
+
             InitializeComponent();
+            admitList.ItemsSource = ob.ToList<string>();
+
         }
 
-       
 
-        private void btnUpload_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
+
+
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -44,10 +54,32 @@ namespace AdmissionAndResult.Views
             {
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
+
+
         }
 
-       
+        private void admitList_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (admitList.SelectedIndex == 0)
+            {
+                batForm = new BatchlorForm();
+                frame.NavigationService.Navigate(batForm);
+            }
+            if (admitList.SelectedIndex == 1)
+            {
+                msForm = new MSForm();
+                frame.NavigationService.Navigate(msForm);
 
-       
+            }
+            if (admitList.SelectedIndex == 2)
+            {
+                phdForm = new PHDForm();
+                frame.NavigationService.Navigate(phdForm);
+
+
+            }
+
+        }
     }
+
 }

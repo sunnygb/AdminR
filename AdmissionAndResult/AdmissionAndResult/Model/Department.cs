@@ -17,12 +17,10 @@ namespace Model
     {
         [Key]
         public long Department_ID { get; set; }
-        public long Student_Id { get; set; }
         public string Department_Name { get; set; }
         public long Student_Strength { get; set; }
         public string HOD_Name { get; set; }
         public string Location { get; set; }
-        public virtual Student Student { get; set; }
         public virtual IEnumerable<Selected_Student> Selected_Student { get; set; }
     }
 }
