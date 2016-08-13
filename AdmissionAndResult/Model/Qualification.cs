@@ -7,13 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace Model
 {
     using System;
     using System.Collections.Generic;
     using Dapper;
     [Table("Qualification")]
-    public partial class Qualification
+    public partial class Qualification : IDataErrorInfo
     {
         [Key]
         public long Qualification_Id { get; set; }
@@ -29,5 +31,62 @@ namespace Model
         public long MSC_CGPA { get; set; }
     
         public virtual Student Student { get; set; }
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Nts_Marks":
+                        if (string.IsNullOrEmpty(NTS_Marks.ToString()))
+                            return "Nts marks is required";
+                        break;
+                    case "FSC_Marks":
+                        if (string.IsNullOrEmpty(FSC_Marks.ToString()))
+                            return "FSC marks is Required";
+                        break;
+                    case "Year":
+                        if (string.IsNullOrEmpty(Year))
+                            return "Year is required";
+                        break;
+                    case "Matric_Mark":
+                        if (string.IsNullOrEmpty(Matric_Mark.ToString()))
+                            return "Matric marks is Required";
+                        break;
+                    case "Institute_Name":
+                        if (string.IsNullOrEmpty(Institute_Name))
+                            return "Institute Name is required";
+                        break;
+                    case "Roll_No":
+                        if (string.IsNullOrEmpty(Roll_No))
+                            return "Roll No. is required";
+                        break;
+                    case "Board_Name":
+                        if (string.IsNullOrEmpty(Board_Name))
+                            return "Board Name is required";
+                        break;
+                    case "Gat_Mark":
+                        if (string.IsNullOrEmpty(GAT_Marks.ToString()))
+                            return "GAT marks is Required";
+                        break;
+                    case "Batchlor_CGPA":
+                        if (string.IsNullOrEmpty(Batchlor_CGPA.ToString()))
+                            return "Batchelor CGPA is Required";
+                        break;
+                    case "MSC_CGPA":
+                        if (string.IsNullOrEmpty(MSC_CGPA.ToString()))
+                            return "MSC CGPA is Required";
+                        break;
+                        
+                }
+                return "";
+            }
+        }
     }
 }

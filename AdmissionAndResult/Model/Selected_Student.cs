@@ -7,13 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace Model
 {
     using System;
     using System.Collections.Generic;
     using Dapper;
     [Table("Selected_Student")]
-    public partial class Selected_Student
+    public partial class Selected_Student 
     {
         [Key]
         public long Selected_Student_Id { get; set; }
@@ -27,5 +29,36 @@ namespace Model
         public virtual Course Course { get; set; }
         public virtual Department Department { get; set; }
         public virtual Student Student { get; set; }
+
+
+        //public string Error
+        //{
+        //    get { throw new NotImplementedException(); }
+        //}
+
+        //public string this[string columnName]
+        //{
+        //    get
+        //    {
+        //        switch (columnName)
+        //        {
+               
+        //        case "Student_Registeration_Number":
+        //        if (string.IsNullOrEmpty(Student_Registeration_Number))
+        //            return "Institute Name is required";
+        //        break;
+        //        case "Aggregate":
+        //        if (string.IsNullOrEmpty(Aggregate.ToString()))
+        //            return "Nts marks is required";
+        //        break;
+        //        case "Course_Id":
+        //        if (string.IsNullOrEmpty(Cource_Id.ToString()))
+        //            return "Nts marks is required";
+        //        break;
+
+                        
+        //    }
+        //}
+        }
     }
-}
+
