@@ -7,22 +7,47 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace Model
 {
     using System;
     using System.Collections.Generic;
     using Dapper;
     [Table("Course")]
-    public partial class Course
+    public partial class Course : IDataErrorInfo
     {
         
    
         [Key]
         public long Course_Id { get; set; }
-        public long Department_ID { get; set; }
         public string Course_Name { get; set; }
         public long Student_Id { get; set; }
         public virtual Student Student { get; set; }
         public virtual IEnumerable<Selected_Student> Selected_Student { get; set; }
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Course_Name":
+                        if (string.IsNullOrEmpty(Course_Id.ToString()))
+                            return "Admin Name is required";
+                        break;
+                    case "Student_Id":
+                        if (string.IsNullOrEmpty(Course_Name))
+                            return "Password is Required";
+                        break;
+                }
+                return "";
+            }
+        }
     }
 }

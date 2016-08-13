@@ -10,7 +10,7 @@
             Background="White"
             mc:Ignorable="d" 
           d:DesignWidth="1014"
-             d:Height="681">
+             >
 
    
     <materialDesign:Card

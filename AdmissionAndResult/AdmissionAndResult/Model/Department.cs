@@ -7,20 +7,48 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace Model
 {
     using System;
     using System.Collections.Generic;
     using Dapper;
     [Table("Department")]
-    public partial class Department
+    public partial class Department : IDataErrorInfo
     {
         [Key]
         public long Department_ID { get; set; }
+        public long Student_Id { get; set; }
         public string Department_Name { get; set; }
         public long Student_Strength { get; set; }
         public string HOD_Name { get; set; }
         public string Location { get; set; }
+        public virtual Student Student { get; set; }
         public virtual IEnumerable<Selected_Student> Selected_Student { get; set; }
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Student_Id":
+                        if (string.IsNullOrEmpty(Department_ID.ToString()))
+                            return "Student ID is required";
+                        break;
+                    case "Department_Name":
+                        if (string.IsNullOrEmpty(Department_Name))
+                            return "Department Name is Required";
+                        break;
+                }
+                return "";
+            }
+        }
     }
 }

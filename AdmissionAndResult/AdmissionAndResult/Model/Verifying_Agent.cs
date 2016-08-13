@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel;
+
 namespace Model
 {
     using System;
@@ -14,14 +16,14 @@ namespace Model
     using Dapper;
 
     [Table("Verifying_Agent")]
-    public partial class Verifying_Agent
+    public partial class Verifying_Agent : IDataErrorInfo
     {
         [Key]
         public long Verifying_Agent_Id { get; set; }
         public string Verifying_Agent_Name { get; set; }
-        public long Verified_Marks { get; set; }
-        public long Verified_CGPA { get; set; }
-        public string Degree_Verification { get; set; }
+        //public long Verified_Marks { get; set; }
+        //public long Verified_CGPA { get; set; }
+        //public string Degree_Verification { get; set; }
         public long Admin_Id { get; set; }
         public string Degree { get; set; }
         public long Eligible { get; set; }
@@ -30,5 +32,34 @@ namespace Model
         public long Student_Id { get; set; }
         public virtual Admin Admin { get; set; }
         public virtual Student Student { get; set; }
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Verifying_Agent_Name":
+                        if (string.IsNullOrEmpty(Verifying_Agent_Name))
+                            return "Verifying agent name is required";
+                        break;
+                    case "Degree":
+                        if (string.IsNullOrEmpty(Degree))
+                            return "Degree is required";
+                        break;
+                    case "Admin_Id":
+                        if (string.IsNullOrEmpty(Admin_Id.ToString()))
+                            return "Admin is required";
+                        break;
+                   
+                }
+                return "";
+            }
+        }
     }
 }
