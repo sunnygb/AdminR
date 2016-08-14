@@ -20,9 +20,18 @@ namespace Model
     {
         [Key]
         public long Qualification_Id { get; set; }
-        public long NTS_Marks { get; set; }
-        public long FSC_Marks { get; set; }
-        public long Matric_Mark { get; set; }
+        public long NTS_Obt_Marks { get; set; }
+        public long NTS_Max_Marks { get; set; }
+        public long FSC_Obt_Marks { get; set; }
+        public long FSC_Max_Marks { get; set; }
+
+
+        public long Matric_Obt_Marks { get; set; }
+        public long Matric_Max_Marks { get; set; }
+
+        public long GAT_Obt_Marks { get; set; }
+        public long GAT_Max_Marks { get; set; }
+
         public string Matric_Year { get; set; }
 
         public string FSC_Year { get; set; }
@@ -34,14 +43,38 @@ namespace Model
 
 
 
-        
 
-        public string Institute_Name { get; set; }
-        public string Roll_No { get; set; }
+
+
+        public string MS_Institute_Name { get; set; }
+        public string BS_Institute_Name { get; set; }
+        public string FSC_Institute_Name { get; set; }
+        public string Matric_Institute_Name { get; set; }
+
+
+
+
+        public string MS_Roll_No { get; set; }
+        public string BS_Roll_No { get; set; }
+        public string Fsc_Roll_No { get; set; }
+        public string Matric_Roll_No { get; set; }
+        public string NTS_Roll_No { get; set; }
+        public string GAT_Roll_No { get; set; }
+
+        public string BS_Degree { get; set; }
+        public string MS_Degree { get; set; }
+
+
+
+
         public string Board_Name { get; set; }
-        public long GAT_Marks { get; set; }
-        public long Batchlor_CGPA { get; set; }
-        public long MSC_CGPA { get; set; }
+        //public long GAT_Marks { get; set; }
+        public long Batchlor_Obt_CGPA { get; set; }
+        public long Batchlor_Max_CGPA { get; set; }
+
+        public long MSC_Obt_CGPA { get; set; }
+        public long MSC_Max_CGPA { get; set; }
+
         public long Verified_NTS_Marks { get; set; }
         public long Verified_FSC_Marks { get; set; }
         public long Verified_Matric_Marks { get; set; }
@@ -62,44 +95,44 @@ namespace Model
             {
                 switch (columnName)
                 {
-                    case "Nts_Marks":
-                        if (string.IsNullOrEmpty(NTS_Marks.ToString()))
+                    case "Nts_Obt_Marks":
+                        if (string.IsNullOrEmpty(NTS_Obt_Marks.ToString()))
                             return "Nts marks is required";
                         break;
-                    case "FSC_Marks":
-                        if (string.IsNullOrEmpty(FSC_Marks.ToString()))
+                    case "FSC_Obt_Marks":
+                        if (string.IsNullOrEmpty(FSC_Obt_Marks.ToString()))
                             return "FSC marks is Required";
                         break;
-                    case "Year":
+                    case "Matric_Year":
                         if (string.IsNullOrEmpty(Matric_Year))
                             return "Year is required";
                         break;
-                    case "Matric_Mark":
-                        if (string.IsNullOrEmpty(Matric_Mark.ToString()))
+                    case "Matric_Obt_Mark":
+                        if (string.IsNullOrEmpty(Matric_Obt_Marks.ToString()))
                             return "Matric marks is Required";
                         break;
-                    case "Institute_Name":
-                        if (string.IsNullOrEmpty(Institute_Name))
+                    case "Matric_Institute_Name":
+                        if (string.IsNullOrEmpty(Matric_Institute_Name))
                             return "Institute Name is required";
                         break;
-                    case "Roll_No":
-                        if (string.IsNullOrEmpty(Roll_No))
+                    case "Matric_Roll_No":
+                        if (string.IsNullOrEmpty(Matric_Roll_No))
                             return "Roll No. is required";
                         break;
                     case "Board_Name":
                         if (string.IsNullOrEmpty(Board_Name))
                             return "Board Name is required";
                         break;
-                    case "Gat_Mark":
-                        if (string.IsNullOrEmpty(GAT_Marks.ToString()))
+                    case "Gat_Obt_Mark":
+                        if (string.IsNullOrEmpty(GAT_Obt_Marks.ToString()))
                             return "GAT marks is Required";
                         break;
-                    case "Batchlor_CGPA":
-                        if (string.IsNullOrEmpty(Batchlor_CGPA.ToString()))
+                    case "Batchlor_Obt_CGPA":
+                        if (string.IsNullOrEmpty(Batchlor_Obt_CGPA.ToString()))
                             return "Batchelor CGPA is Required";
                         break;
-                    case "MSC_CGPA":
-                        if (string.IsNullOrEmpty(MSC_CGPA.ToString()))
+                    case "MSC_Obt_CGPA":
+                        if (string.IsNullOrEmpty(MSC_Obt_CGPA.ToString()))
                             return "MSC CGPA is Required";
                         break;
                         

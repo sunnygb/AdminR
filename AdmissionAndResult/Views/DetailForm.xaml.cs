@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace AdmissionAndResult.Views
 {
     /// <summary>
-    /// Interaction logic for SearchForm.xaml
-    /// </summary>this
-    public partial class SearchForm : UserControl
+    /// Interaction logic for DetailForm.xaml
+    /// </summary>
+    public partial class DetailForm : UserControl
     {
-        public SearchForm()
+        public DetailForm()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

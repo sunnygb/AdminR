@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance Type=ViewModel:AdmitFormViewModel,
-                                              IsDesignTimeCreatable=True}"
-             d:DesignHeight="100"
+            d:DataContext= "{d:DesignInstance Type=ViewModel:AdmitFormViewModel,IsDesignTimeCreatable=True}"
+
+    d:DesignHeight="100"
              d:DesignWidth="941"
              mc:Ignorable="d">
     <Grid>
@@ -62,12 +62,19 @@
             <ComboBox x:Name="a9"
                       Width="150"
                       MinWidth="72"
+                     ItemsSource="{Binding courses}"
+                                            SelectedItem="{Binding selectedcourse}"
+
                       Margin="16 0 0 0"
                       materialDesign:HintAssist.Hint="Programs Available"
-                      materialDesign:HintAssist.IsFloating="True">
-                <RadioButton>
-                    Good
-                </RadioButton>
+                      materialDesign:HintAssist.IsFloating="True" >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock 
+                            Text="{Binding  Course_Name}" ></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                
 
             </ComboBox>
 
@@ -88,9 +95,7 @@
                      Margin="10,0,0,0"
                      materialDesign:HintAssist.Hint="Institute Name"
                      materialDesign:HintAssist.IsFloating="True"
-                     Text="{Binding student,
-                                    ValidatesOnDataErrors=True,
-                                    UpdateSourceTrigger=PropertyChanged}" />
+                    />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="2"
@@ -107,7 +112,10 @@
                      Width="64"
                      Margin="10,0,0,0"
                      materialDesign:HintAssist.Hint=" NTS Roll"
-                     materialDesign:HintAssist.IsFloating="True" />
+                     materialDesign:HintAssist.IsFloating="True" 
+                     Text="{Binding qualification.NTS_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
             <materialDesign:PackIcon Width="15"
                                      Height="15"
                                      Margin="28,17,0,0"
@@ -119,7 +127,10 @@
                      Width="110"
                      Margin="10,0,0,0"
                      materialDesign:HintAssist.Hint="Obtained"
-                     materialDesign:HintAssist.IsFloating="True" />
+                     materialDesign:HintAssist.IsFloating="True"
+                     Text="{Binding qualification.NTS_Obt_Marks,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
 
             <materialDesign:PackIcon Width="15"
                                      Height="15"
@@ -132,7 +143,10 @@
                      Width="116"
                      Margin="10,0,0,0"
                      materialDesign:HintAssist.Hint="Total"
-                     materialDesign:HintAssist.IsFloating="True" />
+                     materialDesign:HintAssist.IsFloating="True" 
+                     Text="{Binding qualification.NTS_Max_Marks,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
     </Grid>
