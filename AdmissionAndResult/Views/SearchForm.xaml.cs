@@ -24,5 +24,7 @@ namespace AdmissionAndResult.Views
         {
             InitializeComponent();
         }
+
+       
     }
 }

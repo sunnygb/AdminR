@@ -14,6 +14,7 @@ namespace Model
     using System;
     using System.Collections.Generic;
     using Dapper;
+    using Dapper.Contrib.Extensions;
     [Table("Department")]
     public partial class Department : IDataErrorInfo
     {

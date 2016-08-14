@@ -14,6 +14,7 @@ namespace Model
     using System;
     using System.Collections.Generic;
     using Dapper;
+    using Dapper.Contrib.Extensions;
     [Table("Selected_Student")]
     public partial class Selected_Student 
     {

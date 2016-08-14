@@ -14,7 +14,7 @@ namespace Model
     using System;
     using System.Collections.Generic;
     using Dapper;
-
+    using Dapper.Contrib.Extensions;
     [Table("Verifying_Agent")]
     public partial class Verifying_Agent : IDataErrorInfo
     {
@@ -23,10 +23,10 @@ namespace Model
         public string Verifying_Agent_Name { get; set; }
         //public long Verified_Marks { get; set; }
         //public long Verified_CGPA { get; set; }
-        //public string Degree_Verification { get; set; }
+        public string Degree_Verification { get; set; }
         public long Admin_Id { get; set; }
-        public string Degree { get; set; }
-        public long Eligible { get; set; }
+        //public string Degree { get; set; }
+        //public long Eligible { get; set; }
         public string Send_Date { get; set; }
         public string Recive_Date { get; set; }
         public long Student_Id { get; set; }
@@ -49,7 +49,7 @@ namespace Model
                             return "Verifying agent name is required";
                         break;
                     case "Degree":
-                        if (string.IsNullOrEmpty(Degree))
+                        if (string.IsNullOrEmpty(Degree_Verification))
                             return "Degree is required";
                         break;
                     case "Admin_Id":
