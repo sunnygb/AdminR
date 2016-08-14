@@ -25,6 +25,7 @@ namespace AdmissionAndResult.ViewModel
         private ObservableCollection<string> _school;
         private ObservableCollection<string> _intermediate;
         private ObservableCollection<Course> _courses;
+        private Course _selectedcourse;
         SQLiteConnection conn; 
 
 
@@ -33,7 +34,7 @@ namespace AdmissionAndResult.ViewModel
         {
             conn= new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
             var admit = conn.Get<Admin>(1);
-             
+             getCourseList();
             SubmitCommand = new RelayCommand(saveFunction);
             _student = new Student();
              Course course =new Course();
@@ -78,18 +79,50 @@ namespace AdmissionAndResult.ViewModel
                 Set(() => qualification, ref _qualification, value);
             }
         }
+
+          public ObservableCollection<Course> courses
+        {
+
+            get { return _courses; }
+
+            set
+            {
+                Set(() => courses, ref _courses, value);
+            }
+        }
+
+          public Course selectedcourse
+          {
+
+              get { return _selectedcourse; }
+
+              set
+              {
+                  Set(() => selectedcourse, ref _selectedcourse, value);
+              }
+          }
+
+
+
+
+
+
+
+
+           
         public RelayCommand SubmitCommand{ get; private set; }
 
 
         //Functions
         public void getCourseList()
         {
-            
+            _courses = new ObservableCollection<Course>(conn.GetAll<Course>());
 
         }
         public void saveFunction()
         {
             conn.Insert<Student>(this.student);
+           
         }
 
     }

@@ -99,6 +99,7 @@ namespace AdmissionAndResult.ViewModel
         public void getStudentList()
         {
             students = new ObservableCollection<Student>(conn.GetAll<Student>());
+            
 
         }
         public void getQualificationList()

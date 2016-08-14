@@ -28,7 +28,7 @@
                     VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="23,29,232,0" Grid.Row="1" Width="229"
                   
                     >
-            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth4" Padding="5" Height="36">
+            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2" Padding="5" Height="36">
                 <TextBlock Text="Admission  &amp; Result" FontFamily="Segoe UI Black" FontSize="22" Margin="0,0,0,-10"/>
 
             </materialDesign:Card>

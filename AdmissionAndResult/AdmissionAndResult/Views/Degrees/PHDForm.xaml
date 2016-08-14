@@ -7,7 +7,9 @@
              xmlns:ViewModel="clr-namespace:AdmissionAndResult.ViewModel"
              
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="941">
+             d:DesignHeight="400" d:DesignWidth="941"
+             d:DataContext= "{d:DesignInstance Type=ViewModel:AdmitFormViewModel,IsDesignTimeCreatable=True}">
+
     <Grid >
 
         <Grid.ColumnDefinitions>
@@ -40,7 +42,9 @@
                           materialDesign:HintAssist.Hint=" BS Degree"
                               materialDesign:HintAssist.IsFloating="True"
                               Width="110"
-                         />
+                         Text="{Binding qualification.BS_Degree,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
 
             <DatePicker  
                         Width="100" 
@@ -60,7 +64,9 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="150"
-                         />
+                         Text="{Binding qualification.BS_Institute_Name,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
 
 
         </StackPanel>
@@ -80,7 +86,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="64"
-                         />
+                         Text="{Binding qualification.BS_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
             <materialDesign:PackIcon Kind="Account" 
                                          Height="15" 
                                          Margin="28,17,0,0"
@@ -93,7 +102,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="110"
-                         />
+                         Text="{Binding qualification.Batchlor_Obt_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
 
             <materialDesign:PackIcon Kind="Account" 
                                          Height="15" 
@@ -107,7 +119,9 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="116"
-                         />
+                         Text="{Binding qualification.Batchlor_Max_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" 
@@ -128,7 +142,10 @@
                           materialDesign:HintAssist.Hint=" MS Degree"
                               materialDesign:HintAssist.IsFloating="True"
                               Width="110"
-                         />
+                         Text="{Binding qualification.MS_Degree,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
 
             <DatePicker  
                         Width="100" 
@@ -148,7 +165,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="150"
-                         />
+                        Text="{Binding qualification.MS_Institute_Name,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
 
 
         </StackPanel>
@@ -168,7 +188,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="64"
-                         />
+                         Text="{Binding qualification.MS_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
             <materialDesign:PackIcon Kind="Account" 
                                          Height="15" 
                                          Margin="28,17,0,0"
@@ -181,7 +204,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="110"
-                         />
+                         Text="{Binding qualification.MSC_Obt_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
 
             <materialDesign:PackIcon Kind="Account" 
                                          Height="15" 
@@ -195,7 +221,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="116"
-                         />
+                         Text="{Binding qualification.MSC_Max_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+            
         </StackPanel>
 
         <materialDesign:Card 
@@ -238,11 +267,16 @@
                           materialDesign:HintAssist.Hint="Programs Available"
                               materialDesign:HintAssist.IsFloating="True"
                               Width="150"
+                      ItemsSource="{Binding courses}"
+                      SelectedItem="{Binding selectedcourse}"
                           >
-                <RadioButton>
-                    Good
-                </RadioButton>
 
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock 
+                            Text="{Binding  Course_Name}" ></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
 
         </StackPanel>
@@ -276,11 +310,14 @@
                                           Foreground="{Binding ElementName=a32,
                                                       Path=BorderBrush}"/>
             <TextBox x:Name="a32"
-               materialDesign:HintAssist.Hint=" NTS Roll"
+               materialDesign:HintAssist.Hint=" GAT Roll"
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
-                             Width="64"
-                         />
+                             Width="64" 
+                         Text="{Binding qualification.GAT_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
             <materialDesign:PackIcon Kind="Account" 
                                          Height="15" 
                                          Margin="28,17,0,0"
@@ -293,7 +330,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="110"
-                         />
+                         Text="{Binding qualification.GAT_Obt_Marks,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
 
             <materialDesign:PackIcon Kind="Account" 
                                          Height="15" 
@@ -307,7 +347,10 @@
                              materialDesign:HintAssist.IsFloating="True"
                          Margin="10,0,0,0"
                              Width="116"
-                         />
+                         Text="{Binding qualification.GAT_Max_Marks,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+            
         </StackPanel>
 
     </Grid>

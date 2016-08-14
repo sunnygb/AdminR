@@ -71,12 +71,14 @@ namespace AdmissionAndResult.Views
                 batForm = new BatchlorForm();
                 frame.NavigationService.Navigate(batForm);
                 batForm.DataContext = viewModel;
+                scrol.ScrollToEnd();
             }
             if (admitList.SelectedIndex == 1)
             {
                 msForm = new MSForm();
                 frame.NavigationService.Navigate(msForm);
                 msForm.DataContext = viewModel;
+                scrol.ScrollToEnd();
 
             }
             if (admitList.SelectedIndex == 2)
@@ -84,8 +86,14 @@ namespace AdmissionAndResult.Views
                 phdForm = new PHDForm();
                 frame.NavigationService.Navigate(phdForm);
                 phdForm.DataContext = viewModel;
+                scrol.ScrollToEnd();
 
             }
+
+        }
+
+        private void txtFullName_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
     }

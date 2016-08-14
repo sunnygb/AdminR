@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Dapper.Contrib.Extensions;
 
 namespace AdmissionAndResult.ViewModel
 {
@@ -20,16 +21,16 @@ namespace AdmissionAndResult.ViewModel
         private long _VerifiedNts;
         private long _verifiedGat;
         private ObservableCollection<Selected_Student> selectedstudents;
-        private ObservableCollection<Student> students;
+        private ObservableCollection<Student> _students;
         SQLiteConnection conn;
 
          public SearchViewModel()
         {
-            conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
+            searchFunction();
             SearchCommand = new RelayCommand(searchFunction);
             Student student = new Student();
              Selected_Student selectedStudent=new Selected_Student();
-            
+          
             
            
             
@@ -52,16 +53,27 @@ namespace AdmissionAndResult.ViewModel
 
             set
             {
-                Set(() => _selectedStudent, ref _selectedStudent, value);
+                Set(() => selectedstudent, ref _selectedStudent, value);
             }
         }
-        public RelayCommand SearchCommand { get; private set; }
+
+        public ObservableCollection<Student> students
+        {
+            get { return _students; }
+
+            set
+            {
+                Set(() => students, ref _students, value);
+            }
+        }
+       
+            public RelayCommand SearchCommand { get; private set; }
 
 
 
         public void searchFunction()
         {
-
+            this.students = new ObservableCollection<Student>(Sqlite.getConnection().GetAll<Student>());
         }
 
     }
