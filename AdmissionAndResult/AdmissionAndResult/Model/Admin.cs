@@ -14,6 +14,7 @@ namespace Model
     using System;
     using System.Collections.Generic;
     using Dapper;
+    using Dapper.Contrib.Extensions;
     [Table("Admin")]
     public partial class Admin:IDataErrorInfo
     {
@@ -22,6 +23,11 @@ namespace Model
         public long Admin_Id { get; set; }
         public string Admin_Name { get; set; }
         public string Password { get; set; }
+        public DateTime Hire_Date { get; set; }
+        public DateTime Change_Date { get; set; }
+
+        
+       
         public virtual IEnumerable<Verifying_Agent> Verifying_Agent { get; set; }
 
         public string Error

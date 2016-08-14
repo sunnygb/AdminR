@@ -14,6 +14,7 @@ namespace Model
     using System;
     using System.Collections.Generic;
     using Dapper;
+    using Dapper.Contrib.Extensions;
     [Table("Qualification")]
     public partial class Qualification : IDataErrorInfo
     {
@@ -22,13 +23,31 @@ namespace Model
         public long NTS_Marks { get; set; }
         public long FSC_Marks { get; set; }
         public long Matric_Mark { get; set; }
-        public string Year { get; set; }
+        public string Matric_Year { get; set; }
+
+        public string FSC_Year { get; set; }
+        public string NTS_Year { get; set; }
+        public string BS_Year { get; set; }
+        public string MS_Year { get; set; }
+        public string GAT_Year { get; set; }
+
+
+
+
+        
+
         public string Institute_Name { get; set; }
         public string Roll_No { get; set; }
         public string Board_Name { get; set; }
         public long GAT_Marks { get; set; }
         public long Batchlor_CGPA { get; set; }
         public long MSC_CGPA { get; set; }
+        public long Verified_NTS_Marks { get; set; }
+        public long Verified_FSC_Marks { get; set; }
+        public long Verified_Matric_Marks { get; set; }
+        public long Verified_GAT_Marks { get; set; }
+        public long Verified_MSC_CGPA { get; set; }
+        public long Verified_BS_CGPA { get; set; }
     
         public virtual Student Student { get; set; }
 
@@ -52,7 +71,7 @@ namespace Model
                             return "FSC marks is Required";
                         break;
                     case "Year":
-                        if (string.IsNullOrEmpty(Year))
+                        if (string.IsNullOrEmpty(Matric_Year))
                             return "Year is required";
                         break;
                     case "Matric_Mark":

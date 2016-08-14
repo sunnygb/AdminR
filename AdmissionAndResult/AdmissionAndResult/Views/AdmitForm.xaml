@@ -6,13 +6,10 @@
              xmlns:local="clr-namespace:AdmissionAndResult.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-          
              d:DesignWidth="1014"
              Background="White"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:AdmitFormViewModel,IsDesignTimeCreatable=True}"
-             >
-
+            >
 
     <materialDesign:Card Margin="10,10,10,10"
                          VerticalAlignment="Stretch"

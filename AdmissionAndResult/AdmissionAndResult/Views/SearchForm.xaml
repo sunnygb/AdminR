@@ -7,10 +7,9 @@
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
              
-              d:DesignWidth="1014"
-             d:DesignHeight="300"
+              
              Background="White"
-             mc:Ignorable="d">
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,70 +17,112 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-      
-        <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" MinWidth="171" />
+    <materialDesign:Card 
+           
+            materialDesign:ShadowAssist.ShadowDepth="Depth3"
+        Margin="5">
+
+        <Grid Margin="10">
+ <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="171" />
                 
             <ColumnDefinition Width="auto" MinWidth="171" />
-            <ColumnDefinition Width="auto" MinWidth="377" />
+            <ColumnDefinition Width="*" MinWidth="377" />
 
 
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
+  <Grid.RowDefinitions>
+            <RowDefinition Height="auto" MinHeight="86" />
+                <RowDefinition Height="auto" MinHeight="167" />
+                <RowDefinition Height="auto" MinHeight="177"  />
+            </Grid.RowDefinitions>
 
-        <materialDesign:Card 
-                Grid.Row="0"
-                    Grid.Column="1"
-            materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="0,50,0,-14" Height="214" >
+            <materialDesign:Chip 
+           Grid.Row="0"
+                Margin="25,10,0,0"
+                Grid.Column="0"
+                IconBackground="{DynamicResource PrimaryHueDarkBrush}" Width="230" Background="#FFFAFAFA" BorderBrush="#FFE64A19" Height="Auto">
+                <ComboBox 
+        	materialDesign:HintAssist.Hint="Search"
+        	IsEditable="True"
+                x:Name="adminList"
+                  Height="44"
+                
+        	Style="{StaticResource MaterialDesignFloatingHintComboBox}" BorderBrush="#FFE64A19" Background="#FFFAFAFA" >
+
+                </ComboBox>
+                <materialDesign:Chip.Icon>
+                    <materialDesign:PackIcon Kind="AccountSearch" Width="24" Height="24"  />
+
+                </materialDesign:Chip.Icon>
+            </materialDesign:Chip>
+
+            <StackPanel  Grid.Column="0"
+                         Grid.Row="1"
+                Orientation="Vertical" Margin="25" >
+                <TreeView
+            		
+          
+                Height="145"
+                   
+          
+                  >
+                    <TreeViewItem Background="Black" Header=" Person" 
+            			IsExpanded="True" 
+                              >
+                        <TreeViewItem>
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Width="15"
+            							Height="15"
+                                              
+            							Foreground="{Binding BorderBrush, ElementName=txtFullName}"
+            							Kind="Account" />
+                                    <TextBlock Margin="8 0 0 0"><Run Text="Registered Students"/></TextBlock>
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                        <TreeViewItem>
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Width="15"
+            							Height="15"
+                                              
+            							Foreground="{Binding BorderBrush, ElementName=txtFullName}"
+            							Kind="Account" />
+                                    <TextBlock Margin="8 0 0 0"><Run Text="Verifying Agent"/></TextBlock>
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                    </TreeViewItem>
+
+                </TreeView>
+            </StackPanel>
+
             <StackPanel 
-                    Orientation="Vertical"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Width="274"
-                    >
-
-                <StackPanel 
                                 
-                                
-                                Orientation="Horizontal">
-                    <DatePicker x:Name="a9"
-                                    Width="130"
-                                    Margin="80 16 0 0"
+                                Grid.Row="2"
+                Grid.Column="0"
+                                Orientation="Horizontal" >
+                <DatePicker x:Name="a9"
+                                    Width="214"
+                                    Margin="25,10,0,133"
                                     HorizontalAlignment="Left"
                                     materialDesign:HintAssist.Hint="Date"
                                     materialDesign:HintAssist.IsFloating="True"
                                     Text="{Binding student.Date_Of_Birth,
                                                    ValidatesOnDataErrors=True,
-                                                   UpdateSourceTrigger=PropertyChanged}" Height="37" />
+                                                   UpdateSourceTrigger=PropertyChanged}" />
 
-                    
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="25,23,0,0" Height="47">
-                    <materialDesign:Chip 
-            IconBackground="{DynamicResource PrimaryHueDarkBrush}" Width="246" Height="Auto" Background="White">
-                        <ComboBox 
-        	materialDesign:HintAssist.Hint="Search"
-        	IsEditable="True"
-                x:Name="adminList"
-                  Height="40"
-                
-        	Style="{StaticResource MaterialDesignFloatingHintComboBox}" BorderBrush="#FFE64A19" Background="White" >
-
-                        </ComboBox>
-                        <materialDesign:Chip.Icon>
-                            <materialDesign:PackIcon Kind="AccountSearch" Width="24" Height="24"  />
-
-                        </materialDesign:Chip.Icon>
-                    </materialDesign:Chip>
-                </StackPanel>
-                
 
             </StackPanel>
+
+           
             
-        </materialDesign:Card>
+            
+       
        
     </Grid>
-    
+    </materialDesign:Card>
+
 </UserControl>

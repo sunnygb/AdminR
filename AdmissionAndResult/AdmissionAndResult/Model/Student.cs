@@ -8,12 +8,14 @@
 //------------------------------------------------------------------------------
 
 using System.ComponentModel;
+using System.Drawing;
 
 namespace Model
 {
     using System;
     using System.Collections.Generic;
     using Dapper;
+    using Dapper.Contrib.Extensions;
     [Table("Student")]
     public partial class Student : IDataErrorInfo
     {
@@ -39,6 +41,8 @@ namespace Model
         public long Verified_NTS_Marks { get; set; }
         public long Verified_GAT_Marks { get; set; }
         public long Verified_CGPA { get; set; }
+        public long Verified_Bachelor_CGPA { get; set; }
+        public Image Image { get; set; }
 
         public virtual IEnumerable<Course> Courses { get; set; }
         public virtual IEnumerable<Department> Departments { get; set; }
