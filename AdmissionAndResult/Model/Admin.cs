@@ -20,7 +20,6 @@ namespace Model
        
         [Key]
         public long Admin_Id { get; set; }
-    
         public string Admin_Name { get; set; }
         public string Password { get; set; }
         public virtual IEnumerable<Verifying_Agent> Verifying_Agent { get; set; }
@@ -29,7 +28,6 @@ namespace Model
         {
             get { throw new NotImplementedException(); }
         }
-
         public string this[string columnName]
         {
             get

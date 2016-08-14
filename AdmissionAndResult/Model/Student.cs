@@ -20,9 +20,10 @@ namespace Model
     
         [Key]
         public long Student_Id { get; set; }
-        public string Student_Name { get; set; }
+        public string Student_Name { get;set; }
         public string Student_Email { get; set; }
         public string Father_Name { get; set; }
+        public string Fathers_Number { get; set; }
         public string Father_Monthly_Income { get; set; }
         public string Father_Occupation { get; set; }
         public string Postal_Address { get; set; }
