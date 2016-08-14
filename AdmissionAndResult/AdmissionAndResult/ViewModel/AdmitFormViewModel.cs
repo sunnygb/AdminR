@@ -11,6 +11,7 @@ using Dapper;
 using Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using AdmissionAndResult.Views.Header;
 
 namespace AdmissionAndResult.ViewModel
 {
@@ -30,12 +31,12 @@ namespace AdmissionAndResult.ViewModel
          public AdmitFormViewModel()
         {
             conn= new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
-           
             SubmitCommand = new RelayCommand(saveFunction);
-            Student student = new Student();
+            _student = new Student();
              Course course =new Course();
              Qualification qualification = new Qualification();
-            
+           
+
             
            
             

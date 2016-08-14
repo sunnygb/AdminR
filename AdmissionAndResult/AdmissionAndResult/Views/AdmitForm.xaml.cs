@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Model;
 using AdmissionAndResult.Views.Degrees;
 using System.Collections.ObjectModel;
+using AdmissionAndResult.ViewModel;
 
 namespace AdmissionAndResult.Views
 {
@@ -25,10 +26,13 @@ namespace AdmissionAndResult.Views
         private PHDForm phdForm;
         private MSForm msForm;
         private BatchlorForm batForm;
+        private AdmitFormViewModel viewModel;
 
 
         public AdmitForm()
         {
+            viewModel= new AdmitFormViewModel();
+            this.DataContext = viewModel;
             ObservableCollection<string> ob = new ObservableCollection<string>();
             ob.Add("Batchlor");
             ob.Add("Master");
@@ -36,6 +40,8 @@ namespace AdmissionAndResult.Views
 
             InitializeComponent();
             admitList.ItemsSource = ob.ToList<string>();
+            
+            
 
         }
 
@@ -64,18 +70,20 @@ namespace AdmissionAndResult.Views
             {
                 batForm = new BatchlorForm();
                 frame.NavigationService.Navigate(batForm);
+                batForm.DataContext = viewModel;
             }
             if (admitList.SelectedIndex == 1)
             {
                 msForm = new MSForm();
                 frame.NavigationService.Navigate(msForm);
+                msForm.DataContext = viewModel;
 
             }
             if (admitList.SelectedIndex == 2)
             {
                 phdForm = new PHDForm();
                 frame.NavigationService.Navigate(phdForm);
-
+                phdForm.DataContext = viewModel;
 
             }
 

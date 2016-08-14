@@ -16,6 +16,7 @@ using AdmissionAndResult.Views;
 using System.Data.SQLite;
 using Dapper;
 using Model;
+using AdmissionAndResult.Views.Header;
 
 namespace AdmissionAndResult
 {
@@ -33,12 +34,15 @@ namespace AdmissionAndResult
             searchForm = new SearchForm();
             meritForm = new MeritForm();
             agentForm = new AgentsForm();
+
+            MainHeader header = new MainHeader();
+            this.headerFrame.NavigationService.Navigate(header);
         }
 
         private void Add_Student_Click(object sender, RoutedEventArgs e)
         {
 
-            SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
+      
             
             mainStack.NavigationService.Navigate(admitForm);
 

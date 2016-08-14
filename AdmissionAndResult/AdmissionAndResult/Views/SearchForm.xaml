@@ -4,12 +4,84 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdmissionAndResult.Views"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              
-             d:DesignHeight="540"
-             d:DesignWidth="1014"
-             mc:Ignorable="d"
-             >
-    <StackPanel Width="1019"
-                Height="540"
-                Background="#FFAF28CD" />
+             
+              d:DesignWidth="1014"
+             d:DesignHeight="300"
+             Background="White"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+      
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" MinWidth="171" />
+                
+            <ColumnDefinition Width="auto" MinWidth="171" />
+            <ColumnDefinition Width="auto" MinWidth="377" />
+
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card 
+                Grid.Row="0"
+                    Grid.Column="1"
+            materialDesign:ShadowAssist.ShadowDepth="Depth3" Margin="0,50,0,-14" Height="214" >
+            <StackPanel 
+                    Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Width="274"
+                    >
+
+                <StackPanel 
+                                
+                                
+                                Orientation="Horizontal">
+                    <DatePicker x:Name="a9"
+                                    Width="130"
+                                    Margin="80 16 0 0"
+                                    HorizontalAlignment="Left"
+                                    materialDesign:HintAssist.Hint="Date"
+                                    materialDesign:HintAssist.IsFloating="True"
+                                    Text="{Binding student.Date_Of_Birth,
+                                                   ValidatesOnDataErrors=True,
+                                                   UpdateSourceTrigger=PropertyChanged}" Height="37" />
+
+                    
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="25,23,0,0" Height="47">
+                    <materialDesign:Chip 
+            IconBackground="{DynamicResource PrimaryHueDarkBrush}" Width="246" Height="Auto" Background="White">
+                        <ComboBox 
+        	materialDesign:HintAssist.Hint="Search"
+        	IsEditable="True"
+                x:Name="adminList"
+                  Height="40"
+                
+        	Style="{StaticResource MaterialDesignFloatingHintComboBox}" BorderBrush="#FFE64A19" Background="White" >
+
+                        </ComboBox>
+                        <materialDesign:Chip.Icon>
+                            <materialDesign:PackIcon Kind="AccountSearch" Width="24" Height="24"  />
+
+                        </materialDesign:Chip.Icon>
+                    </materialDesign:Chip>
+                </StackPanel>
+                
+
+            </StackPanel>
+            
+        </materialDesign:Card>
+       
+    </Grid>
+    
 </UserControl>

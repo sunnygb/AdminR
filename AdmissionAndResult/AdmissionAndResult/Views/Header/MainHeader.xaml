@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="AdmissionAndResult.Views.Header.MainHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             
+             mc:Ignorable="d" 
+             d:DesignHeight="100"  d:DesignWidth="1014"
+             Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="240" />
+            <ColumnDefinition Width="auto" MinWidth="240" />
+            <ColumnDefinition Width="auto" MinWidth="352" />
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel 
+                    Grid.Column="0"
+                    
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="23,29,232,0" Grid.Row="1" Width="229"
+                  
+                    >
+            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth4" Padding="5" Height="36">
+                <TextBlock Text="Admission  &amp; Result" FontFamily="Segoe UI Black" FontSize="22" Margin="0,0,0,-10"/>
+
+            </materialDesign:Card>
+            </StackPanel>
+
+        <StackPanel 
+                    Grid.Column="1"
+                    
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,70,184,30" Grid.Row="1" Width="276"
+                  
+                    >
+           
+        </StackPanel>
+
+        <materialDesign:Chip Grid.Column="2" Margin="96,25,0,50" Grid.Row="1"
+            IconBackground="{DynamicResource PrimaryHueDarkBrush}" Width="246" Height="Auto" Background="White">
+            <ComboBox 
+        	materialDesign:HintAssist.Hint="Search"
+        	IsEditable="True"
+                x:Name="adminList"
+                  Height="40"
+                
+        	Style="{StaticResource MaterialDesignFloatingHintComboBox}" MouseLeave="adminList_MouseLeave" BorderBrush="#FFE64A19" Background="White" >
+
+            </ComboBox>
+            <materialDesign:Chip.Icon>
+                <materialDesign:PackIcon Kind="AccountSearch" Width="24" Height="24"  />
+
+            </materialDesign:Chip.Icon>
+        </materialDesign:Chip>
+
+
+        
+
+    </Grid>
+</UserControl>
