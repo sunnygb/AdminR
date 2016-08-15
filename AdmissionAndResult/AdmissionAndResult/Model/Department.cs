@@ -25,8 +25,6 @@ namespace Model
         public long Student_Strength { get; set; }
         public string HOD_Name { get; set; }
         public string Location { get; set; }
-        public virtual Student Student { get; set; }
-        public virtual IEnumerable<Selected_Student> Selected_Student { get; set; }
 
         public string Error
         {

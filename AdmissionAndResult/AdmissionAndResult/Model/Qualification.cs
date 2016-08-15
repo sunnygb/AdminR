@@ -81,8 +81,6 @@ namespace Model
         public long Verified_GAT_Marks { get; set; }
         public long Verified_MSC_CGPA { get; set; }
         public long Verified_BS_CGPA { get; set; }
-    
-        public virtual Student Student { get; set; }
 
         public string Error
         {

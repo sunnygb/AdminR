@@ -12,25 +12,40 @@ namespace AdmissionAndResult.Model
     public class Admin
     {
 
-        public void setAdmin(wAdmin wadmin)
-        {
-            wadmin.Admin_Id = this.Admin_Id;
-            wadmin.Admin_Name = this.Admin_Name;
-            wadmin.Password = this.Password;
-            wadmin.Change_Date = this.Hire_Date;
-            wadmin.Change_Date = this.Change_Date;
-        }
-        
-        
-        
-        
-        
+
+
         [Key]
         public long Admin_Id { get; set; }
         public string Admin_Name { get; set; }
         public string Password { get; set; }
         public DateTime Hire_Date { get; set; }
         public DateTime Change_Date { get; set; }
+
+
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Admin_Name":
+                        if (string.IsNullOrEmpty(Admin_Name))
+                            return "Admin Name is required";
+                        break;
+                    case "Password":
+                        if (string.IsNullOrEmpty(Password))
+                            return "Password is Required";
+                        break;
+
+                }
+                return "";
+            }
+        }
+      
 
 
        
