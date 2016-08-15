@@ -126,33 +126,24 @@ namespace AdmissionAndResult.ViewModel
         public void saveFunction()
         {
 
-            //this.student.Student_Id = 1005;
-            //conn.Open();
-            //    conn.Insert<Student>(this.student);
-            //    _course.Course_Id = 1009;
-            //    _course.Course_Name = "hello";
-            //    _course.Student_Id = 10000;
 
-            //   conn.Query("insert into Course VALUES(6,\"AB\",1002)");
-
-            //    conn.Close();
-            wAdmin admin = new wAdmin()
+            Course cource = new Course()
             {
-                Admin_Id = 1005,
-                Admin_Name = "Abdullah",
-                Password = "1234",
-                Change_Date = DateTime.Now,
-                Hire_Date = DateTime.Now
-
-
+                Course_Name = "Abdullah",
+                Course_Id = 1
             };
 
-            Admin wadmin =new  Admin();
-            wadmin.setAdmin(admin);
-            conn.Insert<Admin>(wadmin);
+            WCourse wcource = new WCourse(cource);
+         
+            conn.Insert<WCourse>(wcource);
 
-            var Q = this._selectedcourse;
-            var C = this._qualification;
+
+            conn.Insert<Student>(_student);
+            WQualification wQualification = new WQualification(_qualification);
+            wQualification.Qualification_Id = _student.Student_Id;
+           conn.Insert<WQualification>(wQualification);
+            
+
         }
 
         private void CanExecute(object sender, CanExecuteRoutedEventArgs e)

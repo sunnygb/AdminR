@@ -21,17 +21,12 @@ namespace Model
         [Key]
         public long Verifying_Agent_Id { get; set; }
         public string Verifying_Agent_Name { get; set; }
-        //public long Verified_Marks { get; set; }
-        //public long Verified_CGPA { get; set; }
         public string Degree_Verification { get; set; }
         public long Admin_Id { get; set; }
-        //public string Degree { get; set; }
-        //public long Eligible { get; set; }
         public string Send_Date { get; set; }
         public string Recive_Date { get; set; }
         public long Student_Id { get; set; }
-        public virtual wAdmin Admin { get; set; }
-        public virtual Student Student { get; set; }
+
 
         public string Error
         {

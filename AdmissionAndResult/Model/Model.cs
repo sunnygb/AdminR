@@ -1,10 +1,11 @@
 using Dapper;
+using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using Dapper.Contrib.Extensions;
 
 namespace SalarDb.CodeGen.Entities
 {

@@ -21,7 +21,7 @@ namespace Model
     {
     
         [Key]
-        public long Student_Id { get; set; }
+        public long Student_Id { get;set; }
         public string Student_Name { get;set; }
         public string Student_Email { get; set; }
         public string Father_Name { get; set; }
@@ -41,84 +41,77 @@ namespace Model
         public long Verified_NTS_Marks { get; set; }
         public long Verified_GAT_Marks { get; set; }
         public long Verified_Bachelor_CGPA { get; set; }
-       
-      
+        //public Image Image { get; set; }
 
-        //public virtual IEnumerable<Course> Courses { get; set; }
-        //public virtual IEnumerable<Department> Departments { get; set; }
-        //public virtual IEnumerable<Qualification> Qualification { get; set; }
-        //public virtual IEnumerable<Selected_Student> Selected_Student { get; set; }
-        //public virtual IEnumerable<Verifying_Agent> Verifying_Agent { get; set; }
+        public string Error
+        {
+            get { return string.Empty; }
+        }
 
-        //public string Error
-        //{
-        //    get { return string.Empty; }
-        //}
+        public string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case "Student_Name":
+                        if (string.IsNullOrEmpty(Student_Name))
+                            return "Sthdent Name is required";
+                        break;
+                    case "Student_Email":
+                        if (string.IsNullOrEmpty(Student_Email))
+                            return "Student Email is Required";
+                        break;
+                    case "Father_Name":
+                        if (string.IsNullOrEmpty(Father_Name))
+                            return "Father Name is required";
+                        break;
+                    case "Father_Monthly_Income":
+                        if (string.IsNullOrEmpty(Father_Monthly_Income))
+                            return "Father Monthly Income is Required";
+                        break;
 
-        //public string this[string columnName]
-        //{
-        //    get
-        //    {
-        //        switch (columnName)
-        //        {
-        //            case "Student_Name":
-        //                if (string.IsNullOrEmpty(Student_Name))
-        //                    return "Sthdent Name is required";
-        //                break;
-        //            case "Student_Email":
-        //                if (string.IsNullOrEmpty(Student_Email))
-        //                    return "Student Email is Required";
-        //                break;
-        //            case "Father_Name":
-        //                if (string.IsNullOrEmpty(Father_Name))
-        //                    return "Father Name is required";
-        //                break;
-        //            case "Father_Monthly_Income":
-        //                if (string.IsNullOrEmpty(Father_Monthly_Income))
-        //                    return "Father Monthly Income is Required";
-        //                break;
-                   
-        //            case "Father_Occupation":
-        //                if (string.IsNullOrEmpty(Father_Occupation))
-        //                    return "Father Occupation is required";
-        //                break;
-        //            case "Postal_Address":
-        //                if (string.IsNullOrEmpty(Postal_Address))
-        //                    return "Postal address is required";
-        //                break;
-        //            case "Permanent_Address":
-        //                if (string.IsNullOrEmpty(Permanent_Address))
-        //                    return "Permanent Address is required";
-        //                break;
-        //            case "Date_Of_Birth":
-        //                if (string.IsNullOrEmpty(Date_Of_Birth))
-        //                    return "Date of Birth is required";
-        //                break;
-        //            case "NIC_No":
-        //                if (string.IsNullOrEmpty(NIC_No))
-        //                    return "N.I.C No. is required";
-        //                break;
-        //            case "Blood_Group_":
-        //                if (string.IsNullOrEmpty(Blood_Group))
-        //                    return "Blood Group is required";
-        //                break;
-        //            case "Phone_Number":
-        //                if (string.IsNullOrEmpty(Phone_Number))
-        //                    return "Board Name is required";
-        //                break;
-        //            case "Residental_Phone_Number":
-        //                if (string.IsNullOrEmpty(Residental_Phone_Number))
-        //                    return "Residental Phone Number is required";
-        //                break;
-        //            case "Date":
-        //                if (string.IsNullOrEmpty(Date))
-        //                    return "Date is required";
-        //                break;
+                    case "Father_Occupation":
+                        if (string.IsNullOrEmpty(Father_Occupation))
+                            return "Father Occupation is required";
+                        break;
+                    case "Postal_Address":
+                        if (string.IsNullOrEmpty(Postal_Address))
+                            return "Postal address is required";
+                        break;
+                    case "Permanent_Address":
+                        if (string.IsNullOrEmpty(Permanent_Address))
+                            return "Permanent Address is required";
+                        break;
+                    case "Date_Of_Birth":
+                        if (string.IsNullOrEmpty(Date_Of_Birth))
+                            return "Date of Birth is required";
+                        break;
+                    case "NIC_No":
+                        if (string.IsNullOrEmpty(NIC_No))
+                            return "N.I.C No. is required";
+                        break;
+                    case "Blood_Group_":
+                        if (string.IsNullOrEmpty(Blood_Group))
+                            return "Blood Group is required";
+                        break;
+                    case "Phone_Number":
+                        if (string.IsNullOrEmpty(Phone_Number))
+                            return "Board Name is required";
+                        break;
+                    case "Residental_Phone_Number":
+                        if (string.IsNullOrEmpty(Residental_Phone_Number))
+                            return "Residental Phone Number is required";
+                        break;
+                    case "Date":
+                        if (string.IsNullOrEmpty(Date))
+                            return "Date is required";
+                        break;
 
-        //        }
+                }
 
-        //        return "";
-        //    }
-        //}
+                return "";
+            }
+        }
     }
 }

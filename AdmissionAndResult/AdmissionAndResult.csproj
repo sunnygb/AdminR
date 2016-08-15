@@ -124,7 +124,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\wAdmin.cs" />
+    <Compile Include="Model\Wrapper\wAdmin.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Qualification.cs" />
@@ -132,6 +132,9 @@
     <Compile Include="Model\Student.cs" />
     <Compile Include="Model\Verifying_Agent.cs" />
     <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\Wrapper\WCourse.cs" />
+    <Compile Include="Model\Wrapper\WQualification.cs" />
+    <Compile Include="Model\Wrapper\WStudent.cs" />
     <Compile Include="ViewModel\AgentFormViewModel.cs" />
     <Compile Include="ViewModel\AdmitFormViewModel.cs" />
     <Compile Include="ViewModel\DetailFormViewModel.cs" />
@@ -168,6 +171,9 @@
     <Compile Include="Views\SearchForm.xaml.cs">
       <DependentUpon>SearchForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Wrapper\WDepartment.cs" />
+    <Compile Include="Model\Wrapper\WSelected_Student.cs" />
+    <Compile Include="Model\Wrapper\WVerifying_Agent.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
