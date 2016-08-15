@@ -6,17 +6,19 @@
              xmlns:local="clr-namespace:AdmissionAndResult.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
              d:DesignWidth="1014"
              Background="White"
-             mc:Ignorable="d"
-             d:DataContext= "{d:DesignInstance Type=ViewModel:AdmitFormViewModel,IsDesignTimeCreatable=True}">
-    
-    
-             
+             mc:Ignorable="d">
+
+
+
     <materialDesign:Card Margin="10,10,10,10"
                          VerticalAlignment="Stretch"
                          materialDesign:ShadowAssist.ShadowDepth="Depth4">
-        <ScrollViewer x:Name="scrol" ScrollViewer.VerticalScrollBarVisibility="Auto" VirtualizingPanel.ScrollUnit="Pixel">
+        <ScrollViewer x:Name="scrol"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      VirtualizingPanel.ScrollUnit="Pixel">
             <StackPanel Margin="10,0,10,19"
                         OpacityMask="Black"
                         Orientation="Vertical">
@@ -177,7 +179,8 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding student.Student_Name,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}" TextChanged="txtFullName_TextChanged" />
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                  />
                     </StackPanel>
                     <StackPanel Grid.Row="0"
                                 Grid.Column="1"
@@ -190,12 +193,14 @@
                                                  Kind="Account" />
                         <TextBox x:Name="a2"
                                  Width="160"
+                                 Height="37"
                                  Margin="10,0,0,0"
+                                 VerticalAlignment="Bottom"
                                  materialDesign:HintAssist.Hint="Father's Name"
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding student.Father_Name,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"  Height="37" VerticalAlignment="Bottom" />
+                                                UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Grid.Row="0"
                                 Grid.Column="2"
@@ -347,10 +352,10 @@
                                   MinWidth="72"
                                   Margin="16 0 0 0"
                                   materialDesign:HintAssist.Hint="Blood Group"
-                                  materialDesign:HintAssist.IsFloating="True" >
-                           <ComboBoxItem>
-                               A+
-                           </ComboBoxItem>
+                                  materialDesign:HintAssist.IsFloating="True">
+                            <ComboBoxItem>
+                                A+
+                            </ComboBoxItem>
                             <ComboBoxItem>
                                 B+
                             </ComboBoxItem>
@@ -365,9 +370,9 @@
                             </ComboBoxItem>
 
                         </ComboBox>
-                                  
-                            
-                        
+
+
+
 
                     </StackPanel>
                     <StackPanel Grid.Row="4"
@@ -478,7 +483,7 @@
                                   Margin="16 0 0 0"
                                   materialDesign:HintAssist.Hint="School"
                                   materialDesign:HintAssist.IsFloating="True">
-                           
+
                             <ComboBoxItem>
                                 Matric
                             </ComboBoxItem>
@@ -486,15 +491,14 @@
                                 'O'Level
                             </ComboBoxItem>
                         </ComboBox>
-                        
-                                 
-                        
+
+
+
                         <DatePicker Width="80"
                                     Height="29"
                                     Margin="10,10, 0 ,0"
                                     materialDesign:HintAssist.Hint=" Date"
-                                    materialDesign:HintAssist.IsFloating="True" 
-                                    />
+                                    materialDesign:HintAssist.IsFloating="True" />
                     </StackPanel>
                     <StackPanel Grid.Row="7"
                                 Grid.Column="1"
@@ -513,12 +517,9 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.Matric_Institute_Name,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"
-                                 
-                                 
-                                 />
-                                
-                                  
+                                                UpdateSourceTrigger=PropertyChanged}" />
+
+
                     </StackPanel>
                     <StackPanel Grid.Row="7"
                                 Grid.Column="2"
@@ -538,7 +539,7 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.Matric_Roll_No,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
                         <materialDesign:PackIcon Width="15"
                                                  Height="15"
                                                  Margin="28,17,0,0"
@@ -550,10 +551,10 @@
                                  Width="110"
                                  Margin="10,0,0,0"
                                  materialDesign:HintAssist.Hint="Obtained"
-                                 materialDesign:HintAssist.IsFloating="True" 
+                                 materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.Matric_Obt_Marks,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
 
                         <materialDesign:PackIcon Width="15"
                                                  Height="15"
@@ -569,7 +570,7 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.Matric_Max_Marks,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <StackPanel Grid.Row="8"
@@ -588,8 +589,8 @@
                                   MinWidth="72"
                                   Margin="16 0 0 0"
                                   materialDesign:HintAssist.Hint="Intermediate"
-                                  materialDesign:HintAssist.IsFloating="True" >
-                            
+                                  materialDesign:HintAssist.IsFloating="True">
+
                             <ComboBoxItem>
                                 FCS
                             </ComboBoxItem>
@@ -620,7 +621,7 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.FSC_Institute_Name,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <StackPanel Grid.Row="8"
                                 Grid.Column="2"
@@ -640,7 +641,7 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.Fsc_Roll_No,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
                         <materialDesign:PackIcon Width="15"
                                                  Height="15"
                                                  Margin="28,17,0,0"
@@ -652,10 +653,10 @@
                                  Width="110"
                                  Margin="10,0,0,0"
                                  materialDesign:HintAssist.Hint="Obtained"
-                                 materialDesign:HintAssist.IsFloating="True" 
+                                 materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.FSC_Obt_Marks,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
 
                         <materialDesign:PackIcon Width="15"
                                                  Height="15"
@@ -671,7 +672,7 @@
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding qualification.FSC_Max_Marks,
                                                 ValidatesOnDataErrors=True,
-                                                UpdateSourceTrigger=PropertyChanged}"/>
+                                                UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
 
                     <StackPanel Grid.Row="9"
@@ -690,7 +691,7 @@
                                       materialDesign:HintAssist.Hint="Admission"
                                       Background="#FFE8E8E8"
                                       FontFamily="Segoe WP Black"
-                                      MouseLeave="admitList_MouseLeave" />
+                                      />
                             <materialDesign:Chip.Icon>
                                 <materialDesign:PackIcon Kind="Twitter" />
 
@@ -698,15 +699,360 @@
                         </materialDesign:Chip>
 
                     </StackPanel>
-                    <Frame x:Name="frame"
-                           Grid.Row="10"
-                           Grid.RowSpan="3"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="3" />
+                    <Grid  Grid.Column="0"
+                           Grid.Row="10">
 
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" MinWidth="240" />
+                            <ColumnDefinition Width="auto" MinWidth="240" />
+                            <ColumnDefinition Width="auto" MinWidth="352" />
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" 
+                            Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a99,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a99"
+                MinWidth="72"
+                          Margin="16 0 0 0"
+                          materialDesign:HintAssist.Hint=" BS Degree"
+                              materialDesign:HintAssist.IsFloating="True"
+                              Width="110"
+                         Text="{Binding qualification.BS_Degree,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <DatePicker  
+                        Width="100" 
+                        Margin="20,10, 0 ,0" 
+                        materialDesign:HintAssist.Hint=" Date"
+                        materialDesign:HintAssist.IsFloating="True" Height="29" 
+                         
+                             />
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a155,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a155"
+               materialDesign:HintAssist.Hint="Institute Name"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="150"
+                         Text="{Binding qualification.BS_Institute_Name,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" 
+                            Grid.Column="2"
+                          Orientation="Horizontal" 
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a33,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a33"
+               materialDesign:HintAssist.Hint="Roll"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="64"
+                         Text="{Binding qualification.BS_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="28,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a177,
+                                                      Path=BorderBrush}"/>
+
+                            <TextBox x:Name="a177"
+               materialDesign:HintAssist.Hint="Obtained"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="110"
+                         Text="{Binding qualification.Batchlor_Obt_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="25,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a188,
+                                                      Path=BorderBrush}"/>
+
+                            <TextBox x:Name="a188"
+               materialDesign:HintAssist.Hint="Total"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="116"
+                         Text="{Binding qualification.Batchlor_Max_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" 
+                            Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a31,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a31"
+                MinWidth="72"
+                          Margin="16 0 0 0"
+                          materialDesign:HintAssist.Hint=" MS Degree"
+                              materialDesign:HintAssist.IsFloating="True"
+                              Width="110"
+                         Text="{Binding qualification.MS_Degree,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                            <DatePicker  
+                        Width="100" 
+                        Margin="20,10, 0 ,0" 
+                        materialDesign:HintAssist.Hint=" Date"
+                        materialDesign:HintAssist.IsFloating="True" Height="29" 
+                         
+                             />
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a222,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a222"
+               materialDesign:HintAssist.Hint="Institute Name"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="150"
+                        Text="{Binding qualification.MS_Institute_Name,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+
+
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" 
+                            Grid.Column="2"
+                          Orientation="Horizontal" 
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a221,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a221"
+               materialDesign:HintAssist.Hint="Roll"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="64"
+                         Text="{Binding qualification.MS_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="28,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a19,
+                                                      Path=BorderBrush}"/>
+
+                            <TextBox x:Name="a199"
+               materialDesign:HintAssist.Hint="Obtained"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="110"
+                         Text="{Binding qualification.MSC_Obt_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="25,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a188,
+                                                      Path=BorderBrush}"/>
+
+                            <TextBox x:Name="a90"
+               materialDesign:HintAssist.Hint="Total"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="116"
+                         Text="{Binding qualification.MSC_Max_CGPA,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                        </StackPanel>
+
+                        <materialDesign:Card 
+                    Grid.Row="2" Height="35" 
+                        Background="#FFFF5722" 
+                        Foreground="#FFFDF3F3"
+                        FontFamily="Segoe WP Semibold"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                        VerticalAlignment="Center"
+                       
+                    Grid.Column="0" Margin="25,5,51,5"
+                    >
+                            <TextBlock x:Name="l9"
+                                   FontFamily="Segoe WP Semibold"
+                                   FontSize="14"
+                       Margin="5,0,0,0"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="Bold"  Width="136"
+                                   >Programs Available:</TextBlock>
+
+
+
+                        </materialDesign:Card>
+
+                        <StackPanel Grid.Row="4" 
+                            Grid.Column="0"
+                          Orientation="Horizontal" 
+                            Margin="25,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a34,
+                                                      Path=BorderBrush}"/>
+                            <ComboBox x:Name="a34"
+                MinWidth="72"
+                          Margin="16 0 0 0"
+                          materialDesign:HintAssist.Hint="Programs Available"
+                              materialDesign:HintAssist.IsFloating="True"
+                              Width="150"
+                      ItemsSource="{Binding courses}"
+                      SelectedItem="{Binding selectedcourse}"
+                          >
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock 
+                            Text="{Binding  Course_Name}" ></TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                        </StackPanel>
+                        <StackPanel Grid.Row="4"
+                    Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a333,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a333"
+               materialDesign:HintAssist.Hint="Institute Name"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="180"
+                         />
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" 
+                            Grid.Column="2"
+                          Orientation="Horizontal" 
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="10,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a32,
+                                                      Path=BorderBrush}"/>
+                            <TextBox x:Name="a32"
+               materialDesign:HintAssist.Hint=" GAT Roll"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="64" 
+                         Text="{Binding qualification.GAT_Roll_No,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="28,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a35,
+                                                      Path=BorderBrush}"/>
+
+                            <TextBox x:Name="a35"
+               materialDesign:HintAssist.Hint="Obtained"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="110"
+                         Text="{Binding qualification.GAT_Obt_Marks,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                            <materialDesign:PackIcon Kind="Account" 
+                                         Height="15" 
+                                         Margin="25,17,0,0"
+                                         Width="15"  
+                                          Foreground="{Binding ElementName=a30,
+                                                      Path=BorderBrush}"/>
+
+                            <TextBox x:Name="a30"
+               materialDesign:HintAssist.Hint="Total"
+                             materialDesign:HintAssist.IsFloating="True"
+                         Margin="10,0,0,0"
+                             Width="116"
+                         Text="{Binding qualification.GAT_Max_Marks,
+                                                ValidatesOnDataErrors=True,
+                                                UpdateSourceTrigger=PropertyChanged}"/>
+
+                        </StackPanel>
+
+                    </Grid>
 
                 </Grid>
-
+                
+                    <Button Width="92"
+                            Height="31"
+                            Margin="0,10,0,0"
+                            Content="Submit" 
+                            Command="{Binding SubmitCommand}"/>
+                
             </StackPanel>
 
         </ScrollViewer>

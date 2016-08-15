@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdmissionAndResult.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,13 @@ namespace AdmissionAndResult.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            DetailForm dfor = new DetailForm();
             
+           var win= App.Current;
+
+           MainWindow mw =(MainWindow) App.Current.MainWindow;
+           mw.mainStack.NavigationService.Navigate(dfor);
+           dfor.DataContext = new DetailFormViewModel(grid.SelectedItem);
         }
     }
 }

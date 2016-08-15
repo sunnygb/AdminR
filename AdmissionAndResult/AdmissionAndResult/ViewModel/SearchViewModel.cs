@@ -14,22 +14,25 @@ namespace AdmissionAndResult.ViewModel
 {
     class SearchViewModel : ViewModelBase
     {
-        private Student _student;
-        private Selected_Student _selectedStudent;
+       
+        
         private long _VerifiedMatric;
         private  long _VerifiedFsc;
         private long _VerifiedNts;
         private long _verifiedGat;
-        private ObservableCollection<Selected_Student> selectedstudents;
+        private ObservableCollection<Verifying_Agent> _agents;
         private ObservableCollection<Student> _students;
-        SQLiteConnection conn;
+        private Student _selectedStudent;
+        private Verifying_Agent _selectedAgent;
 
          public SearchViewModel()
         {
             searchFunction();
             SearchCommand = new RelayCommand(searchFunction);
-            Student student = new Student();
-             Selected_Student selectedStudent=new Selected_Student();
+         
+           _selectedStudent = new Student();
+             _selectedAgent = new Verifying_Agent();
+
           
             
            
@@ -39,21 +42,21 @@ namespace AdmissionAndResult.ViewModel
         public Student student
         {
 
-            get { return _student; }
-
-            set
-            {
-                Set(() => student, ref _student, value);
-            }
-        }
-        public Selected_Student selectedstudent
-        {
-
             get { return _selectedStudent; }
 
             set
             {
-                Set(() => selectedstudent, ref _selectedStudent, value);
+                Set(() => student, ref _selectedStudent, value);
+            }
+        }
+        public Verifying_Agent selectedagent
+        {
+
+            get { return _selectedAgent; }
+
+            set
+            {
+                Set(() => selectedagent, ref _selectedAgent, value);
             }
         }
 
@@ -73,6 +76,7 @@ namespace AdmissionAndResult.ViewModel
 
         public void searchFunction()
         {
+            
             this.students = new ObservableCollection<Student>(Sqlite.getConnection().GetAll<Student>());
         }
 

@@ -63,7 +63,7 @@
                       Width="150"
                       MinWidth="72"
                      ItemsSource="{Binding courses}"
-                                            SelectedItem="{Binding selectedcourse}"
+                                            SelectedItem="{Binding selectedcourse.Course_Name}"
 
                       Margin="16 0 0 0"
                       materialDesign:HintAssist.Hint="Programs Available"

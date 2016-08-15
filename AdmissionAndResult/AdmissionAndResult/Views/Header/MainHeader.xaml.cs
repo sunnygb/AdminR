@@ -24,15 +24,15 @@ namespace AdmissionAndResult.Views.Header
     {
         public MainHeader()
         {
-            Admin ad1= new Admin();
+           wAdmin ad1= new wAdmin();
            ad1.Admin_Id=1;
             ad1.Admin_Name="Sunny";
             ad1.Password="123";
-             Admin ad2= new Admin();
+             wAdmin ad2= new wAdmin();
            ad2.Admin_Id=2;
             ad2.Admin_Name="Ali";
             ad2.Password="123";
-           ObservableCollection<Admin> admins= new ObservableCollection<Admin>()
+           ObservableCollection<wAdmin> admins= new ObservableCollection<wAdmin>()
                {ad1,ad2
                    
                };

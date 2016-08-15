@@ -124,15 +124,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\wAdmin.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\Department.cs" />
     <Compile Include="Model\Qualification.cs" />
     <Compile Include="Model\Selected_Student.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Model\Verifying_Agent.cs" />
+    <Compile Include="Model\Admin.cs" />
     <Compile Include="ViewModel\AgentFormViewModel.cs" />
     <Compile Include="ViewModel\AdmitFormViewModel.cs" />
+    <Compile Include="ViewModel\DetailFormViewModel.cs" />
+    <Compile Include="ViewModel\MainwindowViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\Sqlite.cs" />
     <Compile Include="Views\AdmitForm.xaml.cs">
