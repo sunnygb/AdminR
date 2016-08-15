@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:AdmissionAndResult.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SearchViewModel,
-                                              IsDesignTimeCreatable=True}"
+           
              d:DesignWidth="1014"
              Background="White"
              mc:Ignorable="d">
@@ -67,6 +66,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
                 <DataGrid CanUserAddRows="False"
+                          x:Name="grid"
                           CanUserSortColumns="True"
                           Margin="20,0,0,0"
                           ItemsSource="{Binding students}" />
@@ -79,10 +79,10 @@
                         Margin="25"
                         Orientation="Vertical">
                 <TreeView Height="145">
-                    <TreeViewItem Background="Black"
+                    <TreeViewItem  Background="Black"
                                   Header=" Person"
                                   IsExpanded="True">
-                        <TreeViewItem>
+                        <TreeViewItem x:Name="tree">
                             <TreeViewItem.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Width="15"

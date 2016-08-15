@@ -30,7 +30,7 @@ namespace Model
         public string Send_Date { get; set; }
         public string Recive_Date { get; set; }
         public long Student_Id { get; set; }
-        public virtual Admin Admin { get; set; }
+        public virtual wAdmin Admin { get; set; }
         public virtual Student Student { get; set; }
 
         public string Error

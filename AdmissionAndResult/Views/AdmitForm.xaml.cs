@@ -31,15 +31,23 @@ namespace AdmissionAndResult.Views
 
         public AdmitForm()
         {
-            viewModel= new AdmitFormViewModel();
+            if(viewModel==null)
+            {
+                this.viewModel = new AdmitFormViewModel();
+            }
+            batForm = new BatchlorForm();
+            msForm = new MSForm();
+            phdForm = new PHDForm();
+
             this.DataContext = viewModel;
             ObservableCollection<string> ob = new ObservableCollection<string>();
             ob.Add("Batchlor");
             ob.Add("Master");
             ob.Add("PHD");
+            //admitList.ItemsSource = ob.ToList<string>();
 
             InitializeComponent();
-            admitList.ItemsSource = ob.ToList<string>();
+            
             
             
 
@@ -64,38 +72,55 @@ namespace AdmissionAndResult.Views
 
         }
 
-        private void admitList_MouseLeave(object sender, MouseEventArgs e)
+        //private void admitList_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //    if (admitList.SelectedIndex == 0)
+        //    {
+                
+        //        frame.NavigationService.Navigate(batForm);
+
+
+        //        scrol.ScrollToEnd();
+        //    }
+        //   else if (admitList.SelectedIndex == 1)
+        //    {
+                
+              
+                
+        //        msForm.DataContext = viewModel;
+        //        frame.NavigationService.Navigate(msForm);
+
+
+        //        scrol.ScrollToEnd();
+
+        //    }
+        //   else
+        //    {
+            
+                
+               
+        //        phdForm.DataContext = viewModel;
+        //        frame.NavigationService.Navigate(phdForm);
+
+
+        //        scrol.ScrollToEnd();
+
+        //    }
+
+        //}
+
+
+        private bool IsValid(DependencyObject obj)
         {
-            if (admitList.SelectedIndex == 0)
-            {
-                batForm = new BatchlorForm();
-                frame.NavigationService.Navigate(batForm);
-                batForm.DataContext = viewModel;
-                scrol.ScrollToEnd();
-            }
-            if (admitList.SelectedIndex == 1)
-            {
-                msForm = new MSForm();
-                frame.NavigationService.Navigate(msForm);
-                msForm.DataContext = viewModel;
-                scrol.ScrollToEnd();
-
-            }
-            if (admitList.SelectedIndex == 2)
-            {
-                phdForm = new PHDForm();
-                frame.NavigationService.Navigate(phdForm);
-                phdForm.DataContext = viewModel;
-                scrol.ScrollToEnd();
-
-            }
-
+            // The dependency object is valid if it has no errors and all
+            // of its children (that are dependency objects) are error-free.
+            return !Validation.GetHasError(obj) &&
+            LogicalTreeHelper.GetChildren(obj)
+            .OfType<DependencyObject>()
+            .All(IsValid);
         }
 
-        private void txtFullName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+   
     }
 
 }

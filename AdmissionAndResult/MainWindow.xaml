@@ -45,6 +45,7 @@
                    Foreground="#FF9C9999" />
             <Button x:Name="Add_Student"
                     Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                    Command="{ Binding registerCommand}"
                     Height="57"
                     Background="White"
                     BorderBrush="White"
