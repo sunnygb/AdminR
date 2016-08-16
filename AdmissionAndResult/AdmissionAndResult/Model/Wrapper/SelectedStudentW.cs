@@ -9,15 +9,31 @@
 
 using System.ComponentModel;
 
-namespace Model
+namespace AdmissionAndResult.Model.Wrapper
 {
     using System;
     using System.Collections.Generic;
     using Dapper;
     using Dapper.Contrib.Extensions;
+    using AdmissionAndResult.Model;
     [Table("Selected_Student")]
-    public partial class Selected_Student
+  class SelectedStudentW : IDataErrorInfo
     {
+        public SelectedStudentW (SelectedStudent selectedStudent)
+         {
+             this.Selected_Student_Id = selectedStudent.Selected_Student_Id;
+             this.Student_Registeration_Number = selectedStudent.Student_Registeration_Number;
+             this.Aggregate = selectedStudent.Aggregate;
+             this.Cource_Id = selectedStudent.Cource_Id;
+             this.CGPA_Text = selectedStudent.CGPA_Text;
+             this.SGPA = selectedStudent.SGPA;
+             this.Department_ID = selectedStudent.Department_ID;
+         }
+        public SelectedStudentW()
+        {
+
+        }
+
         [Key]
         public long Selected_Student_Id { get; set; }
         [Key]

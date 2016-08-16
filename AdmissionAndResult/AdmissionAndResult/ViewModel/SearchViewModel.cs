@@ -5,10 +5,13 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Model;
+
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Dapper.Contrib.Extensions;
+using AdmissionAndResult.Model;
+using AdmissionAndResult.Services;
+using AdmissionAndResult.Model.Wrapper;
 
 namespace AdmissionAndResult.ViewModel
 {
@@ -20,10 +23,10 @@ namespace AdmissionAndResult.ViewModel
         private  long _VerifiedFsc;
         private long _VerifiedNts;
         private long _verifiedGat;
-        private ObservableCollection<Verifying_Agent> _agents;
-        private ObservableCollection<Student> _students;
+        private ObservableCollection<VerifyingAgentW> _agents = new ObservableCollection<VerifyingAgentW>();
+        private ObservableCollection<StudentW> _students = new ObservableCollection<StudentW>();
         private Student _selectedStudent;
-        private Verifying_Agent _selectedAgent;
+        private VerifyingAgentW _selectedAgent;
 
          public SearchViewModel()
         {
@@ -31,7 +34,7 @@ namespace AdmissionAndResult.ViewModel
             SearchCommand = new RelayCommand(searchFunction);
          
            _selectedStudent = new Student();
-             _selectedAgent = new Verifying_Agent();
+             _selectedAgent = new VerifyingAgentW();
 
           
             
@@ -49,7 +52,7 @@ namespace AdmissionAndResult.ViewModel
                 Set(() => student, ref _selectedStudent, value);
             }
         }
-        public Verifying_Agent selectedagent
+        public VerifyingAgentW selectedagent
         {
 
             get { return _selectedAgent; }
@@ -60,7 +63,7 @@ namespace AdmissionAndResult.ViewModel
             }
         }
 
-        public ObservableCollection<Student> students
+        public ObservableCollection<StudentW> students
         {
             get { return _students; }
 
@@ -77,7 +80,11 @@ namespace AdmissionAndResult.ViewModel
         public void searchFunction()
         {
             
-            this.students = new ObservableCollection<Student>(Sqlite.getConnection().GetAll<Student>());
+            var students = Sqlite.GetConnection().GetAll<Student>();
+            foreach( var student in students)
+            {
+                _students.Add(new StudentW(student));
+            }
         }
 
     }

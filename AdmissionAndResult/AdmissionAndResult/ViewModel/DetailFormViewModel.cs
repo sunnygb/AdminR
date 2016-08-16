@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using Model;
+
+using AdmissionAndResult.Model;
 
 namespace AdmissionAndResult.ViewModel
 {
     class DetailFormViewModel : ViewModelBase
     {
         private Student _student;
-        SQLiteConnection conn;
+       
 
         public Student student
         {
@@ -27,7 +28,7 @@ namespace AdmissionAndResult.ViewModel
 
         public DetailFormViewModel(Object student)
         {
-            conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
+            
             _student = new Student();
         }
 

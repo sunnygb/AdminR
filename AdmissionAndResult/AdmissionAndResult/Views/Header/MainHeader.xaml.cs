@@ -1,4 +1,4 @@
-﻿using Model;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,20 +24,9 @@ namespace AdmissionAndResult.Views.Header
     {
         public MainHeader()
         {
-           wAdmin ad1= new wAdmin();
-           ad1.Admin_Id=1;
-            ad1.Admin_Name="Sunny";
-            ad1.Password="123";
-             wAdmin ad2= new wAdmin();
-           ad2.Admin_Id=2;
-            ad2.Admin_Name="Ali";
-            ad2.Password="123";
-           ObservableCollection<wAdmin> admins= new ObservableCollection<wAdmin>()
-               {ad1,ad2
-                   
-               };
+           
             InitializeComponent();
-            this.adminList.ItemsSource=admins;
+           
            
             
         }

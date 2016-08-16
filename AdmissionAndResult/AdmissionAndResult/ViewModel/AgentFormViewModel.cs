@@ -8,34 +8,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
-using Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using AdmissionAndResult.Views.Header;
 using Dapper.Contrib.Extensions;
-
+using AdmissionAndResult.Model.Wrapper;
+using AdmissionAndResult.Services;
+using AdmissionAndResult.Model;
 
 namespace AdmissionAndResult.ViewModel
 {
     class AgentFormViewModel :ViewModelBase
     {
-        private Verifying_Agent _verifyingAgent;
-        private Student _student;
-        private Qualification _qualification;
-        private ObservableCollection<Student> students;
-        private ObservableCollection<Qualification> qualifications;
-        private ObservableCollection<Verifying_Agent> verifyingAgents;
-        SQLiteConnection conn;
+        private VerifyingAgentW _verifyingAgent;
+        private StudentW _student;
+        private QualificationW _qualification;
+        private ObservableCollection<StudentW> _students = new ObservableCollection<StudentW>();
+        private ObservableCollection<QualificationW> _qualifications = new ObservableCollection<QualificationW>();
+        private ObservableCollection<VerifyingAgentW> _verifyingAgents = new ObservableCollection<VerifyingAgentW>();
+    
 
 
 
          public AgentFormViewModel()
         {
-            conn= new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
+           
             SendCommand = new RelayCommand(sendFunction);
-            _student = new Student();
-             _verifyingAgent = new Verifying_Agent();
-             Qualification qualification = new Qualification();
+            _student = new StudentW();
+             _verifyingAgent = new VerifyingAgentW();
+             QualificationW qualification = new QualificationW();
            
 
             
@@ -51,7 +52,7 @@ namespace AdmissionAndResult.ViewModel
 
 
 
-        public Student student
+        public StudentW student
         {
 
             get { return _student; }
@@ -61,7 +62,7 @@ namespace AdmissionAndResult.ViewModel
                 Set(() => student, ref _student, value);
             }
         }
-        public Qualification qualification
+        public QualificationW qualification
         {
 
             get { return _qualification; }
@@ -72,7 +73,7 @@ namespace AdmissionAndResult.ViewModel
                 
             }
         }
-        public Verifying_Agent verifying_agent
+        public VerifyingAgentW verifying_agent
         {
 
             get { return _verifyingAgent; }
@@ -98,18 +99,30 @@ namespace AdmissionAndResult.ViewModel
 
         public void getStudentList()
         {
-            students = new ObservableCollection<Student>(conn.GetAll<Student>());
+           var students =Sqlite.GetConnection().GetAll<Student>();
+            foreach( var student in students)
+            {
+                _students.Add(new StudentW(student));
+            }
             
 
         }
         public void getQualificationList()
         {
-            qualifications = new ObservableCollection<Qualification>(conn.GetAll<Qualification>());
+            var qualifications = Sqlite.GetConnection().GetAll<Qualification>();
+            foreach(var qualification in qualifications)
+            {
+                _qualifications.Add(new QualificationW(qualification));
+            }
 
         }
         public void getVerifyingagentList()
         {
-            verifyingAgents = new ObservableCollection<Verifying_Agent>(conn.GetAll<Verifying_Agent>());
+            var agents = Sqlite.GetConnection().GetAll<VerifyingAgent>();
+            foreach(var agent in agents)
+            {
+                _verifyingAgents.Add(new VerifyingAgentW(agent));
+            }
 
         }
     }

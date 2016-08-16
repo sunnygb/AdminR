@@ -8,43 +8,55 @@
 //------------------------------------------------------------------------------
 
 using System.ComponentModel;
+using System;
+using System.Collections.Generic;
+using Dapper;
+using Dapper.Contrib.Extensions;
+using AdmissionAndResult.Model;
 
-namespace Model
+namespace AdmissionAndResult.Model.Wrapper
 {
-    using System;
-    using System.Collections.Generic;
-    using Dapper;
-    using Dapper.Contrib.Extensions;
-    [Table("Admin")]
-    public partial class wAdmin:IDataErrorInfo
+   
+ 
+    class CourseW : IDataErrorInfo
     {
-       
-        [Key]
-        public long Admin_Id { get; set; }
-        public string Admin_Name { get; set; }
-        public string Password { get; set; }
-        public DateTime Hire_Date { get; set; }
-        public DateTime Change_Date { get; set; }
+
+        public long Course_Id { get; set; }
+        public string Course_Name { get; set; }
+        public long Student_Id { get; set; }
+        public CourseW (Course course)
+        {
+            this.Course_Id=course.Course_Id  ;
+            this.Course_Name = course.Course_Name;
+            this.Student_Id=course.Student_Id  ;
+            
+        }
+         public CourseW()
+         {
+             
+         }
+   
+
 
         public string Error
         {
-            get { throw new NotImplementedException(); }
+            get { return string.Empty; }
         }
+
         public string this[string columnName]
         {
             get
             {
                 switch (columnName)
                 {
-                    case "Admin_Name":
-                        if (string.IsNullOrEmpty(Admin_Name))
+                    case "Course_Name":
+                        if (string.IsNullOrEmpty(Course_Id.ToString()))
                             return "Admin Name is required";
                         break;
-                    case "Password":
-                        if (string.IsNullOrEmpty(Password))
+                    case "Student_Id":
+                        if (string.IsNullOrEmpty(Course_Name))
                             return "Password is Required";
                         break;
-                      
                 }
                 return "";
             }

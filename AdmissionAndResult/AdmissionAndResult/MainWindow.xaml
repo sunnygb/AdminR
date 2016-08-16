@@ -1,32 +1,45 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window x:Class="AdmissionAndResult.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ViewModel="clr-namespace:AdmissionAndResult.ViewModel"
+        xmlns:Views="clr-namespace:AdmissionAndResult.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:AdmissionAndResult"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"    
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        Background="{DynamicResource MaterialDesignPaper}"
-   
-
-
-    x:Class="AdmissionAndResult.MainWindow"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="MainWindow"
         Width="1180.737"
         Height="670.052"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        mc:Ignorable="d"
-        
-        
-        >
-    <DockPanel Background="#FF055061"
-               LastChildFill="False">
+        TextElement.FontSize="13"
+        TextElement.FontWeight="Regular"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        mc:Ignorable="d">
+    <Window.DataContext>
+        <local:MainwindowViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type ViewModel:AdmitFormViewModel}">
+            <Views:AdmitForm />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:SearchViewModel}">
+            <Views:SearchForm />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:AgentFormViewModel}">
+            <Views:AgentsForm />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:MeriListViewModel}">
+            <Views:MeritForm />
+        </DataTemplate>
+    </Window.Resources>
+    <DockPanel Background="#FF055061" LastChildFill="False">
+        <ContentControl Content="{Binding CurrentViewModel}" />
         <StackPanel Width="156"
                     Height="538"
                     Margin="0,101,0,0"
@@ -36,23 +49,22 @@
             <Label x:Name="label"
                    Height="24"
                    Margin="0,6,0,0"
-                   Background="White"
                    materialDesign:ShadowAssist.ShadowDepth="Depth4"
+                   Background="White"
                    Content="Navigation"
                    FontFamily="Segoe UI Semibold"
                    FontSize="9"
                    FontWeight="Bold"
                    Foreground="#FF9C9999" />
             <Button x:Name="Add_Student"
-                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                    Command="{ Binding registerCommand}"
                     Height="57"
+                    Margin="4"
                     Background="White"
                     BorderBrush="White"
-                    Margin="4"
-                    Click="Add_Student_Click">
-                <StackPanel Width="146"
-                            Orientation="Horizontal">
+                    Click="Add_Student_Click"
+                    Command="{Binding registerCommand}"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                <StackPanel Width="146" Orientation="Horizontal">
                     <Image x:Name="image1"
                            Width="36"
                            Margin="0,0,17,0"
@@ -68,13 +80,12 @@
             </Button>
             <Button x:Name="btnsearch"
                     Height="57"
+                    Margin="4"
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
-                    Margin="4"
                     Click="btnsearch_Click">
-                <StackPanel Width="146"
-                            Orientation="Horizontal">
+                <StackPanel Width="146" Orientation="Horizontal">
                     <Image x:Name="image2"
                            Width="36"
                            Height="32"
@@ -91,10 +102,10 @@
             </Button>
             <Button x:Name="Agents"
                     Height="57"
+                    Margin="4"
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
-                    Margin="4"
                     Click="Agents_Click">
 
                 <StackPanel Width="147"
@@ -150,36 +161,29 @@
                     Orientation="Horizontal">
             <StackPanel Background="White">
                 <Image x:Name="image"
-                   Width="155"
+                       Width="155"
                        Height="100"
-                   Margin="0,0,0,0"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   
-                   
-                  
-                   Source="Images/pic - Copy.png">
+                       Margin="0,0,0,0"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Source="Images/pic - Copy.png">
                     <Image.ContextMenu>
                         <ContextMenu />
                     </Image.ContextMenu>
                 </Image>
             </StackPanel>
-            
-            <Frame Width="1007"
-                   x:Name="headerFrame"
-                   Background="{DynamicResource MaterialDesignPaper}"
-                    >
-                
 
-            </Frame>
+            <Frame x:Name="headerFrame"
+                   Width="1007"
+                   Background="{DynamicResource MaterialDesignPaper}" />
 
 
 
         </StackPanel>
         <Frame x:Name="mainStack"
-               NavigationUIVisibility="Hidden"
-                    Width="1019"
-                    Height="540"
-                    DockPanel.Dock="Right" />
+               Width="1019"
+               Height="540"
+               DockPanel.Dock="Right"
+               NavigationUIVisibility="Hidden" />
     </DockPanel>
 </Window>

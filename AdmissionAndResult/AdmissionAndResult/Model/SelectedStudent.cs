@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
-using Model;
+using AdmissionAndResult.Model.Wrapper;
 
 namespace AdmissionAndResult.Model
 {
      [Table("Selected_Student")]
-    class WSelected_Student
+    class SelectedStudent
     {
-         public WSelected_Student(Selected_Student selectedStudent)
+         public SelectedStudent(SelectedStudentW selectedStudent)
          {
              this.Selected_Student_Id = selectedStudent.Selected_Student_Id;
              this.Student_Registeration_Number = selectedStudent.Student_Registeration_Number;
@@ -21,7 +21,7 @@ namespace AdmissionAndResult.Model
              this.SGPA = selectedStudent.SGPA;
              this.Department_ID = selectedStudent.Department_ID;
          }
-
+         public SelectedStudent() { }
 
 
 

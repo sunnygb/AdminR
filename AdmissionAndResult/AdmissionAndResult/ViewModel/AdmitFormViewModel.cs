@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Dapper;
-using Model;
+
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using AdmissionAndResult.Views.Header;
@@ -18,46 +18,41 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Data.Linq;
 using AdmissionAndResult.Model;
+using AdmissionAndResult.Services;
+
+using AdmissionAndResult.Model.Wrapper;
 
 namespace AdmissionAndResult.ViewModel
 {
-    class AdmitFormViewModel : ViewModelBase
+
+    class AdmitFormViewModel : ValidateViewModelCommon
     {
         // PrivateFeilds
-        private Student _student;
-        private Course _course;
-        private Qualification _qualification;
+        private StudentW _student;
+        private QualificationW _qualification;
+        private ObservableCollection<CourseW> _courses = new ObservableCollection<CourseW>();
+        private CourseW _selectedcourse;
 
-        private ObservableCollection<Course> _courses;
-        private Course _selectedcourse = new Course();
-        SQLiteConnection conn;
-        Course wrpaSelecetedCource;
-        Qualification wrapQualification;
 
 
         //Constructor
-         public AdmitFormViewModel()
+        public AdmitFormViewModel()
         {
-            conn= new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
-            
-             getCourseList();
-            SubmitCommand = new RelayCommand(saveFunction);
-            _student = new Student();
-           
-            _course = new Course();
-          
-            _qualification = new Qualification();
 
-            _course.Course_Name = "CS";
-            
-           
-            
+
+            getCourseList();
+            SubmitCommand = new RelayCommand(saveFunction);
+            _student = new StudentW();
+            _selectedcourse = new CourseW();
+            _qualification = new QualificationW();
+
+
         }
 
 
 
         //Getter and Setters
-        public Student student
+        public StudentW student
         {
 
             get { return _student; }
@@ -65,20 +60,11 @@ namespace AdmissionAndResult.ViewModel
             set
             {
                 Set(() => student, ref _student, value);
-                
+
             }
         }
-        public Course cource
-        {
 
-            get { return _course; }
-
-            set
-            {
-                Set(() => cource, ref _course, value);
-            }
-        }
-        public Qualification qualification
+        public QualificationW qualification
         {
 
             get { return _qualification; }
@@ -86,12 +72,11 @@ namespace AdmissionAndResult.ViewModel
             set
             {
                 Set(() => qualification, ref _qualification, value);
-                this.wrapQualification = this._qualification;
-               
+
             }
         }
 
-        public Course selectedcourse
+        public CourseW selectedcourse
         {
 
             get { return _selectedcourse; }
@@ -102,7 +87,7 @@ namespace AdmissionAndResult.ViewModel
             }
         }
 
-        public ObservableCollection<Course> courses
+        public ObservableCollection<CourseW> courses
         {
 
             get { return _courses; }
@@ -110,62 +95,26 @@ namespace AdmissionAndResult.ViewModel
             set
             {
                 Set(() => courses, ref _courses, value);
-                this.wrpaSelecetedCource = this._selectedcourse;
             }
         }
-           
-        public RelayCommand SubmitCommand{ get; private set; }
+
+        public RelayCommand SubmitCommand { get; private set; }
 
 
         //Functions
         public void getCourseList()
         {
-            _courses = new ObservableCollection<Course>(conn.GetAll<Course>());
+           var courses = Sqlite.GetConnection().GetAll<Course>();
 
+            foreach(var course in courses)
+            {
+                _courses.Add(new CourseW(course));
+            }
         }
         public void saveFunction()
         {
 
 
-            Course cource = new Course()
-            {
-                Course_Name = "Abdullah",
-                Course_Id = 1
-            };
-
-            WCourse wcource = new WCourse(cource);
-         
-            conn.Insert<WCourse>(wcource);
-
-
-            conn.Insert<Student>(_student);
-            WQualification wQualification = new WQualification(_qualification);
-            wQualification.Qualification_Id = _student.Student_Id;
-           conn.Insert<WQualification>(wQualification);
-            
-
         }
-
-        private void CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = IsValid(sender as DependencyObject);
-        }
-
-        private bool IsValid(DependencyObject obj)
-        {
-            // The dependency object is valid if it has no errors and all
-            // of its children (that are dependency objects) are error-free.
-            return !Validation.GetHasError(obj) &&
-            LogicalTreeHelper.GetChildren(obj)
-            .OfType<DependencyObject>()
-            .All(IsValid);
-        }
-
     }
-
-
-
-
-
-    
 }
