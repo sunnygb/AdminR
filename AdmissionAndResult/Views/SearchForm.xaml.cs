@@ -33,7 +33,7 @@ namespace AdmissionAndResult.Views
            var win= App.Current;
 
            MainWindow mw =(MainWindow) App.Current.MainWindow;
-           mw.mainStack.NavigationService.Navigate(dfor);
+           //mw.mainStack.NavigationService.Navigate(dfor);
            dfor.DataContext = new DetailFormViewModel(grid.SelectedItem);
         }
     }
