@@ -10,6 +10,8 @@
         Title="MainWindow"
         Width="1180.737"
         Height="670.052"
+        d:DataContext="{d:DesignInstance Type=local:MainwindowViewModel,
+                                         IsDesignTimeCreatable=True}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="NoResize"
@@ -39,7 +41,7 @@
         </DataTemplate>
     </Window.Resources>
     <DockPanel Background="#FF055061" LastChildFill="False">
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <ContentControl />
         <StackPanel Width="156"
                     Height="538"
                     Margin="0,101,0,0"
@@ -61,8 +63,8 @@
                     Margin="4"
                     Background="White"
                     BorderBrush="White"
-                    Click="Add_Student_Click"
-                    Command="{Binding registerCommand}"
+                    Command="{Binding navigationCommand}"
+                    CommandParameter="admission"
                     Style="{StaticResource MaterialDesignRaisedDarkButton}">
                 <StackPanel Width="146" Orientation="Horizontal">
                     <Image x:Name="image1"
@@ -84,7 +86,8 @@
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
-                    Click="btnsearch_Click">
+                    Command="{Binding navigationCommand}"
+                    CommandParameter="search">
                 <StackPanel Width="146" Orientation="Horizontal">
                     <Image x:Name="image2"
                            Width="36"
@@ -106,7 +109,8 @@
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
-                    Click="Agents_Click">
+                    Command="{Binding navigationCommand}"
+                    CommandParameter="agent">
 
                 <StackPanel Width="147"
                             Height="57"
@@ -131,7 +135,8 @@
                     Background="White"
                     BorderBrush="White"
                     BorderThickness="1"
-                    Click="btnMerit_Click">
+                    Command="{Binding navigationCommand}"
+                    CommandParameter="merit">
 
                 <StackPanel Width="151"
                             Height="57"
@@ -180,10 +185,13 @@
 
 
         </StackPanel>
-        <Frame x:Name="mainStack"
-               Width="1019"
-               Height="540"
-               DockPanel.Dock="Right"
-               NavigationUIVisibility="Hidden" />
+        <StackPanel Width="1045"
+                    Height="537"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </StackPanel>
     </DockPanel>
 </Window>
