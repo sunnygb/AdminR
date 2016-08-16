@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F55957F7-578C-45FA-97BA-FD94E6EF4C46}</ProjectGuid>
+    <Prefer32Bit>false</Prefer32Bit>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AdmissionAndResult</RootNamespace>
@@ -45,6 +46,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -124,23 +126,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Wrapper\wAdmin.cs" />
-    <Compile Include="Model\Course.cs" />
-    <Compile Include="Model\Department.cs" />
-    <Compile Include="Model\Qualification.cs" />
-    <Compile Include="Model\Selected_Student.cs" />
-    <Compile Include="Model\Student.cs" />
-    <Compile Include="Model\Verifying_Agent.cs" />
     <Compile Include="Model\Admin.cs" />
-    <Compile Include="Model\Wrapper\WCourse.cs" />
-    <Compile Include="Model\Wrapper\WQualification.cs" />
-    <Compile Include="Model\Wrapper\WStudent.cs" />
+    <Compile Include="Model\Wrapper\CourseW.cs" />
+    <Compile Include="Model\Wrapper\DepartmentW.cs" />
+    <Compile Include="Model\Wrapper\QualificationW.cs" />
+    <Compile Include="Model\Wrapper\SelectedStudentW.cs" />
+    <Compile Include="Model\Wrapper\StudentW.cs" />
+    <Compile Include="Model\Wrapper\VerifyingAgentW.cs" />
+    <Compile Include="Model\Wrapper\AdminW.cs" />
+    <Compile Include="Model\Course.cs" />
+    <Compile Include="Model\Qualification.cs" />
+    <Compile Include="Model\Student.cs" />
+    <Compile Include="Services\ValidateModelCommon.cs" />
+    <Compile Include="Services\ValidateViewModelCommon.cs" />
     <Compile Include="ViewModel\AgentFormViewModel.cs" />
     <Compile Include="ViewModel\AdmitFormViewModel.cs" />
     <Compile Include="ViewModel\DetailFormViewModel.cs" />
-    <Compile Include="ViewModel\MainwindowViewModel.cs" />
+    <Compile Include="MainwindowViewModel.cs" />
+    <Compile Include="ViewModel\MeriListViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
-    <Compile Include="ViewModel\Sqlite.cs" />
+    <Compile Include="Services\Sqlite.cs" />
     <Compile Include="Views\AdmitForm.xaml.cs">
       <DependentUpon>AdmitForm.xaml</DependentUpon>
     </Compile>
@@ -171,9 +176,9 @@
     <Compile Include="Views\SearchForm.xaml.cs">
       <DependentUpon>SearchForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Wrapper\WDepartment.cs" />
-    <Compile Include="Model\Wrapper\WSelected_Student.cs" />
-    <Compile Include="Model\Wrapper\WVerifying_Agent.cs" />
+    <Compile Include="Model\Department.cs" />
+    <Compile Include="Model\SelectedStudent.cs" />
+    <Compile Include="Model\VerifyingAgent.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -13,10 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Model;
+
 using AdmissionAndResult.Views.Degrees;
 using System.Collections.ObjectModel;
 using AdmissionAndResult.ViewModel;
+using AdmissionAndResult.Model;
 
 namespace AdmissionAndResult.Views
 {
@@ -27,6 +28,7 @@ namespace AdmissionAndResult.Views
         private MSForm msForm;
         private BatchlorForm batForm;
         private AdmitFormViewModel viewModel;
+        private Student student;
 
 
         public AdmitForm()
@@ -119,6 +121,17 @@ namespace AdmissionAndResult.Views
             .OfType<DependencyObject>()
             .All(IsValid);
         }
+
+
+        //private void SaveCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        //{
+        //    e.CanExecute = ValidationEngine.Validate(student);
+        //}
+
+        //private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        //{
+        //    CurrentCustomer.Save();
+        //}
 
    
     }

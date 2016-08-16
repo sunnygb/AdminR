@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using AdmissionAndResult.Views;
 using System.Data.SQLite;
 using Dapper;
-using Model;
 using AdmissionAndResult.Views.Header;
 using AdmissionAndResult.ViewModel;
 
@@ -35,9 +34,9 @@ namespace AdmissionAndResult
         
         public MainWindow()
         {
-             conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
-            
+
             InitializeComponent();
+            
             admitForm = new AdmitForm();
             searchForm = new SearchForm();
             meritForm = new MeritForm();

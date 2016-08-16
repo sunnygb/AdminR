@@ -9,7 +9,7 @@
              d:DesignWidth="1014"
              Background="White"
              mc:Ignorable="d"
-             d:DataContext= "{d:DesignInstance Type=ViewModel:AdmitFormViewModel,IsDesignTimeCreatable=True}">
+             >
 
 
 
@@ -167,16 +167,16 @@
                         <materialDesign:PackIcon Width="15"
                                                  Height="15"
                                                  Margin="10,17,0,0"
-                                                 Foreground="{Binding ElementName=txtFullName,
+                                                 Foreground="{Binding ElementName=txt,
                                                                       Path=BorderBrush}"
                                                  Kind="Account" />
-                        <TextBox 
+                        <TextBox x:Name="txt"
                                  Width="160"
                                  Margin="10,0,0,0"
                                  materialDesign:HintAssist.Hint="Full Name"
                                  materialDesign:HintAssist.IsFloating="True"
                                  Text="{Binding student.Student_Name,
-                                                ValidatesOnDataErrors=True,
+                                                ValidatesOnNotifyDataErrors=True,
                                                 UpdateSourceTrigger=PropertyChanged}"  />
                     </StackPanel>
                     <StackPanel Grid.Row="0"

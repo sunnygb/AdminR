@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
-using Model;
+using AdmissionAndResult.Model.Wrapper;
 
 namespace AdmissionAndResult.Model
 {
     [Table("Verifying_Agent")]
 
-    class WVerifying_Agent
+    class VerifyingAgent
     {
-        public WVerifying_Agent(Verifying_Agent verifyingAgent)
+        public VerifyingAgent(VerifyingAgentW verifyingAgent)
         {
             this.Verifying_Agent_Id = verifyingAgent.Verifying_Agent_Id;
             this.Verifying_Agent_Name = verifyingAgent.Verifying_Agent_Name;
@@ -22,6 +22,7 @@ namespace AdmissionAndResult.Model
             this.Recive_Date = verifyingAgent.Recive_Date;
             this.Student_Id = verifyingAgent.Student_Id;
         }
+        public VerifyingAgent() { }
 
 
 
