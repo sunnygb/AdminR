@@ -17,8 +17,12 @@ namespace AdmissionAndResult.Services
 
         private Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
 
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = delegate { };
+       public void  ChangeNvalidate<T>(ref T member,T value, [CallerMemberName] string propertyName=null)
+       {
+           Set<T>(ref member, value, propertyName);
+           ValidateProperty(propertyName, value);
+       }
 
         public System.Collections.IEnumerable GetErrors(string propertyName)
         {
@@ -35,7 +39,7 @@ namespace AdmissionAndResult.Services
             get { return _errors.Count > 0; }
         }
 
-        private void ValidateProperty<T>(T value,[CallerMemberName] string propertyName=null)
+        private void ValidateProperty<T>(string propertyName,T value)
         {
            
             var results = new List<ValidationResult>();
@@ -45,13 +49,16 @@ namespace AdmissionAndResult.Services
             if (results.Any())
             {
                 _errors[propertyName] = results.Select(c => c.ErrorMessage).ToList();
-
+                
+                
             }
             else
             {
                 _errors.Remove(propertyName);
+            
             }
             ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+            
         }
 
 
