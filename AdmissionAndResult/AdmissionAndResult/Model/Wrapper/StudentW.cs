@@ -54,10 +54,17 @@ namespace AdmissionAndResult.Model.Wrapper
     {
 
     }
+         private string _student;
 
         public long Student_Id { get;set; }
-        [Required]
-        public string Student_Name { get;set; }
+        [Required(ErrorMessage="Name tere bap na likhna")]
+        public string Student_Name 
+        { 
+            get { return _student; }
+            set { 
+            ChangeNvalidate(ref _student,value); 
+}
+        }
         public string Student_Email { get; set; }
         public string Father_Name { get; set; }
         public string Fathers_Number { get; set; }
