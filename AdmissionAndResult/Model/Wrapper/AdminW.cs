@@ -16,12 +16,12 @@ namespace AdmissionAndResult.Model.Wrapper
 		this._Change_Date = DateTime.Parse(adminw.Change_Date);
 		this._Hire_Date = DateTime.Parse(adminw.Hire_Date);
 	}
-    public AdminW()
-    {
+	public AdminW()
+	{
 
-    }
+	}
 	private System.Int64 _Admin_Id;
-	public System.Int64 Admin_Id
+	  public System.Int64 Admin_Id
 	{
 	  get { return _Admin_Id; }
 	  set {  ChangeNvalidate(ref  _Admin_Id,value);  }
@@ -29,6 +29,8 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Admin_Name;
+	[Required(ErrorMessage = "Name is required")]
+
 	public System.String Admin_Name
 	{
 	  get { return _Admin_Name; }
@@ -37,6 +39,8 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Password;
+	[Required(ErrorMessage = "Password is required")]
+
 	public System.String Password
 	{
 	  get { return _Password; }
@@ -45,6 +49,8 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.DateTime _Hire_Date;
+	[Required(ErrorMessage = "Hire Date is required")]
+
 	public System.DateTime Hire_Date
 	{
 	  get { return _Hire_Date; }
@@ -53,6 +59,8 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.DateTime _Change_Date;
+	[Required(ErrorMessage = "Change Date is required")]
+
 	public System.DateTime Change_Date
 	{
 	  get { return _Change_Date; }
