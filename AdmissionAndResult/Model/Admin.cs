@@ -20,7 +20,7 @@ namespace AdmissionAndResult.Model
 {
 
     [Table("Admin")]
-    public partial class Admin
+     class Admin
     {
 
         public Admin(AdminW adminw)

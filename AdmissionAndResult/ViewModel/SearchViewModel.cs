@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using AdmissionAndResult.Model;
+using AdmissionAndResult.Model.Wrapper;
+using AdmissionAndResult.Services;
+using Dapper.Contrib.Extensions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Dapper.Contrib.Extensions;
-using AdmissionAndResult.Model;
-using AdmissionAndResult.Services;
-using AdmissionAndResult.Model.Wrapper;
+using System.Collections.ObjectModel;
 
 namespace AdmissionAndResult.ViewModel
 {
     class SearchViewModel : ViewModelBase
     {
-       
+     
         
         private long _VerifiedMatric;
         private  long _VerifiedFsc;
@@ -35,33 +28,57 @@ namespace AdmissionAndResult.ViewModel
          
            _selectedStudent = new Student();
              _selectedAgent = new VerifyingAgentW();
+             _detailCommand = new RelayCommand<object>(showDetail);
+            
 
           
             
            
             
         }
-        
-        public Student student
-        {
 
-            get { return _selectedStudent; }
+         private RelayCommand<object> _detailCommand;
+         public RelayCommand detailCommand
+         {
+             get;
+             private set;
+         }
 
-            set
-            {
-                Set(() => student, ref _selectedStudent, value);
-            }
-        }
-        public VerifyingAgentW selectedagent
-        {
 
-            get { return _selectedAgent; }
+         private object _selectedItem;
+         public object SelectedItem
+         {
 
-            set
-            {
-                Set(() => selectedagent, ref _selectedAgent, value);
-            }
-        }
+             get { return _selectedItem; }
+
+             set
+             {
+                 Set(() => SelectedItem, ref _selectedItem, value);
+             }
+         }
+
+
+
+         public Student student
+         {
+
+             get { return _selectedStudent; }
+
+             set
+             {
+                 Set(() => student, ref _selectedStudent, value);
+             }
+         }
+        //public VerifyingAgentW selectedagent
+        //{
+
+        //    get { return _selectedAgent; }
+
+        //    set
+        //    {
+        //        Set(() => selectedagent, ref _selectedAgent, value);
+        //    }
+        //}
 
         public ObservableCollection<StudentW> students
         {
@@ -85,6 +102,15 @@ namespace AdmissionAndResult.ViewModel
             {
                 _students.Add(new StudentW(student));
             }
+        }
+
+        public void showDetail(object obj)
+        {
+            //Convert.ChangeType(template, typeof(Template));
+            //if (template == SelectedTemplate)
+            //{
+            //    _ESTContext.Templates.Remove(SelectedTemplate);
+            //} 
         }
 
     }

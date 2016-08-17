@@ -1,62 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper.Contrib.Extensions;
-using System.ComponentModel;
 using AdmissionAndResult.Model;
+using System.ComponentModel.DataAnnotations;
+using AdmissionAndResult.Services;
 
 namespace AdmissionAndResult.Model.Wrapper
 {
-
-    public class AdminW:IDataErrorInfo
+  class AdminW : ValidateModelCommon
+  {
+	public AdminW(Admin adminw)
+	{
+		this._Admin_Id = adminw.Admin_Id;
+		this._Admin_Name = adminw.Admin_Name;
+		this._Password = adminw.Password;
+		this._Change_Date = DateTime.Parse(adminw.Change_Date);
+		this._Hire_Date = DateTime.Parse(adminw.Hire_Date);
+	}
+    public AdminW()
     {
-          public AdminW (Admin adminw)
-        {
-            this.Admin_Id = adminw.Admin_Id;
-            this.Admin_Name = adminw.Admin_Name ;
-            this.Password =  adminw.Password;
-            this.Change_Date = DateTime.Parse(adminw.Change_Date);
-            this.Hire_Date = DateTime.Parse(adminw.Hire_Date);
-        }
-          public AdminW()
-          {
 
-          }
-        public long Admin_Id { get; set; }
-        public string Admin_Name { get; set; }
-        public string Password { get; set; }
-        public DateTime Hire_Date { get; set; }
-        public DateTime Change_Date { get; set; }
-
-
-        public string Error
-        {
-            get { throw new NotImplementedException(); }
-        }
-        public string this[string columnName]
-        {
-            get
-            {
-                switch (columnName)
-                {
-                    case "Admin_Name":
-                        if (string.IsNullOrEmpty(Admin_Name))
-                            return "Admin Name is required";
-                        break;
-                    case "Password":
-                        if (string.IsNullOrEmpty(Password))
-                            return "Password is Required";
-                        break;
-
-                }
-                return "";
-            }
-        }
-      
-
-
-       
     }
+	private System.Int64 _Admin_Id;
+	public System.Int64 Admin_Id
+	{
+	  get { return _Admin_Id; }
+	  set {  ChangeNvalidate(ref  _Admin_Id,value);  }
+	}
+
+
+	private System.String _Admin_Name;
+	public System.String Admin_Name
+	{
+	  get { return _Admin_Name; }
+	  set {  ChangeNvalidate(ref  _Admin_Name,value);  }
+	}
+
+
+	private System.String _Password;
+	public System.String Password
+	{
+	  get { return _Password; }
+	  set {  ChangeNvalidate(ref  _Password,value);  }
+	}
+
+
+	private System.DateTime _Hire_Date;
+	public System.DateTime Hire_Date
+	{
+	  get { return _Hire_Date; }
+	  set {  ChangeNvalidate(ref  _Hire_Date,value);  }
+	}
+
+
+	private System.DateTime _Change_Date;
+	public System.DateTime Change_Date
+	{
+	  get { return _Change_Date; }
+	  set {  ChangeNvalidate(ref  _Change_Date,value);  }
+	}
+
+  }
 }

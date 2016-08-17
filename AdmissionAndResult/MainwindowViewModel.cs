@@ -1,4 +1,5 @@
-﻿using AdmissionAndResult.ViewModel;
+﻿using AdmissionAndResult.Services;
+using AdmissionAndResult.ViewModel;
 using AdmissionAndResult.Views;
 using AdmissionAndResult.Views.Header;
 using GalaSoft.MvvmLight;
@@ -19,27 +20,20 @@ namespace AdmissionAndResult
         private MainHeader _header= new MainHeader();
         private MeriListViewModel _meritVM = new MeriListViewModel();
         private SearchViewModel _searchVM = new SearchViewModel();
-        private Object _currentViewModel;
 
 
-
-        public Object CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
+        private ViewModelBase _currentViewModel;
+        public  ViewModelBase CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
 
         public RelayCommand<string> navigationCommand{ get; private set; }
 
        public  MainwindowViewModel()
         {
             navigationCommand = new RelayCommand<string>(navigateTo);
+
             
         }
        
-       
-    
-
-
-
-
-
         private void navigateTo(string destination)
         {
             switch (destination)
