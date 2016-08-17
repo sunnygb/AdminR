@@ -69,7 +69,12 @@
                           x:Name="grid"
                           CanUserSortColumns="True"
                           Margin="20,0,0,0"
-                          ItemsSource="{Binding students}" />
+                          IsReadOnly="True"
+                         
+                          ItemsSource="{Binding students}"
+                          Selected="{Binding SelectedItem}">
+                    
+                </DataGrid>
                 
 
             </StackPanel>
@@ -135,7 +140,8 @@
                         Margin="25,60,0,0">
                 <Button Margin="0,42.5"
                         Width="110.121"
-                        Click="Button_Click">
+                        Command="{Binding detail}"
+                        CommandParameter="{Binding ElementName=MyListBox, Path=SelectedItem}">
                     Details
                 </Button>
                
