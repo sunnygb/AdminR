@@ -31,6 +31,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Student_Id;
+     [Required(ErrorMessage = "Student Id is required")]
 	public System.Int64 Student_Id
 	{
 	  get { return _Student_Id; }
@@ -39,6 +40,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Department_Name;
+     [Required(ErrorMessage = "Department Name is required")]
 	public System.String Department_Name
 	{
 	  get { return _Department_Name; }
@@ -47,6 +49,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Student_Strength;
+     [Required(ErrorMessage = "Student Strength is required")]
 	public System.Int64 Student_Strength
 	{
 	  get { return _Student_Strength; }

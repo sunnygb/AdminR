@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:AdmissionAndResult.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-           
+             d:DataContext="{d:DesignInstance Type=ViewModel:SearchViewModel,
+                                              IsDesignTimeCreatable=True}"
              d:DesignWidth="1014"
              Background="White"
              mc:Ignorable="d">
@@ -18,10 +19,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <materialDesign:Card Margin="5"
-                         materialDesign:ShadowAssist.ShadowDepth="Depth3">
+    <materialDesign:Card Margin="5" materialDesign:ShadowAssist.ShadowDepth="Depth3">
 
-        <Grid Margin="10" x:Name="searchStack">
+        <Grid x:Name="searchStack" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" MinWidth="50" />
 
@@ -65,17 +65,14 @@
                         Margin="0,100,100,100"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch">
-                <DataGrid CanUserAddRows="False"
-                          x:Name="grid"
-                          CanUserSortColumns="True"
+                <DataGrid x:Name="grid"
                           Margin="20,0,0,0"
+                          CanUserAddRows="False"
+                          CanUserSortColumns="True"
                           IsReadOnly="True"
-                         
                           ItemsSource="{Binding students}"
-                          Selected="{Binding SelectedItem}">
-                    
-                </DataGrid>
-                
+                          SelectedItem="{Binding SelectedItem}" />
+
 
             </StackPanel>
 
@@ -84,7 +81,7 @@
                         Margin="25"
                         Orientation="Vertical">
                 <TreeView Height="145">
-                    <TreeViewItem  Background="Black"
+                    <TreeViewItem Background="Black"
                                   Header=" Person"
                                   IsExpanded="True">
                         <TreeViewItem x:Name="tree">
@@ -136,15 +133,15 @@
 
             <StackPanel Grid.Row="2"
                         Grid.Column="0"
-                        Orientation="Horizontal"
-                        Margin="25,60,0,0">
-                <Button Margin="0,42.5"
-                        Width="110.121"
-                        Command="{Binding detail}"
-                        CommandParameter="{Binding ElementName=MyListBox, Path=SelectedItem}">
+                        Margin="25,60,0,0"
+                        Orientation="Horizontal">
+                <Button Width="110.121"
+                        Margin="0,42.5"
+                        Command="{Binding detailCommand, Mode=OneWay}" 
+                        >
                     Details
                 </Button>
-               
+
 
             </StackPanel>
 
@@ -153,9 +150,9 @@
 
 
         </Grid>
-        
+
 
 
     </materialDesign:Card>
-    
+
 </UserControl>

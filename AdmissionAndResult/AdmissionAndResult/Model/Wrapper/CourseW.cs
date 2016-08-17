@@ -27,6 +27,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Course_Name;
+      [Required(ErrorMessage = "Course Name is required")]
 	public System.String Course_Name
 	{
 	  get { return _Course_Name; }
@@ -35,6 +36,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Student_Id;
+      [Required(ErrorMessage = "Student Id is required")]
 	public System.Int64 Student_Id
 	{
 	  get { return _Student_Id; }
