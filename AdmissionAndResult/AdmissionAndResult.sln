@@ -1,11 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionAndResult", "AdmissionAndResult\AdmissionAndResult.csproj", "{F55957F7-578C-45FA-97BA-FD94E6EF4C46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectReports", "ProjectReports\ProjectReports.csproj", "{93C67185-7759-4862-A765-FA81E6BF7EC3}"
+EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://sunnygb.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AdmissionAndResult\\AdmissionAndResult.csproj
+		SccProjectName1 = AdmissionAndResult
+		SccLocalPath1 = AdmissionAndResult
+		SccProjectUniqueName2 = ProjectReports\\ProjectReports.csproj
+		SccProjectName2 = ProjectReports
+		SccLocalPath2 = ProjectReports
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -15,17 +27,12 @@ Global
 		{F55957F7-578C-45FA-97BA-FD94E6EF4C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F55957F7-578C-45FA-97BA-FD94E6EF4C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F55957F7-578C-45FA-97BA-FD94E6EF4C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C67185-7759-4862-A765-FA81E6BF7EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C67185-7759-4862-A765-FA81E6BF7EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C67185-7759-4862-A765-FA81E6BF7EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C67185-7759-4862-A765-FA81E6BF7EC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://sunnygb.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = AdmissionAndResult\\AdmissionAndResult.csproj
-		SccProjectName1 = AdmissionAndResult
-		SccLocalPath1 = AdmissionAndResult
 	EndGlobalSection
 EndGlobal

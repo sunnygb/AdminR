@@ -1,0 +1,17 @@
+﻿<UserControl xmlns:tr="http://schemas.telerik.com/wpf"  x:Class="AdmissionAndResult.Views.StudentverifyingForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:telerikReporting="clr-namespace:Telerik.Reporting;assembly=Telerik.Reporting"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Background="White">
+    <Grid>
+        <tr:ReportViewer x:Name="reportViewer" >
+            <tr:ReportViewer.ReportSource>
+                <telerikReporting:TypeReportSource TypeName="ProjectReports.VerifyingReport,ProjectReports">
+                </telerikReporting:TypeReportSource>
+            </tr:ReportViewer.ReportSource>
+        </tr:ReportViewer>
+    </Grid>
+</UserControl>

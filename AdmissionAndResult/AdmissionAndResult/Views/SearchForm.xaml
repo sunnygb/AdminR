@@ -136,19 +136,15 @@
                         Margin="25,60,0,0"
                         Orientation="Horizontal">
                 <Button Width="110.121"
-                        Margin="0,42.5"
+                        Margin="0,42.5" 
                         Command="{Binding detailCommand, Mode=OneWay}" 
+                        
                         >
                     Details
                 </Button>
 
 
             </StackPanel>
-
-
-
-
-
         </Grid>
 
 

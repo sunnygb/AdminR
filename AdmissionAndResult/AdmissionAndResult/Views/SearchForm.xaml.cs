@@ -24,5 +24,9 @@ namespace AdmissionAndResult.Views
            //mw.mainStack.NavigationService.Navigate(dfor);
            dfor.DataContext = new DetailFormViewModel(grid.SelectedItem);
         }
+
+    
+
+  
     }
 }
