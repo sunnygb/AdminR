@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using AdmissionAndResult.Model;
-using System.ComponentModel.DataAnnotations;
 using AdmissionAndResult.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdmissionAndResult.Model.Wrapper
 {
@@ -18,10 +15,10 @@ namespace AdmissionAndResult.Model.Wrapper
 		this._Student_Id = department.Student_Id;
 		this._Student_Strength = department.Student_Strength;
 	}
-    public DepartmentW()
-    {
+	public DepartmentW()
+	{
 
-    }
+	}
 	private System.Int64 _Department_ID;
 	public System.Int64 Department_ID
 	{
@@ -31,7 +28,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Student_Id;
-     [Required(ErrorMessage = "Student Id is required")]
+	 [Required(ErrorMessage = "Student Id is required")]
 	public System.Int64 Student_Id
 	{
 	  get { return _Student_Id; }
@@ -40,7 +37,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Department_Name;
-     [Required(ErrorMessage = "Department Name is required")]
+	 [Required(ErrorMessage = "Department Name is required")]
 	public System.String Department_Name
 	{
 	  get { return _Department_Name; }
@@ -49,7 +46,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Student_Strength;
-     [Required(ErrorMessage = "Student Strength is required")]
+	 [Required(ErrorMessage = "Student Strength is required")]
 	public System.Int64 Student_Strength
 	{
 	  get { return _Student_Strength; }

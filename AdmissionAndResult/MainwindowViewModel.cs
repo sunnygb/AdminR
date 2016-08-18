@@ -1,39 +1,32 @@
-﻿using AdmissionAndResult.Services;
-using AdmissionAndResult.ViewModel;
-using AdmissionAndResult.Views;
+﻿using AdmissionAndResult.ViewModel;
 using AdmissionAndResult.Views.Header;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdmissionAndResult
 {
-    class MainwindowViewModel: ViewModelBase
+    class MainwindowViewModel : ViewModelBase
     {
 
         private AdmitFormViewModel _admitVM = new AdmitFormViewModel();
         private AgentFormViewModel _agentVM = new AgentFormViewModel();
-        private MainHeader _header= new MainHeader();
+        private MainHeader _header = new MainHeader();
         private MeriListViewModel _meritVM = new MeriListViewModel();
         private SearchViewModel _searchVM = new SearchViewModel();
 
 
         private ViewModelBase _currentViewModel;
-        public  ViewModelBase CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
+        public ViewModelBase CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
 
-        public RelayCommand<string> navigationCommand{ get; private set; }
+        public RelayCommand<string> navigationCommand { get; private set; }
 
-       public  MainwindowViewModel()
+        public MainwindowViewModel()
         {
             navigationCommand = new RelayCommand<string>(navigateTo);
 
-            
+
         }
-       
+
         private void navigateTo(string destination)
         {
             switch (destination)
@@ -54,10 +47,8 @@ namespace AdmissionAndResult
             }
         }
 
+    }
 }
-}
-
-    
 
 
 
@@ -80,23 +71,25 @@ namespace AdmissionAndResult
 
 
 
-        //private AdmitFormViewModel _admitVM;
-        //AdmitForm admitForm;
-        //public MainwindowViewModel()
-        //{
-        //    _admitVM = new AdmitFormViewModel();
-        //    SubmitCommand = new RelayCommand(searchNavigation) {
 
 
-        //    };
-        //}
+//private AdmitFormViewModel _admitVM;
+//AdmitForm admitForm;
+//public MainwindowViewModel()
+//{
+//    _admitVM = new AdmitFormViewModel();
+//    SubmitCommand = new RelayCommand(searchNavigation) {
 
-        //public RelayCommand SubmitCommand { get; private set; }
 
-        //public void searchNavigation()
-        //{
-        //    admitForm = new AdmitForm();
-        //    admitForm.DataContext = _admitVM;
+//    };
+//}
 
-        //}
-    
+//public RelayCommand SubmitCommand { get; private set; }
+
+//public void searchNavigation()
+//{
+//    admitForm = new AdmitForm();
+//    admitForm.DataContext = _admitVM;
+
+//}
+

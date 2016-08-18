@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Dapper;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using AdmissionAndResult.Views.Header;
-using Dapper.Contrib.Extensions;
+﻿using AdmissionAndResult.Model;
 using AdmissionAndResult.Model.Wrapper;
 using AdmissionAndResult.Services;
-using AdmissionAndResult.Model;
+using Dapper.Contrib.Extensions;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using System.Collections.ObjectModel;
 
 namespace AdmissionAndResult.ViewModel
 {

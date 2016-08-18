@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using AdmissionAndResult.Model;
-using System.ComponentModel.DataAnnotations;
 using AdmissionAndResult.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdmissionAndResult.Model.Wrapper
 {
@@ -14,10 +11,10 @@ namespace AdmissionAndResult.Model.Wrapper
 		this._Course_Name = course.Course_Name;
 		this._Student_Id = course.Student_Id;
 	}
-    public CourseW()
-    {
+	public CourseW()
+	{
 
-    }
+	}
 	private System.Int64 _Course_Id;
 	public System.Int64 Course_Id
 	{
@@ -27,7 +24,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Course_Name;
-      [Required(ErrorMessage = "Course Name is required")]
+	  [Required(ErrorMessage = "Course Name is required")]
 	public System.String Course_Name
 	{
 	  get { return _Course_Name; }
@@ -36,7 +33,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Student_Id;
-      [Required(ErrorMessage = "Student Id is required")]
+	  [Required(ErrorMessage = "Student Id is required")]
 	public System.Int64 Student_Id
 	{
 	  get { return _Student_Id; }
