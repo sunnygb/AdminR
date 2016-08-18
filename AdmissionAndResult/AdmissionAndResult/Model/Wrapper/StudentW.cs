@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using AdmissionAndResult.Model;
-using System.ComponentModel.DataAnnotations;
 using AdmissionAndResult.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdmissionAndResult.Model.Wrapper
 {
@@ -31,10 +28,10 @@ namespace AdmissionAndResult.Model.Wrapper
 		this._Verified_Matric_Marks = student.Verified_Matric_Marks;
 		this._Verified_NTS_Marks = student.Verified_NTS_Marks;
 	}
-    public StudentW()
-    {
+	public StudentW()
+	{
 
-    }
+	}
 	private System.Int64 _Student_Id;
 
 	public System.Int64 Student_Id
@@ -45,7 +42,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Student_Name;
-    [Required(ErrorMessage = "Name is required")]
+	[Required(ErrorMessage = "Name is required")]
 
 	public System.String Student_Name
 	{
@@ -55,7 +52,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Student_Email;
-    [Required(ErrorMessage = "Email is required")]
+	[Required(ErrorMessage = "Email is required")]
 
 	public System.String Student_Email
 	{
@@ -65,9 +62,9 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Father_Name;
-      [Required(ErrorMessage = "Father's Name is required")]
+	  [Required(ErrorMessage = "Father's Name is required")]
 
-    public System.String Father_Name
+	public System.String Father_Name
 	{
 	  get { return _Father_Name; }
 	  set {  ChangeNvalidate(ref  _Father_Name,value);  }
@@ -75,7 +72,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Fathers_Number;
-      [Required(ErrorMessage = "Father's Number is required")]
+	  [Required(ErrorMessage = "Father's Number is required")]
 	public System.String Fathers_Number
 	{
 	  get { return _Fathers_Number; }
@@ -108,7 +105,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Permanent_Address;
-      [Required(ErrorMessage = "Permanent Address is required")]
+	  [Required(ErrorMessage = "Permanent Address is required")]
 	public System.String Permanent_Address
 	{
 	  get { return _Permanent_Address; }
@@ -117,7 +114,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Date_Of_Birth;
-      [Required(ErrorMessage = "Email is required")]
+	  [Required(ErrorMessage = "Email is required")]
 	public System.String Date_Of_Birth
 	{
 	  get { return _Date_Of_Birth; }
@@ -126,7 +123,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _NIC_No;
-      [Required(ErrorMessage = "CNIC is required")]
+	  [Required(ErrorMessage = "CNIC is required")]
 	public System.String NIC_No
 	{
 	  get { return _NIC_No; }
@@ -143,7 +140,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Phone_Number;
-      [Required(ErrorMessage = "Phone No. is required")]
+	  [Required(ErrorMessage = "Phone No. is required")]
 	public System.String Phone_Number
 	{
 	  get { return _Phone_Number; }

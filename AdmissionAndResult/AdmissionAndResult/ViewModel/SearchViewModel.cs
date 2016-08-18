@@ -17,6 +17,7 @@ namespace AdmissionAndResult.ViewModel
         private long _VerifiedFsc;
         private long _VerifiedNts;
         private long _verifiedGat;
+
         private ObservableCollection<VerifyingAgentW> _agents = new ObservableCollection<VerifyingAgentW>();
         private ObservableCollection<StudentW> _students = new ObservableCollection<StudentW>();
         private Student _selectedStudent;

@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using AdmissionAndResult.Model;
-using System.ComponentModel.DataAnnotations;
 using AdmissionAndResult.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdmissionAndResult.Model.Wrapper
 {
@@ -48,10 +45,10 @@ namespace AdmissionAndResult.Model.Wrapper
 		this._Verified_Matric_Marks = qualificationW.Verified_Matric_Marks;
 		this._Verified_NTS_Marks = qualificationW.Verified_NTS_Marks;
 	}
-    public QualificationW()
-    {
+	public QualificationW()
+	{
 
-    }
+	}
 
 	private System.Int64 _Qualification_Id;
 	public System.Int64 Qualification_Id
@@ -62,7 +59,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _NTS_Obt_Marks;
-     [Required(ErrorMessage = "NTS Obt. Mark is required")]
+	 [Required(ErrorMessage = "NTS Obt. Mark is required")]
 	public System.Int64 NTS_Obt_Marks
 	{
 	  get { return _NTS_Obt_Marks; }
@@ -71,7 +68,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _NTS_Max_Marks;
-     [Required(ErrorMessage = "NTS Max is required")]
+	 [Required(ErrorMessage = "NTS Max is required")]
 	public System.Int64 NTS_Max_Marks
 	{
 	  get { return _NTS_Max_Marks; }
@@ -80,7 +77,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _FSC_Obt_Marks;
-     [Required(ErrorMessage = "FSC Obt. Mark is required")]
+	 [Required(ErrorMessage = "FSC Obt. Mark is required")]
 	public System.Int64 FSC_Obt_Marks
 	{
 	  get { return _FSC_Obt_Marks; }
@@ -89,7 +86,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _FSC_Max_Marks;
-     [Required(ErrorMessage = "FSC Max mark is required")]
+	 [Required(ErrorMessage = "FSC Max mark is required")]
 	public System.Int64 FSC_Max_Marks
 	{
 	  get { return _FSC_Max_Marks; }
@@ -98,7 +95,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Matric_Obt_Marks;
-     [Required(ErrorMessage = "Martric obt. mark is required")]
+	 [Required(ErrorMessage = "Martric obt. mark is required")]
 	public System.Int64 Matric_Obt_Marks
 	{
 	  get { return _Matric_Obt_Marks; }
@@ -107,7 +104,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Matric_Max_Marks;
-     [Required(ErrorMessage = "Matric Max mark is required")]
+	 [Required(ErrorMessage = "Matric Max mark is required")]
 	public System.Int64 Matric_Max_Marks
 	{
 	  get { return _Matric_Max_Marks; }
@@ -116,7 +113,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _GAT_Obt_Marks;
-     [Required(ErrorMessage = "Gat mark is required")]
+	 [Required(ErrorMessage = "Gat mark is required")]
 	public System.Int64 GAT_Obt_Marks
 	{
 	  get { return _GAT_Obt_Marks; }
@@ -125,7 +122,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _GAT_Max_Marks;
-     [Required(ErrorMessage = "Gat max mark is required")]
+	 [Required(ErrorMessage = "Gat max mark is required")]
 	public System.Int64 GAT_Max_Marks
 	{
 	  get { return _GAT_Max_Marks; }
@@ -134,7 +131,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Matric_Year;
-     [Required(ErrorMessage = "Matric year is required")]
+	 [Required(ErrorMessage = "Matric year is required")]
 	public System.String Matric_Year
 	{
 	  get { return _Matric_Year; }
@@ -143,7 +140,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _FSC_Year;
-     [Required(ErrorMessage = "FSC year is required")]
+	 [Required(ErrorMessage = "FSC year is required")]
 	public System.String FSC_Year
 	{
 	  get { return _FSC_Year; }
@@ -152,7 +149,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _NTS_Year;
-     [Required(ErrorMessage = "NTS year is required")]
+	 [Required(ErrorMessage = "NTS year is required")]
 	public System.String NTS_Year
 	{
 	  get { return _NTS_Year; }
@@ -161,7 +158,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _BS_Year;
-     [Required(ErrorMessage = "BS year is required")]
+	 [Required(ErrorMessage = "BS year is required")]
 	public System.String BS_Year
 	{
 	  get { return _BS_Year; }
@@ -170,7 +167,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _MS_Year;
-     [Required(ErrorMessage = "MS year is required")]
+	 [Required(ErrorMessage = "MS year is required")]
 	public System.String MS_Year
 	{
 	  get { return _MS_Year; }
@@ -179,7 +176,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _GAT_Year;
-     [Required(ErrorMessage = "GAT year is required")]
+	 [Required(ErrorMessage = "GAT year is required")]
 	public System.String GAT_Year
 	{
 	  get { return _GAT_Year; }
@@ -188,7 +185,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _MS_Institute_Name;
-     [Required(ErrorMessage = "MS institute name is required")]
+	 [Required(ErrorMessage = "MS institute name is required")]
 	public System.String MS_Institute_Name
 	{
 	  get { return _MS_Institute_Name; }
@@ -197,7 +194,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _BS_Institute_Name;
-     [Required(ErrorMessage = "BS institute name is required")]
+	 [Required(ErrorMessage = "BS institute name is required")]
 	public System.String BS_Institute_Name
 	{
 	  get { return _BS_Institute_Name; }
@@ -206,7 +203,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _FSC_Institute_Name;
-     [Required(ErrorMessage = "FSC institute name is required")]
+	 [Required(ErrorMessage = "FSC institute name is required")]
 	public System.String FSC_Institute_Name
 	{
 	  get { return _FSC_Institute_Name; }
@@ -215,7 +212,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Matric_Institute_Name;
-     [Required(ErrorMessage = "Matric institute name is required")]
+	 [Required(ErrorMessage = "Matric institute name is required")]
 	public System.String Matric_Institute_Name
 	{
 	  get { return _Matric_Institute_Name; }
@@ -224,7 +221,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _MS_Roll_No;
-     [Required(ErrorMessage = "MS Roll no. is required")]
+	 [Required(ErrorMessage = "MS Roll no. is required")]
 	public System.String MS_Roll_No
 	{
 	  get { return _MS_Roll_No; }
@@ -233,7 +230,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _BS_Roll_No;
-     [Required(ErrorMessage = "BS roll no. is required")]
+	 [Required(ErrorMessage = "BS roll no. is required")]
 	public System.String BS_Roll_No
 	{
 	  get { return _BS_Roll_No; }
@@ -242,7 +239,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Fsc_Roll_No;
-          [Required(ErrorMessage = "FSC roll no. is required")]
+		  [Required(ErrorMessage = "FSC roll no. is required")]
 
 	public System.String Fsc_Roll_No
 	{
@@ -252,7 +249,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Matric_Roll_No;
-          [Required(ErrorMessage = "Matric roll no. is required")]
+		  [Required(ErrorMessage = "Matric roll no. is required")]
 
 	public System.String Matric_Roll_No
 	{
@@ -262,7 +259,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _NTS_Roll_No;
-          [Required(ErrorMessage = "NTS roll no. is required")]
+		  [Required(ErrorMessage = "NTS roll no. is required")]
 
 	public System.String NTS_Roll_No
 	{
@@ -272,7 +269,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _GAT_Roll_No;
-          [Required(ErrorMessage = "GAT roll no. is required")]
+		  [Required(ErrorMessage = "GAT roll no. is required")]
 
 	public System.String GAT_Roll_No
 	{
@@ -282,7 +279,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _BS_Degree;
-          [Required(ErrorMessage = "BS Degree name is required")]
+		  [Required(ErrorMessage = "BS Degree name is required")]
 
 	public System.String BS_Degree
 	{
@@ -292,7 +289,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _MS_Degree;
-               [Required(ErrorMessage = "MS Degree name is required")]
+			   [Required(ErrorMessage = "MS Degree name is required")]
 
 	public System.String MS_Degree
 	{
@@ -310,7 +307,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Batchlor_Obt_CGPA;
-               [Required(ErrorMessage = "Batchelor obtained CGPA is required")]
+			   [Required(ErrorMessage = "Batchelor obtained CGPA is required")]
 
 	public System.Int64 Batchlor_Obt_CGPA
 	{
@@ -320,7 +317,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Batchlor_Max_CGPA;
-     [Required(ErrorMessage = "Batchelor Max CGPA is required")]
+	 [Required(ErrorMessage = "Batchelor Max CGPA is required")]
 	public System.Int64 Batchlor_Max_CGPA
 	{
 	  get { return _Batchlor_Max_CGPA; }
@@ -329,7 +326,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _MSC_Obt_CGPA;
-     [Required(ErrorMessage = "MS obtained CGPA is required")]
+	 [Required(ErrorMessage = "MS obtained CGPA is required")]
 	public System.Int64 MSC_Obt_CGPA
 	{
 	  get { return _MSC_Obt_CGPA; }
@@ -338,7 +335,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _MSC_Max_CGPA;
-     [Required(ErrorMessage = "MS Max CGPA is required")]
+	 [Required(ErrorMessage = "MS Max CGPA is required")]
 	public System.Int64 MSC_Max_CGPA
 	{
 	  get { return _MSC_Max_CGPA; }

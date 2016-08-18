@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using AdmissionAndResult.Model;
-using System.ComponentModel.DataAnnotations;
 using AdmissionAndResult.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdmissionAndResult.Model.Wrapper
 {
@@ -18,10 +15,10 @@ namespace AdmissionAndResult.Model.Wrapper
 		this._SGPA = selectedStudent.SGPA;
 		this._Department_ID = selectedStudent.Department_ID;
 	}
-    public SelectedStudentW()
-    {
+	public SelectedStudentW()
+	{
 
-    }
+	}
 	private System.Int64 _Selected_Student_Id;
 	public System.Int64 Selected_Student_Id
 	{
@@ -31,7 +28,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Student_Registeration_Number;
-       [Required(ErrorMessage = "Student Reg No.  is required")]
+	   [Required(ErrorMessage = "Student Reg No.  is required")]
 	public System.String Student_Registeration_Number
 	{
 	  get { return _Student_Registeration_Number; }
@@ -40,7 +37,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Double _Aggregate;
-       [Required(ErrorMessage = "Aggregate  is required")]
+	   [Required(ErrorMessage = "Aggregate  is required")]
 	public System.Double Aggregate
 	{
 	  get { return _Aggregate; }
@@ -49,7 +46,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Cource_Id;
-       [Required(ErrorMessage = "Course Id is required")]
+	   [Required(ErrorMessage = "Course Id is required")]
 	public System.Int64 Cource_Id
 	{
 	  get { return _Cource_Id; }
@@ -74,7 +71,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.Int64 _Department_ID;
-              [Required(ErrorMessage = "Department Id  is required")]
+			  [Required(ErrorMessage = "Department Id  is required")]
 
 	public System.Int64 Department_ID
 	{
