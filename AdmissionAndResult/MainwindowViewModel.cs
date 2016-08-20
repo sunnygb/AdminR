@@ -2,6 +2,7 @@
 using AdmissionAndResult.Views.Header;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using AdmissionAndResult.Views;
 
 namespace AdmissionAndResult
 {
@@ -13,6 +14,7 @@ namespace AdmissionAndResult
         private MainHeader _header = new MainHeader();
         private MeriListViewModel _meritVM = new MeriListViewModel();
         private SearchViewModel _searchVM = new SearchViewModel();
+
 
 
         private ViewModelBase _currentViewModel;
