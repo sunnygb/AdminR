@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
+using AdmissionAndResult.Views;
 
 namespace AdmissionAndResult.ViewModel
 {
@@ -24,6 +25,7 @@ namespace AdmissionAndResult.ViewModel
         {
             searchFunction();
             SearchCommand = new RelayCommand(searchFunction);
+            
 
             _selectedStudent = new Student();
             _selectedAgent = new VerifyingAgentW();
@@ -101,6 +103,8 @@ namespace AdmissionAndResult.ViewModel
             if (this.SelectedItem.GetType() == typeof(StudentW))
             {
                 var c = Convert.ChangeType(_selectedItem, typeof(StudentW));
+                
+               
             }
             else if (this.SelectedItem.GetType() == typeof(VerifyingAgentW))
             {
