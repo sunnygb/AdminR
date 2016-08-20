@@ -3,9 +3,9 @@
 <%@ Assembly Name="SchemaExplorer" %>
 <%@ Assembly Name="CodeSmith.CustomProperties" %>
 
-<%@ Assembly Name="Mono.Cecil" Path="..\Common" %>
-<%@ Assembly Name="ICSharpCode.NRefactory" Path="..\Common" %>
-<%@ Assembly Name="ICSharpCode.NRefactory.CSharp" Path="..\Common" %>
+<%@ Assembly Name="Mono.Cecil" Path=".\Common" %>
+<%@ Assembly Name="ICSharpCode.NRefactory" Path=".\Common" %>
+<%@ Assembly Name="ICSharpCode.NRefactory.CSharp" Path=".\Common" %>
 
 <%@ Assembly Src="Internal\Model.cs" %>
 <%@ Assembly Src="Internal\Extensions.cs" %>

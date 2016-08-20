@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <codeSmith xmlns="http://www.codesmithtools.com/schema/csp.xsd">
   <variables>
-    <add key="ConnectionString1" value="data source=C:\Users\Sunny\Desktop\Test\SystemDB.db" />
+    <add key="ConnectionString1" value="data source=C:\Users\Sunny\Documents\Visual Studio 2015\Projects\AdmissionAndResult\AdmissionAndResult\SystemDB.db" />
   </variables>
   <propertySets>
     <propertySet name="Entity" template="Entity.cst">
@@ -14,14 +14,14 @@
       <property name="ContextNaming">Plural</property>
       <property name="IgnoreList">
         <stringList>
-          <string>sysdiagrams$</string>
-        </stringList>
+      <string>sysdiagrams$</string>
+    </stringList>
       </property>
       <property name="InclusionMode">False</property>
       <property name="CleanExpressions">
         <stringList>
-          <string>^(sp|tbl|udf|vw)_</string>
-        </stringList>
+      <string>^(sp|tbl|udf|vw)_</string>
+    </stringList>
       </property>
       <property name="InterfaceMode">False</property>
       <property name="IncludeQuery">False</property>
