@@ -4,7 +4,7 @@
     <add key="ConnectionString1" value="data source=C:\Users\Sunny\Desktop\Test\SystemDB.db" />
   </variables>
   <propertySets>
-    <propertySet name="Entity" template="..\..\..\..\..\Desktop\Entity Generator\CSharp\Entity.cst">
+    <propertySet name="Entity" template="Entity.cst">
       <property name="ContextDirectory">.\</property>
       <property name="EntityDirectory">.\Entities</property>
       <property name="MappingDirectory">.\Mapping</property>
@@ -22,44 +22,6 @@
         <stringList>
           <string>^(sp|tbl|udf|vw)_</string>
         </stringList>
-      </property>
-      <property name="InterfaceMode">False</property>
-      <property name="IncludeQuery">False</property>
-      <property name="QueryDirectory">.\Queries</property>
-      <property name="MethodPrefix">By</property>
-      <property name="UniqueMethodPrefix">GetBy</property>
-      <property name="MethodKeySuffix">Key</property>
-      <property name="IncludeMock">False</property>
-      <property name="MockDirectory">.\Mocks</property>
-      <property name="Internalize">True</property>
-      <property name="SourceDatabase">
-        <connectionString>$(ConnectionString1)</connectionString>
-        <providerType>SchemaExplorer.SQLiteSchemaProvider,SchemaExplorer.SQLiteSchemaProvider</providerType>
-      </property>
-      <property name="ContextNamespace">SystemDB.Data</property>
-      <property name="EntityNamespace">SystemDB.Data.Entities</property>
-      <property name="MappingNamespace">SystemDB.Data.Mapping</property>
-      <property name="QueryNamespace">SystemDB.Data.Queries</property>
-      <property name="MockNamespace">SystemDB.Data.Mocks</property>
-    </propertySet>
-    <propertySet name="Entity" template="Entity.cst">
-      <property name="ContextDirectory">.\</property>
-      <property name="EntityDirectory">.\Entities</property>
-      <property name="MappingDirectory">.\Mapping</property>
-      <property name="TableNaming">Singular</property>
-      <property name="EntityNaming">Singular</property>
-      <property name="RelationshipNaming">Plural</property>
-      <property name="ContextNaming">Plural</property>
-      <property name="IgnoreList">
-        <stringList>
-      <string>sysdiagrams$</string>
-    </stringList>
-      </property>
-      <property name="InclusionMode">False</property>
-      <property name="CleanExpressions">
-        <stringList>
-      <string>^(sp|tbl|udf|vw)_</string>
-    </stringList>
       </property>
       <property name="InterfaceMode">False</property>
       <property name="IncludeQuery">False</property>
