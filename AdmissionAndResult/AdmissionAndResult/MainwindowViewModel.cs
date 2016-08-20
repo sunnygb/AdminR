@@ -11,22 +11,24 @@ namespace AdmissionAndResult
 
         private AdmitFormViewModel _admitVM = new AdmitFormViewModel();
         private AgentFormViewModel _agentVM = new AgentFormViewModel();
-        private MainHeader _header = new MainHeader();
         private MeriListViewModel _meritVM = new MeriListViewModel();
         private SearchViewModel _searchVM = new SearchViewModel();
+       
 
 
 
         private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
 
+        private MainHeader _header;
+        public MainHeader MainHeader { get { return _header; } set { Set(() => MainHeader, ref _header, value); } }
+
         public RelayCommand<string> navigationCommand { get; private set; }
 
         public MainwindowViewModel()
         {
             navigationCommand = new RelayCommand<string>(navigateTo);
-
-
+            this._header = new MainHeader();
         }
 
         private void navigateTo(string destination)

@@ -178,9 +178,11 @@
                 </Image>
             </StackPanel>
 
-            <Frame x:Name="headerFrame"
-                   Width="1007"
-                   Background="{DynamicResource MaterialDesignPaper}" />
+            <StackPanel x:Name="headerFrame"
+                        Width="1007"
+                        Background="{DynamicResource MaterialDesignPaper}">
+                <ContentControl Content="{Binding MainHeader}" />
+            </StackPanel>
 
 
 
