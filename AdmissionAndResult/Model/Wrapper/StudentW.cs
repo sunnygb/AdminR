@@ -42,7 +42,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Student_Name;
-	[Required(ErrorMessage = "Name is required")]
+	[Required(ErrorMessage = "Nam Tere bap na likhna")]
 
 	public System.String Student_Name
 	{

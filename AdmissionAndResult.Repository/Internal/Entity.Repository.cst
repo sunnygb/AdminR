@@ -21,12 +21,12 @@ using System.Text;
 
 namespace <%= EntityNamespace %>
 {
-    public partial class <%= Entity.ClassName.ToSafeName() %>
-    {
-    <%foreach(var property in Entity.Properties){ %>
-    
-    
-    <%} %>
 
-    }
+public partial <% Entity.ClassName %> : <%Entity.ClassName.ToLower %>
+{
+
+<%  %>
+
+}
+
 }

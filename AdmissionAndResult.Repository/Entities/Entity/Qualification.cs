@@ -59,7 +59,7 @@ namespace SystemDB.Data.Entities
         public double? VerifiedBSCGPA { get; set; }
         public string BSDegree { get; set; }
         public string MSDegree { get; set; }
-        public object  { get; set; }
+        public object inage { get; set; }
 
         public virtual Student Student { get; set; }
     }
