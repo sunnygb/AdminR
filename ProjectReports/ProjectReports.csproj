@@ -62,17 +62,29 @@
     <Reference Include="Telerik.Reporting, Version=10.0.16.204, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MSVerifyingReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MSVerifyingReport.Designer.cs">
+      <DependentUpon>MSVerifyingReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PHDVerifyingReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PHDVerifyingReport.Designer.cs">
+      <DependentUpon>PHDVerifyingReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="VerifyingReport.cs">
+    <Compile Include="BSVerifyingReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="VerifyingReport.Designer.cs">
-      <DependentUpon>VerifyingReport.cs</DependentUpon>
+    <Compile Include="BSVerifyingReport.Designer.cs">
+      <DependentUpon>BSVerifyingReport.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +96,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="MSVerifyingReport.resx">
+      <DependentUpon>MSVerifyingReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PHDVerifyingReport.resx">
+      <DependentUpon>PHDVerifyingReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="VerifyingReport.resx">
-      <DependentUpon>VerifyingReport.cs</DependentUpon>
+    <EmbeddedResource Include="BSVerifyingReport.resx">
+      <DependentUpon>BSVerifyingReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
