@@ -28,6 +28,18 @@ namespace SystemDB.Data.Entities
         public string HireDate { get; set; }
         public string ChangeDate { get; set; }
 
-        public virtual ICollection<VerifyingAgent> VerifyingAgents { get; set; }
+        public virtual List<VerifyingAgent> VerifyingAgents { get; set; }
+
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.AdminId == default(int);
+         
+                }
+                
+          }
+          public bool IsDeleted { get; set; }
     }
 }

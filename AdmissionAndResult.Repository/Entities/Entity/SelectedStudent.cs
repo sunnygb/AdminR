@@ -32,5 +32,17 @@ namespace SystemDB.Data.Entities
         public virtual Department Department { get; set; }
         public virtual Course CourceCourse { get; set; }
         public virtual Student SelectedStudentMember { get; set; }
+
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.SelectedStudentId == default(int);
+         
+                }
+                
+          }
+          public bool IsDeleted { get; set; }
     }
 }

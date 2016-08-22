@@ -29,7 +29,19 @@ namespace SystemDB.Data.Entities
         public string HODName { get; set; }
         public string Location { get; set; }
 
-        public virtual ICollection<SelectedStudent> SelectedStudents { get; set; }
+        public virtual List<SelectedStudent> SelectedStudents { get; set; }
         public virtual Student Student { get; set; }
+
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.DepartmentID == default(int);
+         
+                }
+                
+          }
+          public bool IsDeleted { get; set; }
     }
 }
