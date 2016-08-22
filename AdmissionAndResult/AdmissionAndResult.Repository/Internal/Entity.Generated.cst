@@ -47,10 +47,22 @@ namespace <%= EntityNamespace %>
 
 <% foreach(var r in Entity.Relationships) { %>
 <% if(r.ThisCardinality == Cardinality.Many) { %>
-        public virtual ICollection<<%= r.OtherEntity.ToSafeName() %>> <%= r.ThisPropertyName.ToSafeName() %> { get; set; }
+        public virtual List<<%= r.OtherEntity.ToSafeName() %>> <%= r.ThisPropertyName.ToSafeName() %> { get; set; }
 <% } else { %>
         public virtual <%= r.OtherEntity.ToSafeName() %> <%= r.ThisPropertyName.ToSafeName() %> { get; set; }
 <% } %>
 <% } // foreach %>
+
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)){%><%= p.PropertyName %><%}%><%}%> == default(int);
+         
+                }
+                
+          }
+          public bool IsDeleted { get; set; }
     }
 }

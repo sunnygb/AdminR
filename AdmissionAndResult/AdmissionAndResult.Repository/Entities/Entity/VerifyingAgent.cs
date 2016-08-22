@@ -31,5 +31,17 @@ namespace SystemDB.Data.Entities
 
         public virtual Admin Admin { get; set; }
         public virtual Student Student { get; set; }
+
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.VerifyingAgentId == default(int);
+         
+                }
+                
+          }
+          public bool IsDeleted { get; set; }
     }
 }

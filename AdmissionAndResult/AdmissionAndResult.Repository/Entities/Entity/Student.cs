@@ -40,17 +40,23 @@ namespace SystemDB.Data.Entities
         public string ResidentalPhoneNumber { get; set; }
         public string Date { get; set; }
         public string FathersNumber { get; set; }
-        public double? VerifiedNTSMarks { get; set; }
-        public double? VerifiedFSCMarks { get; set; }
-        public double? VerifiedMatricMarks { get; set; }
-        public double? VerifiedGATMarks { get; set; }
-        public double? VerifiedMSCCGPA { get; set; }
-        public double? VerifiedBachelorCGPA { get; set; }
 
-        public virtual ICollection<SelectedStudent> SelectedSelectedStudents { get; set; }
-        public virtual ICollection<Department> Departments { get; set; }
-        public virtual ICollection<Course> Courses { get; set; }
-        public virtual ICollection<VerifyingAgent> VerifyingAgents { get; set; }
+        public virtual List<SelectedStudent> SelectedSelectedStudents { get; set; }
+        public virtual List<Department> Departments { get; set; }
+        public virtual List<Course> Courses { get; set; }
+        public virtual List<VerifyingAgent> VerifyingAgents { get; set; }
         public virtual Qualification Qualification { get; set; }
+
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.StudentId == default(int);
+         
+                }
+                
+          }
+          public bool IsDeleted { get; set; }
     }
 }

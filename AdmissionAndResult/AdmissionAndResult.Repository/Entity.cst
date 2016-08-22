@@ -185,14 +185,14 @@
  <%@ Register Name="EntityRepositoryClass"
              Template="Internal\Entity.Repository.cst"
              MergeProperties="False" %>
+ <%@ Register Name="EntityInterfaceClass"
+             Template="Internal\Entity.Interface.cst"
+             MergeProperties="False" %>
              
 
 
 Generating Entities ...
 <% Generate(); %>
-
-<%foreach(var table in SourceDatabase.Tables){ %>
-<% } %>
 
 <script runat="template">
     public void Generate()
@@ -244,12 +244,14 @@ Generating Entities ...
         EntityGeneratedClass entityClass = this.Create<EntityGeneratedClass>();
         EntityWrapperClass wrapperClass = this.Create<EntityWrapperClass>();
         EntityRepositoryClass repositoryClass = this.Create<EntityRepositoryClass>();
+        EntityInterfaceClass interfaceClass = this.Create<EntityInterfaceClass>();
         
         
         
         this.CopyPropertiesTo(entityClass);
         this.CopyPropertiesTo(wrapperClass);
         this.CopyPropertiesTo(repositoryClass);
+        this.CopyPropertiesTo(interfaceClass);
         
 
         foreach(Entity entity in entityContext.Entities)
@@ -261,18 +263,18 @@ Generating Entities ...
                 entity.ClassName));
 
             string rootDirectory = Path.GetFullPath(EntityDirectory);
-            CreateEntity(entityClass, wrapperClass,repositoryClass, entity, rootDirectory);
+            CreateEntity(entityClass, wrapperClass,repositoryClass,interfaceClass, entity, rootDirectory,entityContext);
 
             Debug.WriteLine(string.Format(
                 "Created Entity Class '{0}' in {1} ms.",
                 entity.ClassName,
                 watch.Elapsed.TotalMilliseconds.ToString()));
-
+            
             this.Progress.PerformStep();
         }
     }
 
-    public void CreateEntity(EntityGeneratedClass entityClass, EntityWrapperClass wrapperClass,EntityRepositoryClass repositoryClass, Entity entity, string rootDirectory)
+    public void CreateEntity(EntityGeneratedClass entityClass, EntityWrapperClass wrapperClass,EntityRepositoryClass repositoryClass,EntityInterfaceClass interfaceClass, Entity entity, string rootDirectory,EntityContext et)
     {
         string className = entity.ClassName;
         
@@ -293,13 +295,19 @@ Generating Entities ...
         
         string repositoryFile = className + "Repository.cs";
         repositoryFile = Path.Combine(rootDirectory+"/Repository", repositoryFile);
-        
-        
         Response.WriteLine(repositoryClass);
         repositoryClass.Entity = entity;
+        repositoryClass.EntityContext=et;
         Response.WriteLine(repositoryFile);
-        
         repositoryClass.RenderToFile(repositoryFile, true);
+        
+        
+        string interfaceFile = className + "Interface.cs";
+        interfaceFile = Path.Combine(rootDirectory+"/Interface", interfaceFile);
+        Response.WriteLine(interfaceClass);
+        interfaceClass.Entity = entity;
+        Response.WriteLine(interfaceFile);
+        interfaceClass.RenderToFile(interfaceFile, true);
         
         
         

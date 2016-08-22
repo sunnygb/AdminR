@@ -38,6 +38,10 @@
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper.Contrib, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.Contrib.1.50.0\lib\net45\Dapper.Contrib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ICSharpCode.NRefactory, Version=4.0.0.9999, Culture=neutral, PublicKeyToken=efe927acf176eea2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Common\ICSharpCode.NRefactory.dll</HintPath>
@@ -51,6 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.102.0\lib\net46\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
@@ -69,6 +74,13 @@
     <Compile Include="Entities\Entity\SelectedStudent.cs" />
     <Compile Include="Entities\Entity\Student.cs" />
     <Compile Include="Entities\Entity\VerifyingAgent.cs" />
+    <Compile Include="Entities\Interface\AdminInterface.cs" />
+    <Compile Include="Entities\Interface\CourseInterface.cs" />
+    <Compile Include="Entities\Interface\DepartmentInterface.cs" />
+    <Compile Include="Entities\Interface\QualificationInterface.cs" />
+    <Compile Include="Entities\Interface\SelectedStudentInterface.cs" />
+    <Compile Include="Entities\Interface\StudentInterface.cs" />
+    <Compile Include="Entities\Interface\VerifyingAgentInterface.cs" />
     <Compile Include="Entities\Repository\AdminRepository.cs" />
     <Compile Include="Entities\Repository\CourseRepository.cs" />
     <Compile Include="Entities\Repository\DepartmentRepository.cs" />
@@ -101,6 +113,7 @@
     <None Include="Internal\Entity.Wrapper.cst" />
     <None Include="Internal\Extra\Context.Editable.cst" />
     <None Include="Internal\Extra\Context.Generated.cst" />
+    <None Include="Internal\Entity.Interface.cst" />
     <None Include="Internal\Extra\Mapping.Editable.cst" />
     <None Include="Internal\Extra\Mapping.Generated.cst" />
     <None Include="Internal\Extra\MockedContext.Editable.cst" />
