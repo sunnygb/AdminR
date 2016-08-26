@@ -7,5 +7,6 @@ namespace AdmissionAndResult
     /// </summary>
     public partial class App : Application
     {
+       
     }
 }

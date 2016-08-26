@@ -4,8 +4,14 @@ using System.Data.SQLite;
 using SystemDB.Data.Entities.Services;
 using Dapper;
 using System.Text;
+using System.Transactions;
+using System.Linq;
 
 namespace SystemDB.Data.Entities
+
+
+
+
 {
 
 public class AdminRepository : IAdminsRepository
@@ -14,7 +20,7 @@ public class AdminRepository : IAdminsRepository
                 
                 
                 
-                
+                upda
                 public Admin Find(int id)
                 {            
                            conn.Open();
@@ -89,17 +95,19 @@ public class AdminRepository : IAdminsRepository
                 
                 
                 
-                 public void GetFull(int id)
+                 public Admin GetFull(int id)
                 {
                 
                 
                         
                         
-                           
                            conn.Open();
-                           var sql = "SELECT * FROM Admin WHERE AdminId=@AdminId; "+
+                           var sql = "SELECT * FROM Admin WHERE AdminId=@AdminId; "
+                           +
                            
-                           "SELECT * FROM VerifyingAgent WHERE AdminId= @AdminId; "+
+                           //One To many Relations
+                           "SELECT * FROM VerifyingAgent WHERE AdminId= @AdminId; "      
+ ;
                           using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
                           {
                                            
@@ -113,8 +121,10 @@ public class AdminRepository : IAdminsRepository
                            
                            }
                           
+                          conn.Close();
+                           return admin;
                           }
-                          
+                           
                           
                           
                           
@@ -132,12 +142,75 @@ public class AdminRepository : IAdminsRepository
                        
                            
                            
-                           conn.Close();
+                          
                 
                 }
                 
                 
+                public void Save(Admin admin)
+                {
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(admin.IsNew)
+                             {
+                             
+                                this.Insert(admin);
+                             } 
+                             else
+                             {
+                                  this.Update(admin);
+                             
+                             }
+                             
+                             
+                             //One to Many Members
+                             foreach(var addr in admin.VerifyingAgents.Where(a => !a.IsDeleted))
+                              {
+                                addr.AdminId= admin.AdminId;
+                                   if(addr.IsNew)
+                                   {
+                                   this.Insert(addr);
+                                   }
+                                   else
+                                   {
+                                   this.Update(addr);
+                                   }
+                          
+                          }
+                           foreach(var addr in admin.VerifyingAgents.Where(a => a.IsDeleted))
+                              {
+                                
+                                
+                                
+                                
+                              this.conn.Execute("DELETE FROM VerifyingAgent WHERE "+
+                           "VerifyingAgentId = @VerifyingAgentId",new{ addr.VerifyingAgentId });
+                           
+                          
+                            
+  
+                      
                 
+               
+                          
+                          
+                          }    
+                          
+                          
+                          
+  
+                     }
+                   }  
+                
+                
+                
+                
+                
+                
+                
+      
       
       
           public VerifyingAgent Insert(VerifyingAgent  verifyingagent)
@@ -179,13 +252,23 @@ public class AdminRepository : IAdminsRepository
                            conn.Open();
                            var sql = "UPDATE VerifyingAgent SET "+
                            "VerifyingAgentName= @VerifyingAgentName"+
+                           
                            "DegreeVerification= @DegreeVerification"+
+                           
                            "AdminId= @AdminId"+
+                           
                            "SendDate= @SendDate"+
+                           
                            "ReciveDate= @ReciveDate"+
+                           
                            "StudentId= @StudentId"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "VerifyingAgentId=@VerifyingAgentId";
+                           
+                                                   
                            this.conn.Execute(sql,verifyingagent);
                            conn.Close();
                            return verifyingagent;
@@ -202,15 +285,8 @@ public class AdminRepository : IAdminsRepository
   
                 
                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                      
 
         }
 }
+

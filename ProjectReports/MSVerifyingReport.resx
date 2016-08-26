@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="sqlDataSource1.ParameterValues" xml:space="preserve">
-    <value>{"@Date":"%2016%"}</value>
-  </metadata>
   <data name="sqlDataSource1.SelectCommand" xml:space="preserve">
     <value>SELECT DISTINCT
 Student.Student_Name,
@@ -134,7 +131,7 @@ INNER JOIN Course ON Course.Student_Id = Student.Student_Id AND ''= ''
 INNER JOIN Qualification ON Qualification.Qualification_Id = Student.Student_Id
 WHERE
 Course.Course_Name  IN (Select Course.Course_Name from Course where Course_Name like '%MS%') AND
-Student.Date LIKE @Date AND
+Student.Date LIKE '%2016%' AND
 Qualification.BS_isVerified  IS NULL</value>
   </data>
 </root>

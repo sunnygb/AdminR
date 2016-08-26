@@ -26,8 +26,8 @@ namespace SystemDB.Data.Entities
         public string CourseName { get; set; }
         public long StudentId { get; set; }
 
-        public virtual List<SelectedStudent> CourceSelectedStudents { get; set; }
         public virtual Student Student { get; set; }
+        public virtual List<SelectedStudent> CourceSelectedStudents { get; set; }
 
          public bool IsNew
          {

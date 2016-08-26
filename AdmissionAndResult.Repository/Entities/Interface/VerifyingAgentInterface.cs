@@ -8,12 +8,12 @@ namespace SystemDB.Data.Entities.Services
     {
     
       
-      public List< VerifyingAgent> GetAll();
-      public VerifyingAgent Find(int id);
-      public VerifyingAgent Update(VerifyingAgent verifyingagent);
-      public void Remove(int id); 
-      public VerifyingAgent GetFull(int id);
-      public void Save(VerifyingAgent verifyingagent);
+       List< VerifyingAgent> GetAll();
+       VerifyingAgent Find(int id);
+       VerifyingAgent Update(VerifyingAgent verifyingagent);
+       void Remove(int id); 
+       VerifyingAgent GetFull(int id);
+       void Save(VerifyingAgent verifyingagent);
       
       
     }

@@ -31,6 +31,7 @@ namespace AdmissionAndResult.Model
         [Key]
         public string Student_Registeration_Number { get; set; }
         public double Aggregate { get; set; }
+        
         public long Cource_Id { get; set; }
         public string CGPA_Text { get; set; }
         public string SGPA { get; set; }

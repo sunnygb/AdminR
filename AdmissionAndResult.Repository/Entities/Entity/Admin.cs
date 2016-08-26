@@ -22,6 +22,7 @@ namespace SystemDB.Data.Entities
             VerifyingAgents = new List<VerifyingAgent>();
         }
 
+
         public long AdminId { get; set; }
         public string AdminName { get; set; }
         public string Password { get; set; }

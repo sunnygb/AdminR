@@ -1,8 +1,9 @@
 ﻿
+using AdmissionAndResult.ViewModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AdmissionAndResult.Views.Header
+namespace AdmissionAndResult.Views
 {
     /// <summary>
     /// Interaction logic for MainHeader.xaml
@@ -13,14 +14,11 @@ namespace AdmissionAndResult.Views.Header
         {
            
             InitializeComponent();
-           
+            this.DataContext = new HeaderViewModel();
            
             
         }
 
-        private void adminList_MouseLeave(object sender, MouseEventArgs e)
-        {
-
-        }
+        
     }
 }

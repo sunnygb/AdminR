@@ -8,12 +8,12 @@ namespace SystemDB.Data.Entities.Services
     {
     
       
-      public List< Admin> GetAll();
-      public Admin Find(int id);
-      public Admin Update(Admin admin);
-      public void Remove(int id); 
-      public Admin GetFull(int id);
-      public void Save(Admin admin);
+       List< Admin> GetAll();
+       Admin Find(int id);
+       Admin Update(Admin admin);
+       void Remove(int id); 
+       Admin GetFull(int id);
+       void Save(Admin admin);
       
       
     }

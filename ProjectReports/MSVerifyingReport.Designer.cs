@@ -18,7 +18,6 @@ namespace ProjectReports
             Telerik.Reporting.TableGroup tableGroup7 = new Telerik.Reporting.TableGroup();
             Telerik.Reporting.TableGroup tableGroup8 = new Telerik.Reporting.TableGroup();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MSVerifyingReport));
-            Telerik.Reporting.ReportParameter reportParameter1 = new Telerik.Reporting.ReportParameter();
             Telerik.Reporting.Drawing.StyleRule styleRule1 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule2 = new Telerik.Reporting.Drawing.StyleRule();
             Telerik.Reporting.Drawing.StyleRule styleRule3 = new Telerik.Reporting.Drawing.StyleRule();
@@ -33,6 +32,7 @@ namespace ProjectReports
             this.textBox6 = new Telerik.Reporting.TextBox();
             this.textBox13 = new Telerik.Reporting.TextBox();
             this.pageHeaderSection1 = new Telerik.Reporting.PageHeaderSection();
+            this.textBox31 = new Telerik.Reporting.TextBox();
             this.detail = new Telerik.Reporting.DetailSection();
             this.table1 = new Telerik.Reporting.Table();
             this.textBox7 = new Telerik.Reporting.TextBox();
@@ -45,7 +45,6 @@ namespace ProjectReports
             this.sqlDataSource1 = new Telerik.Reporting.SqlDataSource();
             this.pageFooterSection1 = new Telerik.Reporting.PageFooterSection();
             this.textBox32 = new Telerik.Reporting.TextBox();
-            this.textBox31 = new Telerik.Reporting.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // textBox1
@@ -124,6 +123,19 @@ namespace ProjectReports
             this.pageHeaderSection1.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
             this.textBox31});
             this.pageHeaderSection1.Name = "pageHeaderSection1";
+            // 
+            // textBox31
+            // 
+            this.textBox31.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.9418537198798731E-05D), Telerik.Reporting.Drawing.Unit.Inch(3.9378803194267675E-05D));
+            this.textBox31.Name = "textBox31";
+            this.textBox31.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(6.3999996185302734D), Telerik.Reporting.Drawing.Unit.Inch(0.99992126226425171D));
+            this.textBox31.Style.BorderColor.Default = System.Drawing.Color.Navy;
+            this.textBox31.Style.Font.Bold = true;
+            this.textBox31.Style.Font.Name = "Segoe UI Semibold";
+            this.textBox31.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(14D);
+            this.textBox31.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
+            this.textBox31.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
+            this.textBox31.Value = "MS Verifying Student Report";
             // 
             // detail
             // 
@@ -267,8 +279,6 @@ namespace ProjectReports
             // 
             this.sqlDataSource1.ConnectionString = "ProjectReports.Properties.Settings.ReportConnection";
             this.sqlDataSource1.Name = "sqlDataSource1";
-            this.sqlDataSource1.Parameters.AddRange(new Telerik.Reporting.SqlDataSourceParameter[] {
-            new Telerik.Reporting.SqlDataSourceParameter("@Date", System.Data.DbType.String, "= Parameters.MSDate.Value")});
             this.sqlDataSource1.SelectCommand = resources.GetString("sqlDataSource1.SelectCommand");
             // 
             // pageFooterSection1
@@ -286,19 +296,6 @@ namespace ProjectReports
             this.textBox32.Style.Font.Name = "Segoe UI";
             this.textBox32.Value = "Page: {PageNumber}";
             // 
-            // textBox31
-            // 
-            this.textBox31.Location = new Telerik.Reporting.Drawing.PointU(Telerik.Reporting.Drawing.Unit.Inch(3.9418537198798731E-05D), Telerik.Reporting.Drawing.Unit.Inch(3.9378803194267675E-05D));
-            this.textBox31.Name = "textBox31";
-            this.textBox31.Size = new Telerik.Reporting.Drawing.SizeU(Telerik.Reporting.Drawing.Unit.Inch(6.3999996185302734D), Telerik.Reporting.Drawing.Unit.Inch(0.99992126226425171D));
-            this.textBox31.Style.BorderColor.Default = System.Drawing.Color.Navy;
-            this.textBox31.Style.Font.Bold = true;
-            this.textBox31.Style.Font.Name = "Segoe UI Semibold";
-            this.textBox31.Style.Font.Size = Telerik.Reporting.Drawing.Unit.Point(14D);
-            this.textBox31.Style.TextAlign = Telerik.Reporting.Drawing.HorizontalAlign.Center;
-            this.textBox31.Style.VerticalAlign = Telerik.Reporting.Drawing.VerticalAlign.Middle;
-            this.textBox31.Value = "MS Verifying Student Report";
-            // 
             // MSVerifyingReport
             // 
             this.Items.AddRange(new Telerik.Reporting.ReportItemBase[] {
@@ -308,11 +305,6 @@ namespace ProjectReports
             this.Name = "MSVerifyingReport";
             this.PageSettings.Margins = new Telerik.Reporting.Drawing.MarginsU(Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D), Telerik.Reporting.Drawing.Unit.Inch(1D));
             this.PageSettings.PaperKind = System.Drawing.Printing.PaperKind.Letter;
-            reportParameter1.AllowBlank = false;
-            reportParameter1.Name = "MSDate";
-            reportParameter1.Text = "Date";
-            reportParameter1.Value = "%2016%";
-            this.ReportParameters.Add(reportParameter1);
             styleRule1.Selectors.AddRange(new Telerik.Reporting.Drawing.ISelector[] {
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.TextItemBase)),
             new Telerik.Reporting.Drawing.TypeSelector(typeof(Telerik.Reporting.HtmlTextBox))});
