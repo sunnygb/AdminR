@@ -23,14 +23,12 @@ namespace SystemDB.Data.Entities
         }
 
         public long DepartmentID { get; set; }
-        public long StudentId { get; set; }
         public string DepartmentName { get; set; }
         public long StudentStrength { get; set; }
         public string HODName { get; set; }
         public string Location { get; set; }
 
         public virtual List<SelectedStudent> SelectedStudents { get; set; }
-        public virtual Student Student { get; set; }
 
          public bool IsNew
          {

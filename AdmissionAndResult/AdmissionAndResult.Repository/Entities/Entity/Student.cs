@@ -19,10 +19,9 @@ namespace SystemDB.Data.Entities
     {
         public Student()
         {
-            SelectedSelectedStudents = new List<SelectedStudent>();
-            Departments = new List<Department>();
             Courses = new List<Course>();
             VerifyingAgents = new List<VerifyingAgent>();
+            SelectedStudents = new List<SelectedStudent>();
         }
 
         public long StudentId { get; set; }
@@ -41,11 +40,10 @@ namespace SystemDB.Data.Entities
         public string Date { get; set; }
         public string FathersNumber { get; set; }
 
-        public virtual List<SelectedStudent> SelectedSelectedStudents { get; set; }
-        public virtual List<Department> Departments { get; set; }
         public virtual List<Course> Courses { get; set; }
         public virtual List<VerifyingAgent> VerifyingAgents { get; set; }
         public virtual Qualification Qualification { get; set; }
+        public virtual List<SelectedStudent> SelectedStudents { get; set; }
 
          public bool IsNew
          {

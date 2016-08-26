@@ -4,8 +4,14 @@ using System.Data.SQLite;
 using SystemDB.Data.Entities.Services;
 using Dapper;
 using System.Text;
+using System.Transactions;
+using System.Linq;
 
 namespace SystemDB.Data.Entities
+
+
+
+
 {
 
 public class VerifyingAgentRepository : IVerifyingAgentsRepository
@@ -14,7 +20,7 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
                 
                 
                 
-                
+                upda
                 public VerifyingAgent Find(int id)
                 {            
                            conn.Open();
@@ -97,20 +103,23 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
                 
                 
                 
-                 public void GetFull(int id)
+                 public VerifyingAgent GetFull(int id)
                 {
                 
                 
                         
                         
-                           
                            conn.Open();
-                           var sql = "SELECT * FROM VerifyingAgent WHERE VerifyingAgentId=@VerifyingAgentId; "+
+                           var sql = "SELECT * FROM VerifyingAgent WHERE VerifyingAgentId=@VerifyingAgentId; "
+                           +
+                           
                            
                           //One to One Members
                           "SELECT * FROM Admin WHERE      = @VerifyingAgentId; "+
+                                                      
                           //One to One Members
                           "SELECT * FROM Student WHERE      = @VerifyingAgentId; "+
+                           ;
                           using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
                           {
                                            
@@ -135,8 +144,10 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
                            }
                                     
                           
+                          conn.Close();
+                           return verifyingagent;
                           }
-                          
+                           
                           
                           
                           
@@ -154,12 +165,78 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
                        
                            
                            
-                           conn.Close();
+                          
                 
                 }
                 
                 
+                public void Save(VerifyingAgent verifyingagent)
+                {
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(verifyingagent.IsNew)
+                             {
+                             
+                                this.Insert(verifyingagent);
+                             } 
+                             else
+                             {
+                                  this.Update(verifyingagent);
+                             
+                             }
+                             
+                             
+
+                          //One to One Members
+                            if(!verifyingagent.Admin.IsDeleted)
+                            {
+                                 verifyingagent.Admin.VerifyingAgentId = verifyingagent.VerifyingAgentId;
+                                 
+                          
+                          
+                           }
+                           if(verifyingagent.Admin.IsDeleted)
+                            {
+                                 verifyingagent.Admin.VerifyingAgentId = verifyingagent.VerifyingAgentId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                             
+
+                          //One to One Members
+                            if(!verifyingagent.Student.IsDeleted)
+                            {
+                                 verifyingagent.Student.VerifyingAgentId = verifyingagent.VerifyingAgentId;
+                                 
+                          
+                          
+                           }
+                           if(verifyingagent.Student.IsDeleted)
+                            {
+                                 verifyingagent.Student.VerifyingAgentId = verifyingagent.VerifyingAgentId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                          
+  
+                     }
+                   }  
                 
+                
+                
+                
+                
+                
+                
+      
       
       
           public Admin Insert(Admin  admin)
@@ -195,11 +272,19 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
                            conn.Open();
                            var sql = "UPDATE Admin SET "+
                            "AdminName= @AdminName"+
+                           
                            "Password= @Password"+
+                           
                            "HireDate= @HireDate"+
+                           
                            "ChangeDate= @ChangeDate"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "AdminId=@AdminId";
+                           
+                                                   
                            this.conn.Execute(sql,admin);
                            conn.Close();
                            return admin;
@@ -214,6 +299,7 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
   
   
   
+      
       
       
           public Student Insert(Student  student)
@@ -279,21 +365,39 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
                            conn.Open();
                            var sql = "UPDATE Student SET "+
                            "StudentName= @StudentName"+
+                           
                            "StudentEmail= @StudentEmail"+
+                           
                            "FatherName= @FatherName"+
+                           
                            "FatherMonthlyIncome= @FatherMonthlyIncome"+
+                           
                            "FatherOccupation= @FatherOccupation"+
+                           
                            "PostalAddress= @PostalAddress"+
+                           
                            "PermanentAddress= @PermanentAddress"+
+                           
                            "DateOfBirth= @DateOfBirth"+
+                           
                            "NICNo= @NICNo"+
+                           
                            "BloodGroup= @BloodGroup"+
+                           
                            "PhoneNumber= @PhoneNumber"+
+                           
                            "ResidentalPhoneNumber= @ResidentalPhoneNumber"+
+                           
                            "Date= @Date"+
+                           
                            "FathersNumber= @FathersNumber"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "StudentId=@StudentId";
+                           
+                                                   
                            this.conn.Execute(sql,student);
                            conn.Close();
                            return student;
@@ -310,15 +414,8 @@ public class VerifyingAgentRepository : IVerifyingAgentsRepository
   
                 
                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                      
 
         }
 }
+

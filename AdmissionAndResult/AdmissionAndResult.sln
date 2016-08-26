@@ -5,11 +5,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionAndResult", "Admis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectReports", "ProjectReports\ProjectReports.csproj", "{93C67185-7759-4862-A765-FA81E6BF7EC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmissionAndResult.Repository", "AdmissionAndResult.Repository\AdmissionAndResult.Repository.csproj", "{384C8C13-09ED-406B-A5E5-9042F5DE6053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "AdmissionAndResult.Repository\Generator.csproj", "{384C8C13-09ED-406B-A5E5-9042F5DE6053}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLite-Net", "SQLite-Net\SQLite-Net.csproj", "{A84EED59-476E-410C-AF8F-8D6F650E872F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORMLite", "Dapper\ORMLite.csproj", "{53513A9A-8F32-448D-A1C1-13DF4C8F42D7}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://sunnygb.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -19,9 +23,15 @@ Global
 		SccProjectUniqueName2 = ProjectReports\\ProjectReports.csproj
 		SccProjectName2 = ProjectReports
 		SccLocalPath2 = ProjectReports
-		SccProjectUniqueName3 = AdmissionAndResult.Repository\\AdmissionAndResult.Repository.csproj
-		SccProjectName3 = AdmissionAndResult.Repository
-		SccLocalPath3 = AdmissionAndResult.Repository
+		SccProjectUniqueName3 = SQLite-Net\\SQLite-Net.csproj
+		SccProjectName3 = SQLite-Net
+		SccLocalPath3 = SQLite-Net
+		SccProjectUniqueName4 = Dapper\\ORMLite.csproj
+		SccProjectName4 = Dapper
+		SccLocalPath4 = Dapper
+		SccProjectUniqueName5 = AdmissionAndResult.Repository\\Generator.csproj
+		SccProjectName5 = AdmissionAndResult.Repository
+		SccLocalPath5 = AdmissionAndResult.Repository
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +50,14 @@ Global
 		{384C8C13-09ED-406B-A5E5-9042F5DE6053}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{384C8C13-09ED-406B-A5E5-9042F5DE6053}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{384C8C13-09ED-406B-A5E5-9042F5DE6053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A84EED59-476E-410C-AF8F-8D6F650E872F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A84EED59-476E-410C-AF8F-8D6F650E872F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A84EED59-476E-410C-AF8F-8D6F650E872F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A84EED59-476E-410C-AF8F-8D6F650E872F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53513A9A-8F32-448D-A1C1-13DF4C8F42D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53513A9A-8F32-448D-A1C1-13DF4C8F42D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53513A9A-8F32-448D-A1C1-13DF4C8F42D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53513A9A-8F32-448D-A1C1-13DF4C8F42D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

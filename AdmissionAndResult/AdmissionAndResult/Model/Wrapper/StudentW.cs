@@ -42,8 +42,7 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.String _Student_Name;
-	[Required(ErrorMessage = "Nam Tere bap na likhna")]
-
+	[Required(ErrorMessage = "Name tere bap na likhna")]
 	public System.String Student_Name
 	{
 	  get { return _Student_Name; }

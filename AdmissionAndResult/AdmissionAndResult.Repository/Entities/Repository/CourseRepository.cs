@@ -4,8 +4,14 @@ using System.Data.SQLite;
 using SystemDB.Data.Entities.Services;
 using Dapper;
 using System.Text;
+using System.Transactions;
+using System.Linq;
 
 namespace SystemDB.Data.Entities
+
+
+
+
 {
 
 public class CourseRepository : ICoursesRepository
@@ -14,7 +20,7 @@ public class CourseRepository : ICoursesRepository
                 
                 
                 
-                
+                upda
                 public Course Find(int id)
                 {            
                            conn.Open();
@@ -81,31 +87,27 @@ public class CourseRepository : ICoursesRepository
                 
                 
                 
-                 public void GetFull(int id)
+                 public Course GetFull(int id)
                 {
                 
                 
                         
                         
-                           
                            conn.Open();
-                           var sql = "SELECT * FROM Course WHERE CourseId=@CourseId; "+
+                           var sql = "SELECT * FROM Course WHERE CourseId=@CourseId; "
+                           +
                            
-                           "SELECT * FROM SelectedStudent WHERE CourseId= @CourseId; "+
+                           
                           //One to One Members
                           "SELECT * FROM Student WHERE      = @CourseId; "+
+                                                      //One To many Relations
+                           "SELECT * FROM SelectedStudent WHERE CourseId= @CourseId; "    
+ ;
                           using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
                           {
                                            
                           var course = multipleResults.ReadSingleOrDefault<Course>();
                           // Relations
-                           var selectedstudent = multipleResults.Read<SelectedStudent>().AsList();
-                           if(course != null && selectedstudent != null )
-                           {
-                               course.CourceSelectedStudents.AddRange(selectedstudent);
-                           
-                           
-                           }
                                     //One to One Members
                            var student = multipleResults.ReadSingleOrDefault<Student>();         
                              if(course != null && student != null )
@@ -115,9 +117,18 @@ public class CourseRepository : ICoursesRepository
                            
                            }
                                     
+                           var selectedstudent = multipleResults.Read<SelectedStudent>().AsList();
+                           if(course != null && selectedstudent != null )
+                           {
+                               course.CourceSelectedStudents.AddRange(selectedstudent);
+                           
+                           
+                           }
                           
+                          conn.Close();
+                           return course;
                           }
-                          
+                           
                           
                           
                           
@@ -135,74 +146,94 @@ public class CourseRepository : ICoursesRepository
                        
                            
                            
-                           conn.Close();
+                          
                 
                 }
                 
                 
-                
-      
-      
-          public SelectedStudent Insert(SelectedStudent  selectedstudent)
+                public void Save(Course course)
                 {
-                       conn.Open();
-                       var sql = " INSERT INTO SelectedStudent VALUES("+
-                       
-                       "Selected_Student_Id = @Selected_Student_Id ,"+
-                       
-                       
-                       "Student_Registeration_Number = @Student_Registeration_Number ,"+
-                       
-                       
-                       "Aggregate = @Aggregate ,"+
-                       
-                       
-                       "Cource_Id = @Cource_Id ,"+
-                       
-                       
-                       "CGPA Text = @CGPA Text ,"+
-                       
-                       
-                       "SGPA = @SGPA ,"+
-                       
-                       
-                       "Department_ID = @Department_ID );"+
-                       
-                       "SELECT CAST(SCOPE_IDENTITY() as int)";
-                       var id = conn.QuerySingle<int>(sql,selectedstudent);
-                       conn.Close();
-                       selectedstudent.SelectedStudentId=id;
-                       return selectedstudent;
-                }
-         
-         
-         
-                         public SelectedStudent  Update(SelectedStudent  selectedstudent)
-                         {
-                           conn.Open();
-                           var sql = "UPDATE SelectedStudent SET "+
-                           "StudentRegisterationNumber= @StudentRegisterationNumber"+
-                           "Aggregate= @Aggregate"+
-                           "CourceId= @CourceId"+
-                           "CGPAText= @CGPAText"+
-                           "Sgpa= @Sgpa"+
-                           "DepartmentID= @DepartmentID"+
-                           "WHERE"+ 
-                           "SelectedStudentId=@SelectedStudentId";
-                           this.conn.Execute(sql,selectedstudent);
-                           conn.Close();
-                           return selectedstudent;
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(course.IsNew)
+                             {
+                             
+                                this.Insert(course);
+                             } 
+                             else
+                             {
+                                  this.Update(course);
+                             
+                             }
+                             
+                             
+
+                          //One to One Members
+                            if(!course.Student.IsDeleted)
+                            {
+                                 course.Student.CourseId = course.CourseId;
+                                 
+                          
+                          
+                           }
+                           if(course.Student.IsDeleted)
+                            {
+                                 course.Student.CourseId = course.CourseId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                             
+                             //One to Many Members
+                             foreach(var addr in course.CourceSelectedStudents.Where(a => !a.IsDeleted))
+                              {
+                                addr.CourseId= course.CourseId;
+                                   if(addr.IsNew)
+                                   {
+                                   this.Insert(addr);
+                                   }
+                                   else
+                                   {
+                                   this.Update(addr);
+                                   }
+                          
+                          }
+                           foreach(var addr in course.CourceSelectedStudents.Where(a => a.IsDeleted))
+                              {
+                                
+                                
+                                
+                                
+                              this.conn.Execute("DELETE FROM SelectedStudent WHERE "+
+                           "SelectedStudentId = @SelectedStudentId",new{ addr.SelectedStudentId });                           "StudentId = @StudentId",new{ addr.StudentId });
+                           
+                          
+                            
+  
+                      
                 
-                         }
+               
+                          
+                          
+                          }    
+                          
+                          
+                          
   
-  
-  
-  
-  
-  
-  
-  
-  
+                     }
+                   }  
+                
+                
+                
+                
+                
+                
+                
+      
       
       
           public Student Insert(Student  student)
@@ -268,21 +299,39 @@ public class CourseRepository : ICoursesRepository
                            conn.Open();
                            var sql = "UPDATE Student SET "+
                            "StudentName= @StudentName"+
+                           
                            "StudentEmail= @StudentEmail"+
+                           
                            "FatherName= @FatherName"+
+                           
                            "FatherMonthlyIncome= @FatherMonthlyIncome"+
+                           
                            "FatherOccupation= @FatherOccupation"+
+                           
                            "PostalAddress= @PostalAddress"+
+                           
                            "PermanentAddress= @PermanentAddress"+
+                           
                            "DateOfBirth= @DateOfBirth"+
+                           
                            "NICNo= @NICNo"+
+                           
                            "BloodGroup= @BloodGroup"+
+                           
                            "PhoneNumber= @PhoneNumber"+
+                           
                            "ResidentalPhoneNumber= @ResidentalPhoneNumber"+
+                           
                            "Date= @Date"+
+                           
                            "FathersNumber= @FathersNumber"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "StudentId=@StudentId";
+                           
+                                                   
                            this.conn.Execute(sql,student);
                            conn.Close();
                            return student;
@@ -297,17 +346,90 @@ public class CourseRepository : ICoursesRepository
   
   
   
+      
+      
+      
+          public SelectedStudent Insert(SelectedStudent  selectedstudent)
+                {
+                       conn.Open();
+                       var sql = " INSERT INTO SelectedStudent VALUES("+
+                       
+                       "Selected_Student_Id = @Selected_Student_Id ,"+
+                       
+                       
+                       "Student_Registeration_Number = @Student_Registeration_Number ,"+
+                       
+                       
+                       "Aggregate = @Aggregate ,"+
+                       
+                       
+                       "Cource_Id = @Cource_Id ,"+
+                       
+                       
+                       "CGPA Text = @CGPA Text ,"+
+                       
+                       
+                       "SGPA = @SGPA ,"+
+                       
+                       
+                       "Department_ID = @Department_ID ,"+
+                       
+                       
+                       "Student_Id = @Student_Id );"+
+                       
+                       "SELECT CAST(SCOPE_IDENTITY() as int)";
+                       var id = conn.QuerySingle<int>(sql,selectedstudent);
+                       conn.Close();
+                       selectedstudent.SelectedStudentId=id;
+                       selectedstudent.StudentId=id;
+                       return selectedstudent;
+                }
+         
+         
+         
+                         public SelectedStudent  Update(SelectedStudent  selectedstudent)
+                         {
+                           conn.Open();
+                           var sql = "UPDATE SelectedStudent SET "+
+                           "StudentRegisterationNumber= @StudentRegisterationNumber"+
+                           
+                           "Aggregate= @Aggregate"+
+                           
+                           "CourceId= @CourceId"+
+                           
+                           "CGPAText= @CGPAText"+
+                           
+                           "Sgpa= @Sgpa"+
+                           
+                           "DepartmentID= @DepartmentID"+
+                           
+                           "WHERE"+ 
+                           
+                           
+                           "SelectedStudentId=@SelectedStudentId";
+                           
+                                                   
+                           "StudentId=@StudentId";
+                           
+                                                   
+                           this.conn.Execute(sql,selectedstudent);
+                           conn.Close();
+                           return selectedstudent;
+                
+                         }
+  
+  
+  
+  
+  
+  
+  
+  
+  
                 
                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                      
 
         }
 }
+

@@ -4,8 +4,14 @@ using System.Data.SQLite;
 using SystemDB.Data.Entities.Services;
 using Dapper;
 using System.Text;
+using System.Transactions;
+using System.Linq;
 
 namespace SystemDB.Data.Entities
+
+
+
+
 {
 
 public class SelectedStudentRepository : ISelectedStudentsRepository
@@ -14,12 +20,12 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                 
                 
                 
-                
+                upda
                 public SelectedStudent Find(int id)
                 {            
                            conn.Open();
                            var result = this.conn.QuerySingleOrDefault<SelectedStudent>("SELECT * FROM SelectedStudent WHERE"+
-                           "SelectedStudentId = @SelectedStudentId",new{ id });
+                           "SelectedStudentId = @SelectedStudentId",                           "StudentId = @StudentId",new{ id });
                            conn.Close();
                            return result;
                 
@@ -54,12 +60,16 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                        "SGPA = @SGPA ,"+
                        
                        
-                       "Department_ID = @Department_ID );"+
+                       "Department_ID = @Department_ID ,"+
+                       
+                       
+                       "Student_Id = @Student_Id );"+
                        
                        "SELECT CAST(SCOPE_IDENTITY() as int)";
                        var id = conn.QuerySingle<int>(sql,selectedstudent);
                        conn.Close();
                        selectedstudent.SelectedStudentId=id;
+                       selectedstudent.StudentId=id;
                        return selectedstudent;
                 }
                 
@@ -75,6 +85,7 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                            "DepartmentID= @DepartmentID"+
                            "WHERE"+ 
                            "SelectedStudentId=@SelectedStudentId";
+                           "StudentId=@StudentId";
                            this.conn.Execute(sql,selectedstudent);
                            conn.Close();
                            return selectedstudent;
@@ -88,7 +99,7 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                            
                            conn.Open();
                            this.conn.Execute("DELETE FROM SelectedStudent WHERE "+
-                           "SelectedStudentId = @SelectedStudentId",new{ id });
+                           "SelectedStudentId = @SelectedStudentId",                           "StudentId = @StudentId",new{ id });
                            
                            conn.Close();
                 
@@ -97,22 +108,27 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                 
                 
                 
-                 public void GetFull(int id)
+                 public SelectedStudent GetFull(int id)
                 {
                 
                 
                         
                         
-                           
                            conn.Open();
-                           var sql = "SELECT * FROM SelectedStudent WHERE SelectedStudentId=@SelectedStudentId; "+
+                           var sql = "SELECT * FROM SelectedStudent WHERE SelectedStudentId=@SelectedStudentId; "
+                           +StudentId=@StudentId; "
+                           +
+                           
                            
                           //One to One Members
-                          "SELECT * FROM Department WHERE      = @SelectedStudentId; "+
+                          "SELECT * FROM Department WHERE      = @SelectedStudentId; "+     = @StudentId; "+
+                                                      
                           //One to One Members
-                          "SELECT * FROM Course WHERE      = @SelectedStudentId; "+
+                          "SELECT * FROM Course WHERE      = @SelectedStudentId; "+     = @StudentId; "+
+                                                      
                           //One to One Members
-                          "SELECT * FROM Student WHERE      = @SelectedStudentId; "+
+                          "SELECT * FROM Student WHERE      = @SelectedStudentId; "+     = @StudentId; "+
+                           ;
                           using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
                           {
                                            
@@ -146,8 +162,10 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                            }
                                     
                           
+                          conn.Close();
+                           return selectedstudent;
                           }
-                          
+                           
                           
                           
                           
@@ -165,12 +183,97 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                        
                            
                            
-                           conn.Close();
+                          
                 
                 }
                 
                 
+                public void Save(SelectedStudent selectedstudent)
+                {
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(selectedstudent.IsNew)
+                             {
+                             
+                                this.Insert(selectedstudent);
+                             } 
+                             else
+                             {
+                                  this.Update(selectedstudent);
+                             
+                             }
+                             
+                             
+
+                          //One to One Members
+                            if(!selectedstudent.Department.IsDeleted)
+                            {
+                                 selectedstudent.Department.SelectedStudentIdStudentId = selectedstudent.SelectedStudentIdStudentId;
+                                 
+                          
+                          
+                           }
+                           if(selectedstudent.Department.IsDeleted)
+                            {
+                                 selectedstudent.Department.SelectedStudentIdStudentId = selectedstudent.SelectedStudentIdStudentId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                             
+
+                          //One to One Members
+                            if(!selectedstudent.CourceCourse.IsDeleted)
+                            {
+                                 selectedstudent.CourceCourse.SelectedStudentIdStudentId = selectedstudent.SelectedStudentIdStudentId;
+                                 
+                          
+                          
+                           }
+                           if(selectedstudent.CourceCourse.IsDeleted)
+                            {
+                                 selectedstudent.CourceCourse.SelectedStudentIdStudentId = selectedstudent.SelectedStudentIdStudentId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                             
+
+                          //One to One Members
+                            if(!selectedstudent.Student.IsDeleted)
+                            {
+                                 selectedstudent.Student.SelectedStudentIdStudentId = selectedstudent.SelectedStudentIdStudentId;
+                                 
+                          
+                          
+                           }
+                           if(selectedstudent.Student.IsDeleted)
+                            {
+                                 selectedstudent.Student.SelectedStudentIdStudentId = selectedstudent.SelectedStudentIdStudentId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                          
+  
+                     }
+                   }  
                 
+                
+                
+                
+                
+                
+                
+      
       
       
           public Department Insert(Department  department)
@@ -179,9 +282,6 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                        var sql = " INSERT INTO Department VALUES("+
                        
                        "Department_ID = @Department_ID ,"+
-                       
-                       
-                       "Student_Id = @Student_Id ,"+
                        
                        
                        "Department_Name = @Department_Name ,"+
@@ -208,13 +308,20 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                          {
                            conn.Open();
                            var sql = "UPDATE Department SET "+
-                           "StudentId= @StudentId"+
                            "DepartmentName= @DepartmentName"+
+                           
                            "StudentStrength= @StudentStrength"+
+                           
                            "HODName= @HODName"+
+                           
                            "Location= @Location"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "DepartmentID=@DepartmentID";
+                           
+                                                   
                            this.conn.Execute(sql,department);
                            conn.Close();
                            return department;
@@ -229,6 +336,7 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
   
   
   
+      
       
       
           public Course Insert(Course  course)
@@ -258,9 +366,15 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                            conn.Open();
                            var sql = "UPDATE Course SET "+
                            "CourseName= @CourseName"+
+                           
                            "StudentId= @StudentId"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "CourseId=@CourseId";
+                           
+                                                   
                            this.conn.Execute(sql,course);
                            conn.Close();
                            return course;
@@ -275,6 +389,7 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
   
   
   
+      
       
       
           public Student Insert(Student  student)
@@ -340,21 +455,39 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
                            conn.Open();
                            var sql = "UPDATE Student SET "+
                            "StudentName= @StudentName"+
+                           
                            "StudentEmail= @StudentEmail"+
+                           
                            "FatherName= @FatherName"+
+                           
                            "FatherMonthlyIncome= @FatherMonthlyIncome"+
+                           
                            "FatherOccupation= @FatherOccupation"+
+                           
                            "PostalAddress= @PostalAddress"+
+                           
                            "PermanentAddress= @PermanentAddress"+
+                           
                            "DateOfBirth= @DateOfBirth"+
+                           
                            "NICNo= @NICNo"+
+                           
                            "BloodGroup= @BloodGroup"+
+                           
                            "PhoneNumber= @PhoneNumber"+
+                           
                            "ResidentalPhoneNumber= @ResidentalPhoneNumber"+
+                           
                            "Date= @Date"+
+                           
                            "FathersNumber= @FathersNumber"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "StudentId=@StudentId";
+                           
+                                                   
                            this.conn.Execute(sql,student);
                            conn.Close();
                            return student;
@@ -371,15 +504,8 @@ public class SelectedStudentRepository : ISelectedStudentsRepository
   
                 
                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                      
 
         }
 }
+

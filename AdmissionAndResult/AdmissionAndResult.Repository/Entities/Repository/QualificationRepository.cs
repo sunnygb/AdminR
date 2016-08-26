@@ -4,8 +4,14 @@ using System.Data.SQLite;
 using SystemDB.Data.Entities.Services;
 using Dapper;
 using System.Text;
+using System.Transactions;
+using System.Linq;
 
 namespace SystemDB.Data.Entities
+
+
+
+
 {
 
 public class QualificationRepository : IQualificationsRepository
@@ -14,7 +20,7 @@ public class QualificationRepository : IQualificationsRepository
                 
                 
                 
-                
+                upda
                 public Qualification Find(int id)
                 {            
                            conn.Open();
@@ -205,18 +211,20 @@ public class QualificationRepository : IQualificationsRepository
                 
                 
                 
-                 public void GetFull(int id)
+                 public Qualification GetFull(int id)
                 {
                 
                 
                         
                         
-                           
                            conn.Open();
-                           var sql = "SELECT * FROM Qualification WHERE QualificationId=@QualificationId; "+
+                           var sql = "SELECT * FROM Qualification WHERE QualificationId=@QualificationId; "
+                           +
+                           
                            
                           //One to One Members
                           "SELECT * FROM Student WHERE      = @QualificationId; "+
+                           ;
                           using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
                           {
                                            
@@ -232,8 +240,10 @@ public class QualificationRepository : IQualificationsRepository
                            }
                                     
                           
+                          conn.Close();
+                           return qualification;
                           }
-                          
+                           
                           
                           
                           
@@ -251,12 +261,59 @@ public class QualificationRepository : IQualificationsRepository
                        
                            
                            
-                           conn.Close();
+                          
                 
                 }
                 
                 
+                public void Save(Qualification qualification)
+                {
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(qualification.IsNew)
+                             {
+                             
+                                this.Insert(qualification);
+                             } 
+                             else
+                             {
+                                  this.Update(qualification);
+                             
+                             }
+                             
+                             
+
+                          //One to One Members
+                            if(!qualification.Student.IsDeleted)
+                            {
+                                 qualification.Student.QualificationId = qualification.QualificationId;
+                                 
+                          
+                          
+                           }
+                           if(qualification.Student.IsDeleted)
+                            {
+                                 qualification.Student.QualificationId = qualification.QualificationId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                          
+  
+                     }
+                   }  
                 
+                
+                
+                
+                
+                
+                
+      
       
       
           public Student Insert(Student  student)
@@ -322,21 +379,39 @@ public class QualificationRepository : IQualificationsRepository
                            conn.Open();
                            var sql = "UPDATE Student SET "+
                            "StudentName= @StudentName"+
+                           
                            "StudentEmail= @StudentEmail"+
+                           
                            "FatherName= @FatherName"+
+                           
                            "FatherMonthlyIncome= @FatherMonthlyIncome"+
+                           
                            "FatherOccupation= @FatherOccupation"+
+                           
                            "PostalAddress= @PostalAddress"+
+                           
                            "PermanentAddress= @PermanentAddress"+
+                           
                            "DateOfBirth= @DateOfBirth"+
+                           
                            "NICNo= @NICNo"+
+                           
                            "BloodGroup= @BloodGroup"+
+                           
                            "PhoneNumber= @PhoneNumber"+
+                           
                            "ResidentalPhoneNumber= @ResidentalPhoneNumber"+
+                           
                            "Date= @Date"+
+                           
                            "FathersNumber= @FathersNumber"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "StudentId=@StudentId";
+                           
+                                                   
                            this.conn.Execute(sql,student);
                            conn.Close();
                            return student;
@@ -353,15 +428,8 @@ public class QualificationRepository : IQualificationsRepository
   
                 
                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                      
 
         }
 }
+

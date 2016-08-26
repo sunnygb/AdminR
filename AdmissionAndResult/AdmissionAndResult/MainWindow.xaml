@@ -39,6 +39,11 @@
         <DataTemplate DataType="{x:Type ViewModel:MeriListViewModel}">
             <Views:MeritForm />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:HeaderViewModel}">
+            <Views:MainHeader />
+        </DataTemplate>
+
+
     </Window.Resources>
     <DockPanel Background="#FF055061" LastChildFill="False">
         <ContentControl />

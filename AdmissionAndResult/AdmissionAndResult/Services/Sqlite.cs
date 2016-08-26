@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.SQLite;
+using SQLiteNetExtensions.Extensions;
 namespace AdmissionAndResult.Services
+
 {
    static class Sqlite
     {

@@ -1,8 +1,7 @@
 ﻿using AdmissionAndResult.ViewModel;
-using AdmissionAndResult.Views.Header;
+using AdmissionAndResult.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using AdmissionAndResult.Views;
 
 namespace AdmissionAndResult
 {
@@ -13,6 +12,7 @@ namespace AdmissionAndResult
         private AgentFormViewModel _agentVM = new AgentFormViewModel();
         private MeriListViewModel _meritVM = new MeriListViewModel();
         private SearchViewModel _searchVM = new SearchViewModel();
+        private StudentverifyingForm _verifyingForm = new StudentverifyingForm();
        
 
 

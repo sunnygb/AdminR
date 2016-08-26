@@ -8,12 +8,12 @@ namespace SystemDB.Data.Entities.Services
     {
     
       
-      public List< SelectedStudent> GetAll();
-      public SelectedStudent Find(int id);
-      public SelectedStudent Update(SelectedStudent selectedstudent);
-      public void Remove(int id); 
-      public SelectedStudent GetFull(int id);
-      public void Save(SelectedStudent selectedstudent);
+       List< SelectedStudent> GetAll();
+       SelectedStudent Find(int id);
+       SelectedStudent Update(SelectedStudent selectedstudent);
+       void Remove(int id); 
+       SelectedStudent GetFull(int id);
+       void Save(SelectedStudent selectedstudent);
       
       
     }

@@ -4,8 +4,14 @@ using System.Data.SQLite;
 using SystemDB.Data.Entities.Services;
 using Dapper;
 using System.Text;
+using System.Transactions;
+using System.Linq;
 
 namespace SystemDB.Data.Entities
+
+
+
+
 {
 
 public class StudentRepository : IStudentsRepository
@@ -14,7 +20,7 @@ public class StudentRepository : IStudentsRepository
                 
                 
                 
-                
+                upda
                 public Student Find(int id)
                 {            
                            conn.Open();
@@ -129,41 +135,31 @@ public class StudentRepository : IStudentsRepository
                 
                 
                 
-                 public void GetFull(int id)
+                 public Student GetFull(int id)
                 {
                 
                 
                         
                         
-                           
                            conn.Open();
-                           var sql = "SELECT * FROM Student WHERE StudentId=@StudentId; "+
+                           var sql = "SELECT * FROM Student WHERE StudentId=@StudentId; "
+                           +
                            
-                           "SELECT * FROM SelectedStudent WHERE StudentId= @StudentId; "+
-                           "SELECT * FROM Department WHERE StudentId= @StudentId; "+
-                           "SELECT * FROM Course WHERE StudentId= @StudentId; "+
-                           "SELECT * FROM VerifyingAgent WHERE StudentId= @StudentId; "+
+                           //One To many Relations
+                           "SELECT * FROM Course WHERE StudentId= @StudentId; " +               
+                            //One To many Relations
+                           "SELECT * FROM VerifyingAgent WHERE StudentId= @StudentId; " +               
+                            
                           //One to One Members
                           "SELECT * FROM Qualification WHERE      = @StudentId; "+
+                                                      //One To many Relations
+                           "SELECT * FROM SelectedStudent WHERE StudentId= @StudentId; "                
+ ;
                           using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
                           {
                                            
                           var student = multipleResults.ReadSingleOrDefault<Student>();
                           // Relations
-                           var selectedstudent = multipleResults.Read<SelectedStudent>().AsList();
-                           if(student != null && selectedstudent != null )
-                           {
-                               student.SelectedSelectedStudents.AddRange(selectedstudent);
-                           
-                           
-                           }
-                           var department = multipleResults.Read<Department>().AsList();
-                           if(student != null && department != null )
-                           {
-                               student.Departments.AddRange(department);
-                           
-                           
-                           }
                            var course = multipleResults.Read<Course>().AsList();
                            if(student != null && course != null )
                            {
@@ -187,9 +183,18 @@ public class StudentRepository : IStudentsRepository
                            
                            }
                                     
+                           var selectedstudent = multipleResults.Read<SelectedStudent>().AsList();
+                           if(student != null && selectedstudent != null )
+                           {
+                               student.SelectedStudents.AddRange(selectedstudent);
+                           
+                           
+                           }
                           
+                          conn.Close();
+                           return student;
                           }
-                          
+                           
                           
                           
                           
@@ -207,132 +212,164 @@ public class StudentRepository : IStudentsRepository
                        
                            
                            
-                           conn.Close();
+                          
                 
                 }
                 
                 
-                
-      
-      
-          public SelectedStudent Insert(SelectedStudent  selectedstudent)
+                public void Save(Student student)
                 {
-                       conn.Open();
-                       var sql = " INSERT INTO SelectedStudent VALUES("+
-                       
-                       "Selected_Student_Id = @Selected_Student_Id ,"+
-                       
-                       
-                       "Student_Registeration_Number = @Student_Registeration_Number ,"+
-                       
-                       
-                       "Aggregate = @Aggregate ,"+
-                       
-                       
-                       "Cource_Id = @Cource_Id ,"+
-                       
-                       
-                       "CGPA Text = @CGPA Text ,"+
-                       
-                       
-                       "SGPA = @SGPA ,"+
-                       
-                       
-                       "Department_ID = @Department_ID );"+
-                       
-                       "SELECT CAST(SCOPE_IDENTITY() as int)";
-                       var id = conn.QuerySingle<int>(sql,selectedstudent);
-                       conn.Close();
-                       selectedstudent.SelectedStudentId=id;
-                       return selectedstudent;
-                }
-         
-         
-         
-                         public SelectedStudent  Update(SelectedStudent  selectedstudent)
-                         {
-                           conn.Open();
-                           var sql = "UPDATE SelectedStudent SET "+
-                           "StudentRegisterationNumber= @StudentRegisterationNumber"+
-                           "Aggregate= @Aggregate"+
-                           "CourceId= @CourceId"+
-                           "CGPAText= @CGPAText"+
-                           "Sgpa= @Sgpa"+
-                           "DepartmentID= @DepartmentID"+
-                           "WHERE"+ 
-                           "SelectedStudentId=@SelectedStudentId";
-                           this.conn.Execute(sql,selectedstudent);
-                           conn.Close();
-                           return selectedstudent;
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(student.IsNew)
+                             {
+                             
+                                this.Insert(student);
+                             } 
+                             else
+                             {
+                                  this.Update(student);
+                             
+                             }
+                             
+                             
+                             //One to Many Members
+                             foreach(var addr in student.Courses.Where(a => !a.IsDeleted))
+                              {
+                                addr.StudentId= student.StudentId;
+                                   if(addr.IsNew)
+                                   {
+                                   this.Insert(addr);
+                                   }
+                                   else
+                                   {
+                                   this.Update(addr);
+                                   }
+                          
+                          }
+                           foreach(var addr in student.Courses.Where(a => a.IsDeleted))
+                              {
+                                
+                                
+                                
+                                
+                              this.conn.Execute("DELETE FROM Course WHERE "+
+                           "CourseId = @CourseId",new{ addr.CourseId });
+                           
+                          
+                            
+  
+                      
                 
-                         }
+               
+                          
+                          
+                          }    
+                          
+                          
+                             
+                             //One to Many Members
+                             foreach(var addr in student.VerifyingAgents.Where(a => !a.IsDeleted))
+                              {
+                                addr.StudentId= student.StudentId;
+                                   if(addr.IsNew)
+                                   {
+                                   this.Insert(addr);
+                                   }
+                                   else
+                                   {
+                                   this.Update(addr);
+                                   }
+                          
+                          }
+                           foreach(var addr in student.VerifyingAgents.Where(a => a.IsDeleted))
+                              {
+                                
+                                
+                                
+                                
+                              this.conn.Execute("DELETE FROM VerifyingAgent WHERE "+
+                           "VerifyingAgentId = @VerifyingAgentId",new{ addr.VerifyingAgentId });
+                           
+                          
+                            
   
-  
-  
-  
-  
-  
-  
-  
-  
-      
-      
-          public Department Insert(Department  department)
-                {
-                       conn.Open();
-                       var sql = " INSERT INTO Department VALUES("+
-                       
-                       "Department_ID = @Department_ID ,"+
-                       
-                       
-                       "Student_Id = @Student_Id ,"+
-                       
-                       
-                       "Department_Name = @Department_Name ,"+
-                       
-                       
-                       "Student_Strength = @Student_Strength ,"+
-                       
-                       
-                       "HOD_Name = @HOD_Name ,"+
-                       
-                       
-                       "Location = @Location );"+
-                       
-                       "SELECT CAST(SCOPE_IDENTITY() as int)";
-                       var id = conn.QuerySingle<int>(sql,department);
-                       conn.Close();
-                       department.DepartmentID=id;
-                       return department;
-                }
-         
-         
-         
-                         public Department  Update(Department  department)
-                         {
-                           conn.Open();
-                           var sql = "UPDATE Department SET "+
-                           "StudentId= @StudentId"+
-                           "DepartmentName= @DepartmentName"+
-                           "StudentStrength= @StudentStrength"+
-                           "HODName= @HODName"+
-                           "Location= @Location"+
-                           "WHERE"+ 
-                           "DepartmentID=@DepartmentID";
-                           this.conn.Execute(sql,department);
-                           conn.Close();
-                           return department;
+                      
                 
-                         }
+               
+                          
+                          
+                          }    
+                          
+                          
+                             
+
+                          //One to One Members
+                            if(!student.Qualification.IsDeleted)
+                            {
+                                 student.Qualification.StudentId = student.StudentId;
+                                 
+                          
+                          
+                           }
+                           if(student.Qualification.IsDeleted)
+                            {
+                                 student.Qualification.StudentId = student.StudentId;
+                                 
+                          
+                          
+                           }    
+                          
+                          
+                             
+                             //One to Many Members
+                             foreach(var addr in student.SelectedStudents.Where(a => !a.IsDeleted))
+                              {
+                                addr.StudentId= student.StudentId;
+                                   if(addr.IsNew)
+                                   {
+                                   this.Insert(addr);
+                                   }
+                                   else
+                                   {
+                                   this.Update(addr);
+                                   }
+                          
+                          }
+                           foreach(var addr in student.SelectedStudents.Where(a => a.IsDeleted))
+                              {
+                                
+                                
+                                
+                                
+                              this.conn.Execute("DELETE FROM SelectedStudent WHERE "+
+                           "SelectedStudentId = @SelectedStudentId",new{ addr.SelectedStudentId });                           "StudentId = @StudentId",new{ addr.StudentId });
+                           
+                          
+                            
   
+                      
+                
+               
+                          
+                          
+                          }    
+                          
+                          
+                          
   
-  
-  
-  
-  
-  
-  
-  
+                     }
+                   }  
+                
+                
+                
+                
+                
+                
+                
+      
       
       
           public Course Insert(Course  course)
@@ -362,9 +399,15 @@ public class StudentRepository : IStudentsRepository
                            conn.Open();
                            var sql = "UPDATE Course SET "+
                            "CourseName= @CourseName"+
+                           
                            "StudentId= @StudentId"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "CourseId=@CourseId";
+                           
+                                                   
                            this.conn.Execute(sql,course);
                            conn.Close();
                            return course;
@@ -379,6 +422,7 @@ public class StudentRepository : IStudentsRepository
   
   
   
+      
       
       
           public VerifyingAgent Insert(VerifyingAgent  verifyingagent)
@@ -420,13 +464,23 @@ public class StudentRepository : IStudentsRepository
                            conn.Open();
                            var sql = "UPDATE VerifyingAgent SET "+
                            "VerifyingAgentName= @VerifyingAgentName"+
+                           
                            "DegreeVerification= @DegreeVerification"+
+                           
                            "AdminId= @AdminId"+
+                           
                            "SendDate= @SendDate"+
+                           
                            "ReciveDate= @ReciveDate"+
+                           
                            "StudentId= @StudentId"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "VerifyingAgentId=@VerifyingAgentId";
+                           
+                                                   
                            this.conn.Execute(sql,verifyingagent);
                            conn.Close();
                            return verifyingagent;
@@ -441,6 +495,7 @@ public class StudentRepository : IStudentsRepository
   
   
   
+      
       
       
           public Qualification Insert(Qualification  qualification)
@@ -563,40 +618,77 @@ public class StudentRepository : IStudentsRepository
                            conn.Open();
                            var sql = "UPDATE Qualification SET "+
                            "NTSObtMarks= @NTSObtMarks"+
+                           
                            "InterObtMarks= @InterObtMarks"+
+                           
                            "MatricObtMarks= @MatricObtMarks"+
+                           
                            "FSCYear= @FSCYear"+
+                           
                            "BSYear= @BSYear"+
+                           
                            "MSYear= @MSYear"+
+                           
                            "MatricYear= @MatricYear"+
+                           
                            "MSInstituteName= @MSInstituteName"+
+                           
                            "BSInstituteName= @BSInstituteName"+
+                           
                            "InterInstituteName= @InterInstituteName"+
+                           
                            "MatricInstituteName= @MatricInstituteName"+
+                           
                            "InterRollNo= @InterRollNo"+
+                           
                            "NTSRollNo= @NTSRollNo"+
+                           
                            "MatricRollNo= @MatricRollNo"+
+                           
                            "MSRollNo= @MSRollNo"+
+                           
                            "GATRollNo= @GATRollNo"+
+                           
                            "BSRollNo= @BSRollNo"+
+                           
                            "BoardName= @BoardName"+
+                           
                            "GATObtMarks= @GATObtMarks"+
+                           
                            "BatchlorObtCGPA= @BatchlorObtCGPA"+
+                           
                            "MSCObtCGPA= @MSCObtCGPA"+
+                           
                            "VerifiedNTSMarks= @VerifiedNTSMarks"+
+                           
                            "VerifiedMatricMarks= @VerifiedMatricMarks"+
+                           
                            "VerifiedFSCMarks= @VerifiedFSCMarks"+
+                           
                            "VerifiedMSCCGPA= @VerifiedMSCCGPA"+
+                           
                            "VerifiedBSCGPA= @VerifiedBSCGPA"+
+                           
                            "BSDegree= @BSDegree"+
+                           
                            "MSDegree= @MSDegree"+
+                           
                            "BSIsVerified= @BSIsVerified"+
+                           
                            "MSIsVerified= @MSIsVerified"+
+                           
                            "PHDIsVerified= @PHDIsVerified"+
+                           
                            "MatricIsVerified= @MatricIsVerified"+
+                           
                            "InterIsVerified= @InterIsVerified"+
+                           
                            "WHERE"+ 
+                           
+                           
                            "QualificationId=@QualificationId";
+                           
+                                                   
                            this.conn.Execute(sql,qualification);
                            conn.Close();
                            return qualification;
@@ -611,17 +703,90 @@ public class StudentRepository : IStudentsRepository
   
   
   
+      
+      
+      
+          public SelectedStudent Insert(SelectedStudent  selectedstudent)
+                {
+                       conn.Open();
+                       var sql = " INSERT INTO SelectedStudent VALUES("+
+                       
+                       "Selected_Student_Id = @Selected_Student_Id ,"+
+                       
+                       
+                       "Student_Registeration_Number = @Student_Registeration_Number ,"+
+                       
+                       
+                       "Aggregate = @Aggregate ,"+
+                       
+                       
+                       "Cource_Id = @Cource_Id ,"+
+                       
+                       
+                       "CGPA Text = @CGPA Text ,"+
+                       
+                       
+                       "SGPA = @SGPA ,"+
+                       
+                       
+                       "Department_ID = @Department_ID ,"+
+                       
+                       
+                       "Student_Id = @Student_Id );"+
+                       
+                       "SELECT CAST(SCOPE_IDENTITY() as int)";
+                       var id = conn.QuerySingle<int>(sql,selectedstudent);
+                       conn.Close();
+                       selectedstudent.SelectedStudentId=id;
+                       selectedstudent.StudentId=id;
+                       return selectedstudent;
+                }
+         
+         
+         
+                         public SelectedStudent  Update(SelectedStudent  selectedstudent)
+                         {
+                           conn.Open();
+                           var sql = "UPDATE SelectedStudent SET "+
+                           "StudentRegisterationNumber= @StudentRegisterationNumber"+
+                           
+                           "Aggregate= @Aggregate"+
+                           
+                           "CourceId= @CourceId"+
+                           
+                           "CGPAText= @CGPAText"+
+                           
+                           "Sgpa= @Sgpa"+
+                           
+                           "DepartmentID= @DepartmentID"+
+                           
+                           "WHERE"+ 
+                           
+                           
+                           "SelectedStudentId=@SelectedStudentId";
+                           
+                                                   
+                           "StudentId=@StudentId";
+                           
+                                                   
+                           this.conn.Execute(sql,selectedstudent);
+                           conn.Close();
+                           return selectedstudent;
+                
+                         }
+  
+  
+  
+  
+  
+  
+  
+  
+  
                 
                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                      
 
         }
 }
+

@@ -8,12 +8,12 @@ namespace SystemDB.Data.Entities.Services
     {
     
       
-      public List< Qualification> GetAll();
-      public Qualification Find(int id);
-      public Qualification Update(Qualification qualification);
-      public void Remove(int id); 
-      public Qualification GetFull(int id);
-      public void Save(Qualification qualification);
+       List< Qualification> GetAll();
+       Qualification Find(int id);
+       Qualification Update(Qualification qualification);
+       void Remove(int id); 
+       Qualification GetFull(int id);
+       void Save(Qualification qualification);
       
       
     }

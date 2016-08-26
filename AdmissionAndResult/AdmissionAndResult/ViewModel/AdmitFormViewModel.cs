@@ -2,13 +2,15 @@
 using AdmissionAndResult.Model.Wrapper;
 using AdmissionAndResult.Services;
 using Dapper.Contrib.Extensions;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace AdmissionAndResult.ViewModel
 {
 
-    class AdmitFormViewModel : ValidateViewModelCommon
+    class AdmitFormViewModel : ViewModelBase
     {
         // PrivateFeilds
         private StudentW _student;
@@ -96,7 +98,7 @@ namespace AdmissionAndResult.ViewModel
         }
         public void saveFunction()
         {
-
+            MessageBox.Show("Student has succesfully Added");
 
         }
     }
