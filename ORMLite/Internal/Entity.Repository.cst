@@ -17,7 +17,10 @@
 
 <%@ Property Name="EntityNamespace"
              Type="System.String"  %>
+using ServiceStack.OrmLite;
 using System;
+using System.Data;
+using System.Configuration;
 using System.Collections.Generic;
 using <%=EntityNamespace%>.Services;
 using System.Text;
@@ -27,17 +30,22 @@ using System.Linq;
 namespace <%= EntityNamespace%>.Repository
 {    
     public class <%= Entity.ClassName%>Repository : I<%= Entity.ContextName%>Repository 
-    {
+    { 
+      
+      
+      private IDbConnection conn = GetConnection();
 
       public <%=Entity.ClassName%> Add(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
-          throw new NotImplementedException();
+          this.conn.Insert(<%=Entity.ClassName.ToLower()%>);
+          <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%> =this.conn.LastInsertId();
+          return <%=Entity.ClassName.ToLower()%>;
        
        }
        
-      public List< <%=Entity.ClassName %>> GetAll()
+      public List<<%=Entity.ClassName%>> GetAll()
        {
-          throw new NotImplementedException();
+         return this.conn.Select<<%=Entity.ClassName %>>();
        
        }
        
@@ -70,10 +78,30 @@ namespace <%= EntityNamespace%>.Repository
           throw new NotImplementedException();
        
        }
+       private static IDbConnection GetConnection()
+       {
+          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
+          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
+          var db = dbFactory.OpenDbConnection();
+          return db;
+
+       
+       }
    
     }
 }
 <script runat="template">
-
+       public Property GetPrimeryKey()
+       {
+           foreach(var p in Entity.Properties)
+           {
+               if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive))
+               {
+                   return p;
+                   break;
+               }
+           }
+           return null;
+       }
 
 </script>

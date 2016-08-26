@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ServiceStack.OrmLite;
+using System;
+using System.Data;
+using System.Configuration;
 using System.Collections.Generic;
 using AdmissionAndResult.Data.Services;
 using System.Text;
@@ -8,17 +11,22 @@ using System.Linq;
 namespace AdmissionAndResult.Data.Repository
 {    
     public class SelectedStudentRepository : ISelectedStudentsRepository 
-    {
+    { 
+      
+      
+      private IDbConnection conn = GetConnection();
 
       public SelectedStudent Add(SelectedStudent selectedstudent)
        {
-          throw new NotImplementedException();
+          this.conn.Insert(selectedstudent);
+          selectedstudent.SelectedStudentId =this.conn.LastInsertId();
+          return selectedstudent;
        
        }
        
-      public List< SelectedStudent> GetAll()
+      public List<SelectedStudent> GetAll()
        {
-          throw new NotImplementedException();
+         return this.conn.Select<SelectedStudent>();
        
        }
        
@@ -49,6 +57,15 @@ namespace AdmissionAndResult.Data.Repository
       public void Save(SelectedStudent selectedstudent)
        {
           throw new NotImplementedException();
+       
+       }
+       private static IDbConnection GetConnection()
+       {
+          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
+          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
+          var db = dbFactory.OpenDbConnection();
+          return db;
+
        
        }
    

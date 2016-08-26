@@ -20,6 +20,7 @@ namespace ORMLite.Tests
             var students = repo.GetAll();
 
             // Assert
+            students[0].StudentName.Should().Be("Muhammad Ahmad");
             students.Should().NotBeNull();
             students.Count.Should().Be(5);
         }

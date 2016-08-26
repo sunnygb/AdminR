@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ServiceStack.OrmLite;
+using System;
+using System.Data;
+using System.Configuration;
 using System.Collections.Generic;
 using AdmissionAndResult.Data.Services;
 using System.Text;
@@ -8,17 +11,22 @@ using System.Linq;
 namespace AdmissionAndResult.Data.Repository
 {    
     public class QualificationRepository : IQualificationsRepository 
-    {
+    { 
+      
+      
+      private IDbConnection conn = GetConnection();
 
       public Qualification Add(Qualification qualification)
        {
-          throw new NotImplementedException();
+          this.conn.Insert(qualification);
+          qualification.QualificationId =this.conn.LastInsertId();
+          return qualification;
        
        }
        
-      public List< Qualification> GetAll()
+      public List<Qualification> GetAll()
        {
-          throw new NotImplementedException();
+         return this.conn.Select<Qualification>();
        
        }
        
@@ -49,6 +57,15 @@ namespace AdmissionAndResult.Data.Repository
       public void Save(Qualification qualification)
        {
           throw new NotImplementedException();
+       
+       }
+       private static IDbConnection GetConnection()
+       {
+          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
+          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
+          var db = dbFactory.OpenDbConnection();
+          return db;
+
        
        }
    
