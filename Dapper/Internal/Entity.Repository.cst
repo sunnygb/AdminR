@@ -26,56 +26,398 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 
-namespace <%= EntityNamespace%>.Repository
-{    
-    public class <%= Entity.ClassName%>Repository : I<%= Entity.ClassName%>Repository 
-    {
+namespace <%= EntityNamespace%>
 
-       <%=Entity.ClassName%> Add(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
-       {
-          throw new NotImplementedException();
-       
-       }
-       
-       List< <%=Entity.ClassName %>> GetAll()
-       {
-          throw new NotImplementedException();
-       
-       }
-       
-       <%=Entity.ClassName%> Find(int id)
-       {
-          throw new NotImplementedException();
-       
-       }
-       
-       <%=Entity.ClassName%> Update(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
-       {
-          throw new NotImplementedException();
-       
-       }
-       
-       void Remove(int id)
-       {
-          throw new NotImplementedException();
-       
-       }
-       
-       <%=Entity.ClassName%> GetAllWithChildren(int id)
-       {
-          throw new NotImplementedException();
-       
-       }
-       
-       void Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
-       {
-          throw new NotImplementedException();
-       
-       }
-   
-    }
+
+
+
+{
+<% var Total = Entity.toRelationshipsList.Count();%>
+
+public class <% = Entity.ClassName %>Repository : I<%=Entity.ContextName%>Repository
+{
+                private SQLiteConnection conn = new SQLiteConnection("Data Source=" + Environment.CurrentDirectory + "\\SystemDB.db");
+                
+                
+                
+                upda
+                public <%= Entity.ClassName%> Find(int id)
+                {            
+                           conn.Open();
+                           var result = this.conn.QuerySingleOrDefault<<%= Entity.ClassName %>>("SELECT * FROM <%= Entity.ClassName%> WHERE"+
+                      <% foreach(var p in Entity.Properties){%>
+                       <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                           "<%= p.PropertyName %> = @<%= p.PropertyName %>",<% }%><% } %>new{ id });
+                           conn.Close();
+                           return result;
+                
+                }
+                public List<<% = Entity.ClassName %>> GetAll()
+                {     
+                       conn.Open();
+                      var result = this.conn.Query<<%= Entity.ClassName %>>("SELECT * FROM <%= Entity.ClassName%>").AsList();
+                      conn.Close();
+                      return result;
+                }
+                public <%= Entity.ClassName%> Insert(<%= Entity.ClassName%>  <%=Entity.ClassName.ToLower()%>)
+                {
+                       <%int total = Entity.Properties.Count();%>
+                       <%int count=0;%>
+                       conn.Open();
+                       var sql = " INSERT INTO <% = Entity.ClassName %> VALUES("+<% foreach(var column in Entity.Properties) { %>
+                       
+                       "<%= column.ColumnName%> = @<% = column.ColumnName %><%count++;%> <% if(total!=count){%>,"+
+                       <%} %><%}%>);"+
+                       
+                       "SELECT CAST(SCOPE_IDENTITY() as int)";
+                       var id = conn.QuerySingle<int>(sql,<%=Entity.ClassName.ToLower()%>);
+                       conn.Close();
+                       <% foreach(var p in Entity.Properties){%>
+                       <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                       <%= Entity.ClassName.ToLower() %>.<%= p.PropertyName %>=id;
+                       <% }%>
+                       <% } %>
+                       return <%=Entity.ClassName.ToLower()%>;
+                }
+                
+                 public <%=Entity.ClassName %>  Update(<%=Entity.ClassName %>  <%=Entity.ClassName.ToLower()%>)
+                {
+                           conn.Open();
+                           var sql = "UPDATE <%=Entity.ClassName%> SET "+
+                           <% foreach(var p in Entity.Properties){%>
+                           <% if(!((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive))) {%>   
+                           "<%= p.PropertyName%>= @<%= p.PropertyName%>"+
+                           <% } %>
+                           <%} %>
+                           "WHERE"+ 
+                            <% foreach(var p in Entity.Properties){%>
+                            <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                           "<%= p.PropertyName %>=@<%= p.PropertyName %>";
+                            <%} %>
+                            <%} %>
+                           this.conn.Execute(sql,<%=Entity.ClassName.ToLower()%>);
+                           conn.Close();
+                           return <%=Entity.ClassName.ToLower()%>;
+                
+                }
+                
+                
+                public void Remove(int id)
+                {
+                
+                           
+                           conn.Open();
+                           this.conn.Execute("DELETE FROM <%= Entity.ClassName%> WHERE "+
+                           <% foreach(var p in Entity.Properties){%>
+                           <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                           "<%= p.PropertyName %> = @<%= p.PropertyName %>",<% }%><% } %>new{ id });
+                           
+                           conn.Close();
+                
+                }
+                
+                
+                
+                
+                 public <%= Entity.ClassName%> GetFull(int id)
+                {
+                
+                
+                        
+                        
+                           <% int c= 0; %>
+                           conn.Open();
+                           var sql = "SELECT * FROM <%= Entity.ClassName%> WHERE <% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %>=@<%= p.PropertyName %>; "
+                           +<% }%><% }%>
+                           
+                           <% foreach(var r in Entity.Relationships) { %>
+                           <% c++; %>
+                           <% if(r.ThisCardinality == Cardinality.Many) { %>
+                           //One To many Relations
+                           "SELECT * FROM <%= r.OtherEntity  %> WHERE <% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %>= @<%= p.PropertyName%>; " <%if(!(c==Entity.Relationships.Count())){ %>+<%}%><%} %> <% }%>
+                           <%} else{%>
+                           
+                          //One to One Members
+                          "SELECT * FROM <%= r.OtherEntity  %> WHERE <% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>     = @<%= p.PropertyName%>; "+<% }%><% }%>
+                          <% } %> <% } %>;
+                          using (var multipleResults = this.conn.QueryMultiple(sql, new{ id }))
+                          {
+                                           
+                          var <%= Entity.ClassName.ToLower() %> = multipleResults.ReadSingleOrDefault<<%= Entity.ClassName %>>();
+                          // Relations
+                          <% foreach(var r in Entity.Relationships) { %>
+                          <% if(r.ThisCardinality == Cardinality.Many) { %>
+                           var <%= r.OtherEntity.ToLower()  %> = multipleResults.Read<<%= r.OtherEntity %>>().AsList();
+                           if(<%= Entity.ClassName.ToLower() %> != null && <%= r.OtherEntity.ToLower()  %> != null )
+                           {
+                               <%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.AddRange(<%= r.OtherEntity.ToLower()  %>);
+                           
+                           
+                           }
+                          <%} else{%>
+                                    //One to One Members
+                           var <%= r.OtherEntity.ToLower()  %> = multipleResults.ReadSingleOrDefault<<%= r.OtherEntity %>>();         
+                             if(<%= Entity.ClassName.ToLower() %> != null && <%= r.OtherEntity.ToLower()  %> != null )
+                           {
+                               <%= Entity.ClassName.ToLower() %>.<%= r.OtherEntity.ToSafeName() %> = <%= r.OtherEntity.ToLower()  %>;
+                           
+                           
+                           }
+                                    
+                           <% } %> 
+                          <% } %>
+                          
+                          conn.Close();
+                           return <%= Entity.ClassName.ToLower() %>;
+                          }
+                           
+                          
+                          
+                          
+        
+                          
+                            <%--<% foreach( var e in EntityContext.toEntitylist) {%>
+                            <%if(r.OtherEntity ==e.ClassName){%>
+                            <% foreach( var pri in e.toPropertiesList){%>
+                            <% if((bool)pri.IsForeignKey && (pri.SystemType.IsPrimitive) &&
+                            <%= pri.ColumnName %>
+                            <%} %>
+
+                           <%} %>
+                             <% if((bool)pro.IsForeignKey && (pro.SystemType.IsPrimitive)  ){ %>
+                             "<%= pro.ColumnName %> = @"<%= pro.ColumnName %>
+                             <% break; %>
+                             <%} %>
+                            
+                           <%} %>
+                            
+                           <% }%>
+                           <% }%>
+                           --%>
+                          
+                         
+                           
+                           
+
+                           
+                           <%-- <% foreach( var e in EntityContext.Entities) {%>
+                            <%if(r.OtherEntity ==e.ClassName){%>
+
+                            <% foreach(var pro in e.Properties){%>
+                            <% if((bool)pro.IsForeignKey && (pro.SystemType.IsPrimitive)) {%>
+                            
+                            
+                      
+                            
+                            
+                            
+                            <% break; %>
+                            <% }%>
+                            <%} %>
+                            <%break; %>
+                           
+                           
+                           
+                           
+                            
+                            <% }%>
+                            <% }%>
+                            
+                            
+                            
+                            
+                            <% }%>--%>
+                           
+                           
+                            
+                       
+                           
+                           
+                          
+                
+                }
+                
+                
+                public void Save(<%= Entity.ClassName%> <%= Entity.ClassName.ToLower()%>)
+                {
+                     
+                     using( var txScope = new TransactionScope())
+                     {
+                     
+                             if(<%= Entity.ClassName.ToLower()%>.IsNew)
+                             {
+                             
+                                this.Insert(<%= Entity.ClassName.ToLower()%>);
+                             } 
+                             else
+                             {
+                                  this.Update(<%= Entity.ClassName.ToLower()%>);
+                             
+                             }
+                             
+                             <% foreach(var r in Entity.Relationships) { %>
+                             
+                             <% if(r.ThisCardinality == Cardinality.Many) { %>
+                             //One to Many Members
+                             foreach(var addr in <%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.Where(a => !a.IsDeleted))
+                              {
+                                addr.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %>= <%= Entity.ClassName.ToLower() %>.<%= p.PropertyName%><% }%><% }%>;
+                                   if(addr.IsNew)
+                                   {
+                                   this.Insert(addr);
+                                   }
+                                   else
+                                   {
+                                   this.Update(addr);
+                                   }
+                          
+                          }
+                           foreach(var addr in <%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.Where(a => a.IsDeleted))
+                              {
+                                
+                                
+                                <% foreach( var ee in EntityContext.Entities) {%>
+                                <%if(r.OtherEntity ==ee.ClassName){%>
+                                
+                                
+                              this.conn.Execute("DELETE FROM <%= ee.ClassName%> WHERE "+
+                           <% foreach(var p in ee.Properties){%>
+                           <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                           "<%= p.PropertyName %> = @<%= p.PropertyName %>",new{ addr.<%= p.PropertyName %> });<% }%><% } %>
+                           
+                          
+                            
+  
+                                     <% } %>
+                               <% } %>
+                      
+                
+               
+                          
+                          
+                          }<%} else{ %>
+                          //One to One Members
+                            if(!<%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.IsDeleted)
+                            {
+                                 <%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %><%}%><%}%> = <%= Entity.ClassName.ToLower() %>.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %><%}%><%}%>;
+                                 
+                          
+                          
+                           }
+                           if(<%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.IsDeleted)
+                            {
+                                 <%= Entity.ClassName.ToLower() %>.<%= r.ThisPropertyName.ToSafeName() %>.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %><%}%><%}%> = <%= Entity.ClassName.ToLower() %>.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%><%= p.PropertyName %><%}%><%}%>;
+                                 
+                          
+                          
+                           }<% } %>    
+                          
+                          
+                          <% } %>
+                          
+  
+                     }
+                   }  
+                
+                
+                
+                
+                
+                
+                
+<% foreach(var r in Entity.Relationships) { %>
+   <% foreach( var e in EntityContext.Entities) {%>
+      <%if(r.OtherEntity ==e.ClassName){%>
+      
+      
+      
+          public <%= e.ClassName%> Insert(<%= e.ClassName%>  <%=e.ClassName.ToLower()%>)
+                {
+                       <%int ttotal = e.Properties.Count();%>
+                       <%int tcount=0;%>
+                       conn.Open();
+                       var sql = " INSERT INTO <% = e.ClassName %> VALUES("+<% foreach(var column in e.Properties) { %>
+                       
+                       "<%= column.ColumnName%> = @<% = column.ColumnName %><%tcount++;%> <% if(ttotal!=tcount){%>,"+
+                       <%} %><%}%>);"+
+                       
+                       "SELECT CAST(SCOPE_IDENTITY() as int)";
+                       var id = conn.QuerySingle<int>(sql,<%=e.ClassName.ToLower()%>);
+                       conn.Close();
+                       <% foreach(var p in e.Properties){%>
+                       <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                       <%= e.ClassName.ToLower() %>.<%= p.PropertyName %>=id;
+                       <% }%>
+                       <% } %>
+                       return <%=e.ClassName.ToLower()%>;
+                }
+         
+         
+         
+                         public <%=e.ClassName %>  Update(<%=e.ClassName %>  <%=e.ClassName.ToLower()%>)
+                         {
+                           conn.Open();
+                           var sql = "UPDATE <%=e.ClassName%> SET "+
+                           <% var totali = e.Properties.Count(); %>
+                           <% var ci=0; %>
+                           <% foreach(var p in e.Properties){%>
+                           <% if(!((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive))) {%>   
+                           "<%= p.PropertyName%>= @<%= p.PropertyName%>"+
+                           
+                           <% } %>
+                           <%} %>
+                           "WHERE"+ 
+                           
+                           
+                            <% foreach(var p in e.Properties){%>
+                            <% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)) {%>
+                           "<%= p.PropertyName %>=@<%= p.PropertyName %>";
+                           
+                                                   
+                            <% } %>
+                            <%} %>
+                           this.conn.Execute(sql,<%=e.ClassName.ToLower()%>);
+                           conn.Close();
+                           return <%=e.ClassName.ToLower()%>;
+                
+                         }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+            <% } %>
+     <% } %>
+<% } %>
+                
+               
+                      
+
+        }
 }
+
+
 <script runat="template">
+              
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>
