@@ -23,15 +23,13 @@ namespace <%= EntityNamespace %>.Services
 {
     public interface I<%=Entity.ContextName%>Repository
     {
-    
-      
+       <%=Entity.ClassName%> Add(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        List< <%=Entity.ClassName %>> GetAll();
        <%=Entity.ClassName%> Find(int id);
        <%=Entity.ClassName%> Update(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
        void Remove(int id); 
-       <%=Entity.ClassName%> GetFull(int id);
+       
+       <%=Entity.ClassName%> GetAllWithChildren(int id);
        void Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
-      
-      
     }
 }
