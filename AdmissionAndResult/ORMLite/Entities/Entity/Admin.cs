@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ServiceStack.DataAnnotations;
 
 namespace AdmissionAndResult.Data
 {
@@ -15,14 +16,26 @@ namespace AdmissionAndResult.Data
             VerifyingAgents = new List<VerifyingAgent>();
         }
 
+        [PrimaryKey]
+        [AutoIncrement]  
+        [Alias("Admin_Id")]
         public long AdminId { get; set; }
+
+        [Alias("Admin_Name")]
         public string AdminName { get; set; }
+
+        [Alias("Password")]
         public string Password { get; set; }
+
+        [Alias("Hire_Date")]
         public string HireDate { get; set; }
+
+        [Alias("Change_Date")]
         public string ChangeDate { get; set; }
 
+        [Ignore]
         public virtual List<VerifyingAgent> VerifyingAgents { get; set; }
-
+         [Ignore]
          public bool IsNew
          {
                 get
@@ -33,6 +46,7 @@ namespace AdmissionAndResult.Data
                 }
                 
           }
+          [Ignore]
           public bool IsDeleted { get; set; }
     }
 }

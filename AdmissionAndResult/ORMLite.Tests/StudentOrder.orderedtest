@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="StudentOrder" storage="d:\admissionandresult\ormlite.tests\studentorder.orderedtest" id="4225b6aa-6b19-4d45-a01c-88ed769eb923" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="53f2c856-5184-9f31-43cc-84cf698cdc68" name="GetAll_return_5_Results" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="171f828e-c519-2fe4-8760-03aef7d0a5b7" name="Insert_should_Assign_new_Identity_To_Entity" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="7491c1d1-3e77-c2e0-0dc5-300089b2bd36" name="Find_should_retrieve_existing_entity" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="4805ab55-dae7-114d-70a8-1e708747e3ec" name="Modify_should_update_existing_entity" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="ef3d6483-8c56-eb28-b095-38f6e6daa383" name="Delete_should_remove_entity" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

@@ -67,7 +67,7 @@ namespace ProjectReports
             // 
             // sqlDataSource1
             // 
-            this.sqlDataSource1.ConnectionString = "ProjectReports.Properties.Settings.ReportConnection";
+            this.sqlDataSource1.ConnectionString = "ConnectionDB";
             this.sqlDataSource1.Name = "sqlDataSource1";
             this.sqlDataSource1.SelectCommand = resources.GetString("sqlDataSource1.SelectCommand");
             // 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ServiceStack.OrmLite;
+using System;
+using System.Data;
+using System.Configuration;
 using System.Collections.Generic;
 using AdmissionAndResult.Data.Services;
 using System.Text;
@@ -8,17 +11,22 @@ using System.Linq;
 namespace AdmissionAndResult.Data.Repository
 {    
     public class VerifyingAgentRepository : IVerifyingAgentsRepository 
-    {
+    { 
+      
+      
+      private IDbConnection conn = GetConnection();
 
       public VerifyingAgent Add(VerifyingAgent verifyingagent)
        {
-          throw new NotImplementedException();
+          this.conn.Insert(verifyingagent);
+          verifyingagent.VerifyingAgentId =this.conn.LastInsertId();
+          return verifyingagent;
        
        }
        
-      public List< VerifyingAgent> GetAll()
+      public List<VerifyingAgent> GetAll()
        {
-          throw new NotImplementedException();
+         return this.conn.Select<VerifyingAgent>();
        
        }
        
@@ -49,6 +57,15 @@ namespace AdmissionAndResult.Data.Repository
       public void Save(VerifyingAgent verifyingagent)
        {
           throw new NotImplementedException();
+       
+       }
+       private static IDbConnection GetConnection()
+       {
+          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
+          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
+          var db = dbFactory.OpenDbConnection();
+          return db;
+
        
        }
    
