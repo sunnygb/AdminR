@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<OrderedTest name="StudentOrder" storage="d:\admissionandresult\ormlite.tests\studentorder.orderedtest" id="4225b6aa-6b19-4d45-a01c-88ed769eb923" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+<OrderedTest name="OrderedTest1" storage="d:\admissionandresult\ormlite.tests\orderedtest1.orderedtest" id="fde21765-9a9a-4f62-9207-ff715b41d01f" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <TestLinks>
     <TestLink id="53f2c856-5184-9f31-43cc-84cf698cdc68" name="GetAll_return_5_Results" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <TestLink id="171f828e-c519-2fe4-8760-03aef7d0a5b7" name="Insert_should_Assign_new_Identity_To_Entity" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />

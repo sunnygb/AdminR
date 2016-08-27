@@ -51,19 +51,20 @@ namespace <%= EntityNamespace%>.Repository
        
       public <%=Entity.ClassName%> Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<<%=Entity.ClassName%>>(id);
        
        }
        
       public <%=Entity.ClassName%> Update(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<<%=Entity.ClassName%>>(<%=Entity.ClassName.ToLower()%>);
+          return <%=Entity.ClassName.ToLower()%>;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<<%=Entity.ClassName%>>(id);
        
        }
        
@@ -75,7 +76,32 @@ namespace <%= EntityNamespace%>.Repository
        
       public void Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
-          throw new NotImplementedException();
+          
+          using(var txScope= new TransactionScope())
+            {
+                if(<%=Entity.ClassName.ToLower()%>.IsNew)
+                {
+                    this.Add(<%=Entity.ClassName.ToLower()%>);
+                }
+                else
+                {
+                    this.Update(<%=Entity.ClassName.ToLower()%>);
+                }
+                
+                
+                foreach(var selected in student.SelectedStudents.Where(s => !s.IsDeleted))
+                {
+                    selected.StudentId= student.StudentId;
+                    this.conn.Save(student);
+                }
+                foreach(var selected in student.SelectedStudents.Where(s => s.IsDeleted))
+                {
+                    this.conn.DeleteById<SelectedStudent>(selected.SelectedStudentId);
+
+                }
+                    txScope.Complete();
+            }
+            return <%=Entity.ClassName.ToLower()%>;
        
        }
        private static IDbConnection GetConnection()
