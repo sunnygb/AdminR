@@ -7,10 +7,10 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Selected_Student")]
     public partial class SelectedStudent
     {
-    
+        
         public SelectedStudent()
         {
         }
@@ -27,8 +27,8 @@ namespace AdmissionAndResult.Data
         [Alias("Aggregate")]
         public double? Aggregate { get; set; }
 
-        [Alias("Cource_Id")]
-        public long? CourceId { get; set; }
+        [Alias("Course_Id")]
+        public long? CourseId { get; set; }
 
         [Alias("CGPA Text")]
         public string CGPAText { get; set; }
@@ -46,7 +46,7 @@ namespace AdmissionAndResult.Data
         [Ignore]
         public virtual Department Department { get; set; }
         [Ignore]
-        public virtual Course CourceCourse { get; set; }
+        public virtual Course Course { get; set; }
         [Ignore]
         public virtual Student Student { get; set; }
          [Ignore]
@@ -54,8 +54,8 @@ namespace AdmissionAndResult.Data
          {
                 get
                 {
-         
-                  return this.SelectedStudentId == default(int);
+
+                    return this.SelectedStudentId == default(int);
          
                 }
                 

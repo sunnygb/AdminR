@@ -7,12 +7,13 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Department")]
     public partial class Department
     {
-    
+        
         public Department()
         {
+
             SelectedStudents = new List<SelectedStudent>();
         }
 

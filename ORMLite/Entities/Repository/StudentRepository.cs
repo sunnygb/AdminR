@@ -32,41 +32,32 @@ namespace AdmissionAndResult.Data.Repository
        
       public Student Find(long id)
        {
-           return this.conn.SingleById<Student>(id);
+         return this.conn.SingleById<Student>(id);
        
        }
        
       public Student Update(Student student)
        {
-          
           var result=this.conn.Update<Student>(student);
           return student;
-
        
        }
        
       public void Remove(long id)
        {
-           this.conn.DeleteById<Student>(id);
+          this.conn.DeleteById<Student>(id);
        
        }
        
       public Student GetAllWithChildren(long id)
        {
-           //this.conn.ExecuteSql(" select * from selectedstudent where studentid=@id;", id);
-           this.conn.LoadSelect<SelectedStudent>(x => x.StudentId = id);
-           var student = this.conn.SingleById<Student>(id);
-           var selected = this.conn.Where<SelectedStudent>(new { StudentId = id });
-           if (student != null && selected != null)
-           {
-               student.SelectedStudents.AddRange(selected);
-           }
-           return student;
+          throw new NotImplementedException();
+       
        }
        
       public Student Save(Student student)
        {
-            using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope())
             {
                 if(student.IsNew)
                 {
@@ -76,24 +67,66 @@ namespace AdmissionAndResult.Data.Repository
                 {
                     this.Update(student);
                 }
-                foreach(var selected in student.SelectedStudents.Where(s => !s.IsDeleted))
-                {
-                    selected.StudentId= student.StudentId;
-                    this.conn.Save(student);
-                }
-                foreach(var selected in student.SelectedStudents.Where(s => s.IsDeleted))
-                {
-                    this.conn.DeleteById<SelectedStudent>(selected.SelectedStudentId);
-
-                }
+                
+                
+        
+                 //One To Many
+                  foreach(var course in student.Courses.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    course.StudentId =student.StudentId;
+                    this.conn.Save(course);
+                  }
+                  foreach(var course in student.Courses.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<Course>(course.CourseId);
+                  }
+        
+                 //One To Many
+                  foreach(var verifyingagent in student.VerifyingAgents.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    verifyingagent.StudentId =student.StudentId;
+                    this.conn.Save(verifyingagent);
+                  }
+                  foreach(var verifyingagent in student.VerifyingAgents.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<VerifyingAgent>(verifyingagent.VerifyingAgentId);
+                  }
+                    
+                    
+                 // One To One 
+                 var qualification = student.Qualification;
+                 qualification.QualificationId = student.StudentId;
+                 this.conn.Save(qualification);
+        
+                 //One To Many
+                  foreach(var selectedstudent in student.SelectedStudents.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    selectedstudent.StudentId =student.StudentId;
+                    this.conn.Save(selectedstudent);
+                  }
+                  foreach(var selectedstudent in student.SelectedStudents.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<SelectedStudent>(selectedstudent.SelectedStudentId);
+                  }
+                    
+                   
                     txScope.Complete();
             }
             return student;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
-          string connectionString = "D:\\AdmissionAndResult\\ORMLite.Tests\\bin\\Debug\\SystemDB.db";
+          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
           var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
           var db = dbFactory.OpenDbConnection();
           return db;

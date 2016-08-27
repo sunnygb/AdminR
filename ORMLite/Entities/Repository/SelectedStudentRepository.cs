@@ -32,19 +32,20 @@ namespace AdmissionAndResult.Data.Repository
        
       public SelectedStudent Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<SelectedStudent>(id);
        
        }
        
       public SelectedStudent Update(SelectedStudent selectedstudent)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<SelectedStudent>(selectedstudent);
+          return selectedstudent;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<SelectedStudent>(id);
        
        }
        
@@ -54,11 +55,48 @@ namespace AdmissionAndResult.Data.Repository
        
        }
        
-      public void Save(SelectedStudent selectedstudent)
+      public SelectedStudent Save(SelectedStudent selectedstudent)
        {
-          throw new NotImplementedException();
+          using(var txScope= new TransactionScope())
+            {
+                if(selectedstudent.IsNew)
+                {
+                    this.Add(selectedstudent);
+                }
+                else
+                {
+                    this.Update(selectedstudent);
+                }
+                
+                
+                    
+                    
+                 // One To One 
+                 var department = selectedstudent.Department;
+                 department.DepartmentID = selectedstudent.SelectedStudentId;
+                 this.conn.Save(department);
+                    
+                    
+                 // One To One 
+                 var course = selectedstudent.Course;
+                 course.CourseId = selectedstudent.SelectedStudentId;
+                 this.conn.Save(course);
+                    
+                    
+                 // One To One 
+                 var student = selectedstudent.Student;
+                 student.StudentId = selectedstudent.SelectedStudentId;
+                 this.conn.Save(student);
+                    
+                   
+                    txScope.Complete();
+            }
+            return selectedstudent;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";

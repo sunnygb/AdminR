@@ -32,19 +32,20 @@ namespace AdmissionAndResult.Data.Repository
        
       public Course Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<Course>(id);
        
        }
        
       public Course Update(Course course)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<Course>(course);
+          return course;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<Course>(id);
        
        }
        
@@ -54,11 +55,49 @@ namespace AdmissionAndResult.Data.Repository
        
        }
        
-      public void Save(Course course)
+      public Course Save(Course course)
        {
-          throw new NotImplementedException();
+          using(var txScope= new TransactionScope())
+            {
+                if(course.IsNew)
+                {
+                    this.Add(course);
+                }
+                else
+                {
+                    this.Update(course);
+                }
+                
+                
+                    
+                    
+                 // One To One 
+                 var student = course.Student;
+                 student.StudentId = course.CourseId;
+                 this.conn.Save(student);
+        
+                 //One To Many
+                  foreach(var selectedstudent in course.SelectedStudents.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    selectedstudent.CourseId =course.CourseId;
+                    this.conn.Save(selectedstudent);
+                  }
+                  foreach(var selectedstudent in course.SelectedStudents.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<SelectedStudent>(selectedstudent.SelectedStudentId);
+                  }
+                    
+                   
+                    txScope.Complete();
+            }
+            return course;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";

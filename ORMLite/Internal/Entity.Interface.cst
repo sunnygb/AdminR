@@ -30,6 +30,6 @@ namespace <%= EntityNamespace %>.Services
        void Remove(long id); 
        
        <%=Entity.ClassName%> GetAllWithChildren(long id);
-       void Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       <%=Entity.ClassName%> Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
     }
 }

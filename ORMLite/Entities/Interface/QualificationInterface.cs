@@ -13,6 +13,6 @@ namespace AdmissionAndResult.Data.Services
        void Remove(long id); 
        
        Qualification GetAllWithChildren(long id);
-       void Save(Qualification qualification);
+       Qualification Save(Qualification qualification);
     }
 }

@@ -32,19 +32,20 @@ namespace AdmissionAndResult.Data.Repository
        
       public Admin Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<Admin>(id);
        
        }
        
       public Admin Update(Admin admin)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<Admin>(admin);
+          return admin;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<Admin>(id);
        
        }
        
@@ -54,11 +55,43 @@ namespace AdmissionAndResult.Data.Repository
        
        }
        
-      public void Save(Admin admin)
+      public Admin Save(Admin admin)
        {
-          throw new NotImplementedException();
+          using(var txScope= new TransactionScope())
+            {
+                if(admin.IsNew)
+                {
+                    this.Add(admin);
+                }
+                else
+                {
+                    this.Update(admin);
+                }
+                
+                
+        
+                 //One To Many
+                  foreach(var verifyingagent in admin.VerifyingAgents.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    verifyingagent.AdminId =admin.AdminId;
+                    this.conn.Save(verifyingagent);
+                  }
+                  foreach(var verifyingagent in admin.VerifyingAgents.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<VerifyingAgent>(verifyingagent.VerifyingAgentId);
+                  }
+                    
+                   
+                    txScope.Complete();
+            }
+            return admin;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";

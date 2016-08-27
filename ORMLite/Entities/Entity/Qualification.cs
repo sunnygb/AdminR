@@ -7,10 +7,10 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Qualification")]
     public partial class Qualification
     {
-    
+        
         public Qualification()
         {
         }

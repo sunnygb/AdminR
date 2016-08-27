@@ -32,19 +32,20 @@ namespace AdmissionAndResult.Data.Repository
        
       public Department Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<Department>(id);
        
        }
        
       public Department Update(Department department)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<Department>(department);
+          return department;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<Department>(id);
        
        }
        
@@ -54,11 +55,43 @@ namespace AdmissionAndResult.Data.Repository
        
        }
        
-      public void Save(Department department)
+      public Department Save(Department department)
        {
-          throw new NotImplementedException();
+          using(var txScope= new TransactionScope())
+            {
+                if(department.IsNew)
+                {
+                    this.Add(department);
+                }
+                else
+                {
+                    this.Update(department);
+                }
+                
+                
+        
+                 //One To Many
+                  foreach(var selectedstudent in department.SelectedStudents.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    selectedstudent.DepartmentID =department.DepartmentID;
+                    this.conn.Save(selectedstudent);
+                  }
+                  foreach(var selectedstudent in department.SelectedStudents.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<SelectedStudent>(selectedstudent.SelectedStudentId);
+                  }
+                    
+                   
+                    txScope.Complete();
+            }
+            return department;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";

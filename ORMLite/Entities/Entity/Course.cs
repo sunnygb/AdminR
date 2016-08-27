@@ -7,13 +7,14 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Course")]
     public partial class Course
     {
-    
+        
         public Course()
         {
-            CourceSelectedStudents = new List<SelectedStudent>();
+
+            SelectedStudents = new List<SelectedStudent>();
         }
 
         [PrimaryKey]
@@ -30,7 +31,7 @@ namespace AdmissionAndResult.Data
         [Ignore]
         public virtual Student Student { get; set; }
         [Ignore]
-        public virtual List<SelectedStudent> CourceSelectedStudents { get; set; }
+        public virtual List<SelectedStudent> SelectedStudents { get; set; }
          [Ignore]
          public bool IsNew
          {
