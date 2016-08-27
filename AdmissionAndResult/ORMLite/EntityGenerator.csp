@@ -2,11 +2,13 @@
 <codeSmith xmlns="http://www.codesmithtools.com/schema/csp.xsd">
   <variables>
     <add key="ConnectionString1" value="data source=C:\Users\Sunny\Documents\Visual Studio 2015\Projects\AdmissionAndResult\AdmissionAndResult\SystemDB.db" />
+    <add key="ConnectionString2" value="Data Source=C:\Users\Sunny\Documents\CodeSmith Generator\Samples\v7.0\Data\PetShop.vdb3" />
+    <add key="ConnectionString3" value="data source=D:\AdmissionAndResult\AdmissionAndResult\SystemDB.db" />
   </variables>
   <propertySets>
     <propertySet name="Entity" template="Entity.cst">
       <property name="ContextDirectory">.\</property>
-      <property name="EntityDirectory">.\Entities</property>
+      <property name="EntityDirectory">.\Model</property>
       <property name="MappingDirectory">.\Mapping</property>
       <property name="TableNaming">Singular</property>
       <property name="EntityNaming">Singular</property>
@@ -33,7 +35,7 @@
       <property name="MockDirectory">.\Mocks</property>
       <property name="Internalize">True</property>
       <property name="SourceDatabase">
-        <connectionString>$(ConnectionString1)</connectionString>
+        <connectionString>$(ConnectionString3)</connectionString>
         <providerType>SchemaExplorer.SQLiteSchemaProvider,SchemaExplorer.SQLiteSchemaProvider</providerType>
       </property>
       <property name="ContextNamespace">AdmissionAndResult.Data</property>

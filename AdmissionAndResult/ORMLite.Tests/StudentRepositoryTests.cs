@@ -132,7 +132,7 @@ namespace ORMLite.Tests
 
             };
 
-            student.SelectedStudents.Add(selected);
+            student.SelectedSelectedStudent = selected;
 
             // Act
             var result= repo.Save(student);
@@ -159,9 +159,8 @@ namespace ORMLite.Tests
            student.Should().NotBeNull();
            student.StudentId.Should().Be(ID);
            student.StudentName.Should().Be("Abdullah Farooq");
-           student.SelectedStudents.Count.Should().Be(1);
-           student.SelectedStudents[0].StudentRegisterationNumber.Should().Be("15-NTU-1050");
-           student.SelectedStudents[0].Aggregate.Should().Be(66);
+           student.SelectedSelectedStudent.StudentRegisterationNumber.Should().Be("15-NTU-1050");
+           student.SelectedSelectedStudent.Aggregate.Should().Be(66);
         }
 
         private IStudentsRepository CreateRepository()
