@@ -39,8 +39,7 @@ namespace <%= EntityNamespace %>
 
 <% foreach(var p in Entity.Properties) { %>
 <%if((bool)p.IsPrimaryKey){%>
-        [PrimaryKey]
-        [AutoIncrement]  <%}%>
+        [PrimaryKey]<%}%>
         [Alias("<%= p.ColumnName%>")]
         public <%= p.SystemType.ToNullableType(p.IsNullable == true) %> <%= p.PropertyName.ToSafeName() %> { get; set; }
 <% } // foreach %>

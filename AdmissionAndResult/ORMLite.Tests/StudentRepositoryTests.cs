@@ -22,7 +22,7 @@ namespace ORMLite.Tests
             // Assert
             students[0].StudentName.Should().Be("Muhammad Ahmad");
             students.Should().NotBeNull();
-            students.Count.Should().Be(5);
+            students.Count.Should().Be(4);
         }
 
         static long id;

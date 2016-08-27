@@ -1,10 +1,12 @@
-﻿using AdmissionAndResult.Data.Services;
-using ServiceStack.OrmLite;
+﻿using ServiceStack.OrmLite;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
+using System.Configuration;
+using System.Collections.Generic;
+using AdmissionAndResult.Data.Services;
+using System.Text;
 using System.Transactions;
+using System.Linq;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -101,7 +103,7 @@ namespace AdmissionAndResult.Data.Repository
                  // One To One 
                  if(selectedstudent.Student !=null)
                  {
-                    var selectedstudentmember = selectedstudent.Student;
+                     var selectedstudentmember = selectedstudent.Student;
                     selectedstudentmember.StudentId = selectedstudent.SelectedStudentId;
                     this.conn.Save(selectedstudentmember);
                  }
