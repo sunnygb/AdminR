@@ -70,9 +70,37 @@ namespace <%= EntityNamespace%>.Repository
        
       public <%=Entity.ClassName%> GetAllWithChildren(long id)
        {
-          throw new NotImplementedException();
+          var <%=Entity.ClassName.ToLower()%> = this.conn.SingleById<<%=Entity.ClassName%>>(id);
+          
+          
+          
+          <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+           var <%= r.ThisPropertyName.ToSafeName().ToLower() %> = this.conn.Select<<%= r.OtherEntity.ToSafeName() %>>().Where(a => a.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id).ToList();
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.AddRange(<%= r.ThisPropertyName.ToSafeName().ToLower() %>);
+           }      
+                  
+                  
+                  
+         <% } else { %>
+   
+                 // One To One 
+           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = this.conn.Select<<%= r.ThisPropertyName.ToSafeName()%>>().Where(a => a.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id).SingleOrDefault();
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>;
+           }
+         
+              <% } %> 
+          <% } %>
+  
+         return <%=Entity.ClassName.ToLower()%>;
+         }
        
-       }
        
       public <%=Entity.ClassName%> Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
@@ -110,12 +138,15 @@ namespace <%= EntityNamespace%>.Repository
                     <%} %>
                     
                  // One To One 
-                 var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
-                 <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
-                 this.conn.Save(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
-                    <% } %> 
-                    <% } %>
-                    
+                 if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> !=null)
+                 {
+                    var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
+                    <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                    this.conn.Save(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
+                 }
+                          <% } %> 
+                       <% } %>
+                 
                    
                     txScope.Complete();
             }
