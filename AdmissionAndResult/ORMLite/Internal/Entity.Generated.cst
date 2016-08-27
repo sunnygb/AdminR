@@ -28,7 +28,7 @@ namespace <%= EntityNamespace %>
 
     public partial class <%= Entity.ClassName.ToSafeName() %>
     {
-    
+        [Alias("<%= Entity.TableName %>")]
         public <%= Entity.ClassName.ToSafeName() %>()
         {
 <% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>

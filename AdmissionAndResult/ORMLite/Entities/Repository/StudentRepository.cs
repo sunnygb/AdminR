@@ -32,36 +32,68 @@ namespace AdmissionAndResult.Data.Repository
        
       public Student Find(long id)
        {
-          throw new NotImplementedException();
+           return this.conn.SingleById<Student>(id);
        
        }
        
       public Student Update(Student student)
        {
-          throw new NotImplementedException();
+          
+          var result=this.conn.Update<Student>(student);
+          return student;
+
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+           this.conn.DeleteById<Student>(id);
        
        }
        
       public Student GetAllWithChildren(long id)
        {
-          throw new NotImplementedException();
-       
+           //this.conn.ExecuteSql(" select * from selectedstudent where studentid=@id;", id);
+           this.conn.LoadSelect<SelectedStudent>(x => x.StudentId = id);
+           var student = this.conn.SingleById<Student>(id);
+           var selected = this.conn.Where<SelectedStudent>(new { StudentId = id });
+           if (student != null && selected != null)
+           {
+               student.SelectedStudents.AddRange(selected);
+           }
+           return student;
        }
        
-      public void Save(Student student)
+      public Student Save(Student student)
        {
-          throw new NotImplementedException();
+            using(var txScope= new TransactionScope())
+            {
+                if(student.IsNew)
+                {
+                    this.Add(student);
+                }
+                else
+                {
+                    this.Update(student);
+                }
+                foreach(var selected in student.SelectedStudents.Where(s => !s.IsDeleted))
+                {
+                    selected.StudentId= student.StudentId;
+                    this.conn.Save(student);
+                }
+                foreach(var selected in student.SelectedStudents.Where(s => s.IsDeleted))
+                {
+                    this.conn.DeleteById<SelectedStudent>(selected.SelectedStudentId);
+
+                }
+                    txScope.Complete();
+            }
+            return student;
        
        }
        private static IDbConnection GetConnection()
        {
-          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
+          string connectionString = "D:\\AdmissionAndResult\\ORMLite.Tests\\bin\\Debug\\SystemDB.db";
           var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
           var db = dbFactory.OpenDbConnection();
           return db;

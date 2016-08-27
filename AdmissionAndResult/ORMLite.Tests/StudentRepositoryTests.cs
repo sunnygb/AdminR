@@ -109,6 +109,61 @@ namespace ORMLite.Tests
             result.Should().BeNull();
         }
 
+        static long ID;
+        [TestMethod]
+        public void Insert_withChildren()
+        {
+            // Arrange
+            IStudentsRepository repo = CreateRepository();
+
+            var student = new Student()
+            {
+                StudentName = "Abdullah Farooq",
+                FatherName = "Nasir Jama",
+                StudentEmail = "abc@Gmail.com",
+                PermanentAddress = "Millat Town Faisalabad"
+
+            };
+
+            var selected= new SelectedStudent()
+            {
+                StudentRegisterationNumber="15-NTU-1050",
+                Aggregate=66,
+
+            };
+
+            student.SelectedStudents.Add(selected);
+
+            // Act
+            var result= repo.Save(student);
+            
+            
+
+            // Assert
+            
+            result.StudentId.Should().NotBe(0, "Identity shoud be assigned by Database");
+            Console.WriteLine("New ID: " + student.StudentId);
+            ID = student.StudentId;
+        }
+        [TestMethod]
+        public void Get_With_Children()
+        {
+            // Arrange
+            var repo = CreateRepository();
+
+
+            // Act
+           var student= repo.GetAllWithChildren(ID);
+
+            // Assert
+           student.Should().NotBeNull();
+           student.StudentId.Should().Be(ID);
+           student.StudentName.Should().Be("Abdullah Farooq");
+           student.SelectedStudents.Count.Should().Be(1);
+           student.SelectedStudents[0].StudentRegisterationNumber.Should().Be("15-NTU-1050");
+           student.SelectedStudents[0].Aggregate.Should().Be(66);
+        }
+
         private IStudentsRepository CreateRepository()
         {
             return new StudentRepository();

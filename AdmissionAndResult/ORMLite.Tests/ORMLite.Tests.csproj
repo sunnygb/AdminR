@@ -79,7 +79,10 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="StudentOrder.orderedtest">
+    <None Include="Childdren.orderedtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Student.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
