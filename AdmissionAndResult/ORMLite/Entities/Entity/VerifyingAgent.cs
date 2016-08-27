@@ -7,10 +7,10 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Verifying_Agent")]
     public partial class VerifyingAgent
     {
-    
+        
         public VerifyingAgent()
         {
         }

@@ -13,6 +13,6 @@ namespace AdmissionAndResult.Data.Services
        void Remove(long id); 
        
        VerifyingAgent GetAllWithChildren(long id);
-       void Save(VerifyingAgent verifyingagent);
+       VerifyingAgent Save(VerifyingAgent verifyingagent);
     }
 }

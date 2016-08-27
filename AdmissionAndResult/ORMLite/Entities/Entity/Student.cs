@@ -7,14 +7,17 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Student")]
     public partial class Student
     {
-    
+        
         public Student()
         {
+
             Courses = new List<Course>();
+
             VerifyingAgents = new List<VerifyingAgent>();
+
             SelectedStudents = new List<SelectedStudent>();
         }
 

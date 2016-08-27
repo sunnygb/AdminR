@@ -74,9 +74,8 @@ namespace <%= EntityNamespace%>.Repository
        
        }
        
-      public void Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      public <%=Entity.ClassName%> Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
-          
           using(var txScope= new TransactionScope())
             {
                 if(<%=Entity.ClassName.ToLower()%>.IsNew)
@@ -89,21 +88,43 @@ namespace <%= EntityNamespace%>.Repository
                 }
                 
                 
-                foreach(var selected in student.SelectedStudents.Where(s => !s.IsDeleted))
-                {
-                    selected.StudentId= student.StudentId;
-                    this.conn.Save(student);
-                }
-                foreach(var selected in student.SelectedStudents.Where(s => s.IsDeleted))
-                {
-                    this.conn.DeleteById<SelectedStudent>(selected.SelectedStudentId);
-
-                }
+                 <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    <%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyM(r.OtherEntity).PropertyName %> =<%= this.Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                    this.conn.Save(<%= r.OtherEntity.ToSafeName().ToLower()%>);
+                  }
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => s.IsDeleted))
+                  { 
+                  
+                    this.conn.DeleteById<<%= r.OtherEntity.ToSafeName()%>>(<%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>);
+                  }
+                    <% } else { %>
+                    
+                    <% if(r.ThisPropertyName.ToSafeName().ToString().Equals("Qualification") ){%>
+                    <% Debugger.Launch(); %>
+                    <%} %>
+                    
+                 // One To One 
+                 var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
+                 <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                 this.conn.Save(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
+                    <% } %> 
+                    <% } %>
+                    
+                   
                     txScope.Complete();
             }
             return <%=Entity.ClassName.ToLower()%>;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
@@ -117,8 +138,9 @@ namespace <%= EntityNamespace%>.Repository
     }
 }
 <script runat="template">
-       public Property GetPrimeryKey()
-       {
+
+public Property GetPrimeryKey()
+{
            foreach(var p in Entity.Properties)
            {
                if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive))
@@ -128,6 +150,50 @@ namespace <%= EntityNamespace%>.Repository
                }
            }
            return null;
-       }
+ }
+       
+       
+ public Property GetForeignPropertyM(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                   foreach(var property in Entity.Properties)
+                   {
+                       if(property.PropertyName==this.GetPrimeryKey().PropertyName)
+                       {
+                           return property;
+                           
+                       }
+                   }
+               }
+           }
+           
+           
+   return null;          
+}
+
+public Property GetForeignPropertyO(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                   foreach(var property in entity.Properties)
+                   {
+                    
+                       if((bool)property.IsPrimaryKey)
+                       {
+                           return property;
+                           break;
+                       }
+                   }
+               }
+           }
+           
+           
+   return null;          
+}
 
 </script>

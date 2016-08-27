@@ -13,6 +13,6 @@ namespace AdmissionAndResult.Data.Services
        void Remove(long id); 
        
        SelectedStudent GetAllWithChildren(long id);
-       void Save(SelectedStudent selectedstudent);
+       SelectedStudent Save(SelectedStudent selectedstudent);
     }
 }

@@ -32,19 +32,20 @@ namespace AdmissionAndResult.Data.Repository
        
       public VerifyingAgent Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<VerifyingAgent>(id);
        
        }
        
       public VerifyingAgent Update(VerifyingAgent verifyingagent)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<VerifyingAgent>(verifyingagent);
+          return verifyingagent;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<VerifyingAgent>(id);
        
        }
        
@@ -54,11 +55,42 @@ namespace AdmissionAndResult.Data.Repository
        
        }
        
-      public void Save(VerifyingAgent verifyingagent)
+      public VerifyingAgent Save(VerifyingAgent verifyingagent)
        {
-          throw new NotImplementedException();
+          using(var txScope= new TransactionScope())
+            {
+                if(verifyingagent.IsNew)
+                {
+                    this.Add(verifyingagent);
+                }
+                else
+                {
+                    this.Update(verifyingagent);
+                }
+                
+                
+                    
+                    
+                 // One To One 
+                 var admin = verifyingagent.Admin;
+                 admin.AdminId = verifyingagent.VerifyingAgentId;
+                 this.conn.Save(admin);
+                    
+                    
+                 // One To One 
+                 var student = verifyingagent.Student;
+                 student.StudentId = verifyingagent.VerifyingAgentId;
+                 this.conn.Save(student);
+                    
+                   
+                    txScope.Complete();
+            }
+            return verifyingagent;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";

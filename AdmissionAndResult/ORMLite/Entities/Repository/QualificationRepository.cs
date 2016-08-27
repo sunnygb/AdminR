@@ -32,19 +32,20 @@ namespace AdmissionAndResult.Data.Repository
        
       public Qualification Find(long id)
        {
-          throw new NotImplementedException();
+         return this.conn.SingleById<Qualification>(id);
        
        }
        
       public Qualification Update(Qualification qualification)
        {
-          throw new NotImplementedException();
+          var result=this.conn.Update<Qualification>(qualification);
+          return qualification;
        
        }
        
       public void Remove(long id)
        {
-          throw new NotImplementedException();
+          this.conn.DeleteById<Qualification>(id);
        
        }
        
@@ -54,11 +55,36 @@ namespace AdmissionAndResult.Data.Repository
        
        }
        
-      public void Save(Qualification qualification)
+      public Qualification Save(Qualification qualification)
        {
-          throw new NotImplementedException();
+          using(var txScope= new TransactionScope())
+            {
+                if(qualification.IsNew)
+                {
+                    this.Add(qualification);
+                }
+                else
+                {
+                    this.Update(qualification);
+                }
+                
+                
+                    
+                    
+                 // One To One 
+                 var student = qualification.Student;
+                 student.StudentId = qualification.QualificationId;
+                 this.conn.Save(student);
+                    
+                   
+                    txScope.Complete();
+            }
+            return qualification;
        
        }
+          
+       
+       
        private static IDbConnection GetConnection()
        {
           string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";

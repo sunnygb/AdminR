@@ -7,12 +7,13 @@ namespace AdmissionAndResult.Data
 {
 
 
-
+    [Alias("Admin")]
     public partial class Admin
     {
-    
+        
         public Admin()
         {
+
             VerifyingAgents = new List<VerifyingAgent>();
         }
 
