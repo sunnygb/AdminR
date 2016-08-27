@@ -1,9 +1,12 @@
-﻿using AdmissionAndResult.Data.Services;
-using ServiceStack.OrmLite;
-using System.Collections.Generic;
+﻿using ServiceStack.OrmLite;
+using System;
 using System.Data;
-using System.Linq;
+using System.Configuration;
+using System.Collections.Generic;
+using AdmissionAndResult.Data.Services;
+using System.Text;
 using System.Transactions;
+using System.Linq;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -160,9 +163,10 @@ namespace AdmissionAndResult.Data.Repository
        }
           
        
+       
        private static IDbConnection GetConnection()
        {
-           string connectionString ="D:\\AdmissionAndResult\\ORMLite.Tests\\bin\\Debug\\SystemDB.db";
+          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
           var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
           var db = dbFactory.OpenDbConnection();
           return db;

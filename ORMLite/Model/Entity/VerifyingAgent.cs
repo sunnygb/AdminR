@@ -1,4 +1,7 @@
-﻿using ServiceStack.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using ServiceStack.DataAnnotations;
 
 namespace AdmissionAndResult.Data
 {
@@ -13,7 +16,6 @@ namespace AdmissionAndResult.Data
         }
 
         [PrimaryKey]
-        [AutoIncrement]  
         [Alias("Verifying_Agent_Id")]
         public long VerifyingAgentId { get; set; }
 

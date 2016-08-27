@@ -1,5 +1,7 @@
-﻿using ServiceStack.DataAnnotations;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using ServiceStack.DataAnnotations;
 
 namespace AdmissionAndResult.Data
 {
@@ -18,7 +20,6 @@ namespace AdmissionAndResult.Data
         }
 
         [PrimaryKey]
-        [AutoIncrement]  
         [Alias("Student_Id")]
         public long StudentId { get; set; }
 
