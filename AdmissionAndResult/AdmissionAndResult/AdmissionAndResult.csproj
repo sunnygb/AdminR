@@ -185,35 +185,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entity\Admin.cs">
-      <SubType>
-      </SubType>
-    </Compile>
-    <Compile Include="Entity\Course.cs">
-      <SubType>
-      </SubType>
-    </Compile>
-    <Compile Include="Entity\Department.cs">
-      <SubType>
-      </SubType>
-    </Compile>
-    <Compile Include="Entity\Qualification.cs">
-      <SubType>
-      </SubType>
-    </Compile>
-    <Compile Include="Entity\SearchMain.cs" />
-    <Compile Include="Entity\SelectedStudent.cs">
-      <SubType>
-      </SubType>
-    </Compile>
-    <Compile Include="Entity\Student.cs">
-      <SubType>
-      </SubType>
-    </Compile>
-    <Compile Include="Entity\VerifyingAgent.cs">
-      <SubType>
-      </SubType>
-    </Compile>
     <Compile Include="Model\Admin.cs">
       <SubType>Code</SubType>
     </Compile>

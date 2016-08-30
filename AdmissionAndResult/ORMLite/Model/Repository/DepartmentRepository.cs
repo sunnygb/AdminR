@@ -7,14 +7,24 @@ using AdmissionAndResult.Data.Services;
 using System.Text;
 using System.Transactions;
 using System.Linq;
+using ServiceStack.Data;
 
 namespace AdmissionAndResult.Data.Repository
 {    
-    public class DepartmentRepository : IDepartmentsRepository 
+    public class DepartmentRepository : IDepartmentsRepository,IDisposable
     { 
       
       
-      private IDbConnection conn = GetConnection();
+       public IDbConnectionFactory DbFactory { get; set; }
+      
+       private IDbConnection _conn;
+       private IDbConnection conn 
+       { 
+          get 
+          {
+            return _conn = _conn ??  DbFactory.Open();
+          }
+       }
 
       public Department Add(Department department)
        {
@@ -71,7 +81,7 @@ namespace AdmissionAndResult.Data.Repository
        
        
       public Department Save(Department department)
-       {
+      {
           using(var txScope= new TransactionScope())
             {
                 if(department.IsNew)
@@ -104,17 +114,11 @@ namespace AdmissionAndResult.Data.Repository
             return department;
        
        }
-          
        
-       
-       private static IDbConnection GetConnection()
+       public void Dispose()
        {
-          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
-          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
-          var db = dbFactory.OpenDbConnection();
-          return db;
-
-       
+          if (_conn != null)
+              _conn.Dispose();
        }
    
     }

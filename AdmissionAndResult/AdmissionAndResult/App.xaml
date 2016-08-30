@@ -8,18 +8,20 @@
             <ResourceDictionary.MergedDictionaries>
 
 
-                <ResourceDictionary Source="/Reports/System.Windows.xaml" />
-                <ResourceDictionary Source="/Reports/Telerik.Windows.Controls.xaml" />
-                <ResourceDictionary Source="/Reports/Telerik.Windows.Controls.Input.xaml" />
-                <ResourceDictionary Source="/Reports/Telerik.Windows.Controls.Navigation.xaml" />
-                <ResourceDictionary Source="/Reports/Telerik.ReportViewer.Wpf.xaml" />
                 
+                    <ResourceDictionary Source="/Reports/System.Windows.xaml" />
+                    <ResourceDictionary Source="/Reports/Telerik.Windows.Controls.xaml" />
+                    <ResourceDictionary Source="/Reports/Telerik.Windows.Controls.Input.xaml" />
+                    <ResourceDictionary Source="/Reports/Telerik.Windows.Controls.Navigation.xaml" />
+                    <ResourceDictionary Source="/Reports/Telerik.ReportViewer.Wpf.xaml" />
+                
+
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Deeporange.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lightblue.xaml" />
 
-                
+
 
 
 
@@ -27,7 +29,7 @@
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-           </Application.Resources>
-    
-    
+    </Application.Resources>
+
+
 </Application>

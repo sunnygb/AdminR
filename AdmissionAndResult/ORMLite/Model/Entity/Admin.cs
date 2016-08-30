@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
-
+using AdmissionAndResult.Data.Wrapper;
 namespace AdmissionAndResult.Data
 {
 
@@ -13,25 +13,36 @@ namespace AdmissionAndResult.Data
         
         public Admin()
         {
-
             VerifyingAgents = new List<VerifyingAgent>();
+        }
+        
+        public Admin(AdminW adminw)
+        {
+           this.AdminId = adminw.adminid;
+           this.AdminName = adminw.adminname;
+           this.Password = adminw.password;
+           this.HireDate = adminw.hiredate;
+           this.ChangeDate = adminw.changedate;
+           
+           VerifyingAgents = new List<VerifyingAgent>();
+           
         }
 
         [PrimaryKey]
         [Alias("Admin_Id")]
-        public long AdminId { get; set; }
+        public System.Int64 AdminId { get; set; }
 
         [Alias("Admin_Name")]
-        public string AdminName { get; set; }
+        public System.String AdminName { get; set; }
 
         [Alias("Password")]
-        public string Password { get; set; }
+        public System.String Password { get; set; }
 
         [Alias("Hire_Date")]
-        public string HireDate { get; set; }
+        public System.String HireDate { get; set; }
 
         [Alias("Change_Date")]
-        public string ChangeDate { get; set; }
+        public System.String ChangeDate { get; set; }
 
         [Ignore]
         public virtual List<VerifyingAgent> VerifyingAgents { get; set; }
