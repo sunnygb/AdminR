@@ -57,8 +57,8 @@ namespace AdmissionAndResult.Model.Wrapper
 
 
 	private System.DateTime _Change_Date;
-	[Required(ErrorMessage = "Change Date is required")]
 
+	[Required(ErrorMessage = "Change Date is required")]
 	public System.DateTime Change_Date
 	{
 	  get { return _Change_Date; }

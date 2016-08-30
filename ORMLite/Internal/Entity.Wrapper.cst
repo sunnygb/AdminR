@@ -17,12 +17,76 @@
              Type="System.String"  %>
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Linq;
+using <%= EntityNamespace %>;
+using <%= EntityNamespace %>.Services;
+using <%= EntityNamespace %>.Wrapper;
 
-namespace <%= EntityNamespace %>
+namespace <%= EntityNamespace %>.Wrapper
 {
-    public partial class <%= Entity.ClassName.ToSafeName() %>
+    public partial class <%= Entity.ClassName.ToSafeName() %>W : ValidateModelCommon
     {
+        public <%= Entity.ClassName.ToSafeName() %>W(<%= Entity.ClassName.ToSafeName() %> <%= Entity.ClassName.ToSafeName().ToLower()%>)
+        {
+           <% foreach(var p in Entity.Properties) { %>
+           this._<%= p.PropertyName.ToSafeName().ToLower()%> = <%= Entity.ClassName.ToSafeName().ToLower()%>.<%= p.PropertyName.ToSafeName()%>;
+           
+           <% } // foreach %>
+           
+           <% foreach(var r in Entity.Relationships) { %>
+           <% if(r.ThisCardinality == Cardinality.Many) { %>
+           // One To Many
+           if(<%= Entity.ClassName.ToSafeName().ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> !=null)
+           {
+              this._<%= r.ThisPropertyName.ToSafeName().ToLower() %>w = new ObservableCollection<<%= r.OtherEntity.ToSafeName()%>W>(
+              <%= Entity.ClassName.ToSafeName().ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Select(e=>new <%= r.OtherEntity.ToSafeName()%>W(e)));
+           }
+           
+           <% } else { %>
+           // One To One
+           if(<%= Entity.ClassName.ToSafeName().ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %> !=null)
+           {
+               this._<%= r.ThisPropertyName.ToSafeName().ToLower() %>w = new <%= r.OtherEntity.ToSafeName()%>W(
+               <%= Entity.ClassName.ToSafeName().ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>);
+           }
+           <% } %>
+           <% } // foreach %>
 
+        }
+        
+        public <%= Entity.ClassName.ToSafeName() %>W(){}
+        
+        <% foreach(var p in Entity.Properties) { %>
+        private <%= p.SystemType%> _<%= p.PropertyName.ToSafeName().ToLower()%>;
+        public  <%= p.SystemType%>  <%= p.PropertyName.ToSafeName().ToLower()%>
+        {
+           get { return _<%= p.PropertyName.ToSafeName().ToLower()%>; }
+           set { ChangeNvalidate(ref  _<%= p.PropertyName.ToSafeName().ToLower()%>,value); }
+        }
+        <% } // foreach %>
+        
+        <% foreach(var r in Entity.Relationships) { %>
+        <% if(r.ThisCardinality == Cardinality.Many) { %>
+        // One To Many
+        private ObservableCollection<<%= r.OtherEntity.ToSafeName()%>W> _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w;
+        public  ObservableCollection<<%= r.OtherEntity.ToSafeName()%>W>  <%= r.ThisPropertyName.ToSafeName().ToLower() %>w
+        {
+           get { return _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w; }
+           set { ChangeNvalidate(ref _<%= r.ThisPropertyName.ToSafeName().ToLower()%>w,value); }
+        }
+        <% } else { %>
+        // One To One
+        private <%= r.OtherEntity.ToSafeName()%>W _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w;
+        public  <%= r.OtherEntity.ToSafeName()%>W  <%= r.ThisPropertyName.ToSafeName().ToLower() %>w
+        {
+           get { return _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w; }
+           set { ChangeNvalidate(ref _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w,value); }
+        }
+        <% } %>
+        <% } // foreach %>
+        
+        
     }
 }

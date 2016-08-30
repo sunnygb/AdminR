@@ -7,14 +7,24 @@ using AdmissionAndResult.Data.Services;
 using System.Text;
 using System.Transactions;
 using System.Linq;
+using ServiceStack.Data;
 
 namespace AdmissionAndResult.Data.Repository
 {    
-    public class SelectedStudentRepository : ISelectedStudentsRepository 
+    public class SelectedStudentRepository : ISelectedStudentsRepository,IDisposable
     { 
       
       
-      private IDbConnection conn = GetConnection();
+       public IDbConnectionFactory DbFactory { get; set; }
+      
+       private IDbConnection _conn;
+       private IDbConnection conn 
+       { 
+          get 
+          {
+            return _conn = _conn ??  DbFactory.Open();
+          }
+       }
 
       public SelectedStudent Add(SelectedStudent selectedstudent)
        {
@@ -85,7 +95,7 @@ namespace AdmissionAndResult.Data.Repository
        
        
       public SelectedStudent Save(SelectedStudent selectedstudent)
-       {
+      {
           using(var txScope= new TransactionScope())
             {
                 if(selectedstudent.IsNew)
@@ -103,7 +113,7 @@ namespace AdmissionAndResult.Data.Repository
                  // One To One 
                  if(selectedstudent.Student !=null)
                  {
-                     var selectedstudentmember = selectedstudent.Student;
+                    var selectedstudentmember = selectedstudent.Student;
                     selectedstudentmember.StudentId = selectedstudent.SelectedStudentId;
                     this.conn.Save(selectedstudentmember);
                  }
@@ -132,17 +142,11 @@ namespace AdmissionAndResult.Data.Repository
             return selectedstudent;
        
        }
-          
        
-       
-       private static IDbConnection GetConnection()
+       public void Dispose()
        {
-          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
-          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
-          var db = dbFactory.OpenDbConnection();
-          return db;
-
-       
+          if (_conn != null)
+              _conn.Dispose();
        }
    
     }

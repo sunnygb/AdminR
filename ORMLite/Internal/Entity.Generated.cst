@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
-
+using <%= EntityNamespace %>.Wrapper;
 namespace <%= EntityNamespace %>
 {
 
@@ -31,17 +31,28 @@ namespace <%= EntityNamespace %>
         
         public <%= Entity.ClassName.ToSafeName() %>()
         {
-<% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>
-
+            <% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>
             <%= r.ThisPropertyName.ToSafeName() %> = new List<<%= r.OtherEntity.ToSafeName() %>>();
-<% } // foreach %>
+            <% } // foreach %>
+        }
+        
+        public <%= Entity.ClassName.ToSafeName() %>(<%= Entity.ClassName.ToSafeName() %>W <%= Entity.ClassName.ToSafeName().ToLower()%>w)
+        {
+           <% foreach(var p in Entity.Properties) { %>
+           this.<%= p.PropertyName.ToSafeName()%> = <%= Entity.ClassName.ToSafeName().ToLower()%>w.<%= p.PropertyName.ToSafeName().ToLower()%>;
+           <% } // foreach %>
+           
+           <% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>
+           <%= r.ThisPropertyName.ToSafeName() %> = new List<<%= r.OtherEntity.ToSafeName() %>>();
+           <% } // foreach %>
+           
         }
 
 <% foreach(var p in Entity.Properties) { %>
 <%if((bool)p.IsPrimaryKey){%>
         [PrimaryKey]<%}%>
         [Alias("<%= p.ColumnName%>")]
-        public <%= p.SystemType.ToNullableType(p.IsNullable == true) %> <%= p.PropertyName.ToSafeName() %> { get; set; }
+        public <%= p.SystemType%> <%= p.PropertyName.ToSafeName() %> { get; set; }
 <% } // foreach %>
 
 <% foreach(var r in Entity.Relationships) { %>

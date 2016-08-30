@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
-
+using AdmissionAndResult.Data.Wrapper;
 namespace AdmissionAndResult.Data
 {
 
@@ -13,57 +13,78 @@ namespace AdmissionAndResult.Data
         
         public Student()
         {
-
             Courses = new List<Course>();
-
             VerifyingAgents = new List<VerifyingAgent>();
+        }
+        
+        public Student(StudentW studentw)
+        {
+           this.StudentId = studentw.studentid;
+           this.StudentName = studentw.studentname;
+           this.StudentEmail = studentw.studentemail;
+           this.FatherName = studentw.fathername;
+           this.FatherMonthlyIncome = studentw.fathermonthlyincome;
+           this.FatherOccupation = studentw.fatheroccupation;
+           this.PostalAddress = studentw.postaladdress;
+           this.PermanentAddress = studentw.permanentaddress;
+           this.DateOfBirth = studentw.dateofbirth;
+           this.NICNo = studentw.nicno;
+           this.BloodGroup = studentw.bloodgroup;
+           this.PhoneNumber = studentw.phonenumber;
+           this.ResidentalPhoneNumber = studentw.residentalphonenumber;
+           this.Date = studentw.date;
+           this.FathersNumber = studentw.fathersnumber;
+           
+           Courses = new List<Course>();
+           VerifyingAgents = new List<VerifyingAgent>();
+           
         }
 
         [PrimaryKey]
         [Alias("Student_Id")]
-        public long StudentId { get; set; }
+        public System.Int64 StudentId { get; set; }
 
         [Alias("Student_Name")]
-        public string StudentName { get; set; }
+        public System.String StudentName { get; set; }
 
         [Alias("Student_Email")]
-        public string StudentEmail { get; set; }
+        public System.String StudentEmail { get; set; }
 
         [Alias("Father_Name")]
-        public string FatherName { get; set; }
+        public System.String FatherName { get; set; }
 
         [Alias("Father_Monthly_Income")]
-        public string FatherMonthlyIncome { get; set; }
+        public System.String FatherMonthlyIncome { get; set; }
 
         [Alias("Father_Occupation")]
-        public string FatherOccupation { get; set; }
+        public System.String FatherOccupation { get; set; }
 
         [Alias("Postal_Address")]
-        public string PostalAddress { get; set; }
+        public System.String PostalAddress { get; set; }
 
         [Alias("Permanent_Address")]
-        public string PermanentAddress { get; set; }
+        public System.String PermanentAddress { get; set; }
 
         [Alias("Date_Of_Birth")]
-        public string DateOfBirth { get; set; }
+        public System.String DateOfBirth { get; set; }
 
         [Alias("NIC_No")]
-        public string NICNo { get; set; }
+        public System.String NICNo { get; set; }
 
         [Alias("Blood_Group")]
-        public string BloodGroup { get; set; }
+        public System.String BloodGroup { get; set; }
 
         [Alias("Phone_Number")]
-        public string PhoneNumber { get; set; }
+        public System.String PhoneNumber { get; set; }
 
         [Alias("Residental_Phone_Number")]
-        public string ResidentalPhoneNumber { get; set; }
+        public System.String ResidentalPhoneNumber { get; set; }
 
         [Alias("Date")]
-        public string Date { get; set; }
+        public System.String Date { get; set; }
 
         [Alias("Fathers_Number")]
-        public string FathersNumber { get; set; }
+        public System.String FathersNumber { get; set; }
 
         [Ignore]
         public virtual List<Course> Courses { get; set; }

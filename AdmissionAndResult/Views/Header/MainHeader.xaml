@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:AdmissionAndResult"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="White"
              d:DataContext="{d:DesignInstance Type=ViewModel:HeaderViewModel,
                                               IsDesignTimeCreatable=True}"
              d:DesignHeight="100"
              d:DesignWidth="1014"
-             Background="White"
              mc:Ignorable="d">
 
 
@@ -37,8 +37,8 @@
                     VerticalAlignment="Center"
                     Orientation="Horizontal">
             <materialDesign:Card Height="36"
-                                 materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                 Padding="5">
+                                 Padding="5"
+                                 materialDesign:ShadowAssist.ShadowDepth="Depth2">
                 <TextBlock Margin="0,0,0,-10"
                            FontFamily="Segoe UI Black"
                            FontSize="22"
@@ -65,24 +65,22 @@
                              IconBackground="{DynamicResource PrimaryHueDarkBrush}">
             <ComboBox x:Name="adminList"
                       Height="40"
-                      materialDesign:HintAssist.Hint="Search"
                       Background="White"
                       BorderBrush="#FFE64A19"
                       IsEditable="True"
-                   
-                  materialDesign:HintAssist.HintOpacity=".26"
-                  
                       ItemsSource="{Binding students}"
-                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      materialDesign:HintAssist.Hint="Search"
+                      materialDesign:HintAssist.HintOpacity=".26">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBox x:Name="txt"
+                            <TextBlock x:Name="txt"
                                      Width="160"
                                      Margin="10,0,0,0"
+                                     Text="{Binding Student_Name}"
                                      materialDesign:HintAssist.Hint="Full Name"
-                                     materialDesign:HintAssist.IsFloating="True"
-                                     Text="{Binding Student_Name}" />
+                                     materialDesign:HintAssist.IsFloating="True" />
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

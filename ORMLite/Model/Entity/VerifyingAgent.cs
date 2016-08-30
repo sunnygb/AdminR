@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
-
+using AdmissionAndResult.Data.Wrapper;
 namespace AdmissionAndResult.Data
 {
 
@@ -14,28 +14,41 @@ namespace AdmissionAndResult.Data
         public VerifyingAgent()
         {
         }
+        
+        public VerifyingAgent(VerifyingAgentW verifyingagentw)
+        {
+           this.VerifyingAgentId = verifyingagentw.verifyingagentid;
+           this.VerifyingAgentName = verifyingagentw.verifyingagentname;
+           this.DegreeVerification = verifyingagentw.degreeverification;
+           this.AdminId = verifyingagentw.adminid;
+           this.SendDate = verifyingagentw.senddate;
+           this.ReciveDate = verifyingagentw.recivedate;
+           this.StudentId = verifyingagentw.studentid;
+           
+           
+        }
 
         [PrimaryKey]
         [Alias("Verifying_Agent_Id")]
-        public long VerifyingAgentId { get; set; }
+        public System.Int64 VerifyingAgentId { get; set; }
 
         [Alias("Verifying_Agent_Name")]
-        public string VerifyingAgentName { get; set; }
+        public System.String VerifyingAgentName { get; set; }
 
         [Alias("Degree_Verification")]
-        public string DegreeVerification { get; set; }
+        public System.String DegreeVerification { get; set; }
 
         [Alias("Admin_Id")]
-        public long AdminId { get; set; }
+        public System.Int64 AdminId { get; set; }
 
         [Alias("Send_Date")]
-        public string SendDate { get; set; }
+        public System.String SendDate { get; set; }
 
         [Alias("Recive_Date")]
-        public string ReciveDate { get; set; }
+        public System.String ReciveDate { get; set; }
 
         [Alias("Student_Id")]
-        public long StudentId { get; set; }
+        public System.Int64 StudentId { get; set; }
 
         [Ignore]
         public virtual Admin Admin { get; set; }

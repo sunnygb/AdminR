@@ -7,14 +7,24 @@ using AdmissionAndResult.Data.Services;
 using System.Text;
 using System.Transactions;
 using System.Linq;
+using ServiceStack.Data;
 
 namespace AdmissionAndResult.Data.Repository
 {    
-    public class QualificationRepository : IQualificationsRepository 
+    public class QualificationRepository : IQualificationsRepository,IDisposable
     { 
       
       
-      private IDbConnection conn = GetConnection();
+       public IDbConnectionFactory DbFactory { get; set; }
+      
+       private IDbConnection _conn;
+       private IDbConnection conn 
+       { 
+          get 
+          {
+            return _conn = _conn ??  DbFactory.Open();
+          }
+       }
 
       public Qualification Add(Qualification qualification)
        {
@@ -69,7 +79,7 @@ namespace AdmissionAndResult.Data.Repository
        
        
       public Qualification Save(Qualification qualification)
-       {
+      {
           using(var txScope= new TransactionScope())
             {
                 if(qualification.IsNew)
@@ -98,17 +108,11 @@ namespace AdmissionAndResult.Data.Repository
             return qualification;
        
        }
-          
        
-       
-       private static IDbConnection GetConnection()
+       public void Dispose()
        {
-          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
-          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
-          var db = dbFactory.OpenDbConnection();
-          return db;
-
-       
+          if (_conn != null)
+              _conn.Dispose();
        }
    
     }

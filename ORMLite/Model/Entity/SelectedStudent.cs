@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
-
+using AdmissionAndResult.Data.Wrapper;
 namespace AdmissionAndResult.Data
 {
 
@@ -14,28 +14,41 @@ namespace AdmissionAndResult.Data
         public SelectedStudent()
         {
         }
+        
+        public SelectedStudent(SelectedStudentW selectedstudentw)
+        {
+           this.SelectedStudentId = selectedstudentw.selectedstudentid;
+           this.StudentRegisterationNumber = selectedstudentw.studentregisterationnumber;
+           this.Aggregate = selectedstudentw.aggregate;
+           this.CourseId = selectedstudentw.courseid;
+           this.CGPAText = selectedstudentw.cgpatext;
+           this.Sgpa = selectedstudentw.sgpa;
+           this.DepartmentID = selectedstudentw.departmentid;
+           
+           
+        }
 
         [PrimaryKey]
         [Alias("Selected_Student_Id")]
-        public long SelectedStudentId { get; set; }
+        public System.Int64 SelectedStudentId { get; set; }
 
         [Alias("Student_Registeration_Number")]
-        public string StudentRegisterationNumber { get; set; }
+        public System.String StudentRegisterationNumber { get; set; }
 
         [Alias("Aggregate")]
-        public double? Aggregate { get; set; }
+        public System.Double Aggregate { get; set; }
 
         [Alias("Course_Id")]
-        public long? CourseId { get; set; }
+        public System.Int64 CourseId { get; set; }
 
         [Alias("CGPA Text")]
-        public string CGPAText { get; set; }
+        public System.String CGPAText { get; set; }
 
         [Alias("SGPA")]
-        public string Sgpa { get; set; }
+        public System.String Sgpa { get; set; }
 
         [Alias("Department_ID")]
-        public long DepartmentID { get; set; }
+        public System.Int64 DepartmentID { get; set; }
 
         [Ignore]
         public virtual Student Student { get; set; }

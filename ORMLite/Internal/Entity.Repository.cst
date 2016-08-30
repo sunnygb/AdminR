@@ -26,14 +26,24 @@ using <%=EntityNamespace%>.Services;
 using System.Text;
 using System.Transactions;
 using System.Linq;
+using ServiceStack.Data;
 
 namespace <%= EntityNamespace%>.Repository
 {    
-    public class <%= Entity.ClassName%>Repository : I<%= Entity.ContextName%>Repository 
+    public class <%= Entity.ClassName%>Repository : I<%= Entity.ContextName%>Repository,IDisposable
     { 
       
       
-      private IDbConnection conn = GetConnection();
+       public IDbConnectionFactory DbFactory { get; set; }
+      
+       private IDbConnection _conn;
+       private IDbConnection conn 
+       { 
+          get 
+          {
+            return _conn = _conn ??  DbFactory.Open();
+          }
+       }
 
       public <%=Entity.ClassName%> Add(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
@@ -103,7 +113,7 @@ namespace <%= EntityNamespace%>.Repository
        
        
       public <%=Entity.ClassName%> Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
-       {
+      {
           using(var txScope= new TransactionScope())
             {
                 if(<%=Entity.ClassName.ToLower()%>.IsNew)
@@ -153,17 +163,11 @@ namespace <%= EntityNamespace%>.Repository
             return <%=Entity.ClassName.ToLower()%>;
        
        }
-          
        
-       
-       private static IDbConnection GetConnection()
+       public void Dispose()
        {
-          string connectionString =Environment.CurrentDirectory + "\\SystemDB.db";
-          var dbFactory = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
-          var db = dbFactory.OpenDbConnection();
-          return db;
-
-       
+          if (_conn != null)
+              _conn.Dispose();
        }
    
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
-
+using AdmissionAndResult.Data.Wrapper;
 namespace AdmissionAndResult.Data
 {
 
@@ -13,19 +13,28 @@ namespace AdmissionAndResult.Data
         
         public Course()
         {
-
             SelectedStudents = new List<SelectedStudent>();
+        }
+        
+        public Course(CourseW coursew)
+        {
+           this.CourseId = coursew.courseid;
+           this.CourseName = coursew.coursename;
+           this.StudentId = coursew.studentid;
+           
+           SelectedStudents = new List<SelectedStudent>();
+           
         }
 
         [PrimaryKey]
         [Alias("Course_Id")]
-        public long CourseId { get; set; }
+        public System.Int64 CourseId { get; set; }
 
         [Alias("Course_Name")]
-        public string CourseName { get; set; }
+        public System.String CourseName { get; set; }
 
         [Alias("Student_Id")]
-        public long StudentId { get; set; }
+        public System.Int64 StudentId { get; set; }
 
         [Ignore]
         public virtual Student Student { get; set; }
