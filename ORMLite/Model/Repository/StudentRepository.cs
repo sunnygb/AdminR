@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,48 +27,48 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public Student Add(Student student)
+      public async Task<Student> AddStudentAsync(Student student)
        {
-          this.conn.Insert(student);
+          await this.conn.InsertAsync(student);
           student.StudentId =this.conn.LastInsertId();
           return student;
        
        }
        
-      public List<Student> GetAll()
+      public async Task<List<Student>> GetAllStudentAsync()
        {
-         return this.conn.Select<Student>();
+         return await this.conn.SelectAsync<Student>();
        
        }
        
-      public Student Find(long id)
+      public async Task<Student> FindStudentAsync(long id)
        {
-         return this.conn.SingleById<Student>(id);
+         return await this.conn.SingleByIdAsync<Student>(id);
        
        }
        
-      public Student Update(Student student)
+      public async Task<Student> UpdateStudentAsync(Student student)
        {
-          var result=this.conn.Update<Student>(student);
+          var result= await this.conn.UpdateAsync<Student>(student);
           return student;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveStudentAsync(long id)
        {
-          this.conn.DeleteById<Student>(id);
+         await this.conn.DeleteByIdAsync<Student>(id);
        
        }
        
-      public Student GetAllWithChildren(long id)
+      public async Task<Student> GetStudentWithChildrenAsync(long id)
        {
-          var student = this.conn.SingleById<Student>(id);
+          var student = await this.conn.SingleByIdAsync<Student>(id);
           
           
           
         
                  //One To Many
-           var courses = this.conn.Select<Course>().Where(a => a.CourseId == id).ToList();
+           var courses = await this.conn.SelectAsync<Course>(a=> a.Where(e => e.CourseId == id));
            if (student != null && courses != null)
            {
              student.Courses.AddRange(courses);
@@ -77,7 +78,7 @@ namespace AdmissionAndResult.Data.Repository
                   
         
                  //One To Many
-           var verifyingagents = this.conn.Select<VerifyingAgent>().Where(a => a.VerifyingAgentId == id).ToList();
+           var verifyingagents = await this.conn.SelectAsync<VerifyingAgent>(a=> a.Where(e => e.VerifyingAgentId == id));
            if (student != null && verifyingagents != null)
            {
              student.VerifyingAgents.AddRange(verifyingagents);
@@ -87,18 +88,18 @@ namespace AdmissionAndResult.Data.Repository
                   
    
                  // One To One 
-           var qualification = this.conn.Select<Qualification>().Where(a => a.QualificationId == id).SingleOrDefault();
+           var qualification = await this.conn.SelectAsync<Qualification>(a => a.Where(e => e.QualificationId == id));
            if (student != null && qualification != null)
            {
-             student.Qualification = qualification;
+             student.Qualification = qualification.SingleOrDefault();
            }
          
    
                  // One To One 
-           var selectedselectedstudent = this.conn.Select<SelectedStudent>().Where(a => a.SelectedStudentId == id).SingleOrDefault();
+           var selectedselectedstudent = await this.conn.SelectAsync<SelectedStudent>(a => a.Where(e => e.SelectedStudentId == id));
            if (student != null && selectedselectedstudent != null)
            {
-             student.SelectedSelectedStudent = selectedselectedstudent;
+             student.SelectedStudent = selectedselectedstudent.SingleOrDefault();
            }
          
   
@@ -106,17 +107,17 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public Student Save(Student student)
+      public async Task<Student> SaveStudentAsync(Student student)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(student.IsNew)
                 {
-                    this.Add(student);
+                   await this.AddStudentAsync(student);
                 }
                 else
                 {
-                    this.Update(student);
+                   await this.UpdateStudentAsync(student);
                 }
                 
                 
@@ -126,12 +127,12 @@ namespace AdmissionAndResult.Data.Repository
                   { 
                   
                     course.StudentId =student.StudentId;
-                    this.conn.Save(course);
+                    await this.conn.SaveAsync(course);
                   }
                   foreach(var course in student.Courses.Where(s => s.IsDeleted))
                   { 
                   
-                    this.conn.DeleteById<Course>(course.CourseId);
+                    await this.conn.DeleteByIdAsync<Course>(course.CourseId);
                   }
         
                  //One To Many
@@ -139,31 +140,50 @@ namespace AdmissionAndResult.Data.Repository
                   { 
                   
                     verifyingagent.StudentId =student.StudentId;
-                    this.conn.Save(verifyingagent);
+                    await this.conn.SaveAsync(verifyingagent);
                   }
                   foreach(var verifyingagent in student.VerifyingAgents.Where(s => s.IsDeleted))
                   { 
                   
-                    this.conn.DeleteById<VerifyingAgent>(verifyingagent.VerifyingAgentId);
+                    await this.conn.DeleteByIdAsync<VerifyingAgent>(verifyingagent.VerifyingAgentId);
+                  }
+                    
+                    
+                    
+                 // One To One 
+                 if(student.Qualification!=null)
+                 {
+                    if(student.Qualification.IsDeleted)
+                    {
+                      var id = student.Qualification.QualificationId;
+                      await this._conn.DeleteByIdAsync<Qualification>(id);
+                    }
+                    else if(!student.Qualification.IsDeleted)
+                    {
+                      var qualification = student.Qualification;
+                      qualification.QualificationId = student.StudentId;
+                      await this.conn.SaveAsync(qualification);
+                    }
+                    
                   }
                     
                     
                  // One To One 
-                 if(student.Qualification !=null)
+                 if(student.SelectedStudent!=null)
                  {
-                    var qualification = student.Qualification;
-                    qualification.QualificationId = student.StudentId;
-                    this.conn.Save(qualification);
-                 }
+                    if(student.SelectedStudent.IsDeleted)
+                    {
+                      var id = student.SelectedStudent.SelectedStudentId;
+                      await this._conn.DeleteByIdAsync<SelectedStudent>(id);
+                    }
+                    else if(!student.SelectedStudent.IsDeleted)
+                    {
+                      var selectedselectedstudent = student.SelectedStudent;
+                      selectedselectedstudent.SelectedStudentId = student.StudentId;
+                      await this.conn.SaveAsync(selectedselectedstudent);
+                    }
                     
-                    
-                 // One To One 
-                 if(student.SelectedSelectedStudent !=null)
-                 {
-                    var selectedselectedstudent = student.SelectedSelectedStudent;
-                    selectedselectedstudent.SelectedStudentId = student.StudentId;
-                    this.conn.Save(selectedselectedstudent);
-                 }
+                  }
                  
                    
                     txScope.Complete();

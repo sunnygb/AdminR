@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,48 +27,48 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public Department Add(Department department)
+      public async Task<Department> AddDepartmentAsync(Department department)
        {
-          this.conn.Insert(department);
+          await this.conn.InsertAsync(department);
           department.DepartmentID =this.conn.LastInsertId();
           return department;
        
        }
        
-      public List<Department> GetAll()
+      public async Task<List<Department>> GetAllDepartmentAsync()
        {
-         return this.conn.Select<Department>();
+         return await this.conn.SelectAsync<Department>();
        
        }
        
-      public Department Find(long id)
+      public async Task<Department> FindDepartmentAsync(long id)
        {
-         return this.conn.SingleById<Department>(id);
+         return await this.conn.SingleByIdAsync<Department>(id);
        
        }
        
-      public Department Update(Department department)
+      public async Task<Department> UpdateDepartmentAsync(Department department)
        {
-          var result=this.conn.Update<Department>(department);
+          var result= await this.conn.UpdateAsync<Department>(department);
           return department;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveDepartmentAsync(long id)
        {
-          this.conn.DeleteById<Department>(id);
+         await this.conn.DeleteByIdAsync<Department>(id);
        
        }
        
-      public Department GetAllWithChildren(long id)
+      public async Task<Department> GetDepartmentWithChildrenAsync(long id)
        {
-          var department = this.conn.SingleById<Department>(id);
+          var department = await this.conn.SingleByIdAsync<Department>(id);
           
           
           
         
                  //One To Many
-           var selectedstudents = this.conn.Select<SelectedStudent>().Where(a => a.SelectedStudentId == id).ToList();
+           var selectedstudents = await this.conn.SelectAsync<SelectedStudent>(a=> a.Where(e => e.SelectedStudentId == id));
            if (department != null && selectedstudents != null)
            {
              department.SelectedStudents.AddRange(selectedstudents);
@@ -80,17 +81,17 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public Department Save(Department department)
+      public async Task<Department> SaveDepartmentAsync(Department department)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(department.IsNew)
                 {
-                    this.Add(department);
+                   await this.AddDepartmentAsync(department);
                 }
                 else
                 {
-                    this.Update(department);
+                   await this.UpdateDepartmentAsync(department);
                 }
                 
                 
@@ -100,12 +101,12 @@ namespace AdmissionAndResult.Data.Repository
                   { 
                   
                     selectedstudent.DepartmentID =department.DepartmentID;
-                    this.conn.Save(selectedstudent);
+                    await this.conn.SaveAsync(selectedstudent);
                   }
                   foreach(var selectedstudent in department.SelectedStudents.Where(s => s.IsDeleted))
                   { 
                   
-                    this.conn.DeleteById<SelectedStudent>(selectedstudent.SelectedStudentId);
+                    await this.conn.DeleteByIdAsync<SelectedStudent>(selectedstudent.SelectedStudentId);
                   }
                  
                    

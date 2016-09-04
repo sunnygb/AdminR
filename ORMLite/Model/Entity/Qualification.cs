@@ -17,40 +17,40 @@ namespace AdmissionAndResult.Data
         
         public Qualification(QualificationW qualificationw)
         {
-           this.QualificationId = qualificationw.qualificationid;
-           this.NTSObtMarks = qualificationw.ntsobtmarks;
-           this.InterObtMarks = qualificationw.interobtmarks;
-           this.MatricObtMarks = qualificationw.matricobtmarks;
-           this.FSCYear = qualificationw.fscyear;
-           this.BSYear = qualificationw.bsyear;
-           this.MSYear = qualificationw.msyear;
-           this.MatricYear = qualificationw.matricyear;
-           this.MSInstituteName = qualificationw.msinstitutename;
-           this.BSInstituteName = qualificationw.bsinstitutename;
-           this.InterInstituteName = qualificationw.interinstitutename;
-           this.MatricInstituteName = qualificationw.matricinstitutename;
-           this.InterRollNo = qualificationw.interrollno;
-           this.NTSRollNo = qualificationw.ntsrollno;
-           this.MatricRollNo = qualificationw.matricrollno;
-           this.MSRollNo = qualificationw.msrollno;
-           this.GATRollNo = qualificationw.gatrollno;
-           this.BSRollNo = qualificationw.bsrollno;
-           this.BoardName = qualificationw.boardname;
-           this.GATObtMarks = qualificationw.gatobtmarks;
-           this.BatchlorObtCGPA = qualificationw.batchlorobtcgpa;
-           this.MSCObtCGPA = qualificationw.mscobtcgpa;
-           this.VerifiedNTSMarks = qualificationw.verifiedntsmarks;
-           this.VerifiedMatricMarks = qualificationw.verifiedmatricmarks;
-           this.VerifiedFSCMarks = qualificationw.verifiedfscmarks;
-           this.VerifiedMSCCGPA = qualificationw.verifiedmsccgpa;
-           this.VerifiedBSCGPA = qualificationw.verifiedbscgpa;
-           this.BSDegree = qualificationw.bsdegree;
-           this.MSDegree = qualificationw.msdegree;
-           this.BSIsVerified = qualificationw.bsisverified;
-           this.MSIsVerified = qualificationw.msisverified;
-           this.PHDIsVerified = qualificationw.phdisverified;
-           this.MatricIsVerified = qualificationw.matricisverified;
-           this.InterIsVerified = qualificationw.interisverified;
+           this.QualificationId = qualificationw.QualificationId;
+           this.NTSObtMarks = qualificationw.NTSObtMarks;
+           this.InterObtMarks = qualificationw.InterObtMarks;
+           this.MatricObtMarks = qualificationw.MatricObtMarks;
+           this.FSCYear = qualificationw.FSCYear;
+           this.BSYear = qualificationw.BSYear;
+           this.MSYear = qualificationw.MSYear;
+           this.MatricYear = qualificationw.MatricYear;
+           this.MSInstituteName = qualificationw.MSInstituteName;
+           this.BSInstituteName = qualificationw.BSInstituteName;
+           this.InterInstituteName = qualificationw.InterInstituteName;
+           this.MatricInstituteName = qualificationw.MatricInstituteName;
+           this.InterRollNo = qualificationw.InterRollNo;
+           this.NTSRollNo = qualificationw.NTSRollNo;
+           this.MatricRollNo = qualificationw.MatricRollNo;
+           this.MSRollNo = qualificationw.MSRollNo;
+           this.GATRollNo = qualificationw.GATRollNo;
+           this.BSRollNo = qualificationw.BSRollNo;
+           this.BoardName = qualificationw.BoardName;
+           this.GATObtMarks = qualificationw.GATObtMarks;
+           this.BatchlorObtCGPA = qualificationw.BatchlorObtCGPA;
+           this.MSCObtCGPA = qualificationw.MSCObtCGPA;
+           this.VerifiedNTSMarks = qualificationw.VerifiedNTSMarks;
+           this.VerifiedMatricMarks = qualificationw.VerifiedMatricMarks;
+           this.VerifiedFSCMarks = qualificationw.VerifiedFSCMarks;
+           this.VerifiedMSCCGPA = qualificationw.VerifiedMSCCGPA;
+           this.VerifiedBSCGPA = qualificationw.VerifiedBSCGPA;
+           this.BSDegree = qualificationw.BSDegree;
+           this.MSDegree = qualificationw.MSDegree;
+           this.BSIsVerified = qualificationw.BSIsVerified;
+           this.MSIsVerified = qualificationw.MSIsVerified;
+           this.PHDIsVerified = qualificationw.PHDIsVerified;
+           this.MatricIsVerified = qualificationw.MatricIsVerified;
+           this.InterIsVerified = qualificationw.InterIsVerified;
            
            
         }

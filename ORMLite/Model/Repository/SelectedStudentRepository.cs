@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,67 +27,67 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public SelectedStudent Add(SelectedStudent selectedstudent)
+      public async Task<SelectedStudent> AddSelectedStudentAsync(SelectedStudent selectedstudent)
        {
-          this.conn.Insert(selectedstudent);
+          await this.conn.InsertAsync(selectedstudent);
           selectedstudent.SelectedStudentId =this.conn.LastInsertId();
           return selectedstudent;
        
        }
        
-      public List<SelectedStudent> GetAll()
+      public async Task<List<SelectedStudent>> GetAllSelectedStudentAsync()
        {
-         return this.conn.Select<SelectedStudent>();
+         return await this.conn.SelectAsync<SelectedStudent>();
        
        }
        
-      public SelectedStudent Find(long id)
+      public async Task<SelectedStudent> FindSelectedStudentAsync(long id)
        {
-         return this.conn.SingleById<SelectedStudent>(id);
+         return await this.conn.SingleByIdAsync<SelectedStudent>(id);
        
        }
        
-      public SelectedStudent Update(SelectedStudent selectedstudent)
+      public async Task<SelectedStudent> UpdateSelectedStudentAsync(SelectedStudent selectedstudent)
        {
-          var result=this.conn.Update<SelectedStudent>(selectedstudent);
+          var result= await this.conn.UpdateAsync<SelectedStudent>(selectedstudent);
           return selectedstudent;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveSelectedStudentAsync(long id)
        {
-          this.conn.DeleteById<SelectedStudent>(id);
+         await this.conn.DeleteByIdAsync<SelectedStudent>(id);
        
        }
        
-      public SelectedStudent GetAllWithChildren(long id)
+      public async Task<SelectedStudent> GetSelectedStudentWithChildrenAsync(long id)
        {
-          var selectedstudent = this.conn.SingleById<SelectedStudent>(id);
+          var selectedstudent = await this.conn.SingleByIdAsync<SelectedStudent>(id);
           
           
           
    
                  // One To One 
-           var selectedstudentmember = this.conn.Select<Student>().Where(a => a.StudentId == id).SingleOrDefault();
+           var selectedstudentmember = await this.conn.SelectAsync<Student>(a => a.Where(e => e.StudentId == id));
            if (selectedstudent != null && selectedstudentmember != null)
            {
-             selectedstudent.Student = selectedstudentmember;
+             selectedstudent.Student = selectedstudentmember.SingleOrDefault();
            }
          
    
                  // One To One 
-           var department = this.conn.Select<Department>().Where(a => a.DepartmentID == id).SingleOrDefault();
+           var department = await this.conn.SelectAsync<Department>(a => a.Where(e => e.DepartmentID == id));
            if (selectedstudent != null && department != null)
            {
-             selectedstudent.Department = department;
+             selectedstudent.Department = department.SingleOrDefault();
            }
          
    
                  // One To One 
-           var course = this.conn.Select<Course>().Where(a => a.CourseId == id).SingleOrDefault();
+           var course = await this.conn.SelectAsync<Course>(a => a.Where(e => e.CourseId == id));
            if (selectedstudent != null && course != null)
            {
-             selectedstudent.Course = course;
+             selectedstudent.Course = course.SingleOrDefault();
            }
          
   
@@ -94,47 +95,74 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public SelectedStudent Save(SelectedStudent selectedstudent)
+      public async Task<SelectedStudent> SaveSelectedStudentAsync(SelectedStudent selectedstudent)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(selectedstudent.IsNew)
                 {
-                    this.Add(selectedstudent);
+                   await this.AddSelectedStudentAsync(selectedstudent);
                 }
                 else
                 {
-                    this.Update(selectedstudent);
+                   await this.UpdateSelectedStudentAsync(selectedstudent);
                 }
                 
                 
                     
                     
                  // One To One 
-                 if(selectedstudent.Student !=null)
+                 if(selectedstudent.Student!=null)
                  {
-                    var selectedstudentmember = selectedstudent.Student;
-                    selectedstudentmember.StudentId = selectedstudent.SelectedStudentId;
-                    this.conn.Save(selectedstudentmember);
-                 }
+                    if(selectedstudent.Student.IsDeleted)
+                    {
+                      var id = selectedstudent.Student.StudentId;
+                      await this._conn.DeleteByIdAsync<Student>(id);
+                    }
+                    else if(!selectedstudent.Student.IsDeleted)
+                    {
+                      var selectedstudentmember = selectedstudent.Student;
+                      selectedstudentmember.StudentId = selectedstudent.SelectedStudentId;
+                      await this.conn.SaveAsync(selectedstudentmember);
+                    }
+                    
+                  }
                     
                     
                  // One To One 
-                 if(selectedstudent.Department !=null)
+                 if(selectedstudent.Department!=null)
                  {
-                    var department = selectedstudent.Department;
-                    department.DepartmentID = selectedstudent.SelectedStudentId;
-                    this.conn.Save(department);
-                 }
+                    if(selectedstudent.Department.IsDeleted)
+                    {
+                      var id = selectedstudent.Department.DepartmentID;
+                      await this._conn.DeleteByIdAsync<Department>(id);
+                    }
+                    else if(!selectedstudent.Department.IsDeleted)
+                    {
+                      var department = selectedstudent.Department;
+                      department.DepartmentID = selectedstudent.SelectedStudentId;
+                      await this.conn.SaveAsync(department);
+                    }
+                    
+                  }
                     
                     
                  // One To One 
-                 if(selectedstudent.Course !=null)
+                 if(selectedstudent.Course!=null)
                  {
-                    var course = selectedstudent.Course;
-                    course.CourseId = selectedstudent.SelectedStudentId;
-                    this.conn.Save(course);
-                 }
+                    if(selectedstudent.Course.IsDeleted)
+                    {
+                      var id = selectedstudent.Course.CourseId;
+                      await this._conn.DeleteByIdAsync<Course>(id);
+                    }
+                    else if(!selectedstudent.Course.IsDeleted)
+                    {
+                      var course = selectedstudent.Course;
+                      course.CourseId = selectedstudent.SelectedStudentId;
+                      await this.conn.SaveAsync(course);
+                    }
+                    
+                  }
                  
                    
                     txScope.Complete();

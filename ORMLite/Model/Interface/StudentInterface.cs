@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Services
 {
     public interface IStudentsRepository
     {
-       Student Add(Student student);
-       List< Student> GetAll();
-       Student Find(long id);
-       Student Update(Student student);
-       void Remove(long id); 
+       Task<Student> AddStudentAsync(Student student);
+       Task<List< Student>> GetAllStudentAsync();
+       Task<Student> FindStudentAsync(long id);
+       Task<Student> UpdateStudentAsync(Student student);
+       Task RemoveStudentAsync(long id); 
        
-       Student GetAllWithChildren(long id);
-       Student Save(Student student);
+       Task<Student> GetStudentWithChildrenAsync(long id);
+       Task<Student> SaveStudentAsync(Student student);
     }
 }

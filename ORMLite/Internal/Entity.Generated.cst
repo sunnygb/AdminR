@@ -39,7 +39,7 @@ namespace <%= EntityNamespace %>
         public <%= Entity.ClassName.ToSafeName() %>(<%= Entity.ClassName.ToSafeName() %>W <%= Entity.ClassName.ToSafeName().ToLower()%>w)
         {
            <% foreach(var p in Entity.Properties) { %>
-           this.<%= p.PropertyName.ToSafeName()%> = <%= Entity.ClassName.ToSafeName().ToLower()%>w.<%= p.PropertyName.ToSafeName().ToLower()%>;
+           this.<%= p.PropertyName.ToSafeName()%> = <%= Entity.ClassName.ToSafeName().ToLower()%>w.<%= p.PropertyName.ToSafeName()%>;
            <% } // foreach %>
            
            <% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>

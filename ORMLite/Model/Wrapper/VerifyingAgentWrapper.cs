@@ -9,99 +9,103 @@ using AdmissionAndResult.Data.Wrapper;
 
 namespace AdmissionAndResult.Data.Wrapper
 {
-    public partial class VerifyingAgentW : ValidateModelCommon
+    public partial class VerifyingAgentW : CommonWrapper<VerifyingAgent>
     {
-        public VerifyingAgentW(VerifyingAgent verifyingagent)
+        public VerifyingAgentW(VerifyingAgent verifyingagentModel):base(verifyingagentModel)
         {
-           this._verifyingagentid = verifyingagent.VerifyingAgentId;
            
-           this._verifyingagentname = verifyingagent.VerifyingAgentName;
-           
-           this._degreeverification = verifyingagent.DegreeVerification;
-           
-           this._adminid = verifyingagent.AdminId;
-           
-           this._senddate = verifyingagent.SendDate;
-           
-           this._recivedate = verifyingagent.ReciveDate;
-           
-           this._studentid = verifyingagent.StudentId;
+           InitializeComplexProperties(verifyingagentModel);
+           InitializeCollectionProperties(verifyingagentModel);
            
            
-           // One To One
-           if(verifyingagent.Admin !=null)
-           {
-               this._adminw = new AdminW(
-               verifyingagent.Admin);
-           }
-           // One To One
-           if(verifyingagent.Student !=null)
-           {
-               this._studentw = new StudentW(
-               verifyingagent.Student);
-           }
-
         }
         
-        public VerifyingAgentW(){}
+        private void InitializeCollectionProperties(VerifyingAgent verifyingagentModel)
+        {
+        }
+        
+        private void InitializeComplexProperties(VerifyingAgent verifyingagentModel)
+        {
+        
+           // One To One
+           if(verifyingagentModel.Admin !=null)
+           {
+               this.AdminW = new AdminW(
+               verifyingagentModel.Admin);
+           }
+           // One To One
+           if(verifyingagentModel.Student !=null)
+           {
+               this.StudentW = new StudentW(
+               verifyingagentModel.Student);
+           }
+        }
+          
+        public VerifyingAgentW():base(null){}
         
         private System.Int64 _verifyingagentid;
-        public  System.Int64  verifyingagentid
+        public  System.Int64  VerifyingAgentId
         {
-           get { return _verifyingagentid; }
-           set { ChangeNvalidate(ref  _verifyingagentid,value); }
+           get { return GET(ref _verifyingagentid); }
+           set { SET(ref  _verifyingagentid,value); }
         }
         private System.String _verifyingagentname;
-        public  System.String  verifyingagentname
+        public  System.String  VerifyingAgentName
         {
-           get { return _verifyingagentname; }
-           set { ChangeNvalidate(ref  _verifyingagentname,value); }
+           get { return GET(ref _verifyingagentname); }
+           set { SET(ref  _verifyingagentname,value); }
         }
         private System.String _degreeverification;
-        public  System.String  degreeverification
+        public  System.String  DegreeVerification
         {
-           get { return _degreeverification; }
-           set { ChangeNvalidate(ref  _degreeverification,value); }
+           get { return GET(ref _degreeverification); }
+           set { SET(ref  _degreeverification,value); }
         }
         private System.Int64 _adminid;
-        public  System.Int64  adminid
+        public  System.Int64  AdminId
         {
-           get { return _adminid; }
-           set { ChangeNvalidate(ref  _adminid,value); }
+           get { return GET(ref _adminid); }
+           set { SET(ref  _adminid,value); }
         }
         private System.String _senddate;
-        public  System.String  senddate
+        public  System.String  SendDate
         {
-           get { return _senddate; }
-           set { ChangeNvalidate(ref  _senddate,value); }
+           get { return GET(ref _senddate); }
+           set { SET(ref  _senddate,value); }
         }
         private System.String _recivedate;
-        public  System.String  recivedate
+        public  System.String  ReciveDate
         {
-           get { return _recivedate; }
-           set { ChangeNvalidate(ref  _recivedate,value); }
+           get { return GET(ref _recivedate); }
+           set { SET(ref  _recivedate,value); }
         }
         private System.Int64 _studentid;
-        public  System.Int64  studentid
+        public  System.Int64  StudentId
         {
-           get { return _studentid; }
-           set { ChangeNvalidate(ref  _studentid,value); }
+           get { return GET(ref _studentid); }
+           set { SET(ref  _studentid,value); }
         }
         
         // One To One
         private AdminW _adminw;
-        public  AdminW  adminw
-        {
-           get { return _adminw; }
-           set { ChangeNvalidate(ref _adminw,value); }
+        public  AdminW  AdminW
+        { 
+           get { return _adminw; } 
+           set { _adminw = value;
+           if(!Equals(_adminw,Model.Admin))
+           {Model.Admin = _adminw.Model;};}
         }
+        
         // One To One
         private StudentW _studentw;
-        public  StudentW  studentw
-        {
-           get { return _studentw; }
-           set { ChangeNvalidate(ref _studentw,value); }
+        public  StudentW  StudentW
+        { 
+           get { return _studentw; } 
+           set { _studentw = value;
+           if(!Equals(_studentw,Model.Student))
+           {Model.Student = _studentw.Model;};}
         }
+        
         
         
     }

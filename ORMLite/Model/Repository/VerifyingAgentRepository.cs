@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,59 +27,59 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public VerifyingAgent Add(VerifyingAgent verifyingagent)
+      public async Task<VerifyingAgent> AddVerifyingAgentAsync(VerifyingAgent verifyingagent)
        {
-          this.conn.Insert(verifyingagent);
+          await this.conn.InsertAsync(verifyingagent);
           verifyingagent.VerifyingAgentId =this.conn.LastInsertId();
           return verifyingagent;
        
        }
        
-      public List<VerifyingAgent> GetAll()
+      public async Task<List<VerifyingAgent>> GetAllVerifyingAgentAsync()
        {
-         return this.conn.Select<VerifyingAgent>();
+         return await this.conn.SelectAsync<VerifyingAgent>();
        
        }
        
-      public VerifyingAgent Find(long id)
+      public async Task<VerifyingAgent> FindVerifyingAgentAsync(long id)
        {
-         return this.conn.SingleById<VerifyingAgent>(id);
+         return await this.conn.SingleByIdAsync<VerifyingAgent>(id);
        
        }
        
-      public VerifyingAgent Update(VerifyingAgent verifyingagent)
+      public async Task<VerifyingAgent> UpdateVerifyingAgentAsync(VerifyingAgent verifyingagent)
        {
-          var result=this.conn.Update<VerifyingAgent>(verifyingagent);
+          var result= await this.conn.UpdateAsync<VerifyingAgent>(verifyingagent);
           return verifyingagent;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveVerifyingAgentAsync(long id)
        {
-          this.conn.DeleteById<VerifyingAgent>(id);
+         await this.conn.DeleteByIdAsync<VerifyingAgent>(id);
        
        }
        
-      public VerifyingAgent GetAllWithChildren(long id)
+      public async Task<VerifyingAgent> GetVerifyingAgentWithChildrenAsync(long id)
        {
-          var verifyingagent = this.conn.SingleById<VerifyingAgent>(id);
+          var verifyingagent = await this.conn.SingleByIdAsync<VerifyingAgent>(id);
           
           
           
    
                  // One To One 
-           var admin = this.conn.Select<Admin>().Where(a => a.AdminId == id).SingleOrDefault();
+           var admin = await this.conn.SelectAsync<Admin>(a => a.Where(e => e.AdminId == id));
            if (verifyingagent != null && admin != null)
            {
-             verifyingagent.Admin = admin;
+             verifyingagent.Admin = admin.SingleOrDefault();
            }
          
    
                  // One To One 
-           var student = this.conn.Select<Student>().Where(a => a.StudentId == id).SingleOrDefault();
+           var student = await this.conn.SelectAsync<Student>(a => a.Where(e => e.StudentId == id));
            if (verifyingagent != null && student != null)
            {
-             verifyingagent.Student = student;
+             verifyingagent.Student = student.SingleOrDefault();
            }
          
   
@@ -86,38 +87,56 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public VerifyingAgent Save(VerifyingAgent verifyingagent)
+      public async Task<VerifyingAgent> SaveVerifyingAgentAsync(VerifyingAgent verifyingagent)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(verifyingagent.IsNew)
                 {
-                    this.Add(verifyingagent);
+                   await this.AddVerifyingAgentAsync(verifyingagent);
                 }
                 else
                 {
-                    this.Update(verifyingagent);
+                   await this.UpdateVerifyingAgentAsync(verifyingagent);
                 }
                 
                 
                     
                     
                  // One To One 
-                 if(verifyingagent.Admin !=null)
+                 if(verifyingagent.Admin!=null)
                  {
-                    var admin = verifyingagent.Admin;
-                    admin.AdminId = verifyingagent.VerifyingAgentId;
-                    this.conn.Save(admin);
-                 }
+                    if(verifyingagent.Admin.IsDeleted)
+                    {
+                      var id = verifyingagent.Admin.AdminId;
+                      await this._conn.DeleteByIdAsync<Admin>(id);
+                    }
+                    else if(!verifyingagent.Admin.IsDeleted)
+                    {
+                      var admin = verifyingagent.Admin;
+                      admin.AdminId = verifyingagent.VerifyingAgentId;
+                      await this.conn.SaveAsync(admin);
+                    }
+                    
+                  }
                     
                     
                  // One To One 
-                 if(verifyingagent.Student !=null)
+                 if(verifyingagent.Student!=null)
                  {
-                    var student = verifyingagent.Student;
-                    student.StudentId = verifyingagent.VerifyingAgentId;
-                    this.conn.Save(student);
-                 }
+                    if(verifyingagent.Student.IsDeleted)
+                    {
+                      var id = verifyingagent.Student.StudentId;
+                      await this._conn.DeleteByIdAsync<Student>(id);
+                    }
+                    else if(!verifyingagent.Student.IsDeleted)
+                    {
+                      var student = verifyingagent.Student;
+                      student.StudentId = verifyingagent.VerifyingAgentId;
+                      await this.conn.SaveAsync(student);
+                    }
+                    
+                  }
                  
                    
                     txScope.Complete();

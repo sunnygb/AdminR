@@ -17,13 +17,13 @@ namespace AdmissionAndResult.Data
         
         public SelectedStudent(SelectedStudentW selectedstudentw)
         {
-           this.SelectedStudentId = selectedstudentw.selectedstudentid;
-           this.StudentRegisterationNumber = selectedstudentw.studentregisterationnumber;
-           this.Aggregate = selectedstudentw.aggregate;
-           this.CourseId = selectedstudentw.courseid;
-           this.CGPAText = selectedstudentw.cgpatext;
-           this.Sgpa = selectedstudentw.sgpa;
-           this.DepartmentID = selectedstudentw.departmentid;
+           this.SelectedStudentId = selectedstudentw.SelectedStudentId;
+           this.StudentRegisterationNumber = selectedstudentw.StudentRegisterationNumber;
+           this.Aggregate = selectedstudentw.Aggregate;
+           this.CourseId = selectedstudentw.CourseId;
+           this.CGPAText = selectedstudentw.CGPAText;
+           this.Sgpa = selectedstudentw.Sgpa;
+           this.DepartmentID = selectedstudentw.DepartmentID;
            
            
         }

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="d:\admissionandresult\ormlite.tests\orderedtest1.orderedtest" id="9f7fb0d2-dcd9-4d2c-8998-d8aabde4d1b1" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="539a4a8c-5f03-33a5-89a4-625de2e56d79" name="WrapperClass_Should_Contain_Data" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="9e72bc3a-925e-f7e0-a090-2432ba610062" name="WrapperClass_Should_Contain_StudentModel" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="6c6f685f-9f16-2b95-14b4-f4c78d742bd6" name="Change_In_Wrapper_Should_Also_Change_Model" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="c5617958-0e33-c973-c977-463aa61d5c98" name="Remove_Courses_In_Wrapper_Should_Also_Remove_Model_Cource" storage="bin\debug\ormlite.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

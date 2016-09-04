@@ -9,191 +9,181 @@ using AdmissionAndResult.Data.Wrapper;
 
 namespace AdmissionAndResult.Data.Wrapper
 {
-    public partial class StudentW : ValidateModelCommon
+    public partial class StudentW : CommonWrapper<Student>
     {
-        public StudentW(Student student)
+        public StudentW(Student studentModel):base(studentModel)
         {
-           this._studentid = student.StudentId;
            
-           this._studentname = student.StudentName;
-           
-           this._studentemail = student.StudentEmail;
-           
-           this._fathername = student.FatherName;
-           
-           this._fathermonthlyincome = student.FatherMonthlyIncome;
-           
-           this._fatheroccupation = student.FatherOccupation;
-           
-           this._postaladdress = student.PostalAddress;
-           
-           this._permanentaddress = student.PermanentAddress;
-           
-           this._dateofbirth = student.DateOfBirth;
-           
-           this._nicno = student.NICNo;
-           
-           this._bloodgroup = student.BloodGroup;
-           
-           this._phonenumber = student.PhoneNumber;
-           
-           this._residentalphonenumber = student.ResidentalPhoneNumber;
-           
-           this._date = student.Date;
-           
-           this._fathersnumber = student.FathersNumber;
+           InitializeComplexProperties(studentModel);
+           InitializeCollectionProperties(studentModel);
            
            
+        }
+        
+        private void InitializeCollectionProperties(Student studentModel)
+        {
            // One To Many
-           if(student.Courses !=null)
+           if(studentModel.Courses !=null)
            {
               this._coursesw = new ObservableCollection<CourseW>(
-              student.Courses.Select(e=>new CourseW(e)));
+              studentModel.Courses.Select(e=>new CourseW(e)));
+              RegisterCollection(_coursesw,studentModel.Courses);
            }
-           
            // One To Many
-           if(student.VerifyingAgents !=null)
+           if(studentModel.VerifyingAgents !=null)
            {
               this._verifyingagentsw = new ObservableCollection<VerifyingAgentW>(
-              student.VerifyingAgents.Select(e=>new VerifyingAgentW(e)));
+              studentModel.VerifyingAgents.Select(e=>new VerifyingAgentW(e)));
+              RegisterCollection(_verifyingagentsw,studentModel.VerifyingAgents);
            }
+        }
+        
+        private void InitializeComplexProperties(Student studentModel)
+        {
+        
+           
            
            // One To One
-           if(student.Qualification !=null)
+           if(studentModel.Qualification !=null)
            {
-               this._qualificationw = new QualificationW(
-               student.Qualification);
+               this.QualificationW = new QualificationW(
+               studentModel.Qualification);
            }
            // One To One
-           if(student.SelectedSelectedStudent !=null)
+           if(studentModel.SelectedStudent !=null)
            {
-               this._selectedselectedstudentw = new SelectedStudentW(
-               student.SelectedSelectedStudent);
+               this.SelectedSelectedStudentW = new SelectedStudentW(
+               studentModel.SelectedStudent);
            }
-
         }
-        
-        public StudentW(){}
+          
+        public StudentW():base(null){}
         
         private System.Int64 _studentid;
-        public  System.Int64  studentid
+        public  System.Int64  StudentId
         {
-           get { return _studentid; }
-           set { ChangeNvalidate(ref  _studentid,value); }
+           get { return GET(ref _studentid); }
+           set { SET(ref  _studentid,value); }
         }
         private System.String _studentname;
-        public  System.String  studentname
+        public  System.String  StudentName
         {
-           get { return _studentname; }
-           set { ChangeNvalidate(ref  _studentname,value); }
+           get { return GET(ref _studentname); }
+           set { SET(ref  _studentname,value); }
         }
         private System.String _studentemail;
-        public  System.String  studentemail
+        public  System.String  StudentEmail
         {
-           get { return _studentemail; }
-           set { ChangeNvalidate(ref  _studentemail,value); }
+           get { return GET(ref _studentemail); }
+           set { SET(ref  _studentemail,value); }
         }
         private System.String _fathername;
-        public  System.String  fathername
+        public  System.String  FatherName
         {
-           get { return _fathername; }
-           set { ChangeNvalidate(ref  _fathername,value); }
+           get { return GET(ref _fathername); }
+           set { SET(ref  _fathername,value); }
         }
         private System.String _fathermonthlyincome;
-        public  System.String  fathermonthlyincome
+        public  System.String  FatherMonthlyIncome
         {
-           get { return _fathermonthlyincome; }
-           set { ChangeNvalidate(ref  _fathermonthlyincome,value); }
+           get { return GET(ref _fathermonthlyincome); }
+           set { SET(ref  _fathermonthlyincome,value); }
         }
         private System.String _fatheroccupation;
-        public  System.String  fatheroccupation
+        public  System.String  FatherOccupation
         {
-           get { return _fatheroccupation; }
-           set { ChangeNvalidate(ref  _fatheroccupation,value); }
+           get { return GET(ref _fatheroccupation); }
+           set { SET(ref  _fatheroccupation,value); }
         }
         private System.String _postaladdress;
-        public  System.String  postaladdress
+        public  System.String  PostalAddress
         {
-           get { return _postaladdress; }
-           set { ChangeNvalidate(ref  _postaladdress,value); }
+           get { return GET(ref _postaladdress); }
+           set { SET(ref  _postaladdress,value); }
         }
         private System.String _permanentaddress;
-        public  System.String  permanentaddress
+        public  System.String  PermanentAddress
         {
-           get { return _permanentaddress; }
-           set { ChangeNvalidate(ref  _permanentaddress,value); }
+           get { return GET(ref _permanentaddress); }
+           set { SET(ref  _permanentaddress,value); }
         }
         private System.String _dateofbirth;
-        public  System.String  dateofbirth
+        public  System.String  DateOfBirth
         {
-           get { return _dateofbirth; }
-           set { ChangeNvalidate(ref  _dateofbirth,value); }
+           get { return GET(ref _dateofbirth); }
+           set { SET(ref  _dateofbirth,value); }
         }
         private System.String _nicno;
-        public  System.String  nicno
+        public  System.String  NICNo
         {
-           get { return _nicno; }
-           set { ChangeNvalidate(ref  _nicno,value); }
+           get { return GET(ref _nicno); }
+           set { SET(ref  _nicno,value); }
         }
         private System.String _bloodgroup;
-        public  System.String  bloodgroup
+        public  System.String  BloodGroup
         {
-           get { return _bloodgroup; }
-           set { ChangeNvalidate(ref  _bloodgroup,value); }
+           get { return GET(ref _bloodgroup); }
+           set { SET(ref  _bloodgroup,value); }
         }
         private System.String _phonenumber;
-        public  System.String  phonenumber
+        public  System.String  PhoneNumber
         {
-           get { return _phonenumber; }
-           set { ChangeNvalidate(ref  _phonenumber,value); }
+           get { return GET(ref _phonenumber); }
+           set { SET(ref  _phonenumber,value); }
         }
         private System.String _residentalphonenumber;
-        public  System.String  residentalphonenumber
+        public  System.String  ResidentalPhoneNumber
         {
-           get { return _residentalphonenumber; }
-           set { ChangeNvalidate(ref  _residentalphonenumber,value); }
+           get { return GET(ref _residentalphonenumber); }
+           set { SET(ref  _residentalphonenumber,value); }
         }
         private System.String _date;
-        public  System.String  date
+        public  System.String  Date
         {
-           get { return _date; }
-           set { ChangeNvalidate(ref  _date,value); }
+           get { return GET(ref _date); }
+           set { SET(ref  _date,value); }
         }
         private System.String _fathersnumber;
-        public  System.String  fathersnumber
+        public  System.String  FathersNumber
         {
-           get { return _fathersnumber; }
-           set { ChangeNvalidate(ref  _fathersnumber,value); }
+           get { return GET(ref _fathersnumber); }
+           set { SET(ref  _fathersnumber,value); }
         }
         
         // One To Many
         private ObservableCollection<CourseW> _coursesw;
-        public  ObservableCollection<CourseW>  coursesw
-        {
-           get { return _coursesw; }
-           set { ChangeNvalidate(ref _coursesw,value); }
+        public  ObservableCollection<CourseW>  CoursesW
+        { 
+          get { return _coursesw; }
+          set { _coursesw = value; }
         }
         // One To Many
         private ObservableCollection<VerifyingAgentW> _verifyingagentsw;
-        public  ObservableCollection<VerifyingAgentW>  verifyingagentsw
-        {
-           get { return _verifyingagentsw; }
-           set { ChangeNvalidate(ref _verifyingagentsw,value); }
+        public  ObservableCollection<VerifyingAgentW>  VerifyingAgentsW
+        { 
+          get { return _verifyingagentsw; }
+          set { _verifyingagentsw = value; }
         }
         // One To One
         private QualificationW _qualificationw;
-        public  QualificationW  qualificationw
-        {
-           get { return _qualificationw; }
-           set { ChangeNvalidate(ref _qualificationw,value); }
+        public  QualificationW  QualificationW
+        { 
+           get { return _qualificationw; } 
+           set { _qualificationw = value;
+           if(!Equals(_qualificationw,Model.Qualification))
+           {Model.Qualification = _qualificationw.Model;};}
         }
+        
         // One To One
         private SelectedStudentW _selectedselectedstudentw;
-        public  SelectedStudentW  selectedselectedstudentw
-        {
-           get { return _selectedselectedstudentw; }
-           set { ChangeNvalidate(ref _selectedselectedstudentw,value); }
+        public  SelectedStudentW  SelectedSelectedStudentW
+        { 
+           get { return _selectedselectedstudentw; } 
+           set { _selectedselectedstudentw = value;
+           if(!Equals(_selectedselectedstudentw,Model.SelectedStudent))
+           {Model.SelectedStudent = _selectedselectedstudentw.Model;};}
         }
+        
         
         
     }

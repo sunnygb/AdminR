@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Services
 {
     public interface ICoursesRepository
     {
-       Course Add(Course course);
-       List< Course> GetAll();
-       Course Find(long id);
-       Course Update(Course course);
-       void Remove(long id); 
+       Task<Course> AddCourseAsync(Course course);
+       Task<List< Course>> GetAllCourseAsync();
+       Task<Course> FindCourseAsync(long id);
+       Task<Course> UpdateCourseAsync(Course course);
+       Task RemoveCourseAsync(long id); 
        
-       Course GetAllWithChildren(long id);
-       Course Save(Course course);
+       Task<Course> GetCourseWithChildrenAsync(long id);
+       Task<Course> SaveCourseAsync(Course course);
     }
 }

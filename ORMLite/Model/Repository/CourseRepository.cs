@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,56 +27,56 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public Course Add(Course course)
+      public async Task<Course> AddCourseAsync(Course course)
        {
-          this.conn.Insert(course);
+          await this.conn.InsertAsync(course);
           course.CourseId =this.conn.LastInsertId();
           return course;
        
        }
        
-      public List<Course> GetAll()
+      public async Task<List<Course>> GetAllCourseAsync()
        {
-         return this.conn.Select<Course>();
+         return await this.conn.SelectAsync<Course>();
        
        }
        
-      public Course Find(long id)
+      public async Task<Course> FindCourseAsync(long id)
        {
-         return this.conn.SingleById<Course>(id);
+         return await this.conn.SingleByIdAsync<Course>(id);
        
        }
        
-      public Course Update(Course course)
+      public async Task<Course> UpdateCourseAsync(Course course)
        {
-          var result=this.conn.Update<Course>(course);
+          var result= await this.conn.UpdateAsync<Course>(course);
           return course;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveCourseAsync(long id)
        {
-          this.conn.DeleteById<Course>(id);
+         await this.conn.DeleteByIdAsync<Course>(id);
        
        }
        
-      public Course GetAllWithChildren(long id)
+      public async Task<Course> GetCourseWithChildrenAsync(long id)
        {
-          var course = this.conn.SingleById<Course>(id);
+          var course = await this.conn.SingleByIdAsync<Course>(id);
           
           
           
    
                  // One To One 
-           var student = this.conn.Select<Student>().Where(a => a.StudentId == id).SingleOrDefault();
+           var student = await this.conn.SelectAsync<Student>(a => a.Where(e => e.StudentId == id));
            if (course != null && student != null)
            {
-             course.Student = student;
+             course.Student = student.SingleOrDefault();
            }
          
         
                  //One To Many
-           var selectedstudents = this.conn.Select<SelectedStudent>().Where(a => a.SelectedStudentId == id).ToList();
+           var selectedstudents = await this.conn.SelectAsync<SelectedStudent>(a=> a.Where(e => e.SelectedStudentId == id));
            if (course != null && selectedstudents != null)
            {
              course.SelectedStudents.AddRange(selectedstudents);
@@ -88,41 +89,50 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public Course Save(Course course)
+      public async Task<Course> SaveCourseAsync(Course course)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(course.IsNew)
                 {
-                    this.Add(course);
+                   await this.AddCourseAsync(course);
                 }
                 else
                 {
-                    this.Update(course);
+                   await this.UpdateCourseAsync(course);
                 }
                 
                 
                     
                     
                  // One To One 
-                 if(course.Student !=null)
+                 if(course.Student!=null)
                  {
-                    var student = course.Student;
-                    student.StudentId = course.CourseId;
-                    this.conn.Save(student);
-                 }
+                    if(course.Student.IsDeleted)
+                    {
+                      var id = course.Student.StudentId;
+                      await this._conn.DeleteByIdAsync<Student>(id);
+                    }
+                    else if(!course.Student.IsDeleted)
+                    {
+                      var student = course.Student;
+                      student.StudentId = course.CourseId;
+                      await this.conn.SaveAsync(student);
+                    }
+                    
+                  }
         
                  //One To Many
                   foreach(var selectedstudent in course.SelectedStudents.Where(s => !s.IsDeleted))
                   { 
                   
                     selectedstudent.CourseId =course.CourseId;
-                    this.conn.Save(selectedstudent);
+                    await this.conn.SaveAsync(selectedstudent);
                   }
                   foreach(var selectedstudent in course.SelectedStudents.Where(s => s.IsDeleted))
                   { 
                   
-                    this.conn.DeleteById<SelectedStudent>(selectedstudent.SelectedStudentId);
+                    await this.conn.DeleteByIdAsync<SelectedStudent>(selectedstudent.SelectedStudentId);
                   }
                  
                    

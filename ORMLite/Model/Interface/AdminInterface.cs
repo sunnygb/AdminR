@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Services
 {
     public interface IAdminsRepository
     {
-       Admin Add(Admin admin);
-       List< Admin> GetAll();
-       Admin Find(long id);
-       Admin Update(Admin admin);
-       void Remove(long id); 
+       Task<Admin> AddAdminAsync(Admin admin);
+       Task<List< Admin>> GetAllAdminAsync();
+       Task<Admin> FindAdminAsync(long id);
+       Task<Admin> UpdateAdminAsync(Admin admin);
+       Task RemoveAdminAsync(long id); 
        
-       Admin GetAllWithChildren(long id);
-       Admin Save(Admin admin);
+       Task<Admin> GetAdminWithChildrenAsync(long id);
+       Task<Admin> SaveAdminAsync(Admin admin);
     }
 }

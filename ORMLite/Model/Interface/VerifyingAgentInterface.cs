@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Services
 {
     public interface IVerifyingAgentsRepository
     {
-       VerifyingAgent Add(VerifyingAgent verifyingagent);
-       List< VerifyingAgent> GetAll();
-       VerifyingAgent Find(long id);
-       VerifyingAgent Update(VerifyingAgent verifyingagent);
-       void Remove(long id); 
+       Task<VerifyingAgent> AddVerifyingAgentAsync(VerifyingAgent verifyingagent);
+       Task<List< VerifyingAgent>> GetAllVerifyingAgentAsync();
+       Task<VerifyingAgent> FindVerifyingAgentAsync(long id);
+       Task<VerifyingAgent> UpdateVerifyingAgentAsync(VerifyingAgent verifyingagent);
+       Task RemoveVerifyingAgentAsync(long id); 
        
-       VerifyingAgent GetAllWithChildren(long id);
-       VerifyingAgent Save(VerifyingAgent verifyingagent);
+       Task<VerifyingAgent> GetVerifyingAgentWithChildrenAsync(long id);
+       Task<VerifyingAgent> SaveVerifyingAgentAsync(VerifyingAgent verifyingagent);
     }
 }

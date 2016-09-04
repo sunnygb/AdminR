@@ -18,11 +18,11 @@ namespace AdmissionAndResult.Data
         
         public Department(DepartmentW departmentw)
         {
-           this.DepartmentID = departmentw.departmentid;
-           this.DepartmentName = departmentw.departmentname;
-           this.StudentStrength = departmentw.studentstrength;
-           this.HODName = departmentw.hodname;
-           this.Location = departmentw.location;
+           this.DepartmentID = departmentw.DepartmentID;
+           this.DepartmentName = departmentw.DepartmentName;
+           this.StudentStrength = departmentw.StudentStrength;
+           this.HODName = departmentw.HODName;
+           this.Location = departmentw.Location;
            
            SelectedStudents = new List<SelectedStudent>();
            
