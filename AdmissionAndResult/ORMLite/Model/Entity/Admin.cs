@@ -18,11 +18,11 @@ namespace AdmissionAndResult.Data
         
         public Admin(AdminW adminw)
         {
-           this.AdminId = adminw.adminid;
-           this.AdminName = adminw.adminname;
-           this.Password = adminw.password;
-           this.HireDate = adminw.hiredate;
-           this.ChangeDate = adminw.changedate;
+           this.AdminId = adminw.AdminId;
+           this.AdminName = adminw.AdminName;
+           this.Password = adminw.Password;
+           this.HireDate = adminw.HireDate;
+           this.ChangeDate = adminw.ChangeDate;
            
            VerifyingAgents = new List<VerifyingAgent>();
            

@@ -18,9 +18,9 @@ namespace AdmissionAndResult.Data
         
         public Course(CourseW coursew)
         {
-           this.CourseId = coursew.courseid;
-           this.CourseName = coursew.coursename;
-           this.StudentId = coursew.studentid;
+           this.CourseId = coursew.CourseId;
+           this.CourseName = coursew.CourseName;
+           this.StudentId = coursew.StudentId;
            
            SelectedStudents = new List<SelectedStudent>();
            

@@ -18,18 +18,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace <%= EntityNamespace %>.Services
 {
     public interface I<%=Entity.ContextName%>Repository
     {
-       <%=Entity.ClassName%> Add(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
-       List< <%=Entity.ClassName %>> GetAll();
-       <%=Entity.ClassName%> Find(long id);
-       <%=Entity.ClassName%> Update(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
-       void Remove(long id); 
+       Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<List< <%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async();
+       Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id);
+       Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task Remove<%=Entity.ClassName%>Async(long id); 
        
-       <%=Entity.ClassName%> GetAllWithChildren(long id);
-       <%=Entity.ClassName%> Save(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id);
+       Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
     }
 }

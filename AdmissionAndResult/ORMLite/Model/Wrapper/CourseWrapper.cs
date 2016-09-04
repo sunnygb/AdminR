@@ -9,67 +9,77 @@ using AdmissionAndResult.Data.Wrapper;
 
 namespace AdmissionAndResult.Data.Wrapper
 {
-    public partial class CourseW : ValidateModelCommon
+    public partial class CourseW : CommonWrapper<Course>
     {
-        public CourseW(Course course)
+        public CourseW(Course courseModel):base(courseModel)
         {
-           this._courseid = course.CourseId;
            
-           this._coursename = course.CourseName;
-           
-           this._studentid = course.StudentId;
+           InitializeComplexProperties(courseModel);
+           InitializeCollectionProperties(courseModel);
            
            
-           // One To One
-           if(course.Student !=null)
-           {
-               this._studentw = new StudentW(
-               course.Student);
-           }
+        }
+        
+        private void InitializeCollectionProperties(Course courseModel)
+        {
            // One To Many
-           if(course.SelectedStudents !=null)
+           if(courseModel.SelectedStudents !=null)
            {
               this._selectedstudentsw = new ObservableCollection<SelectedStudentW>(
-              course.SelectedStudents.Select(e=>new SelectedStudentW(e)));
+              courseModel.SelectedStudents.Select(e=>new SelectedStudentW(e)));
+              RegisterCollection(_selectedstudentsw,courseModel.SelectedStudents);
+           }
+        }
+        
+        private void InitializeComplexProperties(Course courseModel)
+        {
+        
+           // One To One
+           if(courseModel.Student !=null)
+           {
+               this.StudentW = new StudentW(
+               courseModel.Student);
            }
            
-
         }
-        
-        public CourseW(){}
+          
+        public CourseW():base(null){}
         
         private System.Int64 _courseid;
-        public  System.Int64  courseid
+        public  System.Int64  CourseId
         {
-           get { return _courseid; }
-           set { ChangeNvalidate(ref  _courseid,value); }
+           get { return GET(ref _courseid); }
+           set { SET(ref  _courseid,value); }
         }
         private System.String _coursename;
-        public  System.String  coursename
+        public  System.String  CourseName
         {
-           get { return _coursename; }
-           set { ChangeNvalidate(ref  _coursename,value); }
+           get { return GET(ref _coursename); }
+           set { SET(ref  _coursename,value); }
         }
         private System.Int64 _studentid;
-        public  System.Int64  studentid
+        public  System.Int64  StudentId
         {
-           get { return _studentid; }
-           set { ChangeNvalidate(ref  _studentid,value); }
+           get { return GET(ref _studentid); }
+           set { SET(ref  _studentid,value); }
         }
         
         // One To One
         private StudentW _studentw;
-        public  StudentW  studentw
-        {
-           get { return _studentw; }
-           set { ChangeNvalidate(ref _studentw,value); }
+        public  StudentW  StudentW
+        { 
+           get { return _studentw; } 
+           set { _studentw = value;
+           if(!Equals(_studentw,Model.Student))
+           {Model.Student = _studentw.Model;};}
         }
+        
         // One To Many
         private ObservableCollection<SelectedStudentW> _selectedstudentsw;
-        public  ObservableCollection<SelectedStudentW>  selectedstudentsw
-        {
-           get { return _selectedstudentsw; }
-           set { ChangeNvalidate(ref _selectedstudentsw,value); }
+        public  ObservableCollection<SelectedStudentW>  SelectedStudentsW
+        { 
+          get { return _selectedstudentsw; }
+          set { _selectedstudentsw = value; }
         }
         
         

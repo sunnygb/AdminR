@@ -9,70 +9,73 @@ using AdmissionAndResult.Data.Wrapper;
 
 namespace AdmissionAndResult.Data.Wrapper
 {
-    public partial class DepartmentW : ValidateModelCommon
+    public partial class DepartmentW : CommonWrapper<Department>
     {
-        public DepartmentW(Department department)
+        public DepartmentW(Department departmentModel):base(departmentModel)
         {
-           this._departmentid = department.DepartmentID;
            
-           this._departmentname = department.DepartmentName;
-           
-           this._studentstrength = department.StudentStrength;
-           
-           this._hodname = department.HODName;
-           
-           this._location = department.Location;
+           InitializeComplexProperties(departmentModel);
+           InitializeCollectionProperties(departmentModel);
            
            
+        }
+        
+        private void InitializeCollectionProperties(Department departmentModel)
+        {
            // One To Many
-           if(department.SelectedStudents !=null)
+           if(departmentModel.SelectedStudents !=null)
            {
               this._selectedstudentsw = new ObservableCollection<SelectedStudentW>(
-              department.SelectedStudents.Select(e=>new SelectedStudentW(e)));
+              departmentModel.SelectedStudents.Select(e=>new SelectedStudentW(e)));
+              RegisterCollection(_selectedstudentsw,departmentModel.SelectedStudents);
            }
-           
-
         }
         
-        public DepartmentW(){}
+        private void InitializeComplexProperties(Department departmentModel)
+        {
+        
+           
+        }
+          
+        public DepartmentW():base(null){}
         
         private System.Int64 _departmentid;
-        public  System.Int64  departmentid
+        public  System.Int64  DepartmentID
         {
-           get { return _departmentid; }
-           set { ChangeNvalidate(ref  _departmentid,value); }
+           get { return GET(ref _departmentid); }
+           set { SET(ref  _departmentid,value); }
         }
         private System.String _departmentname;
-        public  System.String  departmentname
+        public  System.String  DepartmentName
         {
-           get { return _departmentname; }
-           set { ChangeNvalidate(ref  _departmentname,value); }
+           get { return GET(ref _departmentname); }
+           set { SET(ref  _departmentname,value); }
         }
         private System.Int64 _studentstrength;
-        public  System.Int64  studentstrength
+        public  System.Int64  StudentStrength
         {
-           get { return _studentstrength; }
-           set { ChangeNvalidate(ref  _studentstrength,value); }
+           get { return GET(ref _studentstrength); }
+           set { SET(ref  _studentstrength,value); }
         }
         private System.String _hodname;
-        public  System.String  hodname
+        public  System.String  HODName
         {
-           get { return _hodname; }
-           set { ChangeNvalidate(ref  _hodname,value); }
+           get { return GET(ref _hodname); }
+           set { SET(ref  _hodname,value); }
         }
         private System.String _location;
-        public  System.String  location
+        public  System.String  Location
         {
-           get { return _location; }
-           set { ChangeNvalidate(ref  _location,value); }
+           get { return GET(ref _location); }
+           set { SET(ref  _location,value); }
         }
         
         // One To Many
         private ObservableCollection<SelectedStudentW> _selectedstudentsw;
-        public  ObservableCollection<SelectedStudentW>  selectedstudentsw
-        {
-           get { return _selectedstudentsw; }
-           set { ChangeNvalidate(ref _selectedstudentsw,value); }
+        public  ObservableCollection<SelectedStudentW>  SelectedStudentsW
+        { 
+          get { return _selectedstudentsw; }
+          set { _selectedstudentsw = value; }
         }
         
         

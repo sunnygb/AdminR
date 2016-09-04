@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,51 +27,51 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public Qualification Add(Qualification qualification)
+      public async Task<Qualification> AddQualificationAsync(Qualification qualification)
        {
-          this.conn.Insert(qualification);
+          await this.conn.InsertAsync(qualification);
           qualification.QualificationId =this.conn.LastInsertId();
           return qualification;
        
        }
        
-      public List<Qualification> GetAll()
+      public async Task<List<Qualification>> GetAllQualificationAsync()
        {
-         return this.conn.Select<Qualification>();
+         return await this.conn.SelectAsync<Qualification>();
        
        }
        
-      public Qualification Find(long id)
+      public async Task<Qualification> FindQualificationAsync(long id)
        {
-         return this.conn.SingleById<Qualification>(id);
+         return await this.conn.SingleByIdAsync<Qualification>(id);
        
        }
        
-      public Qualification Update(Qualification qualification)
+      public async Task<Qualification> UpdateQualificationAsync(Qualification qualification)
        {
-          var result=this.conn.Update<Qualification>(qualification);
+          var result= await this.conn.UpdateAsync<Qualification>(qualification);
           return qualification;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveQualificationAsync(long id)
        {
-          this.conn.DeleteById<Qualification>(id);
+         await this.conn.DeleteByIdAsync<Qualification>(id);
        
        }
        
-      public Qualification GetAllWithChildren(long id)
+      public async Task<Qualification> GetQualificationWithChildrenAsync(long id)
        {
-          var qualification = this.conn.SingleById<Qualification>(id);
+          var qualification = await this.conn.SingleByIdAsync<Qualification>(id);
           
           
           
    
                  // One To One 
-           var student = this.conn.Select<Student>().Where(a => a.StudentId == id).SingleOrDefault();
+           var student = await this.conn.SelectAsync<Student>(a => a.Where(e => e.StudentId == id));
            if (qualification != null && student != null)
            {
-             qualification.Student = student;
+             qualification.Student = student.SingleOrDefault();
            }
          
   
@@ -78,29 +79,38 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public Qualification Save(Qualification qualification)
+      public async Task<Qualification> SaveQualificationAsync(Qualification qualification)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(qualification.IsNew)
                 {
-                    this.Add(qualification);
+                   await this.AddQualificationAsync(qualification);
                 }
                 else
                 {
-                    this.Update(qualification);
+                   await this.UpdateQualificationAsync(qualification);
                 }
                 
                 
                     
                     
                  // One To One 
-                 if(qualification.Student !=null)
+                 if(qualification.Student!=null)
                  {
-                    var student = qualification.Student;
-                    student.StudentId = qualification.QualificationId;
-                    this.conn.Save(student);
-                 }
+                    if(qualification.Student.IsDeleted)
+                    {
+                      var id = qualification.Student.StudentId;
+                      await this._conn.DeleteByIdAsync<Student>(id);
+                    }
+                    else if(!qualification.Student.IsDeleted)
+                    {
+                      var student = qualification.Student;
+                      student.StudentId = qualification.QualificationId;
+                      await this.conn.SaveAsync(student);
+                    }
+                    
+                  }
                  
                    
                     txScope.Complete();

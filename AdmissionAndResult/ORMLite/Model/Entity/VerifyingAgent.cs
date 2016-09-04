@@ -17,13 +17,13 @@ namespace AdmissionAndResult.Data
         
         public VerifyingAgent(VerifyingAgentW verifyingagentw)
         {
-           this.VerifyingAgentId = verifyingagentw.verifyingagentid;
-           this.VerifyingAgentName = verifyingagentw.verifyingagentname;
-           this.DegreeVerification = verifyingagentw.degreeverification;
-           this.AdminId = verifyingagentw.adminid;
-           this.SendDate = verifyingagentw.senddate;
-           this.ReciveDate = verifyingagentw.recivedate;
-           this.StudentId = verifyingagentw.studentid;
+           this.VerifyingAgentId = verifyingagentw.VerifyingAgentId;
+           this.VerifyingAgentName = verifyingagentw.VerifyingAgentName;
+           this.DegreeVerification = verifyingagentw.DegreeVerification;
+           this.AdminId = verifyingagentw.AdminId;
+           this.SendDate = verifyingagentw.SendDate;
+           this.ReciveDate = verifyingagentw.ReciveDate;
+           this.StudentId = verifyingagentw.StudentId;
            
            
         }

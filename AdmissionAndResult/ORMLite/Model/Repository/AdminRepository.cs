@@ -8,6 +8,7 @@ using System.Text;
 using System.Transactions;
 using System.Linq;
 using ServiceStack.Data;
+using System.Threading.Tasks;
 
 namespace AdmissionAndResult.Data.Repository
 {    
@@ -26,48 +27,48 @@ namespace AdmissionAndResult.Data.Repository
           }
        }
 
-      public Admin Add(Admin admin)
+      public async Task<Admin> AddAdminAsync(Admin admin)
        {
-          this.conn.Insert(admin);
+          await this.conn.InsertAsync(admin);
           admin.AdminId =this.conn.LastInsertId();
           return admin;
        
        }
        
-      public List<Admin> GetAll()
+      public async Task<List<Admin>> GetAllAdminAsync()
        {
-         return this.conn.Select<Admin>();
+         return await this.conn.SelectAsync<Admin>();
        
        }
        
-      public Admin Find(long id)
+      public async Task<Admin> FindAdminAsync(long id)
        {
-         return this.conn.SingleById<Admin>(id);
+         return await this.conn.SingleByIdAsync<Admin>(id);
        
        }
        
-      public Admin Update(Admin admin)
+      public async Task<Admin> UpdateAdminAsync(Admin admin)
        {
-          var result=this.conn.Update<Admin>(admin);
+          var result= await this.conn.UpdateAsync<Admin>(admin);
           return admin;
        
        }
        
-      public void Remove(long id)
+      public async Task RemoveAdminAsync(long id)
        {
-          this.conn.DeleteById<Admin>(id);
+         await this.conn.DeleteByIdAsync<Admin>(id);
        
        }
        
-      public Admin GetAllWithChildren(long id)
+      public async Task<Admin> GetAdminWithChildrenAsync(long id)
        {
-          var admin = this.conn.SingleById<Admin>(id);
+          var admin = await this.conn.SingleByIdAsync<Admin>(id);
           
           
           
         
                  //One To Many
-           var verifyingagents = this.conn.Select<VerifyingAgent>().Where(a => a.VerifyingAgentId == id).ToList();
+           var verifyingagents = await this.conn.SelectAsync<VerifyingAgent>(a=> a.Where(e => e.VerifyingAgentId == id));
            if (admin != null && verifyingagents != null)
            {
              admin.VerifyingAgents.AddRange(verifyingagents);
@@ -80,17 +81,17 @@ namespace AdmissionAndResult.Data.Repository
          }
        
        
-      public Admin Save(Admin admin)
+      public async Task<Admin> SaveAdminAsync(Admin admin)
       {
-          using(var txScope= new TransactionScope())
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
                 if(admin.IsNew)
                 {
-                    this.Add(admin);
+                   await this.AddAdminAsync(admin);
                 }
                 else
                 {
-                    this.Update(admin);
+                   await this.UpdateAdminAsync(admin);
                 }
                 
                 
@@ -100,12 +101,12 @@ namespace AdmissionAndResult.Data.Repository
                   { 
                   
                     verifyingagent.AdminId =admin.AdminId;
-                    this.conn.Save(verifyingagent);
+                    await this.conn.SaveAsync(verifyingagent);
                   }
                   foreach(var verifyingagent in admin.VerifyingAgents.Where(s => s.IsDeleted))
                   { 
                   
-                    this.conn.DeleteById<VerifyingAgent>(verifyingagent.VerifyingAgentId);
+                    await this.conn.DeleteByIdAsync<VerifyingAgent>(verifyingagent.VerifyingAgentId);
                   }
                  
                    

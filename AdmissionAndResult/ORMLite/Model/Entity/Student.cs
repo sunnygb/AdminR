@@ -19,21 +19,21 @@ namespace AdmissionAndResult.Data
         
         public Student(StudentW studentw)
         {
-           this.StudentId = studentw.studentid;
-           this.StudentName = studentw.studentname;
-           this.StudentEmail = studentw.studentemail;
-           this.FatherName = studentw.fathername;
-           this.FatherMonthlyIncome = studentw.fathermonthlyincome;
-           this.FatherOccupation = studentw.fatheroccupation;
-           this.PostalAddress = studentw.postaladdress;
-           this.PermanentAddress = studentw.permanentaddress;
-           this.DateOfBirth = studentw.dateofbirth;
-           this.NICNo = studentw.nicno;
-           this.BloodGroup = studentw.bloodgroup;
-           this.PhoneNumber = studentw.phonenumber;
-           this.ResidentalPhoneNumber = studentw.residentalphonenumber;
-           this.Date = studentw.date;
-           this.FathersNumber = studentw.fathersnumber;
+           this.StudentId = studentw.StudentId;
+           this.StudentName = studentw.StudentName;
+           this.StudentEmail = studentw.StudentEmail;
+           this.FatherName = studentw.FatherName;
+           this.FatherMonthlyIncome = studentw.FatherMonthlyIncome;
+           this.FatherOccupation = studentw.FatherOccupation;
+           this.PostalAddress = studentw.PostalAddress;
+           this.PermanentAddress = studentw.PermanentAddress;
+           this.DateOfBirth = studentw.DateOfBirth;
+           this.NICNo = studentw.NICNo;
+           this.BloodGroup = studentw.BloodGroup;
+           this.PhoneNumber = studentw.PhoneNumber;
+           this.ResidentalPhoneNumber = studentw.ResidentalPhoneNumber;
+           this.Date = studentw.Date;
+           this.FathersNumber = studentw.FathersNumber;
            
            Courses = new List<Course>();
            VerifyingAgents = new List<VerifyingAgent>();
@@ -42,6 +42,7 @@ namespace AdmissionAndResult.Data
 
         [PrimaryKey]
         [Alias("Student_Id")]
+        [AutoIncrement]
         public System.Int64 StudentId { get; set; }
 
         [Alias("Student_Name")]
@@ -93,7 +94,7 @@ namespace AdmissionAndResult.Data
         [Ignore]
         public virtual Qualification Qualification { get; set; }
         [Ignore]
-        public virtual SelectedStudent SelectedSelectedStudent { get; set; }
+        public virtual SelectedStudent SelectedStudent { get; set; }
          [Ignore]
          public bool IsNew
          {

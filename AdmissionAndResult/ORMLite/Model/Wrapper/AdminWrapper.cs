@@ -9,72 +9,75 @@ using AdmissionAndResult.Data.Wrapper;
 
 namespace AdmissionAndResult.Data.Wrapper
 {
-    public partial class AdminW : ValidateModelCommon
+    public partial class AdminW : CommonWrapper<Admin>
     {
-        public AdminW(Admin admin)
+        public AdminW(Admin adminModel):base(adminModel)
         {
-           this._adminid = admin.AdminId;
            
-           this._adminname = admin.AdminName;
-           
-           this._password = admin.Password;
-           
-           this._hiredate = admin.HireDate;
-           
-           this._changedate = admin.ChangeDate;
+           InitializeComplexProperties(adminModel);
+           InitializeCollectionProperties(adminModel);
            
            
+        }
+        
+        private void InitializeCollectionProperties(Admin adminModel)
+        {
            // One To Many
-           if(admin.VerifyingAgents !=null)
+           if(adminModel.VerifyingAgents !=null)
            {
               this._verifyingagentsw = new ObservableCollection<VerifyingAgentW>(
-              admin.VerifyingAgents.Select(e=>new VerifyingAgentW(e)));
+              adminModel.VerifyingAgents.Select(e=>new VerifyingAgentW(e)));
+              RegisterCollection(_verifyingagentsw,adminModel.VerifyingAgents);
            }
-           
-
         }
         
-        public AdminW(){}
+        private void InitializeComplexProperties(Admin adminModel)
+        {
+        
+           
+        }
+          
+        public AdminW():base(null){}
         
         private System.Int64 _adminid;
-        public  System.Int64  adminid
+        public  System.Int64  AdminId
         {
-           get { return _adminid; }
-           set { ChangeNvalidate(ref  _adminid,value); }
+           get { return GET(ref _adminid); }
+           set { SET(ref  _adminid,value); }
         }
         private System.String _adminname;
-        public  System.String  adminname
+        public  System.String  AdminName
         {
-           get { return _adminname; }
-           set { ChangeNvalidate(ref  _adminname,value); }
+           get { return GET(ref _adminname); }
+           set { SET(ref  _adminname,value); }
         }
         private System.String _password;
-        public  System.String  password
+        public  System.String  Password
         {
-           get { return _password; }
-           set { ChangeNvalidate(ref  _password,value); }
+           get { return GET(ref _password); }
+           set { SET(ref  _password,value); }
         }
         private System.String _hiredate;
-        public  System.String  hiredate
+        public  System.String  HireDate
         {
-           get { return _hiredate; }
-           set { ChangeNvalidate(ref  _hiredate,value); }
+           get { return GET(ref _hiredate); }
+           set { SET(ref  _hiredate,value); }
         }
         private System.String _changedate;
-        public  System.String  changedate
+        public  System.String  ChangeDate
         {
-           get { return _changedate; }
-           set { ChangeNvalidate(ref  _changedate,value); }
+           get { return GET(ref _changedate); }
+           set { SET(ref  _changedate,value); }
         }
         
         // One To Many
         private ObservableCollection<VerifyingAgentW> _verifyingagentsw;
-        public  ObservableCollection<VerifyingAgentW>  verifyingagentsw
-        {
-           get { return _verifyingagentsw; }
-           set { ChangeNvalidate(ref _verifyingagentsw,value); }
+        public  ObservableCollection<VerifyingAgentW>  VerifyingAgentsW
+        { 
+          get { return _verifyingagentsw; }
+          set { _verifyingagentsw = value; }
         }
-
-        public Admin AdminModel { get; set; }
+        
+        
     }
 }

@@ -31,11 +31,6 @@ namespace AdmissionAndResult.ViewModel
             _selectedAgent = new VerifyingAgentW();
             detailCommand = new RelayCommand(showDetail, () => _selectedItem != null);
 
-
-
-
-
-
         }
 
         public RelayCommand detailCommand
