@@ -88,18 +88,18 @@ namespace AdmissionAndResult.Data.Repository
                   
    
                  // One To One 
-           var qualification = await this.conn.SelectAsync<Qualification>(a => a.Where(e => e.QualificationId == id));
+           var qualification = await this.conn.SingleAsync<Qualification>(a => a.Where(e => e.QualificationId == id));
            if (student != null && qualification != null)
            {
-             student.Qualification = qualification.SingleOrDefault();
+             student.Qualification = qualification;
            }
          
    
                  // One To One 
-           var selectedselectedstudent = await this.conn.SelectAsync<SelectedStudent>(a => a.Where(e => e.SelectedStudentId == id));
+           var selectedselectedstudent = await this.conn.SingleAsync<SelectedStudent>(a => a.Where(e => e.SelectedStudentId == id));
            if (student != null && selectedselectedstudent != null)
            {
-             student.SelectedStudent = selectedselectedstudent.SingleOrDefault();
+             student.SelectedStudent = selectedselectedstudent;
            }
          
   

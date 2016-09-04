@@ -68,10 +68,10 @@ namespace AdmissionAndResult.Data.Repository
           
    
                  // One To One 
-           var student = await this.conn.SelectAsync<Student>(a => a.Where(e => e.StudentId == id));
+           var student = await this.conn.SingleAsync<Student>(a => a.Where(e => e.StudentId == id));
            if (course != null && student != null)
            {
-             course.Student = student.SingleOrDefault();
+             course.Student = student;
            }
          
         

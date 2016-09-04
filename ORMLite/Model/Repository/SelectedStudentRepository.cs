@@ -68,26 +68,26 @@ namespace AdmissionAndResult.Data.Repository
           
    
                  // One To One 
-           var selectedstudentmember = await this.conn.SelectAsync<Student>(a => a.Where(e => e.StudentId == id));
+           var selectedstudentmember = await this.conn.SingleAsync<Student>(a => a.Where(e => e.StudentId == id));
            if (selectedstudent != null && selectedstudentmember != null)
            {
-             selectedstudent.Student = selectedstudentmember.SingleOrDefault();
+             selectedstudent.Student = selectedstudentmember;
            }
          
    
                  // One To One 
-           var department = await this.conn.SelectAsync<Department>(a => a.Where(e => e.DepartmentID == id));
+           var department = await this.conn.SingleAsync<Department>(a => a.Where(e => e.DepartmentID == id));
            if (selectedstudent != null && department != null)
            {
-             selectedstudent.Department = department.SingleOrDefault();
+             selectedstudent.Department = department;
            }
          
    
                  // One To One 
-           var course = await this.conn.SelectAsync<Course>(a => a.Where(e => e.CourseId == id));
+           var course = await this.conn.SingleAsync<Course>(a => a.Where(e => e.CourseId == id));
            if (selectedstudent != null && course != null)
            {
-             selectedstudent.Course = course.SingleOrDefault();
+             selectedstudent.Course = course;
            }
          
   
