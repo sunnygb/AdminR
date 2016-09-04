@@ -100,10 +100,10 @@ namespace <%= EntityNamespace%>.Repository
          <% } else { %>
    
                  // One To One 
-           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = await this.conn.SelectAsync<<%= r.ThisPropertyName.ToSafeName()%>>(a => a.Where(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id));
+           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = await this.conn.SingleAsync<<%= r.ThisPropertyName.ToSafeName()%>>(a => a.Where(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id));
            if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
            {
-             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>.SingleOrDefault();
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>;
            }
          
               <% } %> 
