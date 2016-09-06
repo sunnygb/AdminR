@@ -1,0 +1,37 @@
+﻿<%@ Template Language="C#" TargetLanguage="C#" Debug="True" Encoding="UTF-8" %>
+
+<%@ Assembly Src="Model.cs" %>
+<%@ Assembly Src="Extensions.cs" %>
+
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="System.Text" %>
+<%@ Import Namespace="System.Text.RegularExpressions" %>
+
+<%@ Import Namespace="SchemaMapper" %>
+
+<%@ Property Name="Entity"
+             Type="SchemaMapper.Entity"  %>
+
+<%@ Property Name="EntityNamespace"
+             Type="System.String"  %>
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace <%= EntityNamespace %>.Services
+{
+    public interface I<%=Entity.ContextName%>Repository
+    {
+       Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<List< <%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async();
+       Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id);
+       Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task Remove<%=Entity.ClassName%>Async(long id); 
+       
+       Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id);
+       Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       IDbConnectionFactory DbFactory { get; set; }
+    }
+}

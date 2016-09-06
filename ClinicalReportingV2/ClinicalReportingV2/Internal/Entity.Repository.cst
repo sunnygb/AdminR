@@ -1,0 +1,240 @@
+﻿<%@ Template Language="C#" TargetLanguage="C#" Debug="True" Encoding="UTF-8" %>
+
+<%@ Assembly Src="Model.cs" %>
+<%@ Assembly Src="Extensions.cs" %>
+
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="System.Text" %>
+<%@ Import Namespace="System.Text.RegularExpressions" %>
+
+<%@ Import Namespace="SchemaMapper" %>
+
+<%@ Property Name="Entity"
+             Type="SchemaMapper.Entity"  %>
+<%@ Property Name="EntityContext"
+             Type="SchemaMapper.EntityContext"  %>
+
+<%@ Property Name="EntityNamespace"
+             Type="System.String"  %>
+using ServiceStack.OrmLite;
+using System;
+using System.Data;
+using System.Configuration;
+using System.Collections.Generic;
+using <%=EntityNamespace%>.Services;
+using System.Text;
+using System.Transactions;
+using System.Linq;
+using ServiceStack.Data;
+using System.Threading.Tasks;
+
+namespace <%= EntityNamespace%>.Repository
+{    
+    public class <%= Entity.ClassName%>Repository : I<%= Entity.ContextName%>Repository,IDisposable
+    { 
+      
+      
+       public IDbConnectionFactory DbFactory { get; set; }
+      
+       private IDbConnection _conn;
+       private IDbConnection conn 
+       { 
+          get 
+          {
+            return _conn = _conn ??  DbFactory.Open();
+          }
+       }
+
+      public async Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          await this.conn.InsertAsync(<%=Entity.ClassName.ToLower()%>);
+          <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%> =this.conn.LastInsertId();
+          return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public async Task<List<<%=Entity.ClassName%>>> GetAll<%=Entity.ClassName%>Async()
+       {
+         return await this.conn.SelectAsync<<%=Entity.ClassName %>>();
+       
+       }
+       
+      public async Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id)
+       {
+         return await this.conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
+       
+       }
+       
+      public async Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          var result= await this.conn.UpdateAsync<<%=Entity.ClassName%>>(<%=Entity.ClassName.ToLower()%>);
+          return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public async Task Remove<%=Entity.ClassName%>Async(long id)
+       {
+         await this.conn.DeleteByIdAsync<<%=Entity.ClassName%>>(id);
+       
+       }
+       
+      public async Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id)
+       {
+          var <%=Entity.ClassName.ToLower()%> = await this.conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
+          
+          
+          
+          <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+           var <%= r.ThisPropertyName.ToSafeName().ToLower() %> = await this.conn.SelectAsync<<%= r.OtherEntity.ToSafeName() %>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.AddRange(<%= r.ThisPropertyName.ToSafeName().ToLower() %>);
+           }      
+                  
+                  
+                  
+         <% } else { %>
+   
+                 // One To One 
+           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = await this.conn.SingleAsync<<%= r.ThisPropertyName.ToSafeName()%>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>;
+           }
+         
+              <% } %> 
+          <% } %>
+  
+         return <%=Entity.ClassName.ToLower()%>;
+         }
+       
+       
+      public async Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                if(<%=Entity.ClassName.ToLower()%>.IsNew)
+                {
+                   await this.Add<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
+                }
+                else
+                {
+                   await this.Update<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
+                }
+                
+                
+                 <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    <%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyM(r.OtherEntity).PropertyName %> =<%= this.Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                    await this.conn.SaveAsync(<%= r.OtherEntity.ToSafeName().ToLower()%>);
+                  }
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => s.IsDeleted))
+                  { 
+                  
+                    await this.conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(<%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>);
+                  }
+                    <% } else { %>
+                    
+                 // One To One 
+                 if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>!=null)
+                 {
+                    if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.IsDeleted)
+                    {
+                      var id = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>;
+                      await this._conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(id);
+                    }
+                    else if(!<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.IsDeleted)
+                    {
+                      var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
+                      <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                      await this.conn.SaveAsync(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
+                    }
+                    
+                  }
+                          <% } %> 
+                       <% } %>
+                 
+                   
+                    txScope.Complete();
+            }
+            return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+       public void Dispose()
+       {
+          if (_conn != null)
+              _conn.Dispose();
+       }
+   
+    }
+}
+<script runat="template">
+
+public Property GetPrimeryKey()
+{
+           foreach(var p in Entity.Properties)
+           {
+               if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive))
+               {
+                   return p;
+                   break;
+               }
+           }
+           return null;
+ }
+       
+       
+ public Property GetForeignPropertyM(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                   foreach(var property in Entity.Properties)
+                   {
+                       if(property.PropertyName==this.GetPrimeryKey().PropertyName)
+                       {
+                           return property;
+                           
+                       }
+                   }
+               }
+           }
+           
+           
+   return null;          
+}
+
+public Property GetForeignPropertyO(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                   foreach(var property in entity.Properties)
+                   {
+                    
+                       if((bool)property.IsPrimaryKey)
+                       {
+                           return property;
+                           break;
+                       }
+                   }
+               }
+           }
+           
+           
+   return null;          
+}
+
+</script>

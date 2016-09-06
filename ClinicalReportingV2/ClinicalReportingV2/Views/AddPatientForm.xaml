@@ -1,0 +1,325 @@
+﻿<UserControl x:Class="ClinicalReporting.Views.AddPatientForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModel="clr-namespace:ClinicalReporting.ViewModel"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ClinicalReporting.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance Type=ViewModel:AddPatientViewModel,
+                                              IsDesignTimeCreatable=True}"
+             d:DesignWidth="1014"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <ViewModel:AddPatientViewModel />
+    </UserControl.DataContext>
+
+
+    <materialDesign:Card Margin="10,10,10,10"
+                         VerticalAlignment="Stretch"
+                         materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        <ScrollViewer x:Name="scrol"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      VirtualizingPanel.ScrollUnit="Pixel">
+            <StackPanel Margin="10,0,10,19"
+                        OpacityMask="Black"
+                        Orientation="Vertical">
+
+
+                <StackPanel Width="604"
+                            Margin="316,0,34,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                    <Button Width="153"
+                            Height="35"
+                            Margin="0,1,0,6"
+                            FontFamily="Segoe WP Semibold"
+                            Style="{DynamicResource MaterialDesignRaisedButton}"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                        <TextBlock x:Name="label"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="Segoe WP Semibold"
+                                   FontSize="14"
+                                   FontWeight="Bold">
+                            Add Patient Form
+                        </TextBlock>
+                    </Button>
+
+                </StackPanel>
+                <StackPanel Width="910"
+                            Height="145"
+                            Orientation="Horizontal"
+                            RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform />
+                            <SkewTransform AngleY="-0.065" />
+                            <RotateTransform />
+                            <TranslateTransform Y="-0.499" />
+                        </TransformGroup>
+                    </StackPanel.RenderTransform>
+                    <GroupBox Margin="0,0,0,-11"
+                              Background="#00000000"
+                              BorderThickness="0"
+                              Header="Instructions"
+                              Style="{DynamicResource MaterialDesignGroupBox}"
+                              materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                        <Label x:Name="label2"
+                               Width="725"
+                               Margin="10,10,0,15"
+                               Background="Transparent"
+                               Content="1. Candidates are required to submit applications on prescribed Admission Form.&#10;2. Please read carefully the instructions given here before filling the Admission Form. &#10;3. Fill in all the fields."
+                               FontFamily="Segoe WP Semibold"
+                               FontWeight="Bold"
+                               Foreground="Black"
+                               RenderTransformOrigin="0.5,0.5" />
+                    </GroupBox>
+
+
+                    <GroupBox Width="147"
+                              Margin="15,0,0,0"
+                              Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="8,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                               Text="Picture" />
+                                    <Button Width="20"
+                                            Height="20"
+                                            Margin="50,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Background="#FF22A5FF"
+                                            BorderBrush="#FF22A5FF"
+                                            Click="Button_Click_1"
+                                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                        <materialDesign:PackIcon Width="20"
+                                                                 Height="20"
+                                                                 HorizontalAlignment="Center"
+                                                                 VerticalAlignment="Center"
+                                                                 Kind="Plus" />
+
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <Image x:Name="imgPhoto" />
+                    </GroupBox>
+
+
+
+
+
+
+
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" MinWidth="150" />
+                        <ColumnDefinition Width="auto" MinWidth="150" />
+                        <ColumnDefinition Width="auto" MinWidth="150" />
+
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="Auto" MinHeight="60" />
+                        <RowDefinition Height="Auto" MinHeight="52" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="47" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+                        <materialDesign:PackIcon Width="30"
+                                                 Height="30"
+                                                 Margin="35,32,0,-2"
+                                                 Foreground="{Binding ElementName=a2,
+                                                                      Path=BorderBrush}"
+                                                 Kind="AccountCardDetails" />
+                        <TextBox x:Name="a2"
+                                 Width="126"
+                                 Height="37"
+                                 Margin="10,0,0,0"
+                                 VerticalAlignment="Bottom"
+                                 FontSize="14"
+                                 FontWeight="Bold"
+                                 Text="{Binding Patient.PatientID,
+                                                ValidatesOnDataErrors=True}"
+                                 materialDesign:HintAssist.Hint="Patient ID "
+                                 materialDesign:HintAssist.IsFloating="True" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1"
+                                Grid.RowSpan="3"
+                                Grid.Column="2"
+                                Width="205"
+                                Margin="281,0,0,0"
+                                Orientation="Vertical">
+                        <GroupBox Margin="5" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button HorizontalAlignment="Left">
+                                            <materialDesign:PackIcon Width="25"
+                                                                     Height="25"
+                                                                     Kind="School" />
+                                        </Button>
+                                        <TextBlock Margin="30,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                   Text="Doctors" />
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+                            <DataGrid Margin="1" ItemsSource="{Binding doctors}" />
+                        </GroupBox>
+
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+                        <materialDesign:PackIcon Width="30"
+                                                 Height="30"
+                                                 Margin="30,34,0,-4"
+                                                 Foreground="{Binding ElementName=a5,
+                                                                      Path=BorderBrush}"
+                                                 Kind="AccountStar" />
+                        <TextBox x:Name="a5"
+                                 Width="249"
+                                 Margin="10,0,0,0"
+                                 FontSize="14"
+                                 FontWeight="Bold"
+                                 Text="{Binding Patient.Name,
+                                                ValidatesOnDataErrors=True}"
+                                 materialDesign:HintAssist.Hint="Full Name"
+                                 materialDesign:HintAssist.IsFloating="True" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+                        <materialDesign:PackIcon Width="30"
+                                                 Height="30"
+                                                 Margin="35,32,0,-2"
+                                                 Foreground="{Binding ElementName=a9,
+                                                                      Path=BorderBrush}"
+                                                 Kind="AccountCircle" />
+                        <TextBox x:Name="a9"
+                                 Width="126"
+                                 Height="60"
+                                 Margin="10,0,0,0"
+                                 VerticalAlignment="Bottom"
+                                 FontSize="14"
+                                 FontWeight="Bold"
+                                 Text="{Binding Patient.Age,
+                                                ValidatesOnDataErrors=True}"
+                                 materialDesign:HintAssist.Hint="Age"
+                                 materialDesign:HintAssist.IsFloating="True" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3"
+                                Grid.Column="1"
+                                Margin="25,0,0,0"
+                                Orientation="Horizontal">
+
+                        <GroupBox Width="286"
+                                  Margin="8,10,0,0"
+                                  Style="{DynamicResource MaterialDesignCardGroupBox}">
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button HorizontalAlignment="Left">
+                                            <materialDesign:PackIcon Width="25"
+                                                                     Height="25"
+                                                                     Kind="GenderMaleFemale" />
+                                        </Button>
+                                        <TextBlock Margin="30,0,0,0"
+                                                   VerticalAlignment="Center"
+                                                   Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                   Text="Gender" />
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+                            <StackPanel>
+                                <RadioButton IsChecked="True">Male</RadioButton>
+                                <RadioButton>Female</RadioButton>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="4"
+                                Grid.Column="1"
+                                Margin="25,0,0,0"
+                                Orientation="Horizontal">
+                        <materialDesign:PackIcon Width="30"
+                                                 Height="30"
+                                                 Margin="10,17,0,0"
+                                                 Foreground="{Binding ElementName=a8,
+                                                                      Path=BorderBrush}"
+                                                 Kind="Voice" />
+                        <ComboBox x:Name="a8"
+                                  Width="166"
+                                  MinWidth="72"
+                                  Margin="16 0 0 0"
+                                  FontSize="14"
+                                  FontWeight="Bold"
+                                  ItemsSource="{Binding doctors}"
+                                  Text="{Binding doctors.Model.DoctorName}"
+                                  materialDesign:HintAssist.Hint="Ref By"
+                                  materialDesign:HintAssist.IsFloating="True" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="5"
+                                Grid.Column="1"
+                                Width="74"
+                                Margin="0,5,25,5"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Margin="10 0 8 0"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource MaterialDesignFloatingActionButton}">
+                            <materialDesign:PackIcon Width="40"
+                                                     Height="40"
+                                                     Kind="ArrowRightBoldHexagonOutline" />
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="5"
+                                Grid.Column="2"
+                                Orientation="Horizontal">
+                        <Button Margin="10 0 8 0"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource MaterialDesignFloatingActionButton}">
+                            <materialDesign:PackIcon Width="40"
+                                                     Height="40"
+                                                     Kind="CloseOctagonOutline" />
+                        </Button>
+                    </StackPanel>
+
+
+
+                </Grid>
+            </StackPanel>
+
+
+        </ScrollViewer>
+    </materialDesign:Card>
+
+
+</UserControl>
