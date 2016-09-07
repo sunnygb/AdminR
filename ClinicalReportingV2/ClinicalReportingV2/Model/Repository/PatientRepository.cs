@@ -138,20 +138,20 @@ namespace ClinicalReporting.Data.Repository
                   
         
                  //One To Many
-           var serologies = await this.conn.SelectAsync<Serology>(e => e.SerialNo == id);
-           if (patient != null && serologies != null)
+           var urineexaminations = await this.conn.SelectAsync<UrineExamination>(e => e.SerialNo == id);
+           if (patient != null && urineexaminations != null)
            {
-             patient.Serologies.AddRange(serologies);
+             patient.UrineExaminations.AddRange(urineexaminations);
            }      
                   
                   
                   
         
                  //One To Many
-           var urineexaminations = await this.conn.SelectAsync<UrineExamination>(e => e.SerialNo == id);
-           if (patient != null && urineexaminations != null)
+           var serologies = await this.conn.SelectAsync<Serology>(e => e.Serialno == id);
+           if (patient != null && serologies != null)
            {
-             patient.UrineExaminations.AddRange(urineexaminations);
+             patient.Serologies.AddRange(serologies);
            }      
                   
                   
@@ -268,19 +268,6 @@ namespace ClinicalReporting.Data.Repository
                   }
         
                  //One To Many
-                  foreach(var serology in patient.Serologies.Where(s => !s.IsDeleted))
-                  { 
-                  
-                    serology.PatientID =patient.PatientID;
-                    await this.conn.SaveAsync(serology);
-                  }
-                  foreach(var serology in patient.Serologies.Where(s => s.IsDeleted))
-                  { 
-                  
-                    await this.conn.DeleteByIdAsync<Serology>(serology.SerialNo);
-                  }
-        
-                 //One To Many
                   foreach(var urineexamination in patient.UrineExaminations.Where(s => !s.IsDeleted))
                   { 
                   
@@ -291,6 +278,19 @@ namespace ClinicalReporting.Data.Repository
                   { 
                   
                     await this.conn.DeleteByIdAsync<UrineExamination>(urineexamination.SerialNo);
+                  }
+        
+                 //One To Many
+                  foreach(var serology in patient.Serologies.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    serology.Patientid =patient.PatientID;
+                    await this.conn.SaveAsync(serology);
+                  }
+                  foreach(var serology in patient.Serologies.Where(s => s.IsDeleted))
+                  { 
+                  
+                    await this.conn.DeleteByIdAsync<Serology>(serology.Serialno);
                   }
                  
                    

@@ -10,9 +10,7 @@
                                               IsDesignTimeCreatable=True}"
              d:DesignWidth="1014"
              mc:Ignorable="d">
-    <UserControl.DataContext>
-        <ViewModel:AddPatientViewModel />
-    </UserControl.DataContext>
+
 
 
     <materialDesign:Card Margin="10,10,10,10"
@@ -186,8 +184,10 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </GroupBox.HeaderTemplate>
-                            <DataGrid Height="150" ScrollViewer.CanContentScroll="True"
-                                Margin="1" ItemsSource="{Binding doctors}" />
+                            <DataGrid Height="150"
+                                      Margin="1"
+                                      ItemsSource="{Binding doctors}"
+                                      ScrollViewer.CanContentScroll="True" />
                         </GroupBox>
 
 
@@ -279,16 +279,14 @@
                                   Width="166"
                                   MinWidth="72"
                                   Margin="16 0 0 0"
+                                  DisplayMemberPath="DoctorName"
                                   FontSize="14"
                                   FontWeight="Bold"
                                   ItemsSource="{Binding doctors}"
-                                  DisplayMemberPath="DoctorName"
-                                  SelectedValuePath="DoctorID"
-                                  SelectedValue="{Binding doctors/DoctorID}"
+                                  SelectedValue="{Binding SelectedDoctor}"
+                                  SelectedValuePath="DoctorName"
                                   materialDesign:HintAssist.Hint="Ref By"
-                                  materialDesign:HintAssist.IsFloating="True" >
-                           
-                        </ComboBox>
+                                  materialDesign:HintAssist.IsFloating="True" />
                     </StackPanel>
                     <StackPanel Grid.Row="5"
                                 Grid.Column="1"

@@ -72,18 +72,18 @@ namespace ClinicalReporting.Data.Wrapper
               RegisterCollection(_semenanalysesw,patientModel.SemenAnalyses);
            }
            // One To Many
-           if(patientModel.Serologies !=null)
-           {
-              this._serologiesw = new ObservableCollection<SerologyW>(
-              patientModel.Serologies.Select(e=>new SerologyW(e)));
-              RegisterCollection(_serologiesw,patientModel.Serologies);
-           }
-           // One To Many
            if(patientModel.UrineExaminations !=null)
            {
               this._urineexaminationsw = new ObservableCollection<UrineExaminationW>(
               patientModel.UrineExaminations.Select(e=>new UrineExaminationW(e)));
               RegisterCollection(_urineexaminationsw,patientModel.UrineExaminations);
+           }
+           // One To Many
+           if(patientModel.Serologies !=null)
+           {
+              this._serologiesw = new ObservableCollection<SerologyW>(
+              patientModel.Serologies.Select(e=>new SerologyW(e)));
+              RegisterCollection(_serologiesw,patientModel.Serologies);
            }
         }
         
@@ -184,18 +184,18 @@ namespace ClinicalReporting.Data.Wrapper
           set { _semenanalysesw = value; }
         }
         // One To Many
-        private ObservableCollection<SerologyW> _serologiesw;
-        public  ObservableCollection<SerologyW>  SerologiesW
-        { 
-          get { return _serologiesw; }
-          set { _serologiesw = value; }
-        }
-        // One To Many
         private ObservableCollection<UrineExaminationW> _urineexaminationsw;
         public  ObservableCollection<UrineExaminationW>  UrineExaminationsW
         { 
           get { return _urineexaminationsw; }
           set { _urineexaminationsw = value; }
+        }
+        // One To Many
+        private ObservableCollection<SerologyW> _serologiesw;
+        public  ObservableCollection<SerologyW>  SerologiesW
+        { 
+          get { return _serologiesw; }
+          set { _serologiesw = value; }
         }
         
         

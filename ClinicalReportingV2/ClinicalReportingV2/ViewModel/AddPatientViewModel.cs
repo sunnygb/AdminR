@@ -20,22 +20,26 @@ namespace ClinicalReporting.ViewModel
     {
 
 
-        
-        public  IDoctorsRepository _repoDoc= new DoctorRepository();
-        private IPatientsRepository _repoPatient = new PatientRepository();
-        
-        public AddPatientViewModel()
-        {
-            _repoDoc.DbFactory = CreateConnection();
 
+        private IDoctorsRepository _repoDoc;
+        private IPatientsRepository _repoPatient;
+
+        public AddPatientViewModel(PatientRepository pRepo,DoctorRepository docRepo)
+        {
+            _repoPatient = pRepo;
+            _repoDoc = docRepo;
+            _repoDoc.DbFactory = CreateConnection();
+            _repoPatient.DbFactory = CreateConnection();
             SaveCommand = new RelayCommand(Savebtn);
             _patient = new PatientW(new Patient());
-            _selectedDoctor = new DoctorW(new Doctor());
+            _selectedDoctor = "";
             this._doctors = new ObservableCollection<DoctorW>(_repoDoc.GetAllDoctorAsync().Result.Select(e => new DoctorW(e)));
         }
 
-        private DoctorW _selectedDoctor;
-        public DoctorW SelectedDoctor { get { return _selectedDoctor; }
+        private string _selectedDoctor;
+        public string SelectedDoctor
+        {
+            get { return _selectedDoctor; }
 
             set
             {

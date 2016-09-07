@@ -66,6 +66,10 @@ namespace ClinicalReporting.Data.Repository
           
           
           
+ 
+                  
+                  
+                  
   
          return doctor;
          }
@@ -85,7 +89,7 @@ namespace ClinicalReporting.Data.Repository
                 }
                 
                 
-                 
+
                    
                     txScope.Complete();
             }

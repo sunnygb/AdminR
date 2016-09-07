@@ -38,19 +38,19 @@ namespace ClinicalReporting.Data.Wrapper
         public SerologyW():base(null){}
         
         private System.Int64 _serialno;
-        public  System.Int64  SerialNo
+        public  System.Int64  Serialno
         {
            get { return GET(ref _serialno); }
            set { SET(ref  _serialno,value); }
         }
         private System.Int64 _patientid;
-        public  System.Int64  PatientID
+        public  System.Int64  Patientid
         {
            get { return GET(ref _patientid); }
            set { SET(ref  _patientid,value); }
         }
-        private System.DateTime _tdate;
-        public  System.DateTime  TDate
+        private System.String _tdate;
+        public  System.String  Tdate
         {
            get { return GET(ref _tdate); }
            set { SET(ref  _tdate,value); }
@@ -62,13 +62,13 @@ namespace ClinicalReporting.Data.Wrapper
            set { SET(ref  _widaltest,value); }
         }
         private System.String _styphito;
-        public  System.String  STyphiTO
+        public  System.String  STyphiTo
         {
            get { return GET(ref _styphito); }
            set { SET(ref  _styphito,value); }
         }
         private System.String _styphith;
-        public  System.String  STyphiTH
+        public  System.String  STyphiTh
         {
            get { return GET(ref _styphith); }
            set { SET(ref  _styphith,value); }
@@ -85,14 +85,32 @@ namespace ClinicalReporting.Data.Wrapper
            get { return GET(ref _parathyphibh); }
            set { SET(ref  _parathyphibh,value); }
         }
+        private System.String _typhoid;
+        public  System.String  Typhoid
+        {
+           get { return GET(ref _typhoid); }
+           set { SET(ref  _typhoid,value); }
+        }
+        private System.String _IGM;
+        public  System.String  IGM
+        {
+            get { return GET(ref _IGM); }
+           set { SET(ref  _IGM,value); }
+        }
+        private System.String _IGG;
+        public  System.String  IGG
+        {
+            get { return GET(ref _IGG); }
+            set { SET(ref  _IGG, value); }
+        }
         private System.String _hbsag;
-        public  System.String  HBSAg
+        public  System.String  HbsAg
         {
            get { return GET(ref _hbsag); }
            set { SET(ref  _hbsag,value); }
         }
         private System.String _asotitre;
-        public  System.String  ASOTitre
+        public  System.String  AsoTitre
         {
            get { return GET(ref _asotitre); }
            set { SET(ref  _asotitre,value); }
@@ -104,7 +122,7 @@ namespace ClinicalReporting.Data.Wrapper
            set { SET(ref  _pregnancytest,value); }
         }
         private System.String _rafactor;
-        public  System.String  RAFactor
+        public  System.String  RaFactor
         {
            get { return GET(ref _rafactor); }
            set { SET(ref  _rafactor,value); }
@@ -122,16 +140,34 @@ namespace ClinicalReporting.Data.Wrapper
            set { SET(ref  _mantoex,value); }
         }
         private System.String _kahnsvdrl;
-        public  System.String  KahnsVDRL
+        public  System.String  KahnsVdrl
         {
            get { return GET(ref _kahnsvdrl); }
            set { SET(ref  _kahnsvdrl,value); }
         }
         private System.String _tbplus;
-        public  System.String  TBPlus
+        public  System.String  TbPlus
         {
            get { return GET(ref _tbplus); }
            set { SET(ref  _tbplus,value); }
+        }
+        private System.String _igm;
+        public  System.String  Igm
+        {
+            get { return GET(ref _igm); }
+            set { SET(ref  _igm, value); }
+        }
+        private System.String _igg;
+        public  System.String  Igg
+        {
+           get { return GET(ref _igg); }
+           set { SET(ref  _igg,value); }
+        }
+        private System.String _helicobacterpylori;
+        public  System.String  HelicobacterPylori
+        {
+           get { return GET(ref _helicobacterpylori); }
+           set { SET(ref  _helicobacterpylori,value); }
         }
         private System.String _hiv;
         public  System.String  Hiv
@@ -139,8 +175,8 @@ namespace ClinicalReporting.Data.Wrapper
            get { return GET(ref _hiv); }
            set { SET(ref  _hiv,value); }
         }
-        private System.Int32 _fee;
-        public  System.Int32  Fee
+        private System.Int64 _fee;
+        public  System.Int64  Fee
         {
            get { return GET(ref _fee); }
            set { SET(ref  _fee,value); }

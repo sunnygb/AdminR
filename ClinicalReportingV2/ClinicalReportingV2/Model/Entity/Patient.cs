@@ -20,8 +20,8 @@ namespace ClinicalReporting.Data
             BloodGroups = new List<BloodGroup>();
             Biochemistries = new List<Biochemistry>();
             SemenAnalyses = new List<SemenAnalysis>();
-            Serologies = new List<Serology>();
             UrineExaminations = new List<UrineExamination>();
+            Serologies = new List<Serology>();
         }
         
         public Patient(PatientW patientw)
@@ -39,8 +39,8 @@ namespace ClinicalReporting.Data
            BloodGroups = new List<BloodGroup>();
            Biochemistries = new List<Biochemistry>();
            SemenAnalyses = new List<SemenAnalysis>();
-           Serologies = new List<Serology>();
            UrineExaminations = new List<UrineExamination>();
+           Serologies = new List<Serology>();
            
         }
 
@@ -75,9 +75,9 @@ namespace ClinicalReporting.Data
         [Ignore]
         public virtual List<SemenAnalysis> SemenAnalyses { get; set; }
         [Ignore]
-        public virtual List<Serology> Serologies { get; set; }
-        [Ignore]
         public virtual List<UrineExamination> UrineExaminations { get; set; }
+        [Ignore]
+        public virtual List<Serology> Serologies { get; set; }
          [Ignore]
          public bool IsNew
          {

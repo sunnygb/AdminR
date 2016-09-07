@@ -30,7 +30,7 @@ namespace ClinicalReporting.Data.Repository
       public async Task<Serology> AddSerologyAsync(Serology serology)
        {
           await this.conn.InsertAsync(serology);
-          serology.SerialNo =this.conn.LastInsertId();
+          serology.Serialno =this.conn.LastInsertId();
           return serology;
        
        }
@@ -105,7 +105,7 @@ namespace ClinicalReporting.Data.Repository
                     else if(!serology.Patient.IsDeleted)
                     {
                       var patient = serology.Patient;
-                      patient.PatientID = serology.SerialNo;
+                      patient.PatientID = serology.Serialno;
                       await this.conn.SaveAsync(patient);
                     }
                     

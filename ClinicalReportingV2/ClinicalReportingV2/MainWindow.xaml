@@ -11,6 +11,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+
     <Window.DataContext>
         <local:MainwindowViewModel />
     </Window.DataContext>
@@ -21,6 +22,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModel:SearchViewModel}">
             <Views:SearchForm />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:MainHeaderViewModel}">
+            <Views:MainHeader />
         </DataTemplate>
     </Window.Resources>
 
@@ -165,14 +169,11 @@
 
 
         </StackPanel>
-        <StackPanel Width="1000"
-                    Height="537"
+        <StackPanel Width="Auto"
+                    Height="Auto"
                     Margin="0,-2,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Background="#FFFFFAD8"
-                    DockPanel.Dock="Right"
-                    Orientation="Horizontal">
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
             <ContentControl Content="{Binding CurrentViewModel}" />
         </StackPanel>
     </DockPanel>
