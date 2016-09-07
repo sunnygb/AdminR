@@ -156,14 +156,6 @@ namespace ClinicalReporting.Data.Repository
                   
                   
                   
-   
-                 // One To One 
-           var refbydoctor = await this.conn.SingleAsync<Doctor>(e => e.DoctorID == id);
-           if (patient != null && refbydoctor != null)
-           {
-             patient.Doctor = refbydoctor;
-           }
-         
   
          return patient;
          }
@@ -299,23 +291,6 @@ namespace ClinicalReporting.Data.Repository
                   { 
                   
                     await this.conn.DeleteByIdAsync<UrineExamination>(urineexamination.SerialNo);
-                  }
-                    
-                 // One To One 
-                 if(patient.Doctor!=null)
-                 {
-                    if(patient.Doctor.IsDeleted)
-                    {
-                      var id = patient.Doctor.DoctorID;
-                      await this._conn.DeleteByIdAsync<Doctor>(id);
-                    }
-                    else if(!patient.Doctor.IsDeleted)
-                    {
-                      var refbydoctor = patient.Doctor;
-                      refbydoctor.DoctorID = patient.PatientID;
-                      await this.conn.SaveAsync(refbydoctor);
-                    }
-                    
                   }
                  
                    

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceStack.Data;
 
 namespace ClinicalReporting.Data.Services
 {
@@ -15,5 +16,6 @@ namespace ClinicalReporting.Data.Services
        
        Task<BloodGroup> GetBloodGroupWithChildrenAsync(long id);
        Task<BloodGroup> SaveBloodGroupAsync(BloodGroup bloodgroup);
+       IDbConnectionFactory DbFactory { get; set; }
     }
 }

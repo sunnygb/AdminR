@@ -257,8 +257,7 @@ Generating Entities ...
         this.CopyPropertiesTo(repositoryClass);
         this.CopyPropertiesTo(interfaceClass);
         this.CopyPropertiesTo(commonClass);
-        
-
+        Debugger.Launch();
         foreach(Entity entity in entityContext.Entities)
         {
             Stopwatch watch = Stopwatch.StartNew();

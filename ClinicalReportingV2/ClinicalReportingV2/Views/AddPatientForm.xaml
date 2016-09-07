@@ -186,7 +186,8 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </GroupBox.HeaderTemplate>
-                            <DataGrid Margin="1" ItemsSource="{Binding doctors}" />
+                            <DataGrid Height="150" ScrollViewer.CanContentScroll="True"
+                                Margin="1" ItemsSource="{Binding doctors}" />
                         </GroupBox>
 
 
@@ -281,9 +282,13 @@
                                   FontSize="14"
                                   FontWeight="Bold"
                                   ItemsSource="{Binding doctors}"
-                                  Text="{Binding doctors.Model.DoctorName}"
+                                  DisplayMemberPath="DoctorName"
+                                  SelectedValuePath="DoctorID"
+                                  SelectedValue="{Binding doctors/DoctorID}"
                                   materialDesign:HintAssist.Hint="Ref By"
-                                  materialDesign:HintAssist.IsFloating="True" />
+                                  materialDesign:HintAssist.IsFloating="True" >
+                           
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Row="5"
                                 Grid.Column="1"
@@ -293,6 +298,8 @@
                                 Orientation="Horizontal">
                         <Button Margin="10 0 8 0"
                                 HorizontalAlignment="Left"
+                                Command="{Binding SaveCommand,
+                                                  Mode=OneWay}"
                                 Style="{StaticResource MaterialDesignFloatingActionButton}">
                             <materialDesign:PackIcon Width="40"
                                                      Height="40"

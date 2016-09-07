@@ -99,12 +99,6 @@ namespace ClinicalReporting.Data.Wrapper
            
            
            
-           // One To One
-           if(patientModel.Doctor !=null)
-           {
-               this.RefByDoctorW = new DoctorW(
-               patientModel.Doctor);
-           }
         }
           
         public PatientW():base(null){}
@@ -133,8 +127,8 @@ namespace ClinicalReporting.Data.Wrapper
            get { return GET(ref _sex); }
            set { SET(ref  _sex,value); }
         }
-        private System.Int64 _refby;
-        public  System.Int64  RefBy
+        private System.String _refby;
+        public  System.String  RefBy
         {
            get { return GET(ref _refby); }
            set { SET(ref  _refby,value); }
@@ -203,16 +197,6 @@ namespace ClinicalReporting.Data.Wrapper
           get { return _urineexaminationsw; }
           set { _urineexaminationsw = value; }
         }
-        // One To One
-        private DoctorW _refbydoctorw;
-        public  DoctorW  RefByDoctorW
-        { 
-           get { return _refbydoctorw; } 
-           set { _refbydoctorw = value;
-           if(!Equals(_refbydoctorw,Model.Doctor))
-           {Model.Doctor = _refbydoctorw.Model;};}
-        }
-        
         
         
     }

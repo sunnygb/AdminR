@@ -13,7 +13,6 @@ namespace ClinicalReporting.Data
         
         public Doctor()
         {
-            RefByPatients = new List<Patient>();
         }
         
         public Doctor(DoctorW doctorw)
@@ -21,7 +20,6 @@ namespace ClinicalReporting.Data
            this.DoctorID = doctorw.DoctorID;
            this.DoctorName = doctorw.DoctorName;
            
-           RefByPatients = new List<Patient>();
            
         }
 
@@ -32,8 +30,6 @@ namespace ClinicalReporting.Data
         [Alias("DoctorName")]
         public System.String DoctorName { get; set; }
 
-        [Ignore]
-        public virtual List<Patient> RefByPatients { get; set; }
          [Ignore]
          public bool IsNew
          {

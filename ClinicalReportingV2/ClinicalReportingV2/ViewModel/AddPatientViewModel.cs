@@ -20,7 +20,7 @@ namespace ClinicalReporting.ViewModel
     {
 
 
-        private Doctor _selectedDoctor;
+        
         public  IDoctorsRepository _repoDoc= new DoctorRepository();
         private IPatientsRepository _repoPatient = new PatientRepository();
         
@@ -30,7 +30,17 @@ namespace ClinicalReporting.ViewModel
 
             SaveCommand = new RelayCommand(Savebtn);
             _patient = new PatientW(new Patient());
+            _selectedDoctor = new DoctorW(new Doctor());
             this._doctors = new ObservableCollection<DoctorW>(_repoDoc.GetAllDoctorAsync().Result.Select(e => new DoctorW(e)));
+        }
+
+        private DoctorW _selectedDoctor;
+        public DoctorW SelectedDoctor { get { return _selectedDoctor; }
+
+            set
+            {
+                Set(() => SelectedDoctor, ref _selectedDoctor, value);
+            }
         }
 
         private PatientW _patient;
@@ -44,6 +54,7 @@ namespace ClinicalReporting.ViewModel
                 Set(() => Patient, ref _patient, value);
             }
         }
+
         private ObservableCollection<DoctorW> _doctors;
         public ObservableCollection<DoctorW> doctors
         {

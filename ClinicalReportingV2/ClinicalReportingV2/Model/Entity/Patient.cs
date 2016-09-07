@@ -58,7 +58,7 @@ namespace ClinicalReporting.Data
         public System.String Sex { get; set; }
 
         [Alias("Ref_by")]
-        public System.Int64 RefBy { get; set; }
+        public System.String RefBy { get; set; }
 
         [Ignore]
         public virtual List<Haematology> Haematologies { get; set; }
@@ -78,8 +78,6 @@ namespace ClinicalReporting.Data
         public virtual List<Serology> Serologies { get; set; }
         [Ignore]
         public virtual List<UrineExamination> UrineExaminations { get; set; }
-        [Ignore]
-        public virtual Doctor Doctor { get; set; }
          [Ignore]
          public bool IsNew
          {

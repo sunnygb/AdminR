@@ -22,19 +22,11 @@ namespace ClinicalReporting.Data.Wrapper
         
         private void InitializeCollectionProperties(Doctor doctorModel)
         {
-           // One To Many
-           if(doctorModel.RefByPatients !=null)
-           {
-              this._refbypatientsw = new ObservableCollection<PatientW>(
-              doctorModel.RefByPatients.Select(e=>new PatientW(e)));
-              RegisterCollection(_refbypatientsw,doctorModel.RefByPatients);
-           }
         }
         
         private void InitializeComplexProperties(Doctor doctorModel)
         {
         
-           
         }
           
         public DoctorW():base(null){}
@@ -52,13 +44,6 @@ namespace ClinicalReporting.Data.Wrapper
            set { SET(ref  _doctorname,value); }
         }
         
-        // One To Many
-        private ObservableCollection<PatientW> _refbypatientsw;
-        public  ObservableCollection<PatientW>  RefByPatientsW
-        { 
-          get { return _refbypatientsw; }
-          set { _refbypatientsw = value; }
-        }
         
         
     }

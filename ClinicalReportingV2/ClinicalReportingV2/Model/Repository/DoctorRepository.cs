@@ -66,16 +66,6 @@ namespace ClinicalReporting.Data.Repository
           
           
           
-        
-                 //One To Many
-           var refbypatients = await this.conn.SelectAsync<Patient>(e => e.PatientID == id);
-           if (doctor != null && refbypatients != null)
-           {
-             doctor.RefByPatients.AddRange(refbypatients);
-           }      
-                  
-                  
-                  
   
          return doctor;
          }
@@ -95,19 +85,6 @@ namespace ClinicalReporting.Data.Repository
                 }
                 
                 
-        
-                 //One To Many
-                  foreach(var patient in doctor.RefByPatients.Where(s => !s.IsDeleted))
-                  { 
-                  
-                    patient.RefBy =doctor.DoctorID;
-                    await this.conn.SaveAsync(patient);
-                  }
-                  foreach(var patient in doctor.RefByPatients.Where(s => s.IsDeleted))
-                  { 
-                  
-                    await this.conn.DeleteByIdAsync<Patient>(patient.PatientID);
-                  }
                  
                    
                     txScope.Complete();

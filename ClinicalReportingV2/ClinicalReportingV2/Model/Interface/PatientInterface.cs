@@ -1,8 +1,8 @@
-﻿using ServiceStack.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceStack.Data;
 
 namespace ClinicalReporting.Data.Services
 {
@@ -16,6 +16,6 @@ namespace ClinicalReporting.Data.Services
        
        Task<Patient> GetPatientWithChildrenAsync(long id);
        Task<Patient> SavePatientAsync(Patient patient);
-      
+       IDbConnectionFactory DbFactory { get; set; }
     }
 }
