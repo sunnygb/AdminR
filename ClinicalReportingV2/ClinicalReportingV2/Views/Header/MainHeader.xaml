@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModel="clr-namespace:ClinicalReporting.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:ClinicalReporting"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,7 +14,11 @@
              d:DesignHeight="100"
              d:DesignWidth="1014"
              mc:Ignorable="d">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadAsync" TargetObject="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 
     <Grid>
@@ -69,13 +75,17 @@
                       HorizontalAlignment="Right"
                       Background="White"
                       BorderBrush="#FFE64A19"
+                      DisplayMemberPath="Name"
                       IsEditable="True"
                       ItemsSource="{Binding Patients}"
                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                       materialDesign:HintAssist.Hint="Search"
-                      materialDesign:HintAssist.HintOpacity=".26" DisplayMemberPath="Name">
-                
-                       
+                      materialDesign:HintAssist.HintOpacity=".26">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
             </ComboBox>
             <materialDesign:Chip.Icon>
                 <materialDesign:PackIcon Width="24"

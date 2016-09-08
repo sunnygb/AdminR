@@ -1,5 +1,5 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+Microsoft Visual Studio Solution File, Format Version 13.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicalReportingV2", "ClinicalReportingV2\ClinicalReportingV2.csproj", "{552E41AD-879E-449A-88AA-D740F7439523}"
 EndProject

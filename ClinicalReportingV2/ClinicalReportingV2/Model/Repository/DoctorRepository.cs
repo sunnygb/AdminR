@@ -7,23 +7,28 @@ using ClinicalReporting.Data.Services;
 using System.Text;
 using System.Transactions;
 using System.Linq;
-using ServiceStack.Data;
+
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
 
 namespace ClinicalReporting.Data.Repository
 {    
     public class DoctorRepository : IDoctorsRepository,IDisposable
-    { 
-      
-      
-       public IDbConnectionFactory DbFactory { get; set; }
-      
+    {
+
+        [Dependency]
+        public ServiceStack.Data.IDbConnectionFactory DbFactory
+        {
+            get;
+            set;
+        }
+
        private IDbConnection _conn;
-       private IDbConnection conn 
+       public IDbConnection conn 
        { 
           get 
           {
-            return _conn = _conn ??  DbFactory.Open();
+              return _conn ?? DbFactory.Open();
           }
        }
 
@@ -99,8 +104,8 @@ namespace ClinicalReporting.Data.Repository
        
        public void Dispose()
        {
-          if (_conn != null)
-              _conn.Dispose();
+          if (conn != null)
+              conn.Dispose();
        }
    
     }

@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
+using Microsoft.Practices.Unity;
+using System.Threading.Tasks;
 
 
 namespace ClinicalReporting.ViewModel
@@ -24,16 +26,15 @@ namespace ClinicalReporting.ViewModel
         private IDoctorsRepository _repoDoc;
         private IPatientsRepository _repoPatient;
 
+        [InjectionConstructor]
         public AddPatientViewModel(PatientRepository pRepo,DoctorRepository docRepo)
         {
             _repoPatient = pRepo;
             _repoDoc = docRepo;
-            _repoDoc.DbFactory = CreateConnection();
-            _repoPatient.DbFactory = CreateConnection();
             SaveCommand = new RelayCommand(Savebtn);
             _patient = new PatientW(new Patient());
             _selectedDoctor = "";
-            this._doctors = new ObservableCollection<DoctorW>(_repoDoc.GetAllDoctorAsync().Result.Select(e => new DoctorW(e)));
+            
         }
 
         private string _selectedDoctor;
@@ -59,8 +60,8 @@ namespace ClinicalReporting.ViewModel
             }
         }
 
-        private ObservableCollection<DoctorW> _doctors;
-        public ObservableCollection<DoctorW> doctors
+        private ObservableCollection<Doctor> _doctors;
+        public ObservableCollection<Doctor> doctors
         {
             get { return _doctors; }
 
@@ -77,12 +78,12 @@ namespace ClinicalReporting.ViewModel
 
             MessageBox.Show("Saved");
         }
-        public IDbConnectionFactory CreateConnection()
+        public async void LoadAsync()
         {
-            String connectionString =Environment.CurrentDirectory + "\\DataBase.db";
-            var db = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
-            return db;
+            this.doctors = new ObservableCollection<Doctor>(await _repoDoc.GetAllDoctorAsync());
+            this._patient.PatientID = await this._repoPatient.DbFactory.Open().ScalarAsync<long>("Select seq from sqlite_sequence where name=@name;", new {name="Patient"});
         }
+
     }
 
 }

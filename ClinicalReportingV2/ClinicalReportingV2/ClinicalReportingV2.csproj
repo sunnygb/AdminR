@@ -7,7 +7,7 @@
     <ProjectGuid>{552E41AD-879E-449A-88AA-D740F7439523}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClinicalReportingV2</RootNamespace>
+    <RootNamespace>ClinicalReporting</RootNamespace>
     <AssemblyName>ClinicalReporting</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -58,6 +58,7 @@
       <HintPath>..\packages\MaterialDesignThemes.2.1.0.657\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -120,7 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ContainerHelper.cs" />
+    <Compile Include="Services\IoC.cs" />
     <Compile Include="Model\Entity\Biochemistry.cs" />
     <Compile Include="Model\Entity\BloodGroup.cs" />
     <Compile Include="Model\Entity\Doctor.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Model\Wrapper\SemenAnalysisWrapper.cs" />
     <Compile Include="Model\Wrapper\SerologyWrapper.cs" />
     <Compile Include="Model\Wrapper\UrineExaminationWrapper.cs" />
+    <Compile Include="Services\ORMLiteConnection.cs" />
     <Compile Include="ViewModel\BackupViewModel.cs" />
     <Compile Include="ViewModel\MainHeaderViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />

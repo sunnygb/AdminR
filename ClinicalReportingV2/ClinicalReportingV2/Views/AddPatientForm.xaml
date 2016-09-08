@@ -3,13 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModel="clr-namespace:ClinicalReporting.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:ClinicalReporting.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance Type=ViewModel:AddPatientViewModel,
-                                              IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
+                                              Type={x:Type ViewModel:AddPatientViewModel}}"
              d:DesignWidth="1014"
              mc:Ignorable="d">
+
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadAsync" TargetObject="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
 
 
 
@@ -40,8 +50,7 @@
                                    VerticalAlignment="Center"
                                    FontFamily="Segoe WP Semibold"
                                    FontSize="14"
-                                   FontWeight="Bold">
-                            Add Patient Form
+                                   FontWeight="Bold"><Run Text="Add Patient Form" />
                         </TextBlock>
                     </Button>
 
@@ -144,8 +153,8 @@
                         <materialDesign:PackIcon Width="30"
                                                  Height="30"
                                                  Margin="35,32,0,-2"
-                                                 Foreground="{Binding ElementName=a2,
-                                                                      Path=BorderBrush}"
+                                                 Foreground="{Binding BorderBrush,
+                                                                      ElementName=a2}"
                                                  Kind="AccountCardDetails" />
                         <TextBox x:Name="a2"
                                  Width="126"
@@ -157,6 +166,26 @@
                                  Text="{Binding Patient.PatientID,
                                                 ValidatesOnDataErrors=True}"
                                  materialDesign:HintAssist.Hint="Patient ID "
+                                 materialDesign:HintAssist.IsFloating="True" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+                        <materialDesign:PackIcon Width="30"
+                                                 Height="30"
+                                                 Margin="30,34,0,-4"
+                                                 Foreground="{Binding BorderBrush,
+                                                                      ElementName=a5}"
+                                                 Kind="AccountStar" />
+                        <TextBox x:Name="a5"
+                                 Width="249"
+                                 Margin="10,0,0,0"
+                                 FontSize="14"
+                                 FontWeight="Bold"
+                                 Text="{Binding Patient.Name,
+                                                ValidatesOnDataErrors=True}"
+                                 materialDesign:HintAssist.Hint="Full Name"
                                  materialDesign:HintAssist.IsFloating="True" />
                     </StackPanel>
 
@@ -192,34 +221,14 @@
 
 
                     </StackPanel>
-
-                    <StackPanel Grid.Row="1"
-                                Grid.Column="1"
-                                Orientation="Horizontal">
-                        <materialDesign:PackIcon Width="30"
-                                                 Height="30"
-                                                 Margin="30,34,0,-4"
-                                                 Foreground="{Binding ElementName=a5,
-                                                                      Path=BorderBrush}"
-                                                 Kind="AccountStar" />
-                        <TextBox x:Name="a5"
-                                 Width="249"
-                                 Margin="10,0,0,0"
-                                 FontSize="14"
-                                 FontWeight="Bold"
-                                 Text="{Binding Patient.Name,
-                                                ValidatesOnDataErrors=True}"
-                                 materialDesign:HintAssist.Hint="Full Name"
-                                 materialDesign:HintAssist.IsFloating="True" />
-                    </StackPanel>
                     <StackPanel Grid.Row="2"
                                 Grid.Column="1"
                                 Orientation="Horizontal">
                         <materialDesign:PackIcon Width="30"
                                                  Height="30"
                                                  Margin="35,32,0,-2"
-                                                 Foreground="{Binding ElementName=a9,
-                                                                      Path=BorderBrush}"
+                                                 Foreground="{Binding BorderBrush,
+                                                                      ElementName=a9}"
                                                  Kind="AccountCircle" />
                         <TextBox x:Name="a9"
                                  Width="126"
@@ -260,8 +269,8 @@
                                 </DataTemplate>
                             </GroupBox.HeaderTemplate>
                             <StackPanel>
-                                <RadioButton IsChecked="True">Male</RadioButton>
-                                <RadioButton>Female</RadioButton>
+                                <RadioButton Content="Male" IsChecked="True" />
+                                <RadioButton Content="Female" />
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -272,8 +281,8 @@
                         <materialDesign:PackIcon Width="30"
                                                  Height="30"
                                                  Margin="10,17,0,0"
-                                                 Foreground="{Binding ElementName=a8,
-                                                                      Path=BorderBrush}"
+                                                 Foreground="{Binding BorderBrush,
+                                                                      ElementName=a8}"
                                                  Kind="Voice" />
                         <ComboBox x:Name="a8"
                                   Width="166"
@@ -286,7 +295,13 @@
                                   SelectedValue="{Binding SelectedDoctor}"
                                   SelectedValuePath="DoctorName"
                                   materialDesign:HintAssist.Hint="Ref By"
-                                  materialDesign:HintAssist.IsFloating="True" />
+                                  materialDesign:HintAssist.IsFloating="True">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Row="5"
                                 Grid.Column="1"

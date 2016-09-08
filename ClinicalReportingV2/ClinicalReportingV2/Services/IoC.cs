@@ -21,17 +21,19 @@ namespace ClinicalReporting.Data.Services
         static ContainerHelper()
         {
             _container = new UnityContainer();
+            String connectionString = Environment.CurrentDirectory + "\\DataBase.db";
+            var db = new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
+            _container.RegisterInstance(typeof(IDbConnectionFactory), db);
+             
+           
             _container.RegisterType(typeof(IPatientsRepository),typeof(PatientRepository),
                 new ContainerControlledLifetimeManager());
             _container.RegisterType(typeof(IDoctorsRepository), typeof(DoctorRepository),
                 new ContainerControlledLifetimeManager());
 
-            String connectionString =Environment.CurrentDirectory + "\\DataBase.db";
-            
 
-            _container.RegisterInstance(typeof(IDbConnectionFactory),
-                new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider),
-                new ContainerControlledLifetimeManager());
+
+
         }
         public static IUnityContainer Container
         {

@@ -1,29 +1,29 @@
-﻿using ServiceStack.OrmLite;
-using System;
+﻿using System;
 using System.Data;
-using System.Configuration;
 using System.Collections.Generic;
 using ClinicalReporting.Data.Services;
 using System.Text;
 using System.Transactions;
 using System.Linq;
-using ServiceStack.Data;
+using ServiceStack.OrmLite;
 using System.Threading.Tasks;
+using Microsoft.Practices.Unity;
+using ClinicalReporting.Services;
 
 namespace ClinicalReporting.Data.Repository
 {    
     public class PatientRepository : IPatientsRepository,IDisposable
     { 
       
-      
-       public IDbConnectionFactory DbFactory { get; set; }
+       [Dependency]
+       public ServiceStack.Data.IDbConnectionFactory DbFactory { get; set; }
       
        private IDbConnection _conn;
        private IDbConnection conn 
        { 
           get 
           {
-            return _conn = _conn ??  DbFactory.Open();
+              return _conn ?? DbFactory.Open();
           }
        }
 
@@ -32,12 +32,14 @@ namespace ClinicalReporting.Data.Repository
           await this.conn.InsertAsync(patient);
           patient.PatientID =this.conn.LastInsertId();
           return patient;
+          
        
        }
        
       public async Task<List<Patient>> GetAllPatientAsync()
        {
          return await this.conn.SelectAsync<Patient>();
+         
        
        }
        

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ServiceStack.DataAnnotations;
 using ClinicalReporting.Data.Wrapper;
+using GalaSoft.MvvmLight;
 namespace ClinicalReporting.Data
 {
 

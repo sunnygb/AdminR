@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 namespace ClinicalReporting.Data.Services
 {
     
-   public  class CommonWrapper<T> :ViewModelBase, INotifyDataErrorInfo
+   public  class CommonWrapper<T> :ObservableObject, INotifyDataErrorInfo
     {
        public CommonWrapper(T model)
        {

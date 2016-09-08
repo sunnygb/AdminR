@@ -29,6 +29,7 @@ namespace ClinicalReporting
             navigationCommand = new RelayCommand<string>(navigateTo);
             this._header = ContainerHelper.Container.Resolve<MainHeaderViewModel>();
             this._addpatientVM = ContainerHelper.Container.Resolve<AddPatientViewModel>();
+          
         }
 
         public ViewModelBase CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
