@@ -1,129 +1,119 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ClinicalReporting.Data.Wrapper;
 using ServiceStack.DataAnnotations;
-using ClinicalReporting.Data.Wrapper;
+using System;
+
 namespace ClinicalReporting.Data
 {
-
-
     [Alias("UrineExamination")]
-    public partial class UrineExamination
+    public class UrineExamination
     {
-        
         public UrineExamination()
         {
         }
-        
+
         public UrineExamination(UrineExaminationW urineexaminationw)
         {
-           this.SerialNo = urineexaminationw.SerialNo;
-           this.PatientID = urineexaminationw.PatientID;
-           this.TDate = urineexaminationw.TDate;
-           this.Colour = urineexaminationw.Colour;
-           this.Reaction = urineexaminationw.Reaction;
-           this.SpecificGravity = urineexaminationw.SpecificGravity;
-           this.Albumin = urineexaminationw.Albumin;
-           this.Sugar = urineexaminationw.Sugar;
-           this.Ketone = urineexaminationw.Ketone;
-           this.Blood = urineexaminationw.Blood;
-           this.Bilirubin = urineexaminationw.Bilirubin;
-           this.UrobilNogen = urineexaminationw.UrobilNogen;
-           this.PusCells = urineexaminationw.PusCells;
-           this.Rbc = urineexaminationw.Rbc;
-           this.EPiCells = urineexaminationw.EPiCells;
-           this.Cast = urineexaminationw.Cast;
-           this.Crystals = urineexaminationw.Crystals;
-           this.CalOxalate = urineexaminationw.CalOxalate;
-           this.UricAcid = urineexaminationw.UricAcid;
-           this.Amorphous = urineexaminationw.Amorphous;
-           this.Others = urineexaminationw.Others;
-           this.Fee = urineexaminationw.Fee;
-           
-           
+            SerialNo = urineexaminationw.SerialNo;
+            PatientID = urineexaminationw.PatientID;
+            TDate = urineexaminationw.TDate;
+            Colour = urineexaminationw.Colour;
+            Reaction = urineexaminationw.Reaction;
+            SpecificGravity = urineexaminationw.SpecificGravity;
+            Albumin = urineexaminationw.Albumin;
+            Sugar = urineexaminationw.Sugar;
+            Ketone = urineexaminationw.Ketone;
+            Blood = urineexaminationw.Blood;
+            Bilirubin = urineexaminationw.Bilirubin;
+            UrobilNogen = urineexaminationw.UrobilNogen;
+            PusCells = urineexaminationw.PusCells;
+            Rbc = urineexaminationw.Rbc;
+            EPiCells = urineexaminationw.EPiCells;
+            Cast = urineexaminationw.Cast;
+            Crystals = urineexaminationw.Crystals;
+            CalOxalate = urineexaminationw.CalOxalate;
+            UricAcid = urineexaminationw.UricAcid;
+            Amorphous = urineexaminationw.Amorphous;
+            Others = urineexaminationw.Others;
+            Fee = urineexaminationw.Fee;
         }
 
         [PrimaryKey]
         [Alias("SerialNo")]
-        public System.Int64 SerialNo { get; set; }
+        public Int64 SerialNo { get; set; }
 
         [Alias("PatientID")]
-        public System.Int64 PatientID { get; set; }
+        public Int64 PatientID { get; set; }
 
         [Alias("TDate")]
-        public System.DateTime TDate { get; set; }
+        public DateTime TDate { get; set; }
 
         [Alias("Colour")]
-        public System.String Colour { get; set; }
+        public String Colour { get; set; }
 
         [Alias("Reaction")]
-        public System.String Reaction { get; set; }
+        public String Reaction { get; set; }
 
         [Alias("Specific_Gravity")]
-        public System.String SpecificGravity { get; set; }
+        public String SpecificGravity { get; set; }
 
         [Alias("Albumin")]
-        public System.String Albumin { get; set; }
+        public String Albumin { get; set; }
 
         [Alias("Sugar")]
-        public System.String Sugar { get; set; }
+        public String Sugar { get; set; }
 
         [Alias("Ketone")]
-        public System.String Ketone { get; set; }
+        public String Ketone { get; set; }
 
         [Alias("Blood")]
-        public System.String Blood { get; set; }
+        public String Blood { get; set; }
 
         [Alias("Bilirubin")]
-        public System.String Bilirubin { get; set; }
+        public String Bilirubin { get; set; }
 
         [Alias("Urobil_Nogen")]
-        public System.String UrobilNogen { get; set; }
+        public String UrobilNogen { get; set; }
 
         [Alias("Pus_Cells")]
-        public System.String PusCells { get; set; }
+        public String PusCells { get; set; }
 
         [Alias("RBC")]
-        public System.String Rbc { get; set; }
+        public String Rbc { get; set; }
 
         [Alias("EPi_Cells")]
-        public System.String EPiCells { get; set; }
+        public String EPiCells { get; set; }
 
         [Alias("Cast")]
-        public System.String Cast { get; set; }
+        public String Cast { get; set; }
 
         [Alias("Crystals")]
-        public System.String Crystals { get; set; }
+        public String Crystals { get; set; }
 
         [Alias("Cal_Oxalate")]
-        public System.String CalOxalate { get; set; }
+        public String CalOxalate { get; set; }
 
         [Alias("Uric_Acid")]
-        public System.String UricAcid { get; set; }
+        public String UricAcid { get; set; }
 
         [Alias("Amorphous")]
-        public System.String Amorphous { get; set; }
+        public String Amorphous { get; set; }
 
         [Alias("Others")]
-        public System.String Others { get; set; }
+        public String Others { get; set; }
 
         [Alias("Fee")]
-        public System.Int32 Fee { get; set; }
+        public Int32 Fee { get; set; }
 
         [Ignore]
         public virtual Patient Patient { get; set; }
-         [Ignore]
-         public bool IsNew
-         {
-                get
-                {
-         
-                  return this.SerialNo == default(int);
-         
-                }
-                
-          }
-          [Ignore]
-          public bool IsDeleted { get; set; }
+
+        [Ignore]
+        public bool IsNew
+        {
+            get { return SerialNo == default(int); }
+        }
+
+        [Ignore]
+        public bool IsDeleted { get; set; }
     }
 }

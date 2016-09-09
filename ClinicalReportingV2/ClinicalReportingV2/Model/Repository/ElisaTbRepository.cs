@@ -1,128 +1,110 @@
-﻿using ServiceStack.OrmLite;
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections.Generic;
-using ClinicalReporting.Data.Services;
-using System.Text;
-using System.Transactions;
-using System.Linq;
+﻿using ClinicalReporting.Data.Services;
 using ServiceStack.Data;
+using ServiceStack.OrmLite;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ClinicalReporting.Data.Repository
-{    
-    public class ElisaTbRepository : IElisaTbsRepository,IDisposable
-    { 
-      
-      
-       public IDbConnectionFactory DbFactory { get; set; }
-      
-       private IDbConnection _conn;
-       private IDbConnection conn 
-       { 
-          get 
-          {
-            return _conn = _conn ??  DbFactory.Open();
-          }
-       }
+{
+    public class ElisaTbRepository : IElisaTbsRepository, IDisposable
+    {
+        private IDbConnection _conn;
 
-      public async Task<ElisaTb> AddElisaTbAsync(ElisaTb elisatb)
-       {
-          await this.conn.InsertAsync(elisatb);
-          elisatb.SerialNo =this.conn.LastInsertId();
-          return elisatb;
-       
-       }
-       
-      public async Task<List<ElisaTb>> GetAllElisaTbAsync()
-       {
-         return await this.conn.SelectAsync<ElisaTb>();
-       
-       }
-       
-      public async Task<ElisaTb> FindElisaTbAsync(long id)
-       {
-         return await this.conn.SingleByIdAsync<ElisaTb>(id);
-       
-       }
-       
-      public async Task<ElisaTb> UpdateElisaTbAsync(ElisaTb elisatb)
-       {
-          var result= await this.conn.UpdateAsync<ElisaTb>(elisatb);
-          return elisatb;
-       
-       }
-       
-      public async Task RemoveElisaTbAsync(long id)
-       {
-         await this.conn.DeleteByIdAsync<ElisaTb>(id);
-       
-       }
-       
-      public async Task<ElisaTb> GetElisaTbWithChildrenAsync(long id)
-       {
-          var elisatb = await this.conn.SingleByIdAsync<ElisaTb>(id);
-          
-          
-          
-   
-                 // One To One 
-           var patient = await this.conn.SingleAsync<Patient>(e => e.PatientID == id);
-           if (elisatb != null && patient != null)
-           {
-             elisatb.Patient = patient;
-           }
-         
-  
-         return elisatb;
-         }
-       
-       
-      public async Task<ElisaTb> SaveElisaTbAsync(ElisaTb elisatb)
-      {
-          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        private IDbConnection conn
+        {
+            get { return _conn = _conn ?? DbFactory.Open(); }
+        }
+
+        public void Dispose()
+        {
+            if (_conn != null)
+                _conn.Dispose();
+        }
+
+        public IDbConnectionFactory DbFactory { get; set; }
+
+        public async Task<ElisaTb> AddElisaTbAsync(ElisaTb elisatb)
+        {
+            await conn.InsertAsync(elisatb);
+            elisatb.SerialNo = conn.LastInsertId();
+            return elisatb;
+        }
+
+        public async Task<List<ElisaTb>> GetAllElisaTbAsync()
+        {
+            return await conn.SelectAsync<ElisaTb>();
+        }
+
+        public async Task<ElisaTb> FindElisaTbAsync(long id)
+        {
+            return await conn.SingleByIdAsync<ElisaTb>(id);
+        }
+
+        public async Task<ElisaTb> UpdateElisaTbAsync(ElisaTb elisatb)
+        {
+            int result = await conn.UpdateAsync(elisatb);
+            return elisatb;
+        }
+
+        public async Task RemoveElisaTbAsync(long id)
+        {
+            await conn.DeleteByIdAsync<ElisaTb>(id);
+        }
+
+        public async Task<ElisaTb> GetElisaTbWithChildrenAsync(long id)
+        {
+            ElisaTb elisatb = await conn.SingleByIdAsync<ElisaTb>(id);
+
+
+            // One To One 
+            Patient patient = await conn.SingleAsync<Patient>(e => e.PatientID == id);
+            if (elisatb != null && patient != null)
             {
-                if(elisatb.IsNew)
+                elisatb.Patient = patient;
+            }
+
+
+            return elisatb;
+        }
+
+
+        public async Task<ElisaTb> SaveElisaTbAsync(ElisaTb elisatb)
+        {
+            using (var txScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                if (elisatb.IsNew)
                 {
-                   await this.AddElisaTbAsync(elisatb);
+                    await AddElisaTbAsync(elisatb);
                 }
                 else
                 {
-                   await this.UpdateElisaTbAsync(elisatb);
+                    await UpdateElisaTbAsync(elisatb);
                 }
-                
-                
-                    
-                 // One To One 
-                 if(elisatb.Patient!=null)
-                 {
-                    if(elisatb.Patient.IsDeleted)
+
+
+                // One To One 
+                if (elisatb.Patient != null)
+                {
+                    if (elisatb.Patient.IsDeleted)
                     {
-                      var id = elisatb.Patient.PatientID;
-                      await this._conn.DeleteByIdAsync<Patient>(id);
+                        long id = elisatb.Patient.PatientID;
+                        await _conn.DeleteByIdAsync<Patient>(id);
                     }
-                    else if(!elisatb.Patient.IsDeleted)
+                    else if (!elisatb.Patient.IsDeleted)
                     {
-                      var patient = elisatb.Patient;
-                      patient.PatientID = elisatb.SerialNo;
-                      await this.conn.SaveAsync(patient);
+                        Patient patient = elisatb.Patient;
+                        patient.PatientID = elisatb.SerialNo;
+                        await conn.SaveAsync(patient);
                     }
-                    
-                  }
-                 
-                   
-                    txScope.Complete();
+                }
+
+
+                txScope.Complete();
             }
             return elisatb;
-       
-       }
-       
-       public void Dispose()
-       {
-          if (_conn != null)
-              _conn.Dispose();
-       }
-   
+        }
     }
 }

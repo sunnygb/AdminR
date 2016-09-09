@@ -1,12 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ClinicalReporting.ViewModel
 {
-    class ThemesViewModel : ViewModelBase
+    internal class ThemesViewModel : ViewModelBase
     {
     }
 }

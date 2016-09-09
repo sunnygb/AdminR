@@ -73,19 +73,39 @@
                       Width="194"
                       Height="40"
                       HorizontalAlignment="Right"
-                      Background="White"
-                      BorderBrush="#FFE64A19"
-                      DisplayMemberPath="Name"
                       IsEditable="True"
                       ItemsSource="{Binding Patients}"
                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                      Text="{Binding SearchPatient}"
+                      SelectedValuePath="PatientID"
+
                       materialDesign:HintAssist.Hint="Search"
-                      materialDesign:HintAssist.HintOpacity=".26">
+                      materialDesign:HintAssist.HintOpacity=".26"
+                      SelectedItem="{Binding PatientID}" SelectedValue="{Binding PatientID}">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Width="160"
+                                     Margin="10,0,0,0"
+                                     IsReadOnly="True"
+                                     Text="{Binding Name}"
+                                     materialDesign:HintAssist.Hint="{Binding PatientID}"
+                                     materialDesign:HintAssist.IsFloating="True" />
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                        <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True"
+                                                VirtualizingStackPanel.VirtualizationMode="Recycling" />
                     </ItemsPanelTemplate>
                 </ComboBox.ItemsPanel>
+
+
             </ComboBox>
             <materialDesign:Chip.Icon>
                 <materialDesign:PackIcon Width="24"
@@ -94,8 +114,6 @@
 
             </materialDesign:Chip.Icon>
         </materialDesign:Chip>
-
-
 
 
     </Grid>

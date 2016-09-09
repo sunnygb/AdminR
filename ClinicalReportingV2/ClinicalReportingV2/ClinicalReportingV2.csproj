@@ -169,10 +169,12 @@
     <Compile Include="Model\Wrapper\UrineExaminationWrapper.cs" />
     <Compile Include="Services\ORMLiteConnection.cs" />
     <Compile Include="ViewModel\BackupViewModel.cs" />
+    <Compile Include="ViewModel\IPatientRepository.cs" />
     <Compile Include="ViewModel\MainHeaderViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ThemesViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\AddPatientForm.xaml.cs">
       <DependentUpon>AddPatientForm.xaml</DependentUpon>
     </Compile>

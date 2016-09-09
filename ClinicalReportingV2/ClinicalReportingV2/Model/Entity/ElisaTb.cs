@@ -1,65 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ClinicalReporting.Data.Wrapper;
 using ServiceStack.DataAnnotations;
-using ClinicalReporting.Data.Wrapper;
+using System;
+
 namespace ClinicalReporting.Data
 {
-
-
     [Alias("ELISA_TB")]
-    public partial class ElisaTb
+    public class ElisaTb
     {
-        
         public ElisaTb()
         {
         }
-        
+
         public ElisaTb(ElisaTbW elisatbw)
         {
-           this.SerialNo = elisatbw.SerialNo;
-           this.PatientID = elisatbw.PatientID;
-           this.TDate = elisatbw.TDate;
-           this.PatientValue = elisatbw.PatientValue;
-           this.CutOffValue = elisatbw.CutOffValue;
-           this.Fee = elisatbw.Fee;
-           
-           
+            SerialNo = elisatbw.SerialNo;
+            PatientID = elisatbw.PatientID;
+            TDate = elisatbw.TDate;
+            PatientValue = elisatbw.PatientValue;
+            CutOffValue = elisatbw.CutOffValue;
+            Fee = elisatbw.Fee;
         }
 
         [PrimaryKey]
         [Alias("SerialNo")]
-        public System.Int64 SerialNo { get; set; }
+        public Int64 SerialNo { get; set; }
 
         [Alias("PatientID")]
-        public System.Int64 PatientID { get; set; }
+        public Int64 PatientID { get; set; }
 
         [Alias("TDate")]
-        public System.DateTime TDate { get; set; }
+        public DateTime TDate { get; set; }
 
         [Alias("Patient_Value")]
-        public System.Double PatientValue { get; set; }
+        public Double PatientValue { get; set; }
 
         [Alias("Cut_Off_Value")]
-        public System.Double CutOffValue { get; set; }
+        public Double CutOffValue { get; set; }
 
         [Alias("Fee")]
-        public System.Int32 Fee { get; set; }
+        public Int32 Fee { get; set; }
 
         [Ignore]
         public virtual Patient Patient { get; set; }
-         [Ignore]
-         public bool IsNew
-         {
-                get
-                {
-         
-                  return this.SerialNo == default(int);
-         
-                }
-                
-          }
-          [Ignore]
-          public bool IsDeleted { get; set; }
+
+        [Ignore]
+        public bool IsNew
+        {
+            get { return SerialNo == default(int); }
+        }
+
+        [Ignore]
+        public bool IsDeleted { get; set; }
     }
 }

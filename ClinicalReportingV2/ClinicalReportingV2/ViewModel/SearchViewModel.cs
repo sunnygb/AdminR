@@ -1,12 +1,17 @@
-﻿using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using ClinicalReporting.Data.Services;
+using GalaSoft.MvvmLight;
 
 namespace ClinicalReporting.ViewModel
 {
-    class SearchViewModel : ViewModelBase
+    internal class SearchViewModel : ViewModelBase
     {
+        private IPatientsRepository _repoPatient;
+
+
+        //public async void LoadAsync()
+        //{
+        //    _patientList = await _repoPatient.DbFactory.Open().SelectAsync<Patient>("SELECT PatientID, Name FROM Patient");
+        //    this.Patients = new ObservableCollection<Patient>(_patientList);
+        //}
     }
 }

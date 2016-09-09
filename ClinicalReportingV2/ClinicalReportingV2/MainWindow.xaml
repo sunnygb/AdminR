@@ -29,7 +29,6 @@
     </Window.Resources>
 
 
-
     <DockPanel LastChildFill="False">
         <ContentControl />
         <StackPanel Width="173"
@@ -52,7 +51,7 @@
                     MinWidth="10"
                     MinHeight="10"
                     Margin="4"
-                    Command="{Binding navigationCommand}"
+                    Command="{Binding NavigationCommand}"
                     CommandParameter="addpatient"
                     Style="{StaticResource MaterialDesignRaisedAccentButton}">
                 <StackPanel Width="146" Orientation="Horizontal">
@@ -75,7 +74,7 @@
                     Height="57"
                     Margin="4"
                     BorderThickness="1"
-                    Command="{Binding navigationCommand}"
+                    Command="{Binding NavigationCommand}"
                     CommandParameter="search"
                     Style="{StaticResource MaterialDesignRaisedAccentButton}">
                 <StackPanel Width="135" Orientation="Horizontal">
@@ -97,7 +96,7 @@
                     Height="57"
                     Margin="4"
                     BorderThickness="1"
-                    Command="{Binding navigationCommand}"
+                    Command="{Binding NavigationCommand}"
                     CommandParameter="bakup"
                     Style="{StaticResource MaterialDesignRaisedAccentButton}">
                 <StackPanel Width="135" Orientation="Horizontal">
@@ -120,7 +119,7 @@
                         Height="57"
                         Margin="4"
                         BorderThickness="1"
-                        Command="{Binding navigationCommand}"
+                        Command="{Binding NavigationCommand}"
                         CommandParameter="settings"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
 
@@ -130,13 +129,12 @@
                                              Kind="Settings                                                  " />
 
 
-
                 </Button>
                 <Button x:Name="Custom"
                         Height="57"
                         Margin="15,4,4,4"
                         BorderThickness="1"
-                        Command="{Binding navigationCommand}"
+                        Command="{Binding NavigationCommand}"
                         CommandParameter="theme"
                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
 
@@ -144,7 +142,6 @@
                                              Height="40"
                                              Margin="5"
                                              Kind="Palette" />
-
 
 
                 </Button>
@@ -165,7 +162,6 @@
                         Background="{DynamicResource MaterialDesignPaper}">
                 <ContentControl Content="{Binding MainHeader}" />
             </StackPanel>
-
 
 
         </StackPanel>

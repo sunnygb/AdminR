@@ -1,128 +1,110 @@
-﻿using ServiceStack.OrmLite;
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections.Generic;
-using ClinicalReporting.Data.Services;
-using System.Text;
-using System.Transactions;
-using System.Linq;
+﻿using ClinicalReporting.Data.Services;
 using ServiceStack.Data;
+using ServiceStack.OrmLite;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ClinicalReporting.Data.Repository
-{    
-    public class UrineExaminationRepository : IUrineExaminationsRepository,IDisposable
-    { 
-      
-      
-       public IDbConnectionFactory DbFactory { get; set; }
-      
-       private IDbConnection _conn;
-       private IDbConnection conn 
-       { 
-          get 
-          {
-            return _conn = _conn ??  DbFactory.Open();
-          }
-       }
+{
+    public class UrineExaminationRepository : IUrineExaminationsRepository, IDisposable
+    {
+        private IDbConnection _conn;
 
-      public async Task<UrineExamination> AddUrineExaminationAsync(UrineExamination urineexamination)
-       {
-          await this.conn.InsertAsync(urineexamination);
-          urineexamination.SerialNo =this.conn.LastInsertId();
-          return urineexamination;
-       
-       }
-       
-      public async Task<List<UrineExamination>> GetAllUrineExaminationAsync()
-       {
-         return await this.conn.SelectAsync<UrineExamination>();
-       
-       }
-       
-      public async Task<UrineExamination> FindUrineExaminationAsync(long id)
-       {
-         return await this.conn.SingleByIdAsync<UrineExamination>(id);
-       
-       }
-       
-      public async Task<UrineExamination> UpdateUrineExaminationAsync(UrineExamination urineexamination)
-       {
-          var result= await this.conn.UpdateAsync<UrineExamination>(urineexamination);
-          return urineexamination;
-       
-       }
-       
-      public async Task RemoveUrineExaminationAsync(long id)
-       {
-         await this.conn.DeleteByIdAsync<UrineExamination>(id);
-       
-       }
-       
-      public async Task<UrineExamination> GetUrineExaminationWithChildrenAsync(long id)
-       {
-          var urineexamination = await this.conn.SingleByIdAsync<UrineExamination>(id);
-          
-          
-          
-   
-                 // One To One 
-           var patient = await this.conn.SingleAsync<Patient>(e => e.PatientID == id);
-           if (urineexamination != null && patient != null)
-           {
-             urineexamination.Patient = patient;
-           }
-         
-  
-         return urineexamination;
-         }
-       
-       
-      public async Task<UrineExamination> SaveUrineExaminationAsync(UrineExamination urineexamination)
-      {
-          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        private IDbConnection conn
+        {
+            get { return _conn = _conn ?? DbFactory.Open(); }
+        }
+
+        public void Dispose()
+        {
+            if (_conn != null)
+                _conn.Dispose();
+        }
+
+        public IDbConnectionFactory DbFactory { get; set; }
+
+        public async Task<UrineExamination> AddUrineExaminationAsync(UrineExamination urineexamination)
+        {
+            await conn.InsertAsync(urineexamination);
+            urineexamination.SerialNo = conn.LastInsertId();
+            return urineexamination;
+        }
+
+        public async Task<List<UrineExamination>> GetAllUrineExaminationAsync()
+        {
+            return await conn.SelectAsync<UrineExamination>();
+        }
+
+        public async Task<UrineExamination> FindUrineExaminationAsync(long id)
+        {
+            return await conn.SingleByIdAsync<UrineExamination>(id);
+        }
+
+        public async Task<UrineExamination> UpdateUrineExaminationAsync(UrineExamination urineexamination)
+        {
+            int result = await conn.UpdateAsync(urineexamination);
+            return urineexamination;
+        }
+
+        public async Task RemoveUrineExaminationAsync(long id)
+        {
+            await conn.DeleteByIdAsync<UrineExamination>(id);
+        }
+
+        public async Task<UrineExamination> GetUrineExaminationWithChildrenAsync(long id)
+        {
+            UrineExamination urineexamination = await conn.SingleByIdAsync<UrineExamination>(id);
+
+
+            // One To One 
+            Patient patient = await conn.SingleAsync<Patient>(e => e.PatientID == id);
+            if (urineexamination != null && patient != null)
             {
-                if(urineexamination.IsNew)
+                urineexamination.Patient = patient;
+            }
+
+
+            return urineexamination;
+        }
+
+
+        public async Task<UrineExamination> SaveUrineExaminationAsync(UrineExamination urineexamination)
+        {
+            using (var txScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                if (urineexamination.IsNew)
                 {
-                   await this.AddUrineExaminationAsync(urineexamination);
+                    await AddUrineExaminationAsync(urineexamination);
                 }
                 else
                 {
-                   await this.UpdateUrineExaminationAsync(urineexamination);
+                    await UpdateUrineExaminationAsync(urineexamination);
                 }
-                
-                
-                    
-                 // One To One 
-                 if(urineexamination.Patient!=null)
-                 {
-                    if(urineexamination.Patient.IsDeleted)
+
+
+                // One To One 
+                if (urineexamination.Patient != null)
+                {
+                    if (urineexamination.Patient.IsDeleted)
                     {
-                      var id = urineexamination.Patient.PatientID;
-                      await this._conn.DeleteByIdAsync<Patient>(id);
+                        long id = urineexamination.Patient.PatientID;
+                        await _conn.DeleteByIdAsync<Patient>(id);
                     }
-                    else if(!urineexamination.Patient.IsDeleted)
+                    else if (!urineexamination.Patient.IsDeleted)
                     {
-                      var patient = urineexamination.Patient;
-                      patient.PatientID = urineexamination.SerialNo;
-                      await this.conn.SaveAsync(patient);
+                        Patient patient = urineexamination.Patient;
+                        patient.PatientID = urineexamination.SerialNo;
+                        await conn.SaveAsync(patient);
                     }
-                    
-                  }
-                 
-                   
-                    txScope.Complete();
+                }
+
+
+                txScope.Complete();
             }
             return urineexamination;
-       
-       }
-       
-       public void Dispose()
-       {
-          if (_conn != null)
-              _conn.Dispose();
-       }
-   
+        }
     }
 }

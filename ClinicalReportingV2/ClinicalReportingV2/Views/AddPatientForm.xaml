@@ -5,22 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:local="clr-namespace:ClinicalReporting.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
                                               Type={x:Type ViewModel:AddPatientViewModel}}"
              d:DesignWidth="1014"
              mc:Ignorable="d">
-
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <ei:CallMethodAction MethodName="LoadAsync" TargetObject="{Binding}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-
-
 
 
     <materialDesign:Card Margin="10,10,10,10"
@@ -50,7 +45,8 @@
                                    VerticalAlignment="Center"
                                    FontFamily="Segoe WP Semibold"
                                    FontSize="14"
-                                   FontWeight="Bold"><Run Text="Add Patient Form" />
+                                   FontWeight="Bold">
+                            <Run Text="Add Patient Form" />
                         </TextBlock>
                     </Button>
 
@@ -116,11 +112,6 @@
                         </GroupBox.HeaderTemplate>
                         <Image x:Name="imgPhoto" />
                     </GroupBox>
-
-
-
-
-
 
 
                 </StackPanel>
@@ -215,7 +206,7 @@
                             </GroupBox.HeaderTemplate>
                             <DataGrid Height="150"
                                       Margin="1"
-                                      ItemsSource="{Binding doctors}"
+                                      ItemsSource="{Binding Doctors}"
                                       ScrollViewer.CanContentScroll="True" />
                         </GroupBox>
 
@@ -291,14 +282,15 @@
                                   DisplayMemberPath="DoctorName"
                                   FontSize="14"
                                   FontWeight="Bold"
-                                  ItemsSource="{Binding doctors}"
+                                  ItemsSource="{Binding Doctors}"
                                   SelectedValue="{Binding SelectedDoctor}"
-                                  SelectedValuePath="DoctorName"
+                                  SelectedValuePath="PatientID"
                                   materialDesign:HintAssist.Hint="Ref By"
                                   materialDesign:HintAssist.IsFloating="True">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                    <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True"
+                                                            VirtualizingStackPanel.VirtualizationMode="Recycling" />
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>
@@ -331,7 +323,6 @@
                                                      Kind="CloseOctagonOutline" />
                         </Button>
                     </StackPanel>
-
 
 
                 </Grid>

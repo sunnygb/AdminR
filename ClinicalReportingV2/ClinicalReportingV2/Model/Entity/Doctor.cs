@@ -1,48 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ClinicalReporting.Data.Wrapper;
 using ServiceStack.DataAnnotations;
-using ClinicalReporting.Data.Wrapper;
-using GalaSoft.MvvmLight;
+using System;
+
 namespace ClinicalReporting.Data
 {
-
-
     [Alias("Doctor")]
-    public partial class Doctor
+    public class Doctor
     {
-        
         public Doctor()
         {
         }
-        
+
         public Doctor(DoctorW doctorw)
         {
-           this.DoctorID = doctorw.DoctorID;
-           this.DoctorName = doctorw.DoctorName;
-           
-           
+            DoctorID = doctorw.DoctorID;
+            DoctorName = doctorw.DoctorName;
         }
 
         [PrimaryKey]
         [Alias("DoctorID")]
-        public System.Int64 DoctorID { get; set; }
+        public Int64 DoctorID { get; set; }
 
         [Alias("DoctorName")]
-        public System.String DoctorName { get; set; }
+        public String DoctorName { get; set; }
 
-         [Ignore]
-         public bool IsNew
-         {
-                get
-                {
-         
-                  return this.DoctorID == default(int);
-         
-                }
-                
-          }
-          [Ignore]
-          public bool IsDeleted { get; set; }
+        [Ignore]
+        public bool IsNew
+        {
+            get { return DoctorID == default(int); }
+        }
+
+        [Ignore]
+        public bool IsDeleted { get; set; }
     }
 }

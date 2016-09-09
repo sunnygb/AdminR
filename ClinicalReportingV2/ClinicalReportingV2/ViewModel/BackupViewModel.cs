@@ -1,17 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ClinicalReporting.ViewModel
 {
-    class BackupViewModel : ViewModelBase
+    internal class BackupViewModel : ViewModelBase
     {
-        public BackupViewModel()
-        {
-
-        }
-
     }
 }

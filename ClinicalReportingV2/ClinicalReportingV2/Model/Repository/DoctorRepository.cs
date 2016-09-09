@@ -1,112 +1,87 @@
-﻿using ServiceStack.OrmLite;
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections.Generic;
-using ClinicalReporting.Data.Services;
-using System.Text;
-using System.Transactions;
-using System.Linq;
-
-using System.Threading.Tasks;
+﻿using ClinicalReporting.Data.Services;
 using Microsoft.Practices.Unity;
+using ServiceStack.Data;
+using ServiceStack.OrmLite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ClinicalReporting.Data.Repository
-{    
-    public class DoctorRepository : IDoctorsRepository,IDisposable
+{
+    public class DoctorRepository : IDoctorsRepository, IDisposable
     {
+        private IDbConnection _conn;
 
-        [Dependency]
-        public ServiceStack.Data.IDbConnectionFactory DbFactory
+        public IDbConnection conn
         {
-            get;
-            set;
+            get { return _conn ?? DbFactory.Open(); }
         }
 
-       private IDbConnection _conn;
-       public IDbConnection conn 
-       { 
-          get 
-          {
-              return _conn ?? DbFactory.Open();
-          }
-       }
+        public void Dispose()
+        {
+            if (conn != null)
+                conn.Dispose();
+        }
 
-      public async Task<Doctor> AddDoctorAsync(Doctor doctor)
-       {
-          await this.conn.InsertAsync(doctor);
-          doctor.DoctorID =this.conn.LastInsertId();
-          return doctor;
-       
-       }
-       
-      public async Task<List<Doctor>> GetAllDoctorAsync()
-       {
-         return await this.conn.SelectAsync<Doctor>();
-       
-       }
-       
-      public async Task<Doctor> FindDoctorAsync(long id)
-       {
-         return await this.conn.SingleByIdAsync<Doctor>(id);
-       
-       }
-       
-      public async Task<Doctor> UpdateDoctorAsync(Doctor doctor)
-       {
-          var result= await this.conn.UpdateAsync<Doctor>(doctor);
-          return doctor;
-       
-       }
-       
-      public async Task RemoveDoctorAsync(long id)
-       {
-         await this.conn.DeleteByIdAsync<Doctor>(id);
-       
-       }
-       
-      public async Task<Doctor> GetDoctorWithChildrenAsync(long id)
-       {
-          var doctor = await this.conn.SingleByIdAsync<Doctor>(id);
-          
-          
-          
- 
-                  
-                  
-                  
-  
-         return doctor;
-         }
-       
-       
-      public async Task<Doctor> SaveDoctorAsync(Doctor doctor)
-      {
-          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        [Dependency]
+        public IDbConnectionFactory DbFactory { get; set; }
+
+        public async Task<Doctor> AddDoctorAsync(Doctor doctor)
+        {
+            await conn.InsertAsync(doctor);
+            doctor.DoctorID = conn.LastInsertId();
+            return doctor;
+        }
+
+        public async Task<List<Doctor>> GetAllDoctorAsync()
+        {
+            return await conn.SelectAsync<Doctor>();
+        }
+
+        public async Task<Doctor> FindDoctorAsync(long id)
+        {
+            return await conn.SingleByIdAsync<Doctor>(id);
+        }
+
+        public async Task<Doctor> UpdateDoctorAsync(Doctor doctor)
+        {
+            int result = await conn.UpdateAsync(doctor);
+            return doctor;
+        }
+
+        public async Task RemoveDoctorAsync(long id)
+        {
+            await conn.DeleteByIdAsync<Doctor>(id);
+        }
+
+        public async Task<Doctor> GetDoctorWithChildrenAsync(long id)
+        {
+            Doctor doctor = await conn.SingleByIdAsync<Doctor>(id);
+
+
+            return doctor;
+        }
+
+
+        public async Task<Doctor> SaveDoctorAsync(Doctor doctor)
+        {
+            using (var txScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                if(doctor.IsNew)
+                if (doctor.IsNew)
                 {
-                   await this.AddDoctorAsync(doctor);
+                    await AddDoctorAsync(doctor);
                 }
                 else
                 {
-                   await this.UpdateDoctorAsync(doctor);
+                    await UpdateDoctorAsync(doctor);
                 }
-                
-                
 
-                   
-                    txScope.Complete();
+
+                txScope.Complete();
             }
             return doctor;
-       
-       }
-       
-       public void Dispose()
-       {
-          if (conn != null)
-              conn.Dispose();
-       }
-   
+        }
     }
 }
