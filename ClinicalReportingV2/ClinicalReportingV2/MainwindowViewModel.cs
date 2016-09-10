@@ -1,8 +1,7 @@
-﻿using ClinicalReporting.Data.Services;
-using ClinicalReporting.ViewModel;
+﻿using ClinicalReporting.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Practices.Unity;
+using Microsoft.Practices.ServiceLocation;
 
 namespace ClinicalReporting
 {
@@ -21,8 +20,8 @@ namespace ClinicalReporting
         public MainwindowViewModel()
         {
             NavigationCommand = new RelayCommand<string>(NavigateTo);
-            _header = ContainerHelper.Container.Resolve<MainHeaderViewModel>();
-            _addpatientVm = ContainerHelper.Container.Resolve<AddPatientViewModel>();
+            _header = ServiceLocator.Current.GetInstance<MainHeaderViewModel>();
+            _addpatientVm = ServiceLocator.Current.GetInstance<AddPatientViewModel>();
         }
 
         public ViewModelBase CurrentViewModel

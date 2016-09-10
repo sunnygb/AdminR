@@ -1,29 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("BloodGroup")]
     public class BloodGroup
     {
-        public BloodGroup()
-        {
-        }
-
-        public BloodGroup(BloodGroupW bloodgroupw)
-        {
-            SerialNo = bloodgroupw.SerialNo;
-            PatientID = bloodgroupw.PatientID;
-            TDate = bloodgroupw.TDate;
-            PatientBloodGroup = bloodgroupw.PatientBloodGroup;
-            DonarName = bloodgroupw.DonarName;
-            DonarBloodGroup = bloodgroupw.DonarBloodGroup;
-            HbsAg = bloodgroupw.HbsAg;
-            AntiHCV = bloodgroupw.AntiHCV;
-            Fee = bloodgroupw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

@@ -1,17 +1,16 @@
-﻿using ClinicalReporting.Data;
-using ClinicalReporting.Data.Services;
-using GalaSoft.MvvmLight;
-using ServiceStack.OrmLite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ClinicalReporting.Model;
+using ClinicalReporting.Model.Repository;
+using GalaSoft.MvvmLight;
 
 namespace ClinicalReporting.ViewModel
 {
     public class MainHeaderViewModel : ViewModelBase
     {
         private readonly IPatientsRepository _repoPatient;
-        private Patient _patientID;
+        private Patient _patientId;
         private List<Patient> _patientList;
 
         private ObservableCollection<Patient> _patients;
@@ -37,32 +36,31 @@ namespace ClinicalReporting.ViewModel
             set
             {
                 Set(() => SearchPatient, ref _searchPatient, value);
-                filterPatient(_searchPatient);
+                FilterPatient(_searchPatient);
             }
         }
 
-        public Patient PatientID
+        public Patient PatientId
         {
-            get { return _patientID; }
+            get { return _patientId; }
 
-            set { Set(() => PatientID, ref _patientID, value); }
+            set { Set(() => PatientId, ref _patientId, value); }
         }
 
         public async void LoadAsync()
         {
             _patientList =
-                await _repoPatient.DbFactory.Open().SelectAsync<Patient>("SELECT PatientID, Name FROM Patient");
+                await _repoPatient.QueryAsync("SELECT PatientID, Name FROM Patient");
             Patients = new ObservableCollection<Patient>(_patientList);
             //var pa = await _repoPatient.DbFactory.Open().SelectAsync<Patient>("SELECT PatientID, Name FROM Patient");
             //pa.ForEach(x => this.Patients.Add(x));
         }
 
-        private void filterPatient(string key)
+        private void FilterPatient(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 Patients = new ObservableCollection<Patient>(_patientList);
-                return;
             }
             else
             {

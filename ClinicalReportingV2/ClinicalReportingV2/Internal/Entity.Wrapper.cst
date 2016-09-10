@@ -15,14 +15,8 @@
 
 <%@ Property Name="EntityNamespace"
              Type="System.String"  %>
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Linq;
-using <%= EntityNamespace %>;
-using <%= EntityNamespace %>.Services;
-using <%= EntityNamespace %>.Wrapper;
 
 namespace <%= EntityNamespace %>.Wrapper
 {

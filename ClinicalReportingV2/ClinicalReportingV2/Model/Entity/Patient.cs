@@ -1,9 +1,8 @@
-﻿using ClinicalReporting.Data.Wrapper;
-using ServiceStack.DataAnnotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ServiceStack.DataAnnotations;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("Patient")]
     public class Patient
@@ -21,24 +20,6 @@ namespace ClinicalReporting.Data
             Serologies = new List<Serology>();
         }
 
-        public Patient(PatientW patientw)
-        {
-            PatientID = patientw.PatientID;
-            Name = patientw.Name;
-            Age = patientw.Age;
-            Sex = patientw.Sex;
-            RefBy = patientw.RefBy;
-
-            Haematologies = new List<Haematology>();
-            ElisaTbs = new List<ElisaTb>();
-            ElisaHcvs = new List<ElisaHcv>();
-            ElisaHbsags = new List<ElisaHbsag>();
-            BloodGroups = new List<BloodGroup>();
-            Biochemistries = new List<Biochemistry>();
-            SemenAnalyses = new List<SemenAnalysis>();
-            UrineExaminations = new List<UrineExamination>();
-            Serologies = new List<Serology>();
-        }
 
         [PrimaryKey]
         [Alias("PatientID")]

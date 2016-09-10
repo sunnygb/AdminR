@@ -1,26 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("ELISA_TB")]
     public class ElisaTb
     {
-        public ElisaTb()
-        {
-        }
-
-        public ElisaTb(ElisaTbW elisatbw)
-        {
-            SerialNo = elisatbw.SerialNo;
-            PatientID = elisatbw.PatientID;
-            TDate = elisatbw.TDate;
-            PatientValue = elisatbw.PatientValue;
-            CutOffValue = elisatbw.CutOffValue;
-            Fee = elisatbw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

@@ -15,7 +15,7 @@
 
 <%@ Property Name="EntityNamespace"
              Type="System.String"  %>
-
+             
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,7 +36,7 @@ namespace <%= EntityNamespace %>
             <% } // foreach %>
         }
         
-        public <%= Entity.ClassName.ToSafeName() %>(<%= Entity.ClassName.ToSafeName() %>W <%= Entity.ClassName.ToSafeName().ToLower()%>w)
+       <%-- public <%= Entity.ClassName.ToSafeName() %>(<%= Entity.ClassName.ToSafeName() %>W <%= Entity.ClassName.ToSafeName().ToLower()%>w)
         {
            <% foreach(var p in Entity.Properties) { %>
            this.<%= p.PropertyName.ToSafeName()%> = <%= Entity.ClassName.ToSafeName().ToLower()%>w.<%= p.PropertyName.ToSafeName()%>;
@@ -46,7 +46,7 @@ namespace <%= EntityNamespace %>
            <%= r.ThisPropertyName.ToSafeName() %> = new List<<%= r.OtherEntity.ToSafeName() %>>();
            <% } // foreach %>
            
-        }
+        }--%>
 
 <% foreach(var p in Entity.Properties) { %>
 <%if((bool)p.IsPrimaryKey){%>

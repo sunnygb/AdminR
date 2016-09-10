@@ -247,7 +247,7 @@ Generating Entities ...
         EntityGeneratedClass entityClass = this.Create<EntityGeneratedClass>();
         EntityWrapperClass wrapperClass = this.Create<EntityWrapperClass>();
         EntityRepositoryClass repositoryClass = this.Create<EntityRepositoryClass>();
-        EntityInterfaceClass interfaceClass = this.Create<EntityInterfaceClass>();
+//      EntityInterfaceClass interfaceClass = this.Create<EntityInterfaceClass>();
         EntityCommonClass commonClass = this.Create<EntityCommonClass>();
         
         
@@ -255,7 +255,7 @@ Generating Entities ...
         this.CopyPropertiesTo(entityClass);
         this.CopyPropertiesTo(wrapperClass);
         this.CopyPropertiesTo(repositoryClass);
-        this.CopyPropertiesTo(interfaceClass);
+//      this.CopyPropertiesTo(interfaceClass);
         this.CopyPropertiesTo(commonClass);
         Debugger.Launch();
         foreach(Entity entity in entityContext.Entities)
@@ -267,7 +267,7 @@ Generating Entities ...
                 entity.ClassName));
 
             string rootDirectory = Path.GetFullPath(EntityDirectory);
-            CreateEntity(entityClass, wrapperClass,repositoryClass,interfaceClass, entity, rootDirectory,entityContext);
+            CreateEntity(entityClass, wrapperClass,repositoryClass, entity, rootDirectory,entityContext);
 
             Debug.WriteLine(string.Format(
                 "Created Entity Class '{0}' in {1} ms.",
@@ -288,7 +288,7 @@ Generating Entities ...
         
     }
 
-    public void CreateEntity(EntityGeneratedClass entityClass, EntityWrapperClass wrapperClass,EntityRepositoryClass repositoryClass,EntityInterfaceClass interfaceClass, Entity entity, string rootDirectory,EntityContext et)
+    public void CreateEntity(EntityGeneratedClass entityClass, EntityWrapperClass wrapperClass,EntityRepositoryClass repositoryClass, Entity entity, string rootDirectory,EntityContext et)
     {
         string className = entity.ClassName;
         
@@ -316,12 +316,12 @@ Generating Entities ...
         repositoryClass.RenderToFile(repositoryFile, true);
         
         
-        string interfaceFile = className + "Interface.cs";
-        interfaceFile = Path.Combine(rootDirectory+"/Interface", interfaceFile);
-        Response.WriteLine(interfaceClass);
-        interfaceClass.Entity = entity;
-        Response.WriteLine(interfaceFile);
-        interfaceClass.RenderToFile(interfaceFile, true);
+//        string interfaceFile = className + "Interface.cs";
+//        interfaceFile = Path.Combine(rootDirectory+"/Interface", interfaceFile);
+//        Response.WriteLine(interfaceClass);
+//        interfaceClass.Entity = entity;
+//        Response.WriteLine(interfaceFile);
+//        interfaceClass.RenderToFile(interfaceFile, true);
         
         
         

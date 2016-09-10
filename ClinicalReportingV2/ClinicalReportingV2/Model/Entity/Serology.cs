@@ -1,44 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("Serology")]
     public class Serology
     {
-        public Serology()
-        {
-        }
-
-        public Serology(SerologyW serologyw)
-        {
-            Serialno = serologyw.Serialno;
-            Patientid = serologyw.Patientid;
-            Tdate = serologyw.Tdate;
-            WidalTest = serologyw.WidalTest;
-            STyphiTo = serologyw.STyphiTo;
-            STyphiTh = serologyw.STyphiTh;
-            ParaThyphiAh = serologyw.ParaThyphiAh;
-            ParaThyphiBh = serologyw.ParaThyphiBh;
-            Typhoid = serologyw.Typhoid;
-            IGM = serologyw.IGM;
-            IGG = serologyw.IGG;
-            HbsAg = serologyw.HbsAg;
-            AsoTitre = serologyw.AsoTitre;
-            PregnancyTest = serologyw.PregnancyTest;
-            RaFactor = serologyw.RaFactor;
-            AntiHcv = serologyw.AntiHcv;
-            Mantoex = serologyw.Mantoex;
-            KahnsVdrl = serologyw.KahnsVdrl;
-            TbPlus = serologyw.TbPlus;
-            Igm = serologyw.Igm;
-            Igg = serologyw.Igg;
-            HelicobacterPylori = serologyw.HelicobacterPylori;
-            Hiv = serologyw.Hiv;
-            Fee = serologyw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SERIALNO")]
         public Int64 Serialno { get; set; }

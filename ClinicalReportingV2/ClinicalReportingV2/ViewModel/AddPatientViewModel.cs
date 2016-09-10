@@ -1,13 +1,11 @@
-﻿using ClinicalReporting.Data;
-using ClinicalReporting.Data.Repository;
-using ClinicalReporting.Data.Services;
-using ClinicalReporting.Data.Wrapper;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using ClinicalReporting.Model;
+using ClinicalReporting.Model.Repository;
+using ClinicalReporting.Model.Wrapper;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Practices.Unity;
 using ServiceStack.OrmLite;
-using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace ClinicalReporting.ViewModel
 {
@@ -20,8 +18,7 @@ namespace ClinicalReporting.ViewModel
 
         private string _selectedDoctor;
 
-        [InjectionConstructor]
-        public AddPatientViewModel(PatientRepository pRepo, DoctorRepository docRepo)
+        public AddPatientViewModel(IPatientsRepository pRepo, IDoctorsRepository docRepo)
         {
             _repoPatient = pRepo;
             _repoDoc = docRepo;
@@ -63,7 +60,7 @@ namespace ClinicalReporting.ViewModel
             Doctors = new ObservableCollection<Doctor>(await _repoDoc.GetAllDoctorAsync());
             _patient.PatientID =
                 await
-                _repoPatient.DbFactory.Open()
+                _repoPatient.Custom
                             .ScalarAsync<long>("Select seq from sqlite_sequence where name=@name;",
                                                new {name = "Patient"});
         }

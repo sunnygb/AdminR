@@ -21,18 +21,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceStack.Data;
 
-namespace <%= EntityNamespace %>.Services
+namespace <%= EntityNamespace %>
 {
-    public interface I<%=Entity.ContextName%>Repository
+    public class <%= Entity.ClassName%>
     {
-       Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
-       Task<List< <%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async();
-       Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id);
-       Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
-       Task Remove<%=Entity.ClassName%>Async(long id); 
-       
-       Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id);
-       Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
-       IDbConnectionFactory DbFactory { get; set; }
+
     }
 }

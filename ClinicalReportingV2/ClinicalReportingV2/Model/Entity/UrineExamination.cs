@@ -1,42 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("UrineExamination")]
     public class UrineExamination
     {
-        public UrineExamination()
-        {
-        }
-
-        public UrineExamination(UrineExaminationW urineexaminationw)
-        {
-            SerialNo = urineexaminationw.SerialNo;
-            PatientID = urineexaminationw.PatientID;
-            TDate = urineexaminationw.TDate;
-            Colour = urineexaminationw.Colour;
-            Reaction = urineexaminationw.Reaction;
-            SpecificGravity = urineexaminationw.SpecificGravity;
-            Albumin = urineexaminationw.Albumin;
-            Sugar = urineexaminationw.Sugar;
-            Ketone = urineexaminationw.Ketone;
-            Blood = urineexaminationw.Blood;
-            Bilirubin = urineexaminationw.Bilirubin;
-            UrobilNogen = urineexaminationw.UrobilNogen;
-            PusCells = urineexaminationw.PusCells;
-            Rbc = urineexaminationw.Rbc;
-            EPiCells = urineexaminationw.EPiCells;
-            Cast = urineexaminationw.Cast;
-            Crystals = urineexaminationw.Crystals;
-            CalOxalate = urineexaminationw.CalOxalate;
-            UricAcid = urineexaminationw.UricAcid;
-            Amorphous = urineexaminationw.Amorphous;
-            Others = urineexaminationw.Others;
-            Fee = urineexaminationw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

@@ -1,105 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("Biochemistry")]
     public class Biochemistry
     {
-        public Biochemistry()
-        {
-        }
-
-        public Biochemistry(BiochemistryW biochemistryw)
-        {
-            SerialNo = biochemistryw.SerialNo;
-            PatientID = biochemistryw.PatientID;
-            TDate = biochemistryw.TDate;
-            BloodSugarFasting = biochemistryw.BloodSugarFasting;
-            BloodSugarFastingUnit = biochemistryw.BloodSugarFastingUnit;
-            BloodSugarFastingNor = biochemistryw.BloodSugarFastingNor;
-            BloodSugar2HPP = biochemistryw.BloodSugar2HPP;
-            BloodSugar2HPPUnit = biochemistryw.BloodSugar2HPPUnit;
-            BloodSugar2HPPNor = biochemistryw.BloodSugar2HPPNor;
-            BloodSugarRandom = biochemistryw.BloodSugarRandom;
-            BloodSugarRandomUnit = biochemistryw.BloodSugarRandomUnit;
-            BloodSugarRandomNor = biochemistryw.BloodSugarRandomNor;
-            BloodUrea = biochemistryw.BloodUrea;
-            BloodUreaUnit = biochemistryw.BloodUreaUnit;
-            BloodUreaNor = biochemistryw.BloodUreaNor;
-            Bun = biochemistryw.Bun;
-            BUNUnit = biochemistryw.BUNUnit;
-            BUNNor = biochemistryw.BUNNor;
-            SCreatinine = biochemistryw.SCreatinine;
-            SCreatinineUnit = biochemistryw.SCreatinineUnit;
-            SCreatinineNor = biochemistryw.SCreatinineNor;
-            SUricAcid = biochemistryw.SUricAcid;
-            SUricAcidUnit = biochemistryw.SUricAcidUnit;
-            SUricAcidNor = biochemistryw.SUricAcidNor;
-            SCholestrol = biochemistryw.SCholestrol;
-            SCholestrolUnit = biochemistryw.SCholestrolUnit;
-            SCholestrolNor = biochemistryw.SCholestrolNor;
-            STriglycerides = biochemistryw.STriglycerides;
-            STriglyceridesUnit = biochemistryw.STriglyceridesUnit;
-            STriglyceridesNor = biochemistryw.STriglyceridesNor;
-            HDLCholestrol = biochemistryw.HDLCholestrol;
-            HDLCholestrolUnit = biochemistryw.HDLCholestrolUnit;
-            HDLCholestrolNor = biochemistryw.HDLCholestrolNor;
-            LDLCholestrol = biochemistryw.LDLCholestrol;
-            LDLCholestrolUnit = biochemistryw.LDLCholestrolUnit;
-            LDLCholestrolNor = biochemistryw.LDLCholestrolNor;
-            SgotAst = biochemistryw.SgotAst;
-            SGOTASTUnit = biochemistryw.SGOTASTUnit;
-            SGOTNor = biochemistryw.SGOTNor;
-            Ldh = biochemistryw.Ldh;
-            LDHUnit = biochemistryw.LDHUnit;
-            LDHNor = biochemistryw.LDHNor;
-            Cpk = biochemistryw.Cpk;
-            CPKUnit = biochemistryw.CPKUnit;
-            CPKNor = biochemistryw.CPKNor;
-            Ckmb = biochemistryw.Ckmb;
-            CKMBUnit = biochemistryw.CKMBUnit;
-            CKMBNor = biochemistryw.CKMBNor;
-            SBilirubinT = biochemistryw.SBilirubinT;
-            SBilirubinTUnit = biochemistryw.SBilirubinTUnit;
-            SBilirubinTNor = biochemistryw.SBilirubinTNor;
-            SBilirubinD = biochemistryw.SBilirubinD;
-            SBilirubinDUnit = biochemistryw.SBilirubinDUnit;
-            SBilirubinDNor = biochemistryw.SBilirubinDNor;
-            SBilirubinInd = biochemistryw.SBilirubinInd;
-            SBilirubinIndUnit = biochemistryw.SBilirubinIndUnit;
-            SBilirubinIndNor = biochemistryw.SBilirubinIndNor;
-            SAlkPhosphatase = biochemistryw.SAlkPhosphatase;
-            SAlkPhosphataseUnit = biochemistryw.SAlkPhosphataseUnit;
-            SAlkPhosphataseNor = biochemistryw.SAlkPhosphataseNor;
-            SgptAlt = biochemistryw.SgptAlt;
-            SGPTALTUnit = biochemistryw.SGPTALTUnit;
-            SGPTALTNor = biochemistryw.SGPTALTNor;
-            SSodium = biochemistryw.SSodium;
-            SSodiumUnit = biochemistryw.SSodiumUnit;
-            SSodiumNor = biochemistryw.SSodiumNor;
-            SPotassium = biochemistryw.SPotassium;
-            SPotassiumUnit = biochemistryw.SPotassiumUnit;
-            SPotassiumNor = biochemistryw.SPotassiumNor;
-            SChloride = biochemistryw.SChloride;
-            SChlorideUnit = biochemistryw.SChlorideUnit;
-            SChlorideNor = biochemistryw.SChlorideNor;
-            SCalcium = biochemistryw.SCalcium;
-            SCalciumUnit = biochemistryw.SCalciumUnit;
-            SCalciumNor = biochemistryw.SCalciumNor;
-            SProtein = biochemistryw.SProtein;
-            SProteinUnit = biochemistryw.SProteinUnit;
-            SProteinNor = biochemistryw.SProteinNor;
-            SAlbumin = biochemistryw.SAlbumin;
-            SAlbuminUnit = biochemistryw.SAlbuminUnit;
-            SAlbuminNor = biochemistryw.SAlbuminNor;
-            AGRatio = biochemistryw.AGRatio;
-            AGRatioUnit = biochemistryw.AGRatioUnit;
-            AGRatioNor = biochemistryw.AGRatioNor;
-            Fee = biochemistryw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

@@ -20,68 +20,84 @@
 using ServiceStack.OrmLite;
 using System;
 using System.Data;
-using System.Configuration;
 using System.Collections.Generic;
-using <%=EntityNamespace%>.Services;
-using System.Text;
 using System.Transactions;
-using System.Linq;
 using ServiceStack.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace <%= EntityNamespace%>.Repository
 {    
+
+    public interface I<%=Entity.ContextName%>Repository
+    {
+       Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<List< <%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async();
+       Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id);
+       Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task Remove<%=Entity.ClassName%>Async(long id); 
+       
+       Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id);
+       Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<List<<%=Entity.ClassName%>>> QueryAsync(string query);
+       IDbConnection Custom { get;  }
+    }
+
+
     public class <%= Entity.ClassName%>Repository : I<%= Entity.ContextName%>Repository,IDisposable
     { 
       
       
-       public IDbConnectionFactory DbFactory { get; set; }
+       private IDbConnectionFactory DbFactory { get; set; }
       
        private IDbConnection _conn;
-       private IDbConnection conn 
+       private IDbConnection Conn 
        { 
-          get 
-          {
-            return _conn = _conn ??  DbFactory.Open();
-          }
+           get { return _conn ?? (_conn = DbFactory.Open()); }
        }
+       
+       public <%= Entity.ClassName%>Repository(IDbConnectionFactory dbFactory)
+       {
+          DbFactory= dbFactory;
+       }
+       
 
       public async Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
-          await this.conn.InsertAsync(<%=Entity.ClassName.ToLower()%>);
-          <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%> =this.conn.LastInsertId();
+          await Conn.InsertAsync(<%=Entity.ClassName.ToLower()%>);
+          <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%> =Conn.LastInsertId();
           return <%=Entity.ClassName.ToLower()%>;
        
        }
        
       public async Task<List<<%=Entity.ClassName%>>> GetAll<%=Entity.ClassName%>Async()
        {
-         return await this.conn.SelectAsync<<%=Entity.ClassName %>>();
+         return await Conn.SelectAsync<<%=Entity.ClassName %>>();
        
        }
        
       public async Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id)
        {
-         return await this.conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
+         return await Conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
        
        }
        
       public async Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
        {
-          var result= await this.conn.UpdateAsync<<%=Entity.ClassName%>>(<%=Entity.ClassName.ToLower()%>);
+          await Conn.UpdateAsync<<%=Entity.ClassName%>>(<%=Entity.ClassName.ToLower()%>);
           return <%=Entity.ClassName.ToLower()%>;
        
        }
        
       public async Task Remove<%=Entity.ClassName%>Async(long id)
        {
-         await this.conn.DeleteByIdAsync<<%=Entity.ClassName%>>(id);
+         await Conn.DeleteByIdAsync<<%=Entity.ClassName%>>(id);
        
        }
        
       public async Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id)
        {
-          var <%=Entity.ClassName.ToLower()%> = await this.conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
+          var <%=Entity.ClassName.ToLower()%> = await Conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
           
           
           
@@ -89,7 +105,7 @@ namespace <%= EntityNamespace%>.Repository
                  <% if(r.ThisCardinality == Cardinality.Many) { %>
         
                  //One To Many
-           var <%= r.ThisPropertyName.ToSafeName().ToLower() %> = await this.conn.SelectAsync<<%= r.OtherEntity.ToSafeName() %>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
+           var <%= r.ThisPropertyName.ToSafeName().ToLower() %> = await Conn.SelectAsync<<%= r.OtherEntity.ToSafeName() %>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
            if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
            {
              <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.AddRange(<%= r.ThisPropertyName.ToSafeName().ToLower() %>);
@@ -100,7 +116,7 @@ namespace <%= EntityNamespace%>.Repository
          <% } else { %>
    
                  // One To One 
-           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = await this.conn.SingleAsync<<%= r.ThisPropertyName.ToSafeName()%>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
+           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = await Conn.SingleAsync<<%= r.ThisPropertyName.ToSafeName()%>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
            if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
            {
              <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>;
@@ -119,11 +135,11 @@ namespace <%= EntityNamespace%>.Repository
             {
                 if(<%=Entity.ClassName.ToLower()%>.IsNew)
                 {
-                   await this.Add<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
+                   await Add<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
                 }
                 else
                 {
-                   await this.Update<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
+                   await Update<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
                 }
                 
                 
@@ -135,12 +151,12 @@ namespace <%= EntityNamespace%>.Repository
                   { 
                   
                     <%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyM(r.OtherEntity).PropertyName %> =<%= this.Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
-                    await this.conn.SaveAsync(<%= r.OtherEntity.ToSafeName().ToLower()%>);
+                    await Conn.SaveAsync(<%= r.OtherEntity.ToSafeName().ToLower()%>);
                   }
                   foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => s.IsDeleted))
                   { 
                   
-                    await this.conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(<%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>);
+                    await Conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(<%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>);
                   }
                     <% } else { %>
                     
@@ -150,13 +166,13 @@ namespace <%= EntityNamespace%>.Repository
                     if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.IsDeleted)
                     {
                       var id = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>;
-                      await this._conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(id);
+                      await Conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(id);
                     }
                     else if(!<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.IsDeleted)
                     {
                       var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
                       <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
-                      await this.conn.SaveAsync(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
+                      await Conn.SaveAsync(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
                     }
                     
                   }
@@ -170,16 +186,131 @@ namespace <%= EntityNamespace%>.Repository
        
        }
        
+      public async Task<List<<%=Entity.ClassName%>>> QueryAsync(string query)
+      {
+        var result = await Conn.SelectAsync<<%=Entity.ClassName%>>(query);
+        return result;
+      }
+      public IDbConnection Custom { get { return Conn; }  }
+       
        public void Dispose()
        {
-          if (_conn != null)
-              _conn.Dispose();
+          if (Conn != null)
+              Conn.Dispose();
        }
    
     }
+    
+    public class Design<%=Entity.ContextName%>Repository : I<%=Entity.ContextName%>Repository
+    {
+      public Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+         return null;
+      }
+      public async Task<List<<%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async()
+      {
+            var resultList = new List<<%=Entity.ClassName %>>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new <%=Entity.ClassName %>
+                {
+                    
+                   <% foreach(var p in Entity.Properties ) { %> 
+                  <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>"+i,<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>i+12345,<% } %> 
+                  <% } // foreach Properties   %>
+                });
+            }
+            return resultList;
+      }
+      public async Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id)
+      {
+         return new <%=Entity.ClassName %>
+                {
+                    
+                    <% foreach(var p in Entity.Properties) { %>
+                    <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else { %> 12345,<% } %>
+                    <% } // foreach %>
+                };
+      }
+      public async Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+        return null;
+      }
+      public async Task Remove<%=Entity.ClassName%>Async(long id)
+      {
+        
+      }
+       
+      public async Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id)
+      {
+        <% foreach(var r in Entity.Relationships) { %>
+        <% if(r.ThisCardinality == Cardinality.Many) { %>
+        // One to Many
+        var <%= r.OtherEntity.ToLower()%>1= new <%= r.OtherEntity %> 
+                 {
+                  <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+            <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+                  <% } // foreach Properties   %>};
+        var <%= r.OtherEntity.ToLower()%>2= new <%= r.OtherEntity %> 
+                 {
+                  <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+            <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+                  <% } // foreach Properties   %>};         
+        <% } else { %>
+        //One to One
+        var <%= r.OtherEntity.ToLower()%> = new <%= r.OtherEntity %> 
+        {
+        <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+        <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+        <% }  // foreach Properties   %>};
+        <% } // Else %>
+
+        <% } // foreach Relationship %>
+         
+        return new <%=Entity.ClassName %>
+                {
+                    
+                    <% foreach(var p in Entity.Properties) { %>
+                    <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %>
+                    <% } // foreach %>
+                    
+                     <% foreach(var r in Entity.Relationships) { %>
+                     <% if(r.ThisCardinality == Cardinality.Many) { %>
+                     // One to Many
+                     <%= r.ThisPropertyName %> = new List<<%= r.OtherEntity%>>{<%= r.OtherEntity.ToLower()%>1,<%= r.OtherEntity.ToLower()%>2},
+                     <% } else { %>
+                     //One to One
+                     <%= r.ThisPropertyName%> = <%= r.OtherEntity.ToLower()%>,
+                     <% } // Else %>
+                     <% } // foreach Relationship %>
+                     
+                };
+         
+      }
+      public async Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+        return null;
+      }
+      public async Task<List<<%=Entity.ClassName%>>> QueryAsync(string query)
+      {
+         return null;
+      }
+      public IDbConnection Custom { get { return null;}  }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
 <script runat="template">
 
+                   
+                    
+                    
 public Property GetPrimeryKey()
 {
            foreach(var p in Entity.Properties)
@@ -234,6 +365,19 @@ public Property GetForeignPropertyO(string OtherEntityName)
            }
            
            
+   return null;          
+}
+
+public Entity GetForeignEntity(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                 return entity;
+               }
+           }
+      
    return null;          
 }
 

@@ -1,26 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("ELISA_HCV")]
     public class ElisaHcv
     {
-        public ElisaHcv()
-        {
-        }
-
-        public ElisaHcv(ElisaHcvW elisahcvw)
-        {
-            SerialNo = elisahcvw.SerialNo;
-            PatientID = elisahcvw.PatientID;
-            TDate = elisahcvw.TDate;
-            PatientValue = elisahcvw.PatientValue;
-            CutOffValue = elisahcvw.CutOffValue;
-            Fee = elisahcvw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

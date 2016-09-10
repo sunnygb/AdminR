@@ -1,9 +1,8 @@
-﻿using ClinicalReporting.Data.Services;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace ClinicalReporting.Data.Wrapper
+namespace ClinicalReporting.Model.Wrapper
 {
     public class PatientW : CommonWrapper<Patient>
     {

@@ -133,17 +133,6 @@
     <Compile Include="Model\Entity\SemenAnalysis.cs" />
     <Compile Include="Model\Entity\Serology.cs" />
     <Compile Include="Model\Entity\UrineExamination.cs" />
-    <Compile Include="Model\Interface\BiochemistryInterface.cs" />
-    <Compile Include="Model\Interface\BloodGroupInterface.cs" />
-    <Compile Include="Model\Interface\DoctorInterface.cs" />
-    <Compile Include="Model\Interface\ElisaHbsagInterface.cs" />
-    <Compile Include="Model\Interface\ElisaHcvInterface.cs" />
-    <Compile Include="Model\Interface\ElisaTbInterface.cs" />
-    <Compile Include="Model\Interface\HaematologyInterface.cs" />
-    <Compile Include="Model\Interface\PatientInterface.cs" />
-    <Compile Include="Model\Interface\SemenAnalysisInterface.cs" />
-    <Compile Include="Model\Interface\SerologyInterface.cs" />
-    <Compile Include="Model\Interface\UrineExaminationInterface.cs" />
     <Compile Include="Model\Repository\BiochemistryRepository.cs" />
     <Compile Include="Model\Repository\BloodGroupRepository.cs" />
     <Compile Include="Model\Repository\DoctorRepository.cs" />
@@ -167,9 +156,7 @@
     <Compile Include="Model\Wrapper\SemenAnalysisWrapper.cs" />
     <Compile Include="Model\Wrapper\SerologyWrapper.cs" />
     <Compile Include="Model\Wrapper\UrineExaminationWrapper.cs" />
-    <Compile Include="Services\ORMLiteConnection.cs" />
     <Compile Include="ViewModel\BackupViewModel.cs" />
-    <Compile Include="ViewModel\IPatientRepository.cs" />
     <Compile Include="ViewModel\MainHeaderViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />

@@ -38,8 +38,8 @@
         <connectionString>$(ConnectionString3)</connectionString>
         <providerType>SchemaExplorer.SQLiteSchemaProvider,SchemaExplorer.SQLiteSchemaProvider</providerType>
       </property>
-      <property name="ContextNamespace">ClinicalReporting.Data</property>
-      <property name="EntityNamespace">ClinicalReporting.Data</property>
+      <property name="ContextNamespace">ClinicalReporting.Model</property>
+      <property name="EntityNamespace">ClinicalReporting.Model</property>
       <property name="MappingNamespace">DataBase.Data.Mapping</property>
       <property name="QueryNamespace">DataBase.Data.Queries</property>
       <property name="MockNamespace">DataBase.Data.Mocks</property>

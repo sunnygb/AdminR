@@ -1,22 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("Doctor")]
     public class Doctor
     {
-        public Doctor()
-        {
-        }
-
-        public Doctor(DoctorW doctorw)
-        {
-            DoctorID = doctorw.DoctorID;
-            DoctorName = doctorw.DoctorName;
-        }
-
         [PrimaryKey]
         [Alias("DoctorID")]
         public Int64 DoctorID { get; set; }

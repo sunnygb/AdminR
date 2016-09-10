@@ -1,4 +1,4 @@
-﻿using ClinicalReporting.Data.Services;
+﻿using ClinicalReporting.Model.Repository;
 using GalaSoft.MvvmLight;
 
 namespace ClinicalReporting.ViewModel

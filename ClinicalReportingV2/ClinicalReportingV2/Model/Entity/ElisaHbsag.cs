@@ -1,26 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("ELISA_HBSAG")]
     public class ElisaHbsag
     {
-        public ElisaHbsag()
-        {
-        }
-
-        public ElisaHbsag(ElisaHbsagW elisahbsagw)
-        {
-            SerialNo = elisahbsagw.SerialNo;
-            PatientID = elisahbsagw.PatientID;
-            TDate = elisahbsagw.TDate;
-            PatientValue = elisahbsagw.PatientValue;
-            CutOffValue = elisahbsagw.CutOffValue;
-            Fee = elisahbsagw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

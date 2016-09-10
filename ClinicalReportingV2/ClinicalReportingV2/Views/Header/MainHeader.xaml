@@ -81,7 +81,7 @@
 
                       materialDesign:HintAssist.Hint="Search"
                       materialDesign:HintAssist.HintOpacity=".26"
-                      SelectedItem="{Binding PatientID}" SelectedValue="{Binding PatientID}">
+                      SelectedItem="{Binding PatientId}" SelectedValue="{Binding PatientId}">
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

@@ -1,87 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("Haematology")]
     public class Haematology
     {
-        public Haematology()
-        {
-        }
-
-        public Haematology(HaematologyW haematologyw)
-        {
-            SerialNo = haematologyw.SerialNo;
-            PatientID = haematologyw.PatientID;
-            TDate = haematologyw.TDate;
-            Hb = haematologyw.Hb;
-            HBUnit = haematologyw.HBUnit;
-            HBNor = haematologyw.HBNor;
-            Tlc = haematologyw.Tlc;
-            TLCUnit = haematologyw.TLCUnit;
-            TLCNor = haematologyw.TLCNor;
-            Esr = haematologyw.Esr;
-            ESRUnit = haematologyw.ESRUnit;
-            ESRNor = haematologyw.ESRNor;
-            Bt = haematologyw.Bt;
-            BTUnit = haematologyw.BTUnit;
-            BTNor = haematologyw.BTNor;
-            Ct = haematologyw.Ct;
-            CTUnit = haematologyw.CTUnit;
-            CTNor = haematologyw.CTNor;
-            PlateletsCount = haematologyw.PlateletsCount;
-            PlateletsCountUnit = haematologyw.PlateletsCountUnit;
-            PlateletsCountNor = haematologyw.PlateletsCountNor;
-            Pt = haematologyw.Pt;
-            PTUnit = haematologyw.PTUnit;
-            PTNor = haematologyw.PTNor;
-            Dlc = haematologyw.Dlc;
-            DLCUnit = haematologyw.DLCUnit;
-            DLCNor = haematologyw.DLCNor;
-            Polymorphs = haematologyw.Polymorphs;
-            PolymorphsUnit = haematologyw.PolymorphsUnit;
-            PolymorphsNor = haematologyw.PolymorphsNor;
-            Lymphocytes = haematologyw.Lymphocytes;
-            LymphocytesUnit = haematologyw.LymphocytesUnit;
-            LymphocytesNor = haematologyw.LymphocytesNor;
-            Monocyte = haematologyw.Monocyte;
-            MonocyteUnit = haematologyw.MonocyteUnit;
-            MonocyteNor = haematologyw.MonocyteNor;
-            Eosinophil = haematologyw.Eosinophil;
-            EosinophilUnit = haematologyw.EosinophilUnit;
-            EosinophilNor = haematologyw.EosinophilNor;
-            Basophil = haematologyw.Basophil;
-            BasophilUnit = haematologyw.BasophilUnit;
-            BasophilNor = haematologyw.BasophilNor;
-            MalariaParasites = haematologyw.MalariaParasites;
-            MalariaParasitesUnit = haematologyw.MalariaParasitesUnit;
-            MalariaParasitesNor = haematologyw.MalariaParasitesNor;
-            BloodGroup = haematologyw.BloodGroup;
-            BloodGroupUnit = haematologyw.BloodGroupUnit;
-            BloodGroupNor = haematologyw.BloodGroupNor;
-            RHFactor = haematologyw.RHFactor;
-            RHFactorUnit = haematologyw.RHFactorUnit;
-            RHFactorNor = haematologyw.RHFactorNor;
-            TotalRBC = haematologyw.TotalRBC;
-            TotalRBCUnit = haematologyw.TotalRBCUnit;
-            TotalRBCNor = haematologyw.TotalRBCNor;
-            PVCHaematorcrit = haematologyw.PVCHaematorcrit;
-            PVCHaematorcritUnit = haematologyw.PVCHaematorcritUnit;
-            PVCHaematorcritNor = haematologyw.PVCHaematorcritNor;
-            MCV = haematologyw.MCV;
-            MCVUnit = haematologyw.MCVUnit;
-            MCVNor = haematologyw.MCVNor;
-            MCH = haematologyw.MCH;
-            MCHUnit = haematologyw.MCHUnit;
-            MCHNor = haematologyw.MCHNor;
-            MCHC = haematologyw.MCHC;
-            MCHCUnit = haematologyw.MCHCUnit;
-            MCHCNor = haematologyw.MCHCNor;
-            Fee = haematologyw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

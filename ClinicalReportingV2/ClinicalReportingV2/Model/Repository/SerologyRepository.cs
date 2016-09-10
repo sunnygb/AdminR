@@ -1,66 +1,86 @@
-﻿using ClinicalReporting.Data.Services;
-using ServiceStack.Data;
-using ServiceStack.OrmLite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Transactions;
+using ServiceStack.Data;
+using ServiceStack.OrmLite;
 
-namespace ClinicalReporting.Data.Repository
+namespace ClinicalReporting.Model.Repository
 {
+    public interface ISerologiesRepository
+    {
+        IDbConnection Custom { get; }
+        Task<Serology> AddSerologyAsync(Serology serology);
+        Task<List<Serology>> GetAllSerologyAsync();
+        Task<Serology> FindSerologyAsync(long id);
+        Task<Serology> UpdateSerologyAsync(Serology serology);
+        Task RemoveSerologyAsync(long id);
+
+        Task<Serology> GetSerologyWithChildrenAsync(long id);
+        Task<Serology> SaveSerologyAsync(Serology serology);
+        Task<List<Serology>> QueryAsync(string query);
+    }
+
+
     public class SerologyRepository : ISerologiesRepository, IDisposable
     {
         private IDbConnection _conn;
 
-        private IDbConnection conn
+        public SerologyRepository(IDbConnectionFactory dbFactory)
         {
-            get { return _conn = _conn ?? DbFactory.Open(); }
+            DbFactory = dbFactory;
+        }
+
+        private IDbConnectionFactory DbFactory { get; set; }
+
+        private IDbConnection Conn
+        {
+            get { return _conn ?? (_conn = DbFactory.Open()); }
         }
 
         public void Dispose()
         {
-            if (_conn != null)
-                _conn.Dispose();
+            if (Conn != null)
+                Conn.Dispose();
         }
 
-        public IDbConnectionFactory DbFactory { get; set; }
 
         public async Task<Serology> AddSerologyAsync(Serology serology)
         {
-            await conn.InsertAsync(serology);
-            serology.Serialno = conn.LastInsertId();
+            await Conn.InsertAsync(serology);
+            serology.Serialno = Conn.LastInsertId();
             return serology;
         }
 
         public async Task<List<Serology>> GetAllSerologyAsync()
         {
-            return await conn.SelectAsync<Serology>();
+            return await Conn.SelectAsync<Serology>();
         }
 
         public async Task<Serology> FindSerologyAsync(long id)
         {
-            return await conn.SingleByIdAsync<Serology>(id);
+            return await Conn.SingleByIdAsync<Serology>(id);
         }
 
         public async Task<Serology> UpdateSerologyAsync(Serology serology)
         {
-            int result = await conn.UpdateAsync(serology);
+            await Conn.UpdateAsync(serology);
             return serology;
         }
 
         public async Task RemoveSerologyAsync(long id)
         {
-            await conn.DeleteByIdAsync<Serology>(id);
+            await Conn.DeleteByIdAsync<Serology>(id);
         }
 
         public async Task<Serology> GetSerologyWithChildrenAsync(long id)
         {
-            Serology serology = await conn.SingleByIdAsync<Serology>(id);
+            Serology serology = await Conn.SingleByIdAsync<Serology>(id);
 
 
             // One To One 
-            Patient patient = await conn.SingleAsync<Patient>(e => e.PatientID == id);
+            Patient patient = await Conn.SingleAsync<Patient>(e => e.PatientID == id);
             if (serology != null && patient != null)
             {
                 serology.Patient = patient;
@@ -91,13 +111,13 @@ namespace ClinicalReporting.Data.Repository
                     if (serology.Patient.IsDeleted)
                     {
                         long id = serology.Patient.PatientID;
-                        await _conn.DeleteByIdAsync<Patient>(id);
+                        await Conn.DeleteByIdAsync<Patient>(id);
                     }
                     else if (!serology.Patient.IsDeleted)
                     {
                         Patient patient = serology.Patient;
                         patient.PatientID = serology.Serialno;
-                        await conn.SaveAsync(patient);
+                        await Conn.SaveAsync(patient);
                     }
                 }
 
@@ -105,6 +125,161 @@ namespace ClinicalReporting.Data.Repository
                 txScope.Complete();
             }
             return serology;
+        }
+
+        public async Task<List<Serology>> QueryAsync(string query)
+        {
+            List<Serology> result = await Conn.SelectAsync<Serology>(query);
+            return result;
+        }
+
+        public IDbConnection Custom
+        {
+            get { return Conn; }
+        }
+    }
+
+    public class DesignSerologiesRepository : ISerologiesRepository
+    {
+        public Task<Serology> AddSerologyAsync(Serology serology)
+        {
+            return null;
+        }
+
+        public async Task<List<Serology>> GetAllSerologyAsync()
+        {
+            var resultList = new List<Serology>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new Serology
+                                   {
+                                       Serialno = i + 12345,
+                                       Patientid = i + 12345,
+                                       Tdate = "Tdate" + i,
+                                       WidalTest = "WidalTest" + i,
+                                       STyphiTo = "STyphiTo" + i,
+                                       STyphiTh = "STyphiTh" + i,
+                                       ParaThyphiAh = "ParaThyphiAh" + i,
+                                       ParaThyphiBh = "ParaThyphiBh" + i,
+                                       Typhoid = "Typhoid" + i,
+                                       IGM = "IGM" + i,
+                                       IGG = "IGG" + i,
+                                       HbsAg = "HbsAg" + i,
+                                       AsoTitre = "AsoTitre" + i,
+                                       PregnancyTest = "PregnancyTest" + i,
+                                       RaFactor = "RaFactor" + i,
+                                       AntiHcv = "AntiHcv" + i,
+                                       Mantoex = "Mantoex" + i,
+                                       KahnsVdrl = "KahnsVdrl" + i,
+                                       TbPlus = "TbPlus" + i,
+                                       Igm = "Igm" + i,
+                                       Igg = "Igg" + i,
+                                       HelicobacterPylori = "HelicobacterPylori" + i,
+                                       Hiv = "Hiv" + i,
+                                       Fee = i + 12345,
+                                   });
+            }
+            return resultList;
+        }
+
+        public async Task<Serology> FindSerologyAsync(long id)
+        {
+            return new Serology
+                       {
+                           Serialno = 12345,
+                           Patientid = 12345,
+                           Tdate = "Tdate",
+                           WidalTest = "WidalTest",
+                           STyphiTo = "STyphiTo",
+                           STyphiTh = "STyphiTh",
+                           ParaThyphiAh = "ParaThyphiAh",
+                           ParaThyphiBh = "ParaThyphiBh",
+                           Typhoid = "Typhoid",
+                           IGM = "IGM",
+                           IGG = "IGG",
+                           HbsAg = "HbsAg",
+                           AsoTitre = "AsoTitre",
+                           PregnancyTest = "PregnancyTest",
+                           RaFactor = "RaFactor",
+                           AntiHcv = "AntiHcv",
+                           Mantoex = "Mantoex",
+                           KahnsVdrl = "KahnsVdrl",
+                           TbPlus = "TbPlus",
+                           Igm = "Igm",
+                           Igg = "Igg",
+                           HelicobacterPylori = "HelicobacterPylori",
+                           Hiv = "Hiv",
+                           Fee = 12345,
+                       };
+        }
+
+        public async Task<Serology> UpdateSerologyAsync(Serology serology)
+        {
+            return null;
+        }
+
+        public async Task RemoveSerologyAsync(long id)
+        {
+        }
+
+        public async Task<Serology> GetSerologyWithChildrenAsync(long id)
+        {
+            //One to One
+            var patient = new Patient
+                              {
+                                  PatientID = 12345,
+                                  Name = "Name",
+                                  Age = "Age",
+                                  Sex = "Sex",
+                                  RefBy = "RefBy",
+                              };
+
+
+            return new Serology
+                       {
+                           Serialno = 12345,
+                           Patientid = 12345,
+                           Tdate = "Tdate",
+                           WidalTest = "WidalTest",
+                           STyphiTo = "STyphiTo",
+                           STyphiTh = "STyphiTh",
+                           ParaThyphiAh = "ParaThyphiAh",
+                           ParaThyphiBh = "ParaThyphiBh",
+                           Typhoid = "Typhoid",
+                           IGM = "IGM",
+                           IGG = "IGG",
+                           HbsAg = "HbsAg",
+                           AsoTitre = "AsoTitre",
+                           PregnancyTest = "PregnancyTest",
+                           RaFactor = "RaFactor",
+                           AntiHcv = "AntiHcv",
+                           Mantoex = "Mantoex",
+                           KahnsVdrl = "KahnsVdrl",
+                           TbPlus = "TbPlus",
+                           Igm = "Igm",
+                           Igg = "Igg",
+                           HelicobacterPylori = "HelicobacterPylori",
+                           Hiv = "Hiv",
+                           Fee = 12345,
+                    
+                           //One to One
+                           Patient = patient,
+                       };
+        }
+
+        public async Task<Serology> SaveSerologyAsync(Serology serology)
+        {
+            return null;
+        }
+
+        public async Task<List<Serology>> QueryAsync(string query)
+        {
+            return null;
+        }
+
+        public IDbConnection Custom
+        {
+            get { return null; }
         }
     }
 }

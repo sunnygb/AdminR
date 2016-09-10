@@ -1,7 +1,6 @@
-﻿using ClinicalReporting.Data.Services;
-using System;
+﻿using System;
 
-namespace ClinicalReporting.Data.Wrapper
+namespace ClinicalReporting.Model.Wrapper
 {
     public class UrineExaminationW : CommonWrapper<UrineExamination>
     {

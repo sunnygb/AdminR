@@ -1,60 +1,80 @@
-﻿using ClinicalReporting.Data.Services;
-using ServiceStack.Data;
-using ServiceStack.OrmLite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Transactions;
+using ServiceStack.Data;
+using ServiceStack.OrmLite;
 
-namespace ClinicalReporting.Data.Repository
+namespace ClinicalReporting.Model.Repository
 {
+    public interface IBloodGroupsRepository
+    {
+        IDbConnection Custom { get; }
+        Task<BloodGroup> AddBloodGroupAsync(BloodGroup bloodgroup);
+        Task<List<BloodGroup>> GetAllBloodGroupAsync();
+        Task<BloodGroup> FindBloodGroupAsync(long id);
+        Task<BloodGroup> UpdateBloodGroupAsync(BloodGroup bloodgroup);
+        Task RemoveBloodGroupAsync(long id);
+
+        Task<BloodGroup> GetBloodGroupWithChildrenAsync(long id);
+        Task<BloodGroup> SaveBloodGroupAsync(BloodGroup bloodgroup);
+        Task<List<BloodGroup>> QueryAsync(string query);
+    }
+
+
     public class BloodGroupRepository : IBloodGroupsRepository, IDisposable
     {
         private IDbConnection _conn;
 
-        private IDbConnection conn
+        public BloodGroupRepository(IDbConnectionFactory dbFactory)
         {
-            get { return _conn = _conn ?? DbFactory.Open(); }
+            DbFactory = dbFactory;
         }
 
-        public IDbConnectionFactory DbFactory { get; set; }
+        private IDbConnectionFactory DbFactory { get; set; }
+
+        private IDbConnection Conn
+        {
+            get { return _conn ?? (_conn = DbFactory.Open()); }
+        }
+
 
         public async Task<BloodGroup> AddBloodGroupAsync(BloodGroup bloodgroup)
         {
-            await conn.InsertAsync(bloodgroup);
-            bloodgroup.SerialNo = conn.LastInsertId();
+            await Conn.InsertAsync(bloodgroup);
+            bloodgroup.SerialNo = Conn.LastInsertId();
             return bloodgroup;
         }
 
         public async Task<List<BloodGroup>> GetAllBloodGroupAsync()
         {
-            return await conn.SelectAsync<BloodGroup>();
+            return await Conn.SelectAsync<BloodGroup>();
         }
 
         public async Task<BloodGroup> FindBloodGroupAsync(long id)
         {
-            return await conn.SingleByIdAsync<BloodGroup>(id);
+            return await Conn.SingleByIdAsync<BloodGroup>(id);
         }
 
         public async Task<BloodGroup> UpdateBloodGroupAsync(BloodGroup bloodgroup)
         {
-            int result = await conn.UpdateAsync(bloodgroup);
+            await Conn.UpdateAsync(bloodgroup);
             return bloodgroup;
         }
 
         public async Task RemoveBloodGroupAsync(long id)
         {
-            await conn.DeleteByIdAsync<BloodGroup>(id);
+            await Conn.DeleteByIdAsync<BloodGroup>(id);
         }
 
         public async Task<BloodGroup> GetBloodGroupWithChildrenAsync(long id)
         {
-            BloodGroup bloodgroup = await conn.SingleByIdAsync<BloodGroup>(id);
+            BloodGroup bloodgroup = await Conn.SingleByIdAsync<BloodGroup>(id);
 
 
             // One To One 
-            Patient patient = await conn.SingleAsync<Patient>(e => e.PatientID == id);
+            Patient patient = await Conn.SingleAsync<Patient>(e => e.PatientID == id);
             if (bloodgroup != null && patient != null)
             {
                 bloodgroup.Patient = patient;
@@ -85,13 +105,13 @@ namespace ClinicalReporting.Data.Repository
                     if (bloodgroup.Patient.IsDeleted)
                     {
                         long id = bloodgroup.Patient.PatientID;
-                        await _conn.DeleteByIdAsync<Patient>(id);
+                        await Conn.DeleteByIdAsync<Patient>(id);
                     }
                     else if (!bloodgroup.Patient.IsDeleted)
                     {
                         Patient patient = bloodgroup.Patient;
                         patient.PatientID = bloodgroup.SerialNo;
-                        await conn.SaveAsync(patient);
+                        await Conn.SaveAsync(patient);
                     }
                 }
 
@@ -101,10 +121,120 @@ namespace ClinicalReporting.Data.Repository
             return bloodgroup;
         }
 
+        public async Task<List<BloodGroup>> QueryAsync(string query)
+        {
+            List<BloodGroup> result = await Conn.SelectAsync<BloodGroup>(query);
+            return result;
+        }
+
+        public IDbConnection Custom
+        {
+            get { return Conn; }
+        }
+
         public void Dispose()
         {
-            if (_conn != null)
-                _conn.Dispose();
+            if (Conn != null)
+                Conn.Dispose();
+        }
+    }
+
+    public class DesignBloodGroupsRepository : IBloodGroupsRepository
+    {
+        public Task<BloodGroup> AddBloodGroupAsync(BloodGroup bloodgroup)
+        {
+            return null;
+        }
+
+        public async Task<List<BloodGroup>> GetAllBloodGroupAsync()
+        {
+            var resultList = new List<BloodGroup>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new BloodGroup
+                                   {
+                                       SerialNo = i + 12345,
+                                       PatientID = i + 12345,
+                                       TDate = DateTime.Now,
+                                       PatientBloodGroup = "PatientBloodGroup" + i,
+                                       DonarName = "DonarName" + i,
+                                       DonarBloodGroup = "DonarBloodGroup" + i,
+                                       HbsAg = "HbsAg" + i,
+                                       AntiHCV = "AntiHCV" + i,
+                                       Fee = i + 12345,
+                                   });
+            }
+            return resultList;
+        }
+
+        public async Task<BloodGroup> FindBloodGroupAsync(long id)
+        {
+            return new BloodGroup
+                       {
+                           SerialNo = 12345,
+                           PatientID = 12345,
+                           TDate = DateTime.Now,
+                           PatientBloodGroup = "PatientBloodGroup",
+                           DonarName = "DonarName",
+                           DonarBloodGroup = "DonarBloodGroup",
+                           HbsAg = "HbsAg",
+                           AntiHCV = "AntiHCV",
+                           Fee = 12345,
+                       };
+        }
+
+        public async Task<BloodGroup> UpdateBloodGroupAsync(BloodGroup bloodgroup)
+        {
+            return null;
+        }
+
+        public async Task RemoveBloodGroupAsync(long id)
+        {
+        }
+
+        public async Task<BloodGroup> GetBloodGroupWithChildrenAsync(long id)
+        {
+            //One to One
+            var patient = new Patient
+                              {
+                                  PatientID = 12345,
+                                  Name = "Name",
+                                  Age = "Age",
+                                  Sex = "Sex",
+                                  RefBy = "RefBy",
+                              };
+
+
+            return new BloodGroup
+                       {
+                           SerialNo = 12345,
+                           PatientID = 12345,
+                           TDate = DateTime.Now,
+                           PatientBloodGroup = "PatientBloodGroup",
+                           DonarName = "DonarName",
+                           DonarBloodGroup = "DonarBloodGroup",
+                           HbsAg = "HbsAg",
+                           AntiHCV = "AntiHCV",
+                           Fee = 12345,
+                    
+                           //One to One
+                           Patient = patient,
+                       };
+        }
+
+        public async Task<BloodGroup> SaveBloodGroupAsync(BloodGroup bloodgroup)
+        {
+            return null;
+        }
+
+        public async Task<List<BloodGroup>> QueryAsync(string query)
+        {
+            return null;
+        }
+
+        public IDbConnection Custom
+        {
+            get { return null; }
         }
     }
 }

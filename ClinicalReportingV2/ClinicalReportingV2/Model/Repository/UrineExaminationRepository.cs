@@ -1,66 +1,86 @@
-﻿using ClinicalReporting.Data.Services;
-using ServiceStack.Data;
-using ServiceStack.OrmLite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Transactions;
+using ServiceStack.Data;
+using ServiceStack.OrmLite;
 
-namespace ClinicalReporting.Data.Repository
+namespace ClinicalReporting.Model.Repository
 {
+    public interface IUrineExaminationsRepository
+    {
+        IDbConnection Custom { get; }
+        Task<UrineExamination> AddUrineExaminationAsync(UrineExamination urineexamination);
+        Task<List<UrineExamination>> GetAllUrineExaminationAsync();
+        Task<UrineExamination> FindUrineExaminationAsync(long id);
+        Task<UrineExamination> UpdateUrineExaminationAsync(UrineExamination urineexamination);
+        Task RemoveUrineExaminationAsync(long id);
+
+        Task<UrineExamination> GetUrineExaminationWithChildrenAsync(long id);
+        Task<UrineExamination> SaveUrineExaminationAsync(UrineExamination urineexamination);
+        Task<List<UrineExamination>> QueryAsync(string query);
+    }
+
+
     public class UrineExaminationRepository : IUrineExaminationsRepository, IDisposable
     {
         private IDbConnection _conn;
 
-        private IDbConnection conn
+        public UrineExaminationRepository(IDbConnectionFactory dbFactory)
         {
-            get { return _conn = _conn ?? DbFactory.Open(); }
+            DbFactory = dbFactory;
+        }
+
+        private IDbConnectionFactory DbFactory { get; set; }
+
+        private IDbConnection Conn
+        {
+            get { return _conn ?? (_conn = DbFactory.Open()); }
         }
 
         public void Dispose()
         {
-            if (_conn != null)
-                _conn.Dispose();
+            if (Conn != null)
+                Conn.Dispose();
         }
 
-        public IDbConnectionFactory DbFactory { get; set; }
 
         public async Task<UrineExamination> AddUrineExaminationAsync(UrineExamination urineexamination)
         {
-            await conn.InsertAsync(urineexamination);
-            urineexamination.SerialNo = conn.LastInsertId();
+            await Conn.InsertAsync(urineexamination);
+            urineexamination.SerialNo = Conn.LastInsertId();
             return urineexamination;
         }
 
         public async Task<List<UrineExamination>> GetAllUrineExaminationAsync()
         {
-            return await conn.SelectAsync<UrineExamination>();
+            return await Conn.SelectAsync<UrineExamination>();
         }
 
         public async Task<UrineExamination> FindUrineExaminationAsync(long id)
         {
-            return await conn.SingleByIdAsync<UrineExamination>(id);
+            return await Conn.SingleByIdAsync<UrineExamination>(id);
         }
 
         public async Task<UrineExamination> UpdateUrineExaminationAsync(UrineExamination urineexamination)
         {
-            int result = await conn.UpdateAsync(urineexamination);
+            await Conn.UpdateAsync(urineexamination);
             return urineexamination;
         }
 
         public async Task RemoveUrineExaminationAsync(long id)
         {
-            await conn.DeleteByIdAsync<UrineExamination>(id);
+            await Conn.DeleteByIdAsync<UrineExamination>(id);
         }
 
         public async Task<UrineExamination> GetUrineExaminationWithChildrenAsync(long id)
         {
-            UrineExamination urineexamination = await conn.SingleByIdAsync<UrineExamination>(id);
+            UrineExamination urineexamination = await Conn.SingleByIdAsync<UrineExamination>(id);
 
 
             // One To One 
-            Patient patient = await conn.SingleAsync<Patient>(e => e.PatientID == id);
+            Patient patient = await Conn.SingleAsync<Patient>(e => e.PatientID == id);
             if (urineexamination != null && patient != null)
             {
                 urineexamination.Patient = patient;
@@ -91,13 +111,13 @@ namespace ClinicalReporting.Data.Repository
                     if (urineexamination.Patient.IsDeleted)
                     {
                         long id = urineexamination.Patient.PatientID;
-                        await _conn.DeleteByIdAsync<Patient>(id);
+                        await Conn.DeleteByIdAsync<Patient>(id);
                     }
                     else if (!urineexamination.Patient.IsDeleted)
                     {
                         Patient patient = urineexamination.Patient;
                         patient.PatientID = urineexamination.SerialNo;
-                        await conn.SaveAsync(patient);
+                        await Conn.SaveAsync(patient);
                     }
                 }
 
@@ -105,6 +125,155 @@ namespace ClinicalReporting.Data.Repository
                 txScope.Complete();
             }
             return urineexamination;
+        }
+
+        public async Task<List<UrineExamination>> QueryAsync(string query)
+        {
+            List<UrineExamination> result = await Conn.SelectAsync<UrineExamination>(query);
+            return result;
+        }
+
+        public IDbConnection Custom
+        {
+            get { return Conn; }
+        }
+    }
+
+    public class DesignUrineExaminationsRepository : IUrineExaminationsRepository
+    {
+        public Task<UrineExamination> AddUrineExaminationAsync(UrineExamination urineexamination)
+        {
+            return null;
+        }
+
+        public async Task<List<UrineExamination>> GetAllUrineExaminationAsync()
+        {
+            var resultList = new List<UrineExamination>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new UrineExamination
+                                   {
+                                       SerialNo = i + 12345,
+                                       PatientID = i + 12345,
+                                       TDate = DateTime.Now,
+                                       Colour = "Colour" + i,
+                                       Reaction = "Reaction" + i,
+                                       SpecificGravity = "SpecificGravity" + i,
+                                       Albumin = "Albumin" + i,
+                                       Sugar = "Sugar" + i,
+                                       Ketone = "Ketone" + i,
+                                       Blood = "Blood" + i,
+                                       Bilirubin = "Bilirubin" + i,
+                                       UrobilNogen = "UrobilNogen" + i,
+                                       PusCells = "PusCells" + i,
+                                       Rbc = "Rbc" + i,
+                                       EPiCells = "EPiCells" + i,
+                                       Cast = "Cast" + i,
+                                       Crystals = "Crystals" + i,
+                                       CalOxalate = "CalOxalate" + i,
+                                       UricAcid = "UricAcid" + i,
+                                       Amorphous = "Amorphous" + i,
+                                       Others = "Others" + i,
+                                       Fee = i + 12345,
+                                   });
+            }
+            return resultList;
+        }
+
+        public async Task<UrineExamination> FindUrineExaminationAsync(long id)
+        {
+            return new UrineExamination
+                       {
+                           SerialNo = 12345,
+                           PatientID = 12345,
+                           TDate = DateTime.Now,
+                           Colour = "Colour",
+                           Reaction = "Reaction",
+                           SpecificGravity = "SpecificGravity",
+                           Albumin = "Albumin",
+                           Sugar = "Sugar",
+                           Ketone = "Ketone",
+                           Blood = "Blood",
+                           Bilirubin = "Bilirubin",
+                           UrobilNogen = "UrobilNogen",
+                           PusCells = "PusCells",
+                           Rbc = "Rbc",
+                           EPiCells = "EPiCells",
+                           Cast = "Cast",
+                           Crystals = "Crystals",
+                           CalOxalate = "CalOxalate",
+                           UricAcid = "UricAcid",
+                           Amorphous = "Amorphous",
+                           Others = "Others",
+                           Fee = 12345,
+                       };
+        }
+
+        public async Task<UrineExamination> UpdateUrineExaminationAsync(UrineExamination urineexamination)
+        {
+            return null;
+        }
+
+        public async Task RemoveUrineExaminationAsync(long id)
+        {
+        }
+
+        public async Task<UrineExamination> GetUrineExaminationWithChildrenAsync(long id)
+        {
+            //One to One
+            var patient = new Patient
+                              {
+                                  PatientID = 12345,
+                                  Name = "Name",
+                                  Age = "Age",
+                                  Sex = "Sex",
+                                  RefBy = "RefBy",
+                              };
+
+
+            return new UrineExamination
+                       {
+                           SerialNo = 12345,
+                           PatientID = 12345,
+                           TDate = DateTime.Now,
+                           Colour = "Colour",
+                           Reaction = "Reaction",
+                           SpecificGravity = "SpecificGravity",
+                           Albumin = "Albumin",
+                           Sugar = "Sugar",
+                           Ketone = "Ketone",
+                           Blood = "Blood",
+                           Bilirubin = "Bilirubin",
+                           UrobilNogen = "UrobilNogen",
+                           PusCells = "PusCells",
+                           Rbc = "Rbc",
+                           EPiCells = "EPiCells",
+                           Cast = "Cast",
+                           Crystals = "Crystals",
+                           CalOxalate = "CalOxalate",
+                           UricAcid = "UricAcid",
+                           Amorphous = "Amorphous",
+                           Others = "Others",
+                           Fee = 12345,
+                    
+                           //One to One
+                           Patient = patient,
+                       };
+        }
+
+        public async Task<UrineExamination> SaveUrineExaminationAsync(UrineExamination urineexamination)
+        {
+            return null;
+        }
+
+        public async Task<List<UrineExamination>> QueryAsync(string query)
+        {
+            return null;
+        }
+
+        public IDbConnection Custom
+        {
+            get { return null; }
         }
     }
 }

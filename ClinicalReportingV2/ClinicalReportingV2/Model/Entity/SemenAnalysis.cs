@@ -1,37 +1,11 @@
-﻿using ClinicalReporting.Data.Wrapper;
+﻿using System;
 using ServiceStack.DataAnnotations;
-using System;
 
-namespace ClinicalReporting.Data
+namespace ClinicalReporting.Model
 {
     [Alias("SemenAnalysis")]
     public class SemenAnalysis
     {
-        public SemenAnalysis()
-        {
-        }
-
-        public SemenAnalysis(SemenAnalysisW semenanalysisw)
-        {
-            SerialNo = semenanalysisw.SerialNo;
-            PatientID = semenanalysisw.PatientID;
-            TDate = semenanalysisw.TDate;
-            Colour = semenanalysisw.Colour;
-            Quantity = semenanalysisw.Quantity;
-            Ph = semenanalysisw.Ph;
-            TimeOfCollection = semenanalysisw.TimeOfCollection;
-            TimeOfExamination = semenanalysisw.TimeOfExamination;
-            TotalCount = semenanalysisw.TotalCount;
-            ActiveMotility = semenanalysisw.ActiveMotility;
-            Sluggish = semenanalysisw.Sluggish;
-            NonMotile = semenanalysisw.NonMotile;
-            Abnormal = semenanalysisw.Abnormal;
-            PusCells = semenanalysisw.PusCells;
-            Rbc = semenanalysisw.Rbc;
-            EpithelialCell = semenanalysisw.EpithelialCell;
-            Fee = semenanalysisw.Fee;
-        }
-
         [PrimaryKey]
         [Alias("SerialNo")]
         public Int64 SerialNo { get; set; }

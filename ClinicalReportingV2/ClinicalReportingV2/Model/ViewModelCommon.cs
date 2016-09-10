@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,10 +7,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using GalaSoft.MvvmLight;
 
-namespace ClinicalReporting.Data.Services
+namespace ClinicalReporting.Model.Wrapper
 {
-    public class CommonWrapper<T> : ObservableObject, INotifyDataErrorInfo
+    public class CommonWrapper<T> : ViewModelBase, INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
 

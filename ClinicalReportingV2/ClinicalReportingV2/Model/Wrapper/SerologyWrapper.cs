@@ -1,7 +1,6 @@
-﻿using ClinicalReporting.Data.Services;
-using System;
+﻿using System;
 
-namespace ClinicalReporting.Data.Wrapper
+namespace ClinicalReporting.Model.Wrapper
 {
     public class SerologyW : CommonWrapper<Serology>
     {
@@ -97,14 +96,14 @@ namespace ClinicalReporting.Data.Wrapper
 
         public String IGM
         {
-            get { return GET(ref _IGM); }
-            set { SET(ref _IGM, value); }
+            get { return GET(ref _igm); }
+            set { SET(ref _igm, value); }
         }
 
         public String IGG
         {
-            get { return GET(ref _IGG); }
-            set { SET(ref _IGG, value); }
+            get { return GET(ref _igg); }
+            set { SET(ref _igg, value); }
         }
 
         public String HbsAg
@@ -157,13 +156,13 @@ namespace ClinicalReporting.Data.Wrapper
 
         public String Igm
         {
-            get { return GET(ref _igm); }
+            get { return GET(ref _IGM); }
             set { SET(ref _igm, value); }
         }
 
         public String Igg
         {
-            get { return GET(ref _igg); }
+            get { return GET(ref _IGG); }
             set { SET(ref _igg, value); }
         }
 
