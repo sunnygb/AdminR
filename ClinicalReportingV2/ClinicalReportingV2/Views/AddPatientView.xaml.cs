@@ -7,11 +7,12 @@ using Microsoft.Win32;
 
 namespace ClinicalReporting.Views
 {
-    public partial class AddPatientForm : UserControl
+    public partial class AddPatientView : UserControl,ICommonView
     {
-        public AddPatientForm()
+        public AddPatientView()
         {
             InitializeComponent();
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -28,14 +29,6 @@ namespace ClinicalReporting.Views
         }
 
 
-        private bool IsValid(DependencyObject obj)
-        {
-            // The dependency object is valid if it has no errors and all
-            // of its children (that are dependency objects) are error-free.
-            return !Validation.GetHasError(obj) &&
-                   LogicalTreeHelper.GetChildren(obj)
-                                    .OfType<DependencyObject>()
-                                    .All(IsValid);
-        }
+
     }
 }

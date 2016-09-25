@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ClinicalReporting.Views.AddPatientForm"
+﻿<UserControl x:Class="ClinicalReporting.Views.AddPatientView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModel="clr-namespace:ClinicalReporting.ViewModel"
@@ -10,12 +10,7 @@
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
                                               Type={x:Type ViewModel:AddPatientViewModel}}"
              d:DesignWidth="1014"
-             mc:Ignorable="d">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <ei:CallMethodAction MethodName="LoadAsync" TargetObject="{Binding}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+             mc:Ignorable="d" DataContext="{Binding Mian.AddPatientViewModel, Source={StaticResource Locator}}">
 
 
     <materialDesign:Card Margin="10,10,10,10"

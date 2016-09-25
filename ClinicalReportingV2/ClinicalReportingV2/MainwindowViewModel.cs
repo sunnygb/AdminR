@@ -1,4 +1,6 @@
-﻿using ClinicalReporting.ViewModel;
+﻿using System.Diagnostics;
+using ClinicalReporting.Services;
+using ClinicalReporting.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Practices.ServiceLocation;
@@ -7,34 +9,38 @@ namespace ClinicalReporting
 {
     public class MainwindowViewModel : ViewModelBase
     {
-        private readonly AddPatientViewModel _addpatientVm;
+        private  AddPatientViewModel _addpatientVm;
+        private SearchViewModel _searchVm;
+
         private readonly BackupViewModel _backupVm = new BackupViewModel();
-        private readonly SearchViewModel _searchVm = new SearchViewModel();
         private readonly SettingsViewModel _settingsVm = new SettingsViewModel();
         private readonly ThemesViewModel _themesVm = new ThemesViewModel();
 
 
-        private ViewModelBase _currentViewModel;
-        private MainHeaderViewModel _header;
-
-        public MainwindowViewModel()
+        
+        private SearchViewModel _header;
+        private readonly IFrameNavigation _navigation;
+        
+        public MainwindowViewModel(IFrameNavigation navigation)
         {
+            _navigation = navigation;
             NavigationCommand = new RelayCommand<string>(NavigateTo);
-            _header = ServiceLocator.Current.GetInstance<MainHeaderViewModel>();
             _addpatientVm = ServiceLocator.Current.GetInstance<AddPatientViewModel>();
+            _searchVm = ServiceLocator.Current.GetInstance<SearchViewModel>();
+            
         }
 
-        public ViewModelBase CurrentViewModel
+        public AddPatientViewModel AddPatientViewModel
         {
-            get { return _currentViewModel; }
-            set { Set(() => CurrentViewModel, ref _currentViewModel, value); }
+            get { return _addpatientVm; }
+            set { Set(() => AddPatientViewModel, ref _addpatientVm, value); }
+        }
+        public SearchViewModel SearchViewModel
+        {
+            get { return _searchVm; }
+            set { Set(() => SearchViewModel, ref _searchVm, value); }
         }
 
-        public MainHeaderViewModel MainHeader
-        {
-            get { return _header; }
-            set { Set(() => MainHeader, ref _header, value); }
-        }
 
         public RelayCommand<string> NavigationCommand { get; private set; }
 
@@ -43,22 +49,32 @@ namespace ClinicalReporting
             switch (destination)
             {
                 case "addpatient":
-                    CurrentViewModel = _addpatientVm;
+                    _navigation.SetMainFrame(ViewModelLocator.PatientView, "MainFrame");
                     break;
 
                 case "search":
-                    CurrentViewModel = _searchVm;
+                    //CurrentViewModel = _searchVm;
+                    _navigation.SetMainFrame(ViewModelLocator.SearchView, "MainFrame");
+                    
+                    
                     break;
                 case "backup":
-                    CurrentViewModel = _backupVm;
+                    
                     break;
                 case "settings":
-                    CurrentViewModel = _settingsVm;
+                    
                     break;
                 case "themes":
-                    CurrentViewModel = _themesVm;
+                   
                     break;
             }
+        }
+        public async void LoadAsync()
+        {
+            Trace.WriteLine("Async Method Started");
+            _navigation.SetMainFrame(ViewModelLocator.HeaderView, "HeaderFrame");
+            await _addpatientVm.LoadAsync();
+            await _searchVm.LoadAsync();
         }
     }
 }

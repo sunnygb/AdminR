@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using ClinicalReporting.Model;
 using ClinicalReporting.Model.Repository;
@@ -9,7 +10,7 @@ using ServiceStack.OrmLite;
 
 namespace ClinicalReporting.ViewModel
 {
-    internal class AddPatientViewModel : ViewModelBase
+    public class AddPatientViewModel : ViewModelBase
     {
         private readonly IDoctorsRepository _repoDoc;
         private readonly IPatientsRepository _repoPatient;
@@ -55,14 +56,14 @@ namespace ClinicalReporting.ViewModel
             MessageBox.Show("Saved");
         }
 
-        public async void LoadAsync()
+        public async Task LoadAsync()
         {
             Doctors = new ObservableCollection<Doctor>(await _repoDoc.GetAllDoctorAsync());
             _patient.PatientID =
                 await
                 _repoPatient.Custom
                             .ScalarAsync<long>("Select seq from sqlite_sequence where name=@name;",
-                                               new {name = "Patient"});
+                                               new {name = "Patient"})+1;
         }
     }
 }

@@ -3,12 +3,11 @@
 namespace ClinicalReporting.Views
 {
     /// <summary>
-    ///     Interaction logic for SearchForm.xaml
+    ///     Interaction logic for MainHeader.xaml
     /// </summary>
-    /// this
-    public partial class SearchForm : UserControl
+    public partial class MainHeaderView : UserControl,ICommonView
     {
-        public SearchForm()
+        public MainHeaderView()
         {
             InitializeComponent();
         }

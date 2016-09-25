@@ -1,6 +1,8 @@
 ﻿<Window x:Class="ClinicalReporting.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:ClinicalReporting"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewModel="clr-namespace:ClinicalReporting.ViewModel"
@@ -15,17 +17,23 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <ei:CallMethodAction MethodName="LoadAsync" TargetObject="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:AddPatientViewModel}">
-            <views:AddPatientForm />
+            <views:AddPatientView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:SearchViewModel}">
-            <views:SearchForm />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:MainHeaderViewModel}">
-            <views:MainHeader />
+            <views:SearchView />
         </DataTemplate>
     </Window.Resources>
+
+
 
 
     <DockPanel LastChildFill="False">
@@ -156,20 +164,18 @@
 
             <StackPanel Width="172" />
 
-            <StackPanel x:Name="headerFrame"
-                        Width="1060"
-                        Background="{DynamicResource MaterialDesignPaper}">
-                <ContentControl Content="{Binding MainHeader}" />
-            </StackPanel>
+            <Frame x:Name="HeaderFrame"
+                   Width="1060"
+                   Background="{DynamicResource MaterialDesignPaper}" />
 
 
         </StackPanel>
-        <StackPanel Width="Auto"
-                    Height="Auto"
-                    Margin="0,-2,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
-            <ContentControl Content="{Binding CurrentViewModel}" />
-        </StackPanel>
+        <Frame x:Name="MainFrame"
+               Width="1060"
+               Background="{DynamicResource MaterialDesignPaper}"
+               NavigationUIVisibility="Hidden">
+            <!--  <ContentControl Content="{Binding CurrentViewModel}" />  -->
+        </Frame>
+
     </DockPanel>
 </Window>

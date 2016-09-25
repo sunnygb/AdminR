@@ -121,7 +121,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\IoC.cs" />
     <Compile Include="Model\Entity\Biochemistry.cs" />
     <Compile Include="Model\Entity\BloodGroup.cs" />
     <Compile Include="Model\Entity\Doctor.cs" />
@@ -156,20 +155,21 @@
     <Compile Include="Model\Wrapper\SemenAnalysisWrapper.cs" />
     <Compile Include="Model\Wrapper\SerologyWrapper.cs" />
     <Compile Include="Model\Wrapper\UrineExaminationWrapper.cs" />
+    <Compile Include="Services\IFrameNavigation.cs" />
     <Compile Include="ViewModel\BackupViewModel.cs" />
-    <Compile Include="ViewModel\MainHeaderViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ThemesViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Views\AddPatientForm.xaml.cs">
-      <DependentUpon>AddPatientForm.xaml</DependentUpon>
+    <Compile Include="Services\ViewModelLocator.cs" />
+    <Compile Include="Views\AddPatientView.xaml.cs">
+      <DependentUpon>AddPatientView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Header\MainHeader.xaml.cs">
-      <DependentUpon>MainHeader.xaml</DependentUpon>
+    <Compile Include="Views\Header\MainHeaderView.xaml.cs">
+      <DependentUpon>MainHeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchForm.xaml.cs">
-      <DependentUpon>SearchForm.xaml</DependentUpon>
+    <Compile Include="Views\ICommonView.cs" />
+    <Compile Include="Views\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -184,15 +184,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\AddPatientForm.xaml">
+    <Page Include="Views\AddPatientView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Header\MainHeader.xaml">
+    <Page Include="Views\Header\MainHeaderView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SearchForm.xaml">
+    <Page Include="Views\SearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

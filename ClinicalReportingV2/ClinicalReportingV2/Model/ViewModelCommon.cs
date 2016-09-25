@@ -11,7 +11,7 @@ using GalaSoft.MvvmLight;
 
 namespace ClinicalReporting.Model.Wrapper
 {
-    public class CommonWrapper<T> : ViewModelBase, INotifyDataErrorInfo
+    public class CommonWrapper<T> : ObservableObject, INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
 
