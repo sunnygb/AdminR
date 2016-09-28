@@ -1,40 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using ServiceStack.DataAnnotations;
-
+using ClinicalReporting.Model.Wrapper;
 namespace ClinicalReporting.Model
 {
+
+
     [Alias("ELISA_HBSAG")]
-    public class ElisaHbsag
+    public partial class ElisaHbsag
     {
+        
+        public ElisaHbsag()
+        {
+        }
+        
+
         [PrimaryKey]
         [Alias("SerialNo")]
-        public Int64 SerialNo { get; set; }
+        public System.Int64 SerialNo { get; set; }
 
         [Alias("PatientID")]
-        public Int64 PatientID { get; set; }
+        public System.Int64 PatientID { get; set; }
 
         [Alias("TDate")]
-        public DateTime TDate { get; set; }
+        public System.DateTime TDate { get; set; }
 
         [Alias("Patient_Value")]
-        public Double PatientValue { get; set; }
+        public System.Double PatientValue { get; set; }
 
         [Alias("Cut_Off_Value")]
-        public Double CutOffValue { get; set; }
+        public System.Double CutOffValue { get; set; }
 
         [Alias("Fee")]
-        public Int32 Fee { get; set; }
+        public System.Int32 Fee { get; set; }
 
         [Ignore]
         public virtual Patient Patient { get; set; }
-
-        [Ignore]
-        public bool IsNew
-        {
-            get { return SerialNo == default(int); }
-        }
-
-        [Ignore]
-        public bool IsDeleted { get; set; }
+         [Ignore]
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.SerialNo == default(int);
+         
+                }
+                
+          }
+          [Ignore]
+          public bool IsDeleted { get; set; }
     }
 }

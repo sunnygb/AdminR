@@ -1,73 +1,87 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using ServiceStack.DataAnnotations;
-
+using ClinicalReporting.Model.Wrapper;
 namespace ClinicalReporting.Model
 {
+
+
     [Alias("SemenAnalysis")]
-    public class SemenAnalysis
+    public partial class SemenAnalysis
     {
+        
+        public SemenAnalysis()
+        {
+        }
+        
+
         [PrimaryKey]
         [Alias("SerialNo")]
-        public Int64 SerialNo { get; set; }
+        public System.Int64 SerialNo { get; set; }
 
         [Alias("PatientID")]
-        public Int64 PatientID { get; set; }
+        public System.Int64 PatientID { get; set; }
 
         [Alias("TDate")]
-        public DateTime TDate { get; set; }
+        public System.DateTime TDate { get; set; }
 
         [Alias("Colour")]
-        public String Colour { get; set; }
+        public System.String Colour { get; set; }
 
         [Alias("Quantity")]
-        public String Quantity { get; set; }
+        public System.String Quantity { get; set; }
 
         [Alias("PH")]
-        public String Ph { get; set; }
+        public System.String Ph { get; set; }
 
         [Alias("Time_Of_Collection")]
-        public String TimeOfCollection { get; set; }
+        public System.String TimeOfCollection { get; set; }
 
         [Alias("Time_Of_Examination")]
-        public String TimeOfExamination { get; set; }
+        public System.String TimeOfExamination { get; set; }
 
         [Alias("Total_Count")]
-        public String TotalCount { get; set; }
+        public System.String TotalCount { get; set; }
 
         [Alias("Active_Motility")]
-        public String ActiveMotility { get; set; }
+        public System.String ActiveMotility { get; set; }
 
         [Alias("Sluggish")]
-        public String Sluggish { get; set; }
+        public System.String Sluggish { get; set; }
 
         [Alias("Non_Motile")]
-        public String NonMotile { get; set; }
+        public System.String NonMotile { get; set; }
 
         [Alias("Abnormal")]
-        public String Abnormal { get; set; }
+        public System.String Abnormal { get; set; }
 
         [Alias("Pus_Cells")]
-        public String PusCells { get; set; }
+        public System.String PusCells { get; set; }
 
         [Alias("RBC")]
-        public String Rbc { get; set; }
+        public System.String Rbc { get; set; }
 
         [Alias("Epithelial_Cell")]
-        public String EpithelialCell { get; set; }
+        public System.String EpithelialCell { get; set; }
 
         [Alias("Fee")]
-        public Int32 Fee { get; set; }
+        public System.Int32 Fee { get; set; }
 
         [Ignore]
         public virtual Patient Patient { get; set; }
-
-        [Ignore]
-        public bool IsNew
-        {
-            get { return SerialNo == default(int); }
-        }
-
-        [Ignore]
-        public bool IsDeleted { get; set; }
+         [Ignore]
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.SerialNo == default(int);
+         
+                }
+                
+          }
+          [Ignore]
+          public bool IsDeleted { get; set; }
     }
 }

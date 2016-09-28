@@ -11,10 +11,13 @@
         Width="1180.737"
         Height="670.052"
         Background="{DynamicResource MaterialDesignPaper}"
-        DataContext="{Binding Mian,
+        DataContext="{Binding Main,
+                              Mode=OneWay,
                               Source={StaticResource Locator}}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+
+
 
 
     <i:Interaction.Triggers>
@@ -22,16 +25,6 @@
             <ei:CallMethodAction MethodName="LoadAsync" TargetObject="{Binding}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-
-
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:AddPatientViewModel}">
-            <views:AddPatientView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:SearchViewModel}">
-            <views:SearchView />
-        </DataTemplate>
-    </Window.Resources>
 
 
 

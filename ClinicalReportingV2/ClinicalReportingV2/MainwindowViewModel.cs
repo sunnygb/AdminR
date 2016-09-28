@@ -9,6 +9,10 @@ namespace ClinicalReporting
 {
     public class MainwindowViewModel : ViewModelBase
     {
+
+        #region
+
+        #endregion
         private  AddPatientViewModel _addpatientVm;
         private SearchViewModel _searchVm;
 
@@ -49,12 +53,12 @@ namespace ClinicalReporting
             switch (destination)
             {
                 case "addpatient":
-                    _navigation.SetMainFrame(ViewModelLocator.PatientView, "MainFrame");
+                    _navigation.SetMainFrame(ViewList.PatientView, "MainFrame");
                     break;
 
                 case "search":
                     //CurrentViewModel = _searchVm;
-                    _navigation.SetMainFrame(ViewModelLocator.SearchView, "MainFrame");
+                    _navigation.SetMainFrame(ViewList.SearchView, "MainFrame");
                     
                     
                     break;
@@ -72,7 +76,7 @@ namespace ClinicalReporting
         public async void LoadAsync()
         {
             Trace.WriteLine("Async Method Started");
-            _navigation.SetMainFrame(ViewModelLocator.HeaderView, "HeaderFrame");
+            _navigation.SetMainFrame(ViewList.HeaderView, "HeaderFrame");
             await _addpatientVm.LoadAsync();
             await _searchVm.LoadAsync();
         }

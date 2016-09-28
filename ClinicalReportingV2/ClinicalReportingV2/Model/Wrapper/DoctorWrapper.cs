@@ -1,40 +1,44 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ClinicalReporting.Model.Wrapper
 {
-    public class DoctorW : CommonWrapper<Doctor>
+    public partial class DoctorW : CommonWrapper<Doctor>
     {
-        private Int64 _doctorid;
-        private String _doctorname;
-
-        public DoctorW(Doctor doctorModel) : base(doctorModel)
+        public DoctorW(Doctor doctorModel):base(doctorModel)
         {
-            InitializeComplexProperties(doctorModel);
-            InitializeCollectionProperties(doctorModel);
+           
+           InitializeComplexProperties(doctorModel);
+           InitializeCollectionProperties(doctorModel);
+           
+           
         }
-
-        public DoctorW() : base(null)
-        {
-        }
-
-        public Int64 DoctorID
-        {
-            get { return GET(ref _doctorid); }
-            set { SET(ref _doctorid, value); }
-        }
-
-        public String DoctorName
-        {
-            get { return GET(ref _doctorname); }
-            set { SET(ref _doctorname, value); }
-        }
-
+        
         private void InitializeCollectionProperties(Doctor doctorModel)
         {
         }
-
+        
         private void InitializeComplexProperties(Doctor doctorModel)
         {
+        
         }
+          
+        public DoctorW():base(null){}
+        
+        private System.Int64 _doctorid;
+        public  System.Int64  DoctorID
+        {
+           get { return GET(ref _doctorid); }
+           set { SET(ref  _doctorid,value); }
+        }
+        private System.String _doctorname;
+        public  System.String  DoctorName
+        {
+           get { return GET(ref _doctorname); }
+           set { SET(ref  _doctorname,value); }
+        }
+        
+        
+        
     }
 }

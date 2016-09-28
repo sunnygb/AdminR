@@ -11,6 +11,7 @@ namespace ClinicalReporting.Views
         public SearchView()
         {
             InitializeComponent();
+            
         }
     }
 }

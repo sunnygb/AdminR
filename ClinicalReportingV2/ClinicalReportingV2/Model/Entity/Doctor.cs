@@ -1,25 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using ServiceStack.DataAnnotations;
-
+using ClinicalReporting.Model.Wrapper;
 namespace ClinicalReporting.Model
 {
+
+
     [Alias("Doctor")]
-    public class Doctor
+    public partial class Doctor
     {
+        
+        public Doctor()
+        {
+        }
+        
+
         [PrimaryKey]
         [Alias("DoctorID")]
-        public Int64 DoctorID { get; set; }
+        public System.Int64 DoctorID { get; set; }
 
         [Alias("DoctorName")]
-        public String DoctorName { get; set; }
+        public System.String DoctorName { get; set; }
 
-        [Ignore]
-        public bool IsNew
-        {
-            get { return DoctorID == default(int); }
-        }
-
-        [Ignore]
-        public bool IsDeleted { get; set; }
+         [Ignore]
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.DoctorID == default(int);
+         
+                }
+                
+          }
+          [Ignore]
+          public bool IsDeleted { get; set; }
     }
 }

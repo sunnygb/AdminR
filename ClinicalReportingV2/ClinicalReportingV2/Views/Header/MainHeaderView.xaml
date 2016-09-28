@@ -69,13 +69,14 @@
                       Width="194"
                       Height="40"
                       HorizontalAlignment="Right"
-                      IsEditable="True"
+                       IsEditable="True"
+                       VirtualizingPanel.ScrollUnit="Pixel"
                       ItemsSource="{Binding Patients}"
                       SelectedItem="Patient"
                       SelectedValue="{Binding PatientId}"
                       SelectedValuePath="PatientID"
                       Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                      Text="{Binding SearchPatient}"
+                      Text="{Binding SearchName}"
                       materialDesign:HintAssist.Hint="Search"
                       materialDesign:HintAssist.HintOpacity=".26">
 

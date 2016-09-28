@@ -7,10 +7,12 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             DataContext="{Binding Main.AddPatientViewModel,
+                                   Source={StaticResource Locator}}"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
                                               Type={x:Type ViewModel:AddPatientViewModel}}"
              d:DesignWidth="1014"
-             mc:Ignorable="d" DataContext="{Binding Mian.AddPatientViewModel, Source={StaticResource Locator}}">
+             mc:Ignorable="d">
 
 
     <materialDesign:Card Margin="10,10,10,10"
@@ -280,12 +282,12 @@
                                   ItemsSource="{Binding Doctors}"
                                   SelectedValue="{Binding SelectedDoctor}"
                                   SelectedValuePath="PatientID"
+                                  VirtualizingPanel.ScrollUnit="Pixel"
                                   materialDesign:HintAssist.Hint="Ref By"
                                   materialDesign:HintAssist.IsFloating="True">
                             <ComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True"
-                                                            VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                                    <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
                                 </ItemsPanelTemplate>
                             </ComboBox.ItemsPanel>
                         </ComboBox>

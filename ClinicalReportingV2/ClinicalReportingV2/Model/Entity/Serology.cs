@@ -1,94 +1,108 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using ServiceStack.DataAnnotations;
-
+using ClinicalReporting.Model.Wrapper;
 namespace ClinicalReporting.Model
 {
+
+
     [Alias("Serology")]
-    public class Serology
+    public partial class Serology
     {
+        
+        public Serology()
+        {
+        }
+        
+
         [PrimaryKey]
         [Alias("SERIALNO")]
-        public Int64 Serialno { get; set; }
+        public System.Int64 Serialno { get; set; }
 
         [Alias("PATIENTID")]
-        public Int64 Patientid { get; set; }
+        public System.Int64 Patientid { get; set; }
 
         [Alias("TDATE")]
-        public String Tdate { get; set; }
+        public System.String Tdate { get; set; }
 
         [Alias("WIDAL_TEST")]
-        public String WidalTest { get; set; }
+        public System.String WidalTest { get; set; }
 
         [Alias("S_TYPHI_TO")]
-        public String STyphiTo { get; set; }
+        public System.String STyphiTo { get; set; }
 
         [Alias("S_TYPHI_TH")]
-        public String STyphiTh { get; set; }
+        public System.String STyphiTh { get; set; }
 
         [Alias("PARA_THYPHI_AH")]
-        public String ParaThyphiAh { get; set; }
+        public System.String ParaThyphiAh { get; set; }
 
         [Alias("PARA_THYPHI_BH")]
-        public String ParaThyphiBh { get; set; }
+        public System.String ParaThyphiBh { get; set; }
 
         [Alias("TYPHOID")]
-        public String Typhoid { get; set; }
+        public System.String Typhoid { get; set; }
 
         [Alias("I_G_M")]
-        public String IGM { get; set; }
+        public System.String IGM { get; set; }
 
         [Alias("I_G_G")]
-        public String IGG { get; set; }
+        public System.String IGG { get; set; }
 
         [Alias("HBS_AG")]
-        public String HbsAg { get; set; }
+        public System.String HbsAg { get; set; }
 
         [Alias("ASO_TITRE")]
-        public String AsoTitre { get; set; }
+        public System.String AsoTitre { get; set; }
 
         [Alias("PREGNANCY_TEST")]
-        public String PregnancyTest { get; set; }
+        public System.String PregnancyTest { get; set; }
 
         [Alias("RA_FACTOR")]
-        public String RaFactor { get; set; }
+        public System.String RaFactor { get; set; }
 
         [Alias("ANTI_HCV")]
-        public String AntiHcv { get; set; }
+        public System.String AntiHcv { get; set; }
 
         [Alias("MANTOEX")]
-        public String Mantoex { get; set; }
+        public System.String Mantoex { get; set; }
 
         [Alias("KAHNS_VDRL")]
-        public String KahnsVdrl { get; set; }
+        public System.String KahnsVdrl { get; set; }
 
         [Alias("TB_PLUS")]
-        public String TbPlus { get; set; }
+        public System.String TbPlus { get; set; }
 
         [Alias("IGM")]
-        public String Igm { get; set; }
+        public System.String Igm { get; set; }
 
         [Alias("IGG")]
-        public String Igg { get; set; }
+        public System.String Igg { get; set; }
 
         [Alias("HELICOBACTER_PYLORI")]
-        public String HelicobacterPylori { get; set; }
+        public System.String HelicobacterPylori { get; set; }
 
         [Alias("HIV")]
-        public String Hiv { get; set; }
+        public System.String Hiv { get; set; }
 
         [Alias("FEE")]
-        public Int64 Fee { get; set; }
+        public System.Int64 Fee { get; set; }
 
         [Ignore]
         public virtual Patient Patient { get; set; }
-
-        [Ignore]
-        public bool IsNew
-        {
-            get { return Serialno == default(int); }
-        }
-
-        [Ignore]
-        public bool IsDeleted { get; set; }
+         [Ignore]
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.Serialno == default(int);
+         
+                }
+                
+          }
+          [Ignore]
+          public bool IsDeleted { get; set; }
     }
 }

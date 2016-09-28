@@ -1,223 +1,237 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using ServiceStack.DataAnnotations;
-
+using ClinicalReporting.Model.Wrapper;
 namespace ClinicalReporting.Model
 {
+
+
     [Alias("Haematology")]
-    public class Haematology
+    public partial class Haematology
     {
+        
+        public Haematology()
+        {
+        }
+        
+
         [PrimaryKey]
         [Alias("SerialNo")]
-        public Int64 SerialNo { get; set; }
+        public System.Int64 SerialNo { get; set; }
 
         [Alias("PatientID")]
-        public Int64 PatientID { get; set; }
+        public System.Int64 PatientID { get; set; }
 
         [Alias("TDate")]
-        public DateTime TDate { get; set; }
+        public System.DateTime TDate { get; set; }
 
         [Alias("HB")]
-        public String Hb { get; set; }
+        public System.String Hb { get; set; }
 
         [Alias("HB_Unit")]
-        public String HBUnit { get; set; }
+        public System.String HBUnit { get; set; }
 
         [Alias("HB_Nor")]
-        public String HBNor { get; set; }
+        public System.String HBNor { get; set; }
 
         [Alias("TLC")]
-        public String Tlc { get; set; }
+        public System.String Tlc { get; set; }
 
         [Alias("TLC_Unit")]
-        public String TLCUnit { get; set; }
+        public System.String TLCUnit { get; set; }
 
         [Alias("TLC_Nor")]
-        public String TLCNor { get; set; }
+        public System.String TLCNor { get; set; }
 
         [Alias("ESR")]
-        public String Esr { get; set; }
+        public System.String Esr { get; set; }
 
         [Alias("ESR_Unit")]
-        public String ESRUnit { get; set; }
+        public System.String ESRUnit { get; set; }
 
         [Alias("ESR_Nor")]
-        public String ESRNor { get; set; }
+        public System.String ESRNor { get; set; }
 
         [Alias("BT")]
-        public String Bt { get; set; }
+        public System.String Bt { get; set; }
 
         [Alias("BT_Unit")]
-        public String BTUnit { get; set; }
+        public System.String BTUnit { get; set; }
 
         [Alias("BT_Nor")]
-        public String BTNor { get; set; }
+        public System.String BTNor { get; set; }
 
         [Alias("CT")]
-        public String Ct { get; set; }
+        public System.String Ct { get; set; }
 
         [Alias("CT_Unit")]
-        public String CTUnit { get; set; }
+        public System.String CTUnit { get; set; }
 
         [Alias("CT_Nor")]
-        public String CTNor { get; set; }
+        public System.String CTNor { get; set; }
 
         [Alias("Platelets_Count")]
-        public String PlateletsCount { get; set; }
+        public System.String PlateletsCount { get; set; }
 
         [Alias("Platelets_Count_Unit")]
-        public String PlateletsCountUnit { get; set; }
+        public System.String PlateletsCountUnit { get; set; }
 
         [Alias("Platelets_Count_Nor")]
-        public String PlateletsCountNor { get; set; }
+        public System.String PlateletsCountNor { get; set; }
 
         [Alias("PT")]
-        public String Pt { get; set; }
+        public System.String Pt { get; set; }
 
         [Alias("PT_Unit")]
-        public String PTUnit { get; set; }
+        public System.String PTUnit { get; set; }
 
         [Alias("PT_Nor")]
-        public String PTNor { get; set; }
+        public System.String PTNor { get; set; }
 
         [Alias("DLC")]
-        public String Dlc { get; set; }
+        public System.String Dlc { get; set; }
 
         [Alias("DLC_Unit")]
-        public String DLCUnit { get; set; }
+        public System.String DLCUnit { get; set; }
 
         [Alias("DLC_Nor")]
-        public String DLCNor { get; set; }
+        public System.String DLCNor { get; set; }
 
         [Alias("Polymorphs")]
-        public String Polymorphs { get; set; }
+        public System.String Polymorphs { get; set; }
 
         [Alias("Polymorphs_Unit")]
-        public String PolymorphsUnit { get; set; }
+        public System.String PolymorphsUnit { get; set; }
 
         [Alias("Polymorphs_Nor")]
-        public String PolymorphsNor { get; set; }
+        public System.String PolymorphsNor { get; set; }
 
         [Alias("Lymphocytes")]
-        public String Lymphocytes { get; set; }
+        public System.String Lymphocytes { get; set; }
 
         [Alias("Lymphocytes_Unit")]
-        public String LymphocytesUnit { get; set; }
+        public System.String LymphocytesUnit { get; set; }
 
         [Alias("Lymphocytes_Nor")]
-        public String LymphocytesNor { get; set; }
+        public System.String LymphocytesNor { get; set; }
 
         [Alias("Monocyte")]
-        public String Monocyte { get; set; }
+        public System.String Monocyte { get; set; }
 
         [Alias("Monocyte_Unit")]
-        public String MonocyteUnit { get; set; }
+        public System.String MonocyteUnit { get; set; }
 
         [Alias("Monocyte_Nor")]
-        public String MonocyteNor { get; set; }
+        public System.String MonocyteNor { get; set; }
 
         [Alias("Eosinophil")]
-        public String Eosinophil { get; set; }
+        public System.String Eosinophil { get; set; }
 
         [Alias("Eosinophil_Unit")]
-        public String EosinophilUnit { get; set; }
+        public System.String EosinophilUnit { get; set; }
 
         [Alias("Eosinophil_Nor")]
-        public String EosinophilNor { get; set; }
+        public System.String EosinophilNor { get; set; }
 
         [Alias("Basophil")]
-        public String Basophil { get; set; }
+        public System.String Basophil { get; set; }
 
         [Alias("Basophil_Unit")]
-        public String BasophilUnit { get; set; }
+        public System.String BasophilUnit { get; set; }
 
         [Alias("Basophil_Nor")]
-        public String BasophilNor { get; set; }
+        public System.String BasophilNor { get; set; }
 
         [Alias("Malaria_Parasites")]
-        public String MalariaParasites { get; set; }
+        public System.String MalariaParasites { get; set; }
 
         [Alias("Malaria_Parasites_Unit")]
-        public String MalariaParasitesUnit { get; set; }
+        public System.String MalariaParasitesUnit { get; set; }
 
         [Alias("Malaria_Parasites_Nor")]
-        public String MalariaParasitesNor { get; set; }
+        public System.String MalariaParasitesNor { get; set; }
 
         [Alias("Blood_Group")]
-        public String BloodGroup { get; set; }
+        public System.String BloodGroup { get; set; }
 
         [Alias("Blood_Group_Unit")]
-        public String BloodGroupUnit { get; set; }
+        public System.String BloodGroupUnit { get; set; }
 
         [Alias("Blood_Group_Nor")]
-        public String BloodGroupNor { get; set; }
+        public System.String BloodGroupNor { get; set; }
 
         [Alias("RH_Factor")]
-        public String RHFactor { get; set; }
+        public System.String RHFactor { get; set; }
 
         [Alias("RH_Factor_Unit")]
-        public String RHFactorUnit { get; set; }
+        public System.String RHFactorUnit { get; set; }
 
         [Alias("RH_Factor_Nor")]
-        public String RHFactorNor { get; set; }
+        public System.String RHFactorNor { get; set; }
 
         [Alias("Total_R_B_C")]
-        public String TotalRBC { get; set; }
+        public System.String TotalRBC { get; set; }
 
         [Alias("Total_R_B_C_Unit")]
-        public String TotalRBCUnit { get; set; }
+        public System.String TotalRBCUnit { get; set; }
 
         [Alias("Total_R_B_C_Nor")]
-        public String TotalRBCNor { get; set; }
+        public System.String TotalRBCNor { get; set; }
 
         [Alias("P_V_C_Haematorcrit")]
-        public String PVCHaematorcrit { get; set; }
+        public System.String PVCHaematorcrit { get; set; }
 
         [Alias("P_V_C_Haematorcrit_Unit")]
-        public String PVCHaematorcritUnit { get; set; }
+        public System.String PVCHaematorcritUnit { get; set; }
 
         [Alias("P_V_C_Haematorcrit_Nor")]
-        public String PVCHaematorcritNor { get; set; }
+        public System.String PVCHaematorcritNor { get; set; }
 
         [Alias("M_C_V")]
-        public String MCV { get; set; }
+        public System.String MCV { get; set; }
 
         [Alias("M_C_V_Unit")]
-        public String MCVUnit { get; set; }
+        public System.String MCVUnit { get; set; }
 
         [Alias("M_C_V_Nor")]
-        public String MCVNor { get; set; }
+        public System.String MCVNor { get; set; }
 
         [Alias("M_C_H")]
-        public String MCH { get; set; }
+        public System.String MCH { get; set; }
 
         [Alias("M_C_H_Unit")]
-        public String MCHUnit { get; set; }
+        public System.String MCHUnit { get; set; }
 
         [Alias("M_C_H_Nor")]
-        public String MCHNor { get; set; }
+        public System.String MCHNor { get; set; }
 
         [Alias("M_C_H_C")]
-        public String MCHC { get; set; }
+        public System.String MCHC { get; set; }
 
         [Alias("M_C_H_C_Unit")]
-        public String MCHCUnit { get; set; }
+        public System.String MCHCUnit { get; set; }
 
         [Alias("M_C_H_C_Nor")]
-        public String MCHCNor { get; set; }
+        public System.String MCHCNor { get; set; }
 
         [Alias("Fee")]
-        public Int32 Fee { get; set; }
+        public System.Int32 Fee { get; set; }
 
         [Ignore]
         public virtual Patient Patient { get; set; }
-
-        [Ignore]
-        public bool IsNew
-        {
-            get { return SerialNo == default(int); }
-        }
-
-        [Ignore]
-        public bool IsDeleted { get; set; }
+         [Ignore]
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.SerialNo == default(int);
+         
+                }
+                
+          }
+          [Ignore]
+          public bool IsDeleted { get; set; }
     }
 }

@@ -168,20 +168,20 @@ namespace ClinicalReporting.Services
                 }
             }
         }
-        public void ConfigureControl(string key, UserControl View)
-        {
-            lock (_userControlByKey)
-            {
-                if (_userControlByKey.ContainsKey(key))
-                {
-                    _userControlByKey[key] = View;
-                }
-                else
-                {
-                    _userControlByKey.Add(key, View);
-                }
-            }
-        }
+        //public void ConfigureControl(string key, UserControl View)
+        //{
+        //    lock (_userControlByKey)
+        //    {
+        //        if (_userControlByKey.ContainsKey(key))
+        //        {
+        //            _userControlByKey[key] = View;
+        //        }
+        //        else
+        //        {
+        //            _userControlByKey.Add(key, View);
+        //        }
+        //    }
+        //}
             
         }
         #endregion
