@@ -657,6 +657,7 @@ namespace ClinicalReporting.Model.Repository
        }
        public List< Patient> GetAllPatient()
        {
+
            var resultList = new List<Patient>();
             for (int i = 0; i < 10; i++)
             {
@@ -1201,8 +1202,8 @@ namespace ClinicalReporting.Model.Repository
         var serology1= new Serology 
                  {
             Serialno = 12345, 
-                              Patientid = 12345, 
-                              Tdate =  "Tdate", 
+                              Patientid = 12345,
+            Tdate = DateTime.Now, 
                               WidalTest =  "WidalTest", 
                               STyphiTo =  "STyphiTo", 
                               STyphiTh =  "STyphiTh", 
@@ -1228,8 +1229,8 @@ namespace ClinicalReporting.Model.Repository
         var serology2= new Serology 
                  {
             Serialno = 12345, 
-                              Patientid = 12345, 
-                              Tdate =  "Tdate", 
+                              Patientid = 12345,
+            Tdate = DateTime.Now, 
                               WidalTest =  "WidalTest", 
                               STyphiTo =  "STyphiTo", 
                               STyphiTh =  "STyphiTh", 
@@ -1313,20 +1314,25 @@ namespace ClinicalReporting.Model.Repository
       }
       public async Task<List<Patient>> GetAllPatientAsync()
       {
-            var resultList = new List<Patient>();
-            for (int i = 0; i < 10; i++)
-            {
-                resultList.Add(new Patient
-                {
-                    
-                  PatientID = i+12345, 
-                  Name =  "Name"+i, 
-                  Age =  "Age"+i, 
-                  Sex =  "Sex"+i, 
-                  RefBy =  "RefBy"+i, 
-                });
-            }
-            return resultList;
+          var resultList = new List<Patient>();
+          
+              
+              for (int i = 0; i < 10; i++)
+              {
+                  resultList.Add(new Patient
+                  {
+
+                      PatientID = i + 12345,
+                      Name = "Name" + i,
+                      Age = "Age" + i,
+                      Sex = "Sex" + i,
+                      RefBy = "RefBy" + i,
+                  });
+              }
+             
+              
+         
+          return resultList;
       }
       public async Task<Patient> FindPatientAsync(long id)
       {
@@ -1855,8 +1861,8 @@ namespace ClinicalReporting.Model.Repository
         var serology1= new Serology 
                  {
             Serialno = 12345, 
-                              Patientid = 12345, 
-                              Tdate =  "Tdate", 
+                              Patientid = 12345,
+            Tdate = DateTime.Now, 
                               WidalTest =  "WidalTest", 
                               STyphiTo =  "STyphiTo", 
                               STyphiTh =  "STyphiTh", 
@@ -1882,8 +1888,8 @@ namespace ClinicalReporting.Model.Repository
         var serology2= new Serology 
                  {
             Serialno = 12345, 
-                              Patientid = 12345, 
-                              Tdate =  "Tdate", 
+                              Patientid = 12345,
+            Tdate = DateTime.Now, 
                               WidalTest =  "WidalTest", 
                               STyphiTo =  "STyphiTo", 
                               STyphiTh =  "STyphiTh", 
@@ -1964,10 +1970,5 @@ namespace ClinicalReporting.Model.Repository
     }
     
 #endregion    
-    
-    
-    
-    
-    
-    
+     
 }

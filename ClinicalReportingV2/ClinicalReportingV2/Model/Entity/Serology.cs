@@ -24,7 +24,7 @@ namespace ClinicalReporting.Model
         public System.Int64 Patientid { get; set; }
 
         [Alias("TDATE")]
-        public System.String Tdate { get; set; }
+        public DateTime Tdate { get; set; }
 
         [Alias("WIDAL_TEST")]
         public System.String WidalTest { get; set; }

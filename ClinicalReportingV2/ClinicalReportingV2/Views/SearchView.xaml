@@ -16,7 +16,13 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <!--
+                <CollectionViewSource x:Key="PatientViewCollection"
+                Filter="Patient_Filter"
+                Source="{Binding Patients}" />
+            -->
             <ResourceDictionary.MergedDictionaries>
+
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -59,24 +65,24 @@
                                          Height="30"
                                          Margin="30,20,0,-4"
                                          Foreground="{Binding BorderBrush,
-                                                              ElementName=A5}"
+                                                              ElementName=Search}"
                                          Kind="AccountStar" />
-                <TextBox x:Name="A5"
+                <TextBox x:Name="Search"
                          Width="150"
                          Margin="10,0,0,0"
                          FontSize="14"
                          FontWeight="Bold"
                          Text="{Binding SearchName,
-                                        UpdateSourceTrigger=PropertyChanged}"
+                                        UpdateSourceTrigger=PropertyChanged,
+                                        Delay=300}"
                          materialDesign:HintAssist.Hint="Full Name"
-                         materialDesign:HintAssist.IsFloating="True" />
+                         materialDesign:HintAssist.IsFloating="True">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchName}" />
+                    </TextBox.InputBindings>
+                </TextBox>
 
-                <DatePicker Width="206"
-                            Margin="25,20,0,0"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            materialDesign:HintAssist.Hint="Date"
-                            materialDesign:HintAssist.IsFloating="True" />
+
 
 
             </StackPanel>
@@ -84,11 +90,13 @@
                         Grid.Column="0"
                         HorizontalAlignment="Left"
                         Orientation="Horizontal">
-                <DataGrid Height="400"
+                <DataGrid x:Name="Grid"
+                          Height="400"
                           Margin="10"
                           AutoGenerateColumns="False"
                           IsReadOnly="True"
-                          ItemsSource="{Binding Patients}"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding PatientView}"
                           SelectedValue="{Binding PatientId}"
                           SelectedValuePath="PatientID"
                           SelectionMode="Single"
@@ -117,19 +125,297 @@
                     </DataGrid.Columns>
 
                 </DataGrid>
-                <TreeView Width="200">
-                    <TreeViewItem Header="Blood Group"
-                                  IsExpanded="True"
-                                  ItemsSource="{Binding PatientTests.BloodGroups}">
+                <StackPanel Orientation="Vertical">
+                    <DatePicker Width="170"
+                                Margin="13,20,0,3"
+                                HorizontalAlignment="Left"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                materialDesign:HintAssist.Hint="Date"
+                                materialDesign:HintAssist.IsFloating="True" />
+                    <TreeView Width="210"
+                              Height="350"
+                              LostFocus="TreeViewLostFocus"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <TreeViewItem x:Name="Blood" ItemsSource="{Binding PatientTests.BloodGroups}">
 
-                        <TreeViewItem.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding TDate}" />
-                            </DataTemplate>
-                        </TreeViewItem.ItemTemplate>
-                    </TreeViewItem>
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="Blood Group" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=Blood, Path=DataContext.PatientTests.BloodGroups.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=Blood,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="blood"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
 
-                </TreeView>
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+
+                        <TreeViewItem x:Name="bio" ItemsSource="{Binding PatientTests.Biochemistries}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="Biochemistry" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=bio, Path=DataContext.PatientTests.Biochemistries.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=bio,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="bio"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+
+                        <TreeViewItem x:Name="hbsa" ItemsSource="{Binding PatientTests.ElisaHbsags}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="HBS AG (Elisa)" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=hbsa, Path=DataContext.PatientTests.ElisaHbsags.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=hbsa,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="hbs"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="hcv" ItemsSource="{Binding PatientTests.ElisaHcvs}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="HCV (Elisa)" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=hcv, Path=DataContext.PatientTests.ElisaHcvs.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=hcv,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="hcv"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="tb" ItemsSource="{Binding PatientTests.ElisaTbs}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="T.B (Elisa)" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=tb, Path=DataContext.PatientTests.ElisaTbs.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=tb,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="tb"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="hae" ItemsSource="{Binding PatientTests.Haematologies}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="Haematology" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=hae, Path=DataContext.PatientTests.Haematologies.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=hae,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="hae"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="ser" ItemsSource="{Binding PatientTests.Serologies}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="Serology" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=ser, Path=DataContext.PatientTests.Serologies.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=ser,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="ser"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Tdate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="se" ItemsSource="{Binding PatientTests.SemenAnalyses}">
+
+                            <TreeViewItem.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Width="100"
+                                                   Height="20"
+                                                   Text="Semens Analysis" />
+                                        <TextBlock Height="20" />
+                                        <TextBlock Width="15" Text="{Binding ElementName=se, Path=DataContext.PatientTests.SemenAnalyses.Count}" />
+                                        <Button Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ElementName=se,
+                                                                  Path=DataContext.AddNewTest}"
+                                                CommandParameter="sem"
+                                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}">
+                                            <materialDesign:PackIcon Width="20"
+                                                                     Height="20"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Kind="Plus" />
+                                        </Button>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TreeViewItem.HeaderTemplate>
+
+
+                            <TreeViewItem.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TDate, StringFormat=d}" />
+                                </DataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+                    </TreeView>
+                </StackPanel>
+
             </StackPanel>
 
 

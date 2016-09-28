@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace ClinicalReporting.Views
 {
@@ -12,6 +14,19 @@ namespace ClinicalReporting.Views
         {
             InitializeComponent();
             
+        }
+
+        private void TreeViewLostFocus(object sender, RoutedEventArgs e)
+        {
+            Blood.IsExpanded = false;
+            bio.IsExpanded = false;
+            hbsa.IsExpanded = false;
+            hcv.IsExpanded = false;
+            tb.IsExpanded = false;
+            hae.IsExpanded = false;
+            se.IsExpanded = false;
+            ser.IsExpanded = false;
+
         }
     }
 }

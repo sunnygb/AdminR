@@ -22,7 +22,7 @@ namespace ClinicalReporting
 
 
         
-        private SearchViewModel _header;
+       
         private readonly IFrameNavigation _navigation;
         
         public MainwindowViewModel(IFrameNavigation navigation)

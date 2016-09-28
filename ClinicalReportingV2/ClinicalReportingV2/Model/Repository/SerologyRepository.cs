@@ -294,7 +294,7 @@ namespace ClinicalReporting.Model.Repository
                     
                   Serialno = i+12345, 
                   Patientid = i+12345, 
-                  Tdate =  "Tdate"+i, 
+                  Tdate =  DateTime.Now, 
                   WidalTest =  "WidalTest"+i, 
                   STyphiTo =  "STyphiTo"+i, 
                   STyphiTh =  "STyphiTh"+i, 
@@ -328,7 +328,7 @@ namespace ClinicalReporting.Model.Repository
                     
                     Serialno =  12345,
                     Patientid =  12345,
-                    Tdate =  "Tdate",
+                    Tdate = DateTime.Now,
                     WidalTest =  "WidalTest",
                     STyphiTo =  "STyphiTo",
                     STyphiTh =  "STyphiTh",
@@ -380,7 +380,7 @@ namespace ClinicalReporting.Model.Repository
                     
                     Serialno = 12345,
                     Patientid = 12345,
-                    Tdate =  "Tdate",
+                    Tdate = DateTime.Now,
                     WidalTest =  "WidalTest",
                     STyphiTo =  "STyphiTo",
                     STyphiTh =  "STyphiTh",
@@ -423,7 +423,7 @@ namespace ClinicalReporting.Model.Repository
                     
                   Serialno = i+12345, 
                   Patientid = i+12345, 
-                  Tdate =  "Tdate"+i, 
+                  Tdate =  DateTime.Now, 
                   WidalTest =  "WidalTest"+i, 
                   STyphiTo =  "STyphiTo"+i, 
                   STyphiTh =  "STyphiTh"+i, 
@@ -463,8 +463,8 @@ namespace ClinicalReporting.Model.Repository
                 {
                     
                   Serialno = i+12345, 
-                  Patientid = i+12345, 
-                  Tdate =  "Tdate"+i, 
+                  Patientid = i+12345,
+                  Tdate = DateTime.Now, 
                   WidalTest =  "WidalTest"+i, 
                   STyphiTo =  "STyphiTo"+i, 
                   STyphiTh =  "STyphiTh"+i, 
@@ -497,7 +497,7 @@ namespace ClinicalReporting.Model.Repository
                     
                     Serialno =  12345,
                     Patientid =  12345,
-                    Tdate =  "Tdate",
+                    Tdate = DateTime.Now,
                     WidalTest =  "WidalTest",
                     STyphiTo =  "STyphiTo",
                     STyphiTh =  "STyphiTh",
@@ -548,7 +548,7 @@ namespace ClinicalReporting.Model.Repository
                     
                     Serialno = 12345,
                     Patientid = 12345,
-                    Tdate =  "Tdate",
+                    Tdate = DateTime.Now,
                     WidalTest =  "WidalTest",
                     STyphiTo =  "STyphiTo",
                     STyphiTh =  "STyphiTh",
@@ -590,8 +590,8 @@ namespace ClinicalReporting.Model.Repository
                 {
                     
                   Serialno = i+12345, 
-                  Patientid = i+12345, 
-                  Tdate =  "Tdate"+i, 
+                  Patientid = i+12345,
+                  Tdate = DateTime.Now, 
                   WidalTest =  "WidalTest"+i, 
                   STyphiTo =  "STyphiTo"+i, 
                   STyphiTh =  "STyphiTh"+i, 

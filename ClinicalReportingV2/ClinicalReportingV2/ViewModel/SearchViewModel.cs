@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 using ClinicalReporting.Model;
@@ -21,9 +23,16 @@ namespace ClinicalReporting.ViewModel
     public class SearchViewModel : ViewModelBase
     {
         private readonly IPatientsRepository _repoPatient;
-        private List<Patient> _patientList;
+        
         private ObservableCollection<Patient> _patients;
 
+
+        private ICollectionView _patientView;
+
+        public ICollectionView PatientView
+        {
+            get { return _patientView; }
+        }
         
 
         private Patient _patienTests;
@@ -70,19 +79,14 @@ namespace ClinicalReporting.ViewModel
            
 
 
-                _repoPatient = ServiceLocator.Current.GetInstance<IPatientsRepository>();
-                _patientList = _repoPatient.GetAllPatient();
-                Patients = new ObservableCollection<Patient>(_patientList);
-
+              _repoPatient = ServiceLocator.Current.GetInstance<IPatientsRepository>();
+            _patientView = CollectionViewSource.GetDefaultView(_repoPatient.GetAllPatientAsync().Result);
+            
                 SearchName = "Abdullah Farooq";
             PatientTests = _repoPatient.GetWithChildren(1);
         }
 
-        public ObservableCollection<Patient> Patients
-        {
-            get { return _patients; }
-            set { Set(() => Patients, ref _patients, value); }
-        }
+
 
         private Int64 _patientId;
 
@@ -100,49 +104,83 @@ namespace ClinicalReporting.ViewModel
         {
             get { return _searchName; }
             set { Set(() => SearchName, ref _searchName, value);
-            if (!IsInDesignMode)
-            {
-                SearchTests(_searchName);
-            }
+
+                PatientTests = null;
+                _patientView.Refresh();
                
             }
         }
 
-        private  void SearchTests(string _searchName)
-        {
-            PatientTests = null;
-            if (string.IsNullOrEmpty(_searchName))
-            {
-                
-                Patients = new ObservableCollection<Patient>(_patientList);
-            }
-            else
-            {
-                Patients = new ObservableCollection<Patient>(_patientList.Where(x => x.Name.ToLower().Contains(_searchName.ToLower())));
-            }
-            
-        }
 
         [PreferredConstructor]
         public SearchViewModel(IPatientsRepository repository)
         {
             _repoPatient = repository;
             DetailCommand = new RelayCommand<Int64>(NavigateTo);
+            AddNewTest = new RelayCommand<string>(addNewTest);
         }
 
         private void NavigateTo(Int64 patientId)
         {
             
         }
+        public void addNewTest(string testName)
+        {
+            MessageBox.Show("Funtion Passed");
+            switch (testName)
+            {
+                case "blood":
+
+                    break;
+                case "bio":
+
+                    break;
+                case "hbs":
+
+                    break;
+
+                case "hcv":
+
+                    break;
+                case "tb":
+
+                    break;
+                case "hae":
+
+                    break;
+                case "ser":
+
+                    break;
+                case "sem":
+
+                    break;
+
+
+            }
+        }
 
         public RelayCommand<Int64> DetailCommand { get; private set; }
+
+        public RelayCommand<string> AddNewTest {get; private set; }
 
 
         public async Task LoadAsync()
         {
-            _patientList = await _repoPatient.GetAllPatientAsync();
-            Patients = new ObservableCollection<Patient>(_patientList);
+           
+            _patientView = CollectionViewSource.GetDefaultView(await _repoPatient.GetAllPatientAsync());
+            _patientView.Filter += PatientFilter;
+            
         }
 
+        private bool PatientFilter(object obj)
+        {
+            if (string.IsNullOrEmpty(SearchName))
+            {
+                return true;
+            }
+            
+            Patient pat = obj as Patient;
+            return pat.Name.ToLower().Contains(_searchName.ToLower());
+        }
     }
 }
