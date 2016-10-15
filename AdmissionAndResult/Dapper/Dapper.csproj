@@ -43,11 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Internal\Extensions.cs" />
     <Compile Include="Internal\Extra\Model.cs" />
-    <Compile Include="Internal\Generator.cs" />
-    <Compile Include="Internal\Model.cs" />
-    <Compile Include="Internal\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

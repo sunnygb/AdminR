@@ -19,13 +19,13 @@ using Telerik.Reporting;
 
 namespace AdmissionAndResult.Views
 {
-    
-    public partial class StudentverifyingForm : UserControl
+
+    public partial class StudentverifyingReport : UserControl, ICommonView
     {
 
 
         
-        public StudentverifyingForm()
+        public StudentverifyingReport()
         {
            
             

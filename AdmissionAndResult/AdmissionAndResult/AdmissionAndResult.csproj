@@ -228,21 +228,19 @@
     <Compile Include="Model\Wrapper\SelectedStudentWrapper.cs" />
     <Compile Include="Model\Wrapper\StudentWrapper.cs" />
     <Compile Include="Model\Wrapper\VerifyingAgentWrapper.cs" />
-    <Compile Include="Services\ValidateModelCommon.cs" />
-    <Compile Include="Services\ValidateViewModelCommon.cs" />
-    <Compile Include="ViewModel\AgentFormViewModel.cs" />
-    <Compile Include="ViewModel\AdmitFormViewModel.cs" />
-    <Compile Include="ViewModel\DetailFormViewModel.cs" />
+    <Compile Include="Services\IFrameNavigation.cs" />
+    <Compile Include="Services\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\VerifyingAgentViewModel.cs" />
+    <Compile Include="ViewModel\StudentAdmitViewModel.cs" />
+    <Compile Include="ViewModel\StudentDetailViewModel.cs" />
     <Compile Include="MainwindowViewModel.cs" />
-    <Compile Include="ViewModel\HeaderViewModel.cs" />
     <Compile Include="ViewModel\MeriListViewModel.cs" />
-    <Compile Include="ViewModel\SearchViewModel.cs" />
-    <Compile Include="Services\Sqlite.cs" />
-    <Compile Include="Views\AdmitForm.xaml.cs">
-      <DependentUpon>AdmitForm.xaml</DependentUpon>
+    <Compile Include="ViewModel\StudentSearchViewModel.cs" />
+    <Compile Include="Views\StudentAdmitView.xaml.cs">
+      <DependentUpon>StudentAdmitView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\AgentsForm.xaml.cs">
-      <DependentUpon>AgentsForm.xaml</DependentUpon>
+    <Compile Include="Views\VerifyingAgentsView.xaml.cs">
+      <DependentUpon>VerifyingAgentsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Degrees\BatchlorForm.xaml.cs">
       <DependentUpon>BatchlorForm.xaml</DependentUpon>
@@ -253,20 +251,21 @@
     <Compile Include="Views\Degrees\PHDForm.xaml.cs">
       <DependentUpon>PHDForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DetailForm.xaml.cs">
-      <DependentUpon>DetailForm.xaml</DependentUpon>
+    <Compile Include="Views\StudentDetailView.xaml.cs">
+      <DependentUpon>StudentDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DetailUniversity.xaml.cs">
       <DependentUpon>DetailUniversity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Header\MainHeader.xaml.cs">
-      <DependentUpon>MainHeader.xaml</DependentUpon>
+    <Compile Include="Views\Header\MainHeaderView.xaml.cs">
+      <DependentUpon>MainHeaderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MeritForm.xaml.cs">
-      <DependentUpon>MeritForm.xaml</DependentUpon>
+    <Compile Include="Views\iCommonView.cs" />
+    <Compile Include="Views\StudentMeritView.xaml.cs">
+      <DependentUpon>StudentMeritView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchForm.xaml.cs">
-      <DependentUpon>SearchForm.xaml</DependentUpon>
+    <Compile Include="Views\StudentSearchView.xaml.cs">
+      <DependentUpon>StudentSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StudentVerifyingReport.xaml.cs">
       <DependentUpon>StudentVerifyingReport.xaml</DependentUpon>
@@ -303,11 +302,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AdmitForm.xaml">
+    <Page Include="Views\StudentAdmitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AgentsForm.xaml">
+    <Page Include="Views\VerifyingAgentsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -323,7 +322,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DetailForm.xaml">
+    <Page Include="Views\StudentDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,15 +330,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Header\MainHeader.xaml">
+    <Page Include="Views\Header\MainHeaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MeritForm.xaml">
+    <Page Include="Views\StudentMeritView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchForm.xaml">
+    <Page Include="Views\StudentSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FluentAssertions;
+﻿using AdmissionAndResult.Data;
 using AdmissionAndResult.Data.Wrapper;
-using AdmissionAndResult.Data;
+using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 namespace ORMLite.Tests
 {

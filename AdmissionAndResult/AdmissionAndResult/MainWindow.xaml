@@ -10,10 +10,8 @@
         Title="MainWindow"
         Width="1180.737"
         Height="670.052"
-        d:DataContext="{d:DesignInstance Type=local:MainwindowViewModel,
-                                         IsDesignTimeCreatable=True}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
+        FontFamily="{StaticResource MaterialDesignFont}"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         TextElement.FontSize="13"
@@ -22,25 +20,19 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         mc:Ignorable="d">
-    <Window.DataContext>
-        <local:MainwindowViewModel />
-    </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type ViewModel:AdmitFormViewModel}">
-            <Views:AdmitForm />
+        <DataTemplate DataType="{x:Type ViewModel:StudentAdmitViewModel}">
+            <Views:StudentAdmitView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type ViewModel:SearchViewModel}">
-            <Views:SearchForm />
+        <DataTemplate DataType="{x:Type ViewModel:StudentSearchViewModel}">
+            <Views:StudentSearchView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type ViewModel:AgentFormViewModel}">
+        <DataTemplate DataType="{x:Type ViewModel:VerifyingAgentViewModel}">
             <Views:AgentsForm />
         </DataTemplate>
         <DataTemplate DataType="{x:Type ViewModel:MeriListViewModel}">
-            <Views:MeritForm />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type ViewModel:HeaderViewModel}">
-            <Views:MainHeader />
+            <Views:StudentMeritView />
         </DataTemplate>
 
 
@@ -56,13 +48,13 @@
             <Label x:Name="label"
                    Height="24"
                    Margin="0,6,0,0"
-                   materialDesign:ShadowAssist.ShadowDepth="Depth4"
                    Background="White"
                    Content="Navigation"
                    FontFamily="Segoe UI Semibold"
                    FontSize="9"
                    FontWeight="Bold"
-                   Foreground="#FF9C9999" />
+                   Foreground="#FF9C9999"
+                   materialDesign:ShadowAssist.ShadowDepth="Depth4" />
             <Button x:Name="Add_Student"
                     Height="57"
                     Margin="4"

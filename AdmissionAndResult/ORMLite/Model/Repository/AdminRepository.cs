@@ -1,14 +1,12 @@
-﻿using ServiceStack.OrmLite;
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections.Generic;
-using AdmissionAndResult.Data.Services;
-using System.Text;
-using System.Transactions;
-using System.Linq;
+﻿using AdmissionAndResult.Data.Services;
 using ServiceStack.Data;
+using ServiceStack.OrmLite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace AdmissionAndResult.Data.Repository
 {    

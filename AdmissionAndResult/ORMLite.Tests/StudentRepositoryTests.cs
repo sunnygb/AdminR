@@ -1,11 +1,10 @@
-﻿using System;   
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using AdmissionAndResult.Data;
 using AdmissionAndResult.Data.Repository;
 using AdmissionAndResult.Data.Services;
-using AdmissionAndResult.Data;
 using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceStack.OrmLite;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 namespace ORMLite.Tests
 {
@@ -209,6 +208,7 @@ namespace ORMLite.Tests
 
         private IStudentsRepository CreateRepository()
         {
+            
             StudentRepository repo =new StudentRepository();
             var db = new OrmLiteConnectionFactory("D://AdmissionAndResult//ORMLite.Tests//bin//Debug//SystemDB.db",SqliteDialect.Provider);
             repo.DbFactory = db;

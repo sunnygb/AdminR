@@ -295,7 +295,7 @@ namespace SchemaMapper
     #endregion
 
     #region Collections
-    public class EntityCollection
+    public  class EntityCollection
       : ObservableCollection<Entity>
     {
         public bool IsProcessed { get; set; }

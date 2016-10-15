@@ -188,6 +188,9 @@
  <%@ Register Name="EntityInterfaceClass"
              Template="Internal\Entity.Interface.cst"
              MergeProperties="False" %>
+ <%@ Register Name="EntityCommonClass"
+             Template="Internal\Entity.ViewModelCommon.cst"
+             MergeProperties="False" %>
              
 
 
@@ -245,6 +248,7 @@ Generating Entities ...
         EntityWrapperClass wrapperClass = this.Create<EntityWrapperClass>();
         EntityRepositoryClass repositoryClass = this.Create<EntityRepositoryClass>();
         EntityInterfaceClass interfaceClass = this.Create<EntityInterfaceClass>();
+        EntityCommonClass commonClass = this.Create<EntityCommonClass>();
         
         
         
@@ -252,6 +256,7 @@ Generating Entities ...
         this.CopyPropertiesTo(wrapperClass);
         this.CopyPropertiesTo(repositoryClass);
         this.CopyPropertiesTo(interfaceClass);
+        this.CopyPropertiesTo(commonClass);
         
 
         foreach(Entity entity in entityContext.Entities)
@@ -272,6 +277,15 @@ Generating Entities ...
             
             this.Progress.PerformStep();
         }
+        
+        //ForViewModelCommon
+        string rootDirectory1 = Path.GetFullPath(EntityDirectory);
+        string commonFile = "ViewModelCommon.cs";
+        commonFile = Path.Combine(rootDirectory1, commonFile);
+        Response.WriteLine(commonFile);
+        Response.WriteLine(commonFile);
+        commonClass.RenderToFile(commonFile, true);
+        
     }
 
     public void CreateEntity(EntityGeneratedClass entityClass, EntityWrapperClass wrapperClass,EntityRepositoryClass repositoryClass,EntityInterfaceClass interfaceClass, Entity entity, string rootDirectory,EntityContext et)
