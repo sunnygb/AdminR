@@ -1,0 +1,103 @@
+﻿<%@ Template Language="C#" TargetLanguage="C#" Debug="True" Encoding="UTF-8" %>
+
+<%@ Assembly Src="Model.cs" %>
+<%@ Assembly Src="Extensions.cs" %>
+
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="System.Text" %>
+<%@ Import Namespace="System.Text.RegularExpressions" %>
+
+<%@ Import Namespace="SchemaMapper" %>
+
+<%@ Property Name="Entity"
+             Type="SchemaMapper.Entity"  %>
+
+<%@ Property Name="EntityNamespace"
+             Type="System.String"  %>
+using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace <%= EntityNamespace %>.Wrapper
+{
+    public partial class <%= Entity.ClassName.ToSafeName() %>W : CommonWrapper<<%= Entity.ClassName.ToSafeName() %>>
+    {
+        public <%= Entity.ClassName.ToSafeName() %>W(<%= Entity.ClassName.ToSafeName() %> <%= Entity.ClassName.ToSafeName().ToLower()%>Model):base(<%= Entity.ClassName.ToSafeName().ToLower()%>Model)
+        {
+           
+           InitializeComplexProperties(<%= Entity.ClassName.ToSafeName().ToLower()%>Model);
+           InitializeCollectionProperties(<%= Entity.ClassName.ToSafeName().ToLower()%>Model);
+           
+           
+        }
+        
+        private void InitializeCollectionProperties(<%= Entity.ClassName.ToSafeName() %> <%= Entity.ClassName.ToSafeName().ToLower()%>Model)
+        {
+           <% foreach(var r in Entity.Relationships) { %>
+           <% if(r.ThisCardinality == Cardinality.Many) { %>
+           // One To Many
+           if(<%= Entity.ClassName.ToSafeName().ToLower()%>Model.<%= r.ThisPropertyName.ToSafeName()%> !=null)
+           {
+              this._<%= r.ThisPropertyName.ToSafeName().ToLower()%>w = new ObservableCollection<<%= r.OtherEntity.ToSafeName()%>W>(
+              <%= Entity.ClassName.ToSafeName().ToLower()%>Model.<%= r.ThisPropertyName.ToSafeName() %>.Select(e=>new <%= r.OtherEntity.ToSafeName()%>W(e)));
+              RegisterCollection(_<%= r.ThisPropertyName.ToSafeName().ToLower()%>w,<%= Entity.ClassName.ToSafeName().ToLower()%>Model.<%= r.ThisPropertyName.ToSafeName() %>);
+           }
+           <% } else { %>
+           <% } %>
+           <% } // foreach %>
+        }
+        
+        private void InitializeComplexProperties(<%= Entity.ClassName.ToSafeName() %> <%= Entity.ClassName.ToSafeName().ToLower()%>Model)
+        {
+        
+           <% foreach(var r in Entity.Relationships) { %>
+           <% if(r.ThisCardinality == Cardinality.Many) { %>
+           
+           <% } else { %>
+           // One To One
+           if(<%= Entity.ClassName.ToSafeName().ToLower()%>Model.<%= r.ThisPropertyName.ToSafeName() %> !=null)
+           {
+               this.<%= r.ThisPropertyName.ToSafeName()%>W = new <%= r.OtherEntity.ToSafeName()%>W(
+               <%= Entity.ClassName.ToSafeName().ToLower()%>Model.<%= r.ThisPropertyName.ToSafeName()%>);
+           }
+           <% } %>
+           <% } // foreach %>
+        }
+          
+        public <%= Entity.ClassName.ToSafeName() %>W():base(null){}
+        
+        <% foreach(var p in Entity.Properties) { %>
+        private <%= p.SystemType%> _<%= p.PropertyName.ToSafeName().ToLower()%>;
+        public  <%= p.SystemType%>  <%= p.PropertyName.ToSafeName()%>
+        {
+           get { return GET(ref _<%= p.PropertyName.ToSafeName().ToLower()%>); }
+           set { SET(ref  _<%= p.PropertyName.ToSafeName().ToLower()%>,value); }
+        }
+        <% } // foreach %>
+        
+        <% foreach(var r in Entity.Relationships) { %>
+        <% if(r.ThisCardinality == Cardinality.Many) { %>
+        // One To Many
+        private ObservableCollection<<%= r.OtherEntity.ToSafeName()%>W> _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w;
+        public  ObservableCollection<<%= r.OtherEntity.ToSafeName()%>W>  <%= r.ThisPropertyName.ToSafeName()%>W
+        { 
+          get { return _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w; }
+          set { _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w = value; }
+        }
+        <% } else { %>
+        // One To One
+        private <%= r.OtherEntity.ToSafeName()%>W _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w;
+        public  <%= r.OtherEntity.ToSafeName()%>W  <%= r.ThisPropertyName.ToSafeName()%>W
+        { 
+           get { return _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w; } 
+           set { _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w = value;
+           if(!Equals(_<%= r.ThisPropertyName.ToSafeName().ToLower() %>w,Model.<%= r.OtherEntity.ToSafeName()%>))
+           {Model.<%= r.OtherEntity.ToSafeName()%> = _<%= r.ThisPropertyName.ToSafeName().ToLower() %>w.Model;};}
+        }
+        
+        <% } %>
+        <% } // foreach %>
+        
+        
+    }
+}

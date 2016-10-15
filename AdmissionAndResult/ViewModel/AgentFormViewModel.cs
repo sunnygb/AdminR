@@ -1,6 +1,7 @@
 ﻿using AdmissionAndResult.Model;
 using AdmissionAndResult.Model.Wrapper;
 using AdmissionAndResult.Services;
+using ClinicalReporting.Model.Wrapper;
 using Dapper.Contrib.Extensions;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
