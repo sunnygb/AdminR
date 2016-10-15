@@ -39,7 +39,7 @@ namespace ClinicalReporting.Model
         public System.Int64 DepartmentID { get; set; }
 
         [Ignore]
-        public virtual Student SelectedStudentMember { get; set; }
+        public virtual Student Student { get; set; }
         [Ignore]
         public virtual Department Department { get; set; }
         [Ignore]

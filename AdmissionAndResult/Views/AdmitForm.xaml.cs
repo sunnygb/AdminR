@@ -1,6 +1,7 @@
-﻿using AdmissionAndResult.Model;
+﻿
 using AdmissionAndResult.ViewModel;
 using AdmissionAndResult.Views.Degrees;
+using ClinicalReporting.Model;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;

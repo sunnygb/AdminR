@@ -206,19 +206,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Internal\Extensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Internal\Extra\Model.cs" />
-    <Compile Include="Internal\Generator.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Internal\Model.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Internal\Parser.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Model\Entity\Admin.cs" />
     <Compile Include="Model\Entity\Course.cs" />
     <Compile Include="Model\Entity\Department.cs" />
@@ -234,6 +221,13 @@
     <Compile Include="Model\Repository\StudentRepository.cs" />
     <Compile Include="Model\Repository\VerifyingAgentRepository.cs" />
     <Compile Include="Model\ViewModelCommon.cs" />
+    <Compile Include="Model\Wrapper\AdminWrapper.cs" />
+    <Compile Include="Model\Wrapper\CourseWrapper.cs" />
+    <Compile Include="Model\Wrapper\DepartmentWrapper.cs" />
+    <Compile Include="Model\Wrapper\QualificationWrapper.cs" />
+    <Compile Include="Model\Wrapper\SelectedStudentWrapper.cs" />
+    <Compile Include="Model\Wrapper\StudentWrapper.cs" />
+    <Compile Include="Model\Wrapper\VerifyingAgentWrapper.cs" />
     <Compile Include="Services\ValidateModelCommon.cs" />
     <Compile Include="Services\ValidateViewModelCommon.cs" />
     <Compile Include="ViewModel\AgentFormViewModel.cs" />
@@ -380,14 +374,6 @@
     <None Include="Internal\Entity.Repository.cst" />
     <None Include="Internal\Entity.ViewModelCommon.cst" />
     <None Include="Internal\Entity.Wrapper.cst" />
-    <None Include="Internal\Extra\Context.Editable.cst" />
-    <None Include="Internal\Extra\Context.Generated.cst" />
-    <None Include="Internal\Extra\Mapping.Editable.cst" />
-    <None Include="Internal\Extra\Mapping.Generated.cst" />
-    <None Include="Internal\Extra\MockedContext.Editable.cst" />
-    <None Include="Internal\Extra\MockedContext.Generated.cst" />
-    <None Include="Internal\Extra\Query.Editable.cst" />
-    <None Include="Internal\Extra\Query.Generated.cst" />
     <None Include="ModelGenerator.csp" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -454,11 +440,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Common\ICSharpCode.NRefactory.CSharp.dll" />
-    <Content Include="Common\ICSharpCode.NRefactory.dll" />
-    <Content Include="Common\Mono.Cecil.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net451\System.Data.SQLite.Core.targets')" />

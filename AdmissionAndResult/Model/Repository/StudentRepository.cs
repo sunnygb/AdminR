@@ -132,10 +132,10 @@ namespace ClinicalReporting.Model.Repository
          
    
                  // One To One 
-           var selectedselectedstudent = Conn.Select<SelectedSelectedStudent>().Where(a => a.SelectedStudentId == id).SingleOrDefault();
+           var selectedselectedstudent = Conn.Select<SelectedStudent>().Where(a => a.SelectedStudentId == id).SingleOrDefault();
            if (student != null && selectedselectedstudent != null)
            {
-             student.SelectedSelectedStudent = selectedselectedstudent;
+             student.SelectedStudent = selectedselectedstudent;
            }
          
   
@@ -195,9 +195,9 @@ namespace ClinicalReporting.Model.Repository
                     
                     
                  // One To One 
-                 if(student.SelectedSelectedStudent !=null)
+                 if(student.SelectedStudent !=null)
                  {
-                    var selectedselectedstudent = student.SelectedSelectedStudent;
+                    var selectedselectedstudent = student.SelectedStudent;
                     selectedselectedstudent.SelectedStudentId = student.StudentId;
                     Conn.Save(selectedselectedstudent);
                  }
@@ -293,10 +293,10 @@ namespace ClinicalReporting.Model.Repository
          
    
                  // One To One 
-           var selectedselectedstudent = await Conn.SingleAsync<SelectedSelectedStudent>(e => e.SelectedStudentId == id);
+           var selectedselectedstudent = await Conn.SingleAsync<SelectedStudent>(e => e.SelectedStudentId == id);
            if (student != null && selectedselectedstudent != null)
            {
-             student.SelectedSelectedStudent = selectedselectedstudent;
+             student.SelectedStudent = selectedselectedstudent;
            }
          
   
@@ -363,16 +363,16 @@ namespace ClinicalReporting.Model.Repository
                   }
                     
                  // One To One 
-                 if(student.SelectedSelectedStudent!=null)
+                 if(student.SelectedStudent!=null)
                  {
-                    if(student.SelectedSelectedStudent.IsDeleted)
+                    if(student.SelectedStudent.IsDeleted)
                     {
-                      var id = student.SelectedSelectedStudent.SelectedStudentId;
+                      var id = student.SelectedStudent.SelectedStudentId;
                       await Conn.DeleteByIdAsync<SelectedStudent>(id);
                     }
-                    else if(!student.SelectedSelectedStudent.IsDeleted)
+                    else if(!student.SelectedStudent.IsDeleted)
                     {
-                      var selectedselectedstudent = student.SelectedSelectedStudent;
+                      var selectedselectedstudent = student.SelectedStudent;
                       selectedselectedstudent.SelectedStudentId = student.StudentId;
                       await Conn.SaveAsync(selectedselectedstudent);
                     }
@@ -594,7 +594,7 @@ namespace ClinicalReporting.Model.Repository
                      //One to One
                      Qualification = qualification,
                      //One to One
-                     SelectedSelectedStudent = selectedstudent,
+                     SelectedStudent = selectedstudent,
                      
                 };
          
@@ -809,7 +809,7 @@ namespace ClinicalReporting.Model.Repository
                      //One to One
                      Qualification = qualification,
                      //One to One
-                     SelectedSelectedStudent = selectedstudent,
+                     SelectedStudent = selectedstudent,
                      
                 };
          
