@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{394F98CC-45EF-428B-BE7B-1200CED20D73}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DapperRepo</RootNamespace>
+    <AssemblyName>DapperRepo</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MicroOrm.Dapper.Repositories, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicroOrm.Dapper.Repositories.1.5.0\lib\net45\MicroOrm.Dapper.Repositories.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\ORMLite.Tests\bin\Debug\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dapper.cs" />
+    <Compile Include="Model\Entity\Biochemistry.cs" />
+    <Compile Include="Model\Entity\BloodGroup.cs" />
+    <Compile Include="Model\Entity\Doctor.cs" />
+    <Compile Include="Model\Entity\ElisaHbsag.cs" />
+    <Compile Include="Model\Entity\ElisaHcv.cs" />
+    <Compile Include="Model\Entity\ElisaTb.cs" />
+    <Compile Include="Model\Entity\Haematology.cs" />
+    <Compile Include="Model\Entity\Patient.cs" />
+    <Compile Include="Model\Entity\SemenAnalysis.cs" />
+    <Compile Include="Model\Entity\Serology.cs" />
+    <Compile Include="Model\Entity\UrineExamination.cs" />
+    <Compile Include="Model\Repository\BiochemistryRepository.cs" />
+    <Compile Include="Model\Repository\BloodGroupRepository.cs" />
+    <Compile Include="Model\Repository\DoctorRepository.cs" />
+    <Compile Include="Model\Repository\ElisaHbsagRepository.cs" />
+    <Compile Include="Model\Repository\ElisaHcvRepository.cs" />
+    <Compile Include="Model\Repository\ElisaTbRepository.cs" />
+    <Compile Include="Model\Repository\HaematologyRepository.cs" />
+    <Compile Include="Model\Repository\PatientRepository.cs" />
+    <Compile Include="Model\Repository\SemenAnalysisRepository.cs" />
+    <Compile Include="Model\Repository\SerologyRepository.cs" />
+    <Compile Include="Model\Repository\UrineExaminationRepository.cs" />
+    <Compile Include="Model\ViewModelCommon.cs" />
+    <Compile Include="Model\Wrapper\BiochemistryWrapper.cs" />
+    <Compile Include="Model\Wrapper\BloodGroupWrapper.cs" />
+    <Compile Include="Model\Wrapper\DoctorWrapper.cs" />
+    <Compile Include="Model\Wrapper\ElisaHbsagWrapper.cs" />
+    <Compile Include="Model\Wrapper\ElisaHcvWrapper.cs" />
+    <Compile Include="Model\Wrapper\ElisaTbWrapper.cs" />
+    <Compile Include="Model\Wrapper\HaematologyWrapper.cs" />
+    <Compile Include="Model\Wrapper\PatientWrapper.cs" />
+    <Compile Include="Model\Wrapper\SemenAnalysisWrapper.cs" />
+    <Compile Include="Model\Wrapper\SerologyWrapper.cs" />
+    <Compile Include="Model\Wrapper\UrineExaminationWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataBase.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Entity.cst" />
+    <None Include="Internal\Entity.Editable.cst" />
+    <None Include="Internal\Entity.Generated.cst" />
+    <None Include="Internal\Entity.Interface.cst" />
+    <None Include="Internal\Entity.Repository.cst" />
+    <None Include="Internal\Entity.ViewModelCommon.cst" />
+    <None Include="Internal\Entity.Wrapper.cst" />
+    <None Include="ModelGenerator.csp" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

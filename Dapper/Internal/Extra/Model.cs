@@ -284,7 +284,7 @@ namespace SchemaMapper
     #endregion
 
     #region Collections
-    public class EntityCollection
+    public partial class EntityCollection
       : ObservableCollection<Entity>
     {
         public bool IsProcessed { get; set; }

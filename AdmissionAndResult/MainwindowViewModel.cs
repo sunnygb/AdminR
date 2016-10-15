@@ -5,14 +5,14 @@ using GalaSoft.MvvmLight.Command;
 
 namespace AdmissionAndResult
 {
-    class MainwindowViewModel : ViewModelBase
+    public class MainwindowViewModel : ViewModelBase
     {
 
-        private AdmitFormViewModel _admitVM = new AdmitFormViewModel();
-        private AgentFormViewModel _agentVM = new AgentFormViewModel();
+        private StudentAdmitViewModel _admitVM = new StudentAdmitViewModel();
+        private VerifyingAgentViewModel _agentVM = new VerifyingAgentViewModel();
         private MeriListViewModel _meritVM = new MeriListViewModel();
-        private SearchViewModel _searchVM = new SearchViewModel();
-        private StudentverifyingForm _verifyingForm = new StudentverifyingForm();
+        private StudentSearchViewModel _studentSearchVm = new StudentSearchViewModel();
+        private StudentverifyingReport _verifyingReport = new StudentverifyingReport();
        
 
 
@@ -20,15 +20,15 @@ namespace AdmissionAndResult
         private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel { get { return _currentViewModel; } set { Set(() => CurrentViewModel, ref _currentViewModel, value); } }
 
-        private MainHeader _header;
-        public MainHeader MainHeader { get { return _header; } set { Set(() => MainHeader, ref _header, value); } }
+        private MainHeaderView _headerView;
+        public MainHeaderView MainHeaderView { get { return _headerView; } set { Set(() => MainHeaderView, ref _headerView, value); } }
 
         public RelayCommand<string> navigationCommand { get; private set; }
 
         public MainwindowViewModel()
         {
             navigationCommand = new RelayCommand<string>(navigateTo);
-            this._header = new MainHeader();
+            this._headerView = new MainHeaderView();
         }
 
         private void navigateTo(string destination)
@@ -40,7 +40,7 @@ namespace AdmissionAndResult
                     break;
 
                 case "search":
-                    CurrentViewModel = _searchVM;
+                    CurrentViewModel = _studentSearchVm;
                     break;
                 case "agent":
                     CurrentViewModel = _agentVM;
@@ -78,7 +78,7 @@ namespace AdmissionAndResult
 
 
 //private AdmitFormViewModel _admitVM;
-//AdmitForm admitForm;
+//StudentAdmitView admitForm;
 //public MainwindowViewModel()
 //{
 //    _admitVM = new AdmitFormViewModel();
@@ -92,7 +92,7 @@ namespace AdmissionAndResult
 
 //public void searchNavigation()
 //{
-//    admitForm = new AdmitForm();
+//    admitForm = new StudentAdmitView();
 //    admitForm.DataContext = _admitVM;
 
 //}

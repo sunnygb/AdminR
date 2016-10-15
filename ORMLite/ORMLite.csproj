@@ -125,6 +125,7 @@
     <None Include="Internal\Entity.Generated.cst" />
     <None Include="Internal\Entity.Interface.cst" />
     <None Include="Internal\Entity.Repository.cst" />
+    <None Include="Internal\Entity.ViewModelCommon.cst" />
     <None Include="Internal\Entity.Wrapper.cst" />
     <None Include="packages.config" />
     <None Include="SystemDB.db">

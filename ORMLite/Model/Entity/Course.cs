@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AdmissionAndResult.Data.Wrapper;
 using ServiceStack.DataAnnotations;
-using AdmissionAndResult.Data.Wrapper;
+using System.Collections.Generic;
 namespace AdmissionAndResult.Data
 {
 

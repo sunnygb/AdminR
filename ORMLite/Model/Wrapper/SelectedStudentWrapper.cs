@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Linq;
-using AdmissionAndResult.Data;
-using AdmissionAndResult.Data.Services;
-using AdmissionAndResult.Data.Wrapper;
+﻿using AdmissionAndResult.Data.Services;
 
 namespace AdmissionAndResult.Data.Wrapper
 {

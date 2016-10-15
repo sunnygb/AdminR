@@ -13,17 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM", "ORM", "{187EA65C-E53
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORMLite", "ORMLite", "{0E1B050F-6A01-4F6E-BA33-5EDB03A049A2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dapper", "Dapper", "{1C55F732-27E9-4871-8D59-422842432552}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite-Net", "SQLite-Net", "{DDE72D36-8897-48A4-975C-867765A133DE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{E740B875-FF4F-41D8-BFFA-83D294992D17}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Tests", "Dapper.Tests\Dapper.Tests.csproj", "{A381FCDB-06A7-4272-B6D2-C95DF4FB6799}"
-EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://sunnygb.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -41,14 +33,6 @@ Global
 		SccProjectTopLevelParentUniqueName4 = AdmissionAndResult.sln
 		SccProjectName4 = ORMLite
 		SccLocalPath4 = ORMLite
-		SccProjectUniqueName5 = Dapper\\Dapper.csproj
-		SccProjectTopLevelParentUniqueName5 = AdmissionAndResult.sln
-		SccProjectName5 = Dapper
-		SccLocalPath5 = Dapper
-		SccProjectUniqueName6 = Dapper.Tests\\Dapper.Tests.csproj
-		SccProjectTopLevelParentUniqueName6 = AdmissionAndResult.sln
-		SccProjectName6 = Dapper.Tests
-		SccLocalPath6 = Dapper.Tests
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,25 +55,13 @@ Global
 		{83D68A9E-57A5-4BF7-8134-168F2133540E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D68A9E-57A5-4BF7-8134-168F2133540E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D68A9E-57A5-4BF7-8134-168F2133540E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E740B875-FF4F-41D8-BFFA-83D294992D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E740B875-FF4F-41D8-BFFA-83D294992D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E740B875-FF4F-41D8-BFFA-83D294992D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E740B875-FF4F-41D8-BFFA-83D294992D17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A381FCDB-06A7-4272-B6D2-C95DF4FB6799}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A381FCDB-06A7-4272-B6D2-C95DF4FB6799}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A381FCDB-06A7-4272-B6D2-C95DF4FB6799}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A381FCDB-06A7-4272-B6D2-C95DF4FB6799}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0E1B050F-6A01-4F6E-BA33-5EDB03A049A2} = {187EA65C-E531-4974-9B5F-1D7A340F73F0}
-		{1C55F732-27E9-4871-8D59-422842432552} = {187EA65C-E531-4974-9B5F-1D7A340F73F0}
-		{DDE72D36-8897-48A4-975C-867765A133DE} = {187EA65C-E531-4974-9B5F-1D7A340F73F0}
 		{61889009-614F-4E9F-A231-52F226E6F5A8} = {0E1B050F-6A01-4F6E-BA33-5EDB03A049A2}
 		{83D68A9E-57A5-4BF7-8134-168F2133540E} = {0E1B050F-6A01-4F6E-BA33-5EDB03A049A2}
-		{E740B875-FF4F-41D8-BFFA-83D294992D17} = {1C55F732-27E9-4871-8D59-422842432552}
-		{A381FCDB-06A7-4272-B6D2-C95DF4FB6799} = {1C55F732-27E9-4871-8D59-422842432552}
 	EndGlobalSection
 EndGlobal
