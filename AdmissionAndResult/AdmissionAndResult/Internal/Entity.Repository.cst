@@ -1,0 +1,676 @@
+﻿<%@ Template Language="C#" TargetLanguage="C#" Debug="True" Encoding="UTF-8" %>
+
+<%@ Assembly Src="Model.cs" %>
+<%@ Assembly Src="Extensions.cs" %>
+
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="System.Text" %>
+<%@ Import Namespace="System.Text.RegularExpressions" %>
+
+<%@ Import Namespace="SchemaMapper" %>
+
+<%@ Property Name="Entity"
+             Type="SchemaMapper.Entity"  %>
+<%@ Property Name="EntityContext"
+             Type="SchemaMapper.EntityContext"  %>
+
+<%@ Property Name="EntityNamespace"
+             Type="System.String"  %>
+using ServiceStack.OrmLite;
+using System;
+using System.Data;
+using System.Collections.Generic;
+using System.Transactions;
+using ServiceStack.Data;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace <%= EntityNamespace%>.Repository
+{    
+
+
+<%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%>
+<%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%><%-- Repository Interface --%>
+
+#region Interface
+
+    public interface I<%=Entity.ContextName%>Repository
+    {
+       Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<List< <%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async();
+       Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id);
+       Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task Remove<%=Entity.ClassName%>Async(long id); 
+       Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id);
+       Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       Task<List<<%=Entity.ClassName%>>> QueryAsync(string query);
+       
+       <%=Entity.ClassName%> Add<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       List< <%=Entity.ClassName %>> GetAll<%=Entity.ClassName%>();
+       <%=Entity.ClassName%> Find<%=Entity.ClassName%>(long id);
+       <%=Entity.ClassName%> Update<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       void Remove<%=Entity.ClassName%>(long id); 
+       <%=Entity.ClassName%> GetWithChildren(long id);
+       <%=Entity.ClassName%> Save<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>);
+       List< <%=Entity.ClassName %>> Query(string query);
+       
+       IDbConnection Custom { get;  }
+    }
+
+#endregion
+
+#region Original Repository
+        
+<%-- Original Repository Implementation --%><%-- Original Repository Implementation --%><%-- Original Repository Implementation --%><%-- Original Repository Implementation --%>
+<%-- Original Repository Implementation --%><%-- Original Repository Implementation --%><%-- Original Repository Implementation --%><%-- Original Repository Implementation --%>
+
+
+                                                            
+
+    public class <%= Entity.ClassName%>Repository : I<%= Entity.ContextName%>Repository,IDisposable
+    { 
+      
+      
+       private IDbConnectionFactory DbFactory { get; set; }
+      
+       private IDbConnection _conn;
+       private IDbConnection Conn 
+       { 
+           get { return _conn ?? (_conn = DbFactory.Open()); }
+       }
+       
+       public <%= Entity.ClassName%>Repository(IDbConnectionFactory dbFactory)
+       {
+          DbFactory= dbFactory;
+       }
+       
+<%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%>
+<%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%><%-- Simple Methods --%>
+       
+       public <%=Entity.ClassName%> Add<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          this.Conn.Insert(<%=Entity.ClassName.ToLower()%>);
+          <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%> =this.Conn.LastInsertId();
+          return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public List<<%=Entity.ClassName%>> GetAll<%=Entity.ClassName%>()
+       {
+         return Conn.Select<<%=Entity.ClassName %>>();
+       
+       }
+       
+      public <%=Entity.ClassName%> Find<%=Entity.ClassName%>(long id)
+       {
+         return Conn.SingleById<<%=Entity.ClassName%>>(id);
+       
+       }
+       
+      public <%=Entity.ClassName%> Update<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          var result=Conn.Update<<%=Entity.ClassName%>>(<%=Entity.ClassName.ToLower()%>);
+          return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public void Remove<%=Entity.ClassName%>(long id)
+       {
+          Conn.DeleteById<<%=Entity.ClassName%>>(id);
+       
+       }
+       
+      public <%=Entity.ClassName%> GetWithChildren(long id)
+       {
+          var <%=Entity.ClassName.ToLower()%> = Conn.SingleById<<%=Entity.ClassName%>>(id);
+          
+          
+          
+          <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+           var <%= r.ThisPropertyName.ToSafeName().ToLower() %> = Conn.Select<<%= r.OtherEntity.ToSafeName() %>>().Where(a => a.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id).ToList();
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.AddRange(<%= r.ThisPropertyName.ToSafeName().ToLower() %>);
+           }      
+                  
+                  
+                  
+         <% } else { %>
+   
+                 // One To One 
+           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = Conn.Select<<%= r.ThisPropertyName.ToSafeName()%>>().Where(a => a.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id).SingleOrDefault();
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>;
+           }
+         
+              <% } %> 
+          <% } %>
+  
+         return <%=Entity.ClassName.ToLower()%>;
+         }
+       
+       
+      public <%=Entity.ClassName%> Save<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+          using(var txScope= new TransactionScope())
+            {
+                if(<%=Entity.ClassName.ToLower()%>.IsNew)
+                {
+                    this.Add<%=Entity.ClassName%>(<%=Entity.ClassName.ToLower()%>);
+                }
+                else
+                {
+                    this.Update<%=Entity.ClassName%>(<%=Entity.ClassName.ToLower()%>);
+                }
+                
+                
+                 <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    <%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyM(r.OtherEntity).PropertyName %> =<%= this.Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                    Conn.Save(<%= r.OtherEntity.ToSafeName().ToLower()%>);
+                  }
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => s.IsDeleted))
+                  { 
+                  
+                    Conn.DeleteById<<%= r.OtherEntity.ToSafeName()%>>(<%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>);
+                  }
+                    <% } else { %>
+                    
+                    <% if(r.ThisPropertyName.ToSafeName().ToString().Equals("Qualification") ){%>
+                    <% Debugger.Launch(); %>
+                    <%} %>
+                    
+                 // One To One 
+                 if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> !=null)
+                 {
+                    var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
+                    <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                    Conn.Save(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
+                 }
+                          <% } %> 
+                       <% } %>
+                 
+                   
+                    txScope.Complete();
+            }
+            return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+       public List< <%=Entity.ClassName %>> Query(string query)
+       {
+          return Conn.Select<<%=Entity.ClassName%>>(query);
+       }
+       
+ #endregion
+ 
+ 
+#region Asyn Methods
+                                                               
+                                                               
+<%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%>
+<%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%><%-- Async Methods --%>
+       
+       
+       
+
+      public async Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          await Conn.InsertAsync(<%=Entity.ClassName.ToLower()%>);
+          <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%> =Conn.LastInsertId();
+          return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public async Task<List<<%=Entity.ClassName%>>> GetAll<%=Entity.ClassName%>Async()
+       {
+         return await Conn.SelectAsync<<%=Entity.ClassName %>>();
+       
+       }
+       
+      public async Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id)
+       {
+         return await Conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
+       
+       }
+       
+      public async Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          await Conn.UpdateAsync<<%=Entity.ClassName%>>(<%=Entity.ClassName.ToLower()%>);
+          return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public async Task Remove<%=Entity.ClassName%>Async(long id)
+       {
+         await Conn.DeleteByIdAsync<<%=Entity.ClassName%>>(id);
+       
+       }
+       
+      public async Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id)
+       {
+          var <%=Entity.ClassName.ToLower()%> = await Conn.SingleByIdAsync<<%=Entity.ClassName%>>(id);
+          
+          
+          
+          <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+           var <%= r.ThisPropertyName.ToSafeName().ToLower() %> = await Conn.SelectAsync<<%= r.OtherEntity.ToSafeName() %>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.AddRange(<%= r.ThisPropertyName.ToSafeName().ToLower() %>);
+           }      
+                  
+                  
+                  
+         <% } else { %>
+   
+                 // One To One 
+           var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = await Conn.SingleAsync<<%= r.ThisPropertyName.ToSafeName()%>>(e => e.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> == id);
+           if (<%=Entity.ClassName.ToLower()%> != null && <%= r.ThisPropertyName.ToSafeName().ToLower()%> != null)
+           {
+             <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%> = <%= r.ThisPropertyName.ToSafeName().ToLower()%>;
+           }
+         
+              <% } %> 
+          <% } %>
+  
+         return <%=Entity.ClassName.ToLower()%>;
+         }
+       
+       
+      public async Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+          using(var txScope= new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                if(<%=Entity.ClassName.ToLower()%>.IsNew)
+                {
+                   await Add<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
+                }
+                else
+                {
+                   await Update<%=Entity.ClassName%>Async(<%=Entity.ClassName.ToLower()%>);
+                }
+                
+                
+                 <% foreach(var r in Entity.Relationships) { %>
+                 <% if(r.ThisCardinality == Cardinality.Many) { %>
+        
+                 //One To Many
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => !s.IsDeleted))
+                  { 
+                  
+                    <%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyM(r.OtherEntity).PropertyName %> =<%= this.Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                    await Conn.SaveAsync(<%= r.OtherEntity.ToSafeName().ToLower()%>);
+                  }
+                  foreach(var <%= r.OtherEntity.ToSafeName().ToLower()%> in <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName() %>.Where(s => s.IsDeleted))
+                  { 
+                  
+                    await Conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(<%= r.OtherEntity.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>);
+                  }
+                    <% } else { %>
+                    
+                 // One To One 
+                 if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>!=null)
+                 {
+                    if(<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.IsDeleted)
+                    {
+                      var id = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%>;
+                      await Conn.DeleteByIdAsync<<%= r.OtherEntity.ToSafeName()%>>(id);
+                    }
+                    else if(!<%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>.IsDeleted)
+                    {
+                      var <%= r.ThisPropertyName.ToSafeName().ToLower()%> = <%=Entity.ClassName.ToLower()%>.<%= r.ThisPropertyName.ToSafeName()%>;
+                      <%= r.ThisPropertyName.ToSafeName().ToLower()%>.<%= GetForeignPropertyO(r.OtherEntity).PropertyName%> = <%=Entity.ClassName.ToLower()%>.<%= GetPrimeryKey().PropertyName%>;
+                      await Conn.SaveAsync(<%= r.ThisPropertyName.ToSafeName().ToLower()%>);
+                    }
+                    
+                  }
+                          <% } %> 
+                       <% } %>
+                 
+                   
+                    txScope.Complete();
+            }
+            return <%=Entity.ClassName.ToLower()%>;
+       
+       }
+       
+      public async Task<List<<%=Entity.ClassName%>>> QueryAsync(string query)
+      {
+        return await Conn.SelectAsync<<%=Entity.ClassName%>>(query);
+      }
+      
+      
+       #endregion
+       
+       
+       
+#region Design Repository
+       
+<%-- Implementation Design Repository --%><%-- Implementation Design Repository --%><%-- Implementation Design Repository --%><%-- Implementation Design Repository --%>
+<%-- Implementation Design Repository --%><%-- Implementation Design Repository --%><%-- Implementation Design Repository --%><%-- Implementation Design Repository --%>
+
+
+      public IDbConnection Custom { get { return Conn; }  }
+       
+       public void Dispose()
+       {
+          if (Conn != null)
+              Conn.Dispose();
+       }
+   
+    }
+    
+    public class Design<%=Entity.ContextName%>Repository : I<%=Entity.ContextName%>Repository
+    {
+    
+    
+       public <%=Entity.ClassName%> Add<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+          return null;
+       }
+       public List< <%=Entity.ClassName %>> GetAll<%=Entity.ClassName%>()
+       {
+           var resultList = new List<<%=Entity.ClassName %>>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new <%=Entity.ClassName %>
+                {
+                    
+                   <% foreach(var p in Entity.Properties ) { %> 
+                  <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>"+i,<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>i+12345,<% } %> 
+                  <% } // foreach Properties   %>
+                });
+            }
+            return resultList;
+         
+       }
+       public  <%=Entity.ClassName%> Find<%=Entity.ClassName%>(long id)
+       {
+             return new <%=Entity.ClassName %>
+                {
+                    
+                    <% foreach(var p in Entity.Properties) { %>
+                    <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else { %> 12345,<% } %>
+                    <% } // foreach %>
+                };
+       }
+       public <%=Entity.ClassName%> Update<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+         return null;
+       }
+       public void Remove<%=Entity.ClassName%>(long id)
+       {
+          return;
+       
+       }
+       public <%=Entity.ClassName%> GetWithChildren(long id)
+       {
+              
+        <% foreach(var r in Entity.Relationships) { %>
+        <% if(r.ThisCardinality == Cardinality.Many) { %>
+        // One to Many
+        var <%= r.OtherEntity.ToLower()%>1= new <%= r.OtherEntity %> 
+                 {
+                  <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+            <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+                  <% } // foreach Properties   %>};
+        var <%= r.OtherEntity.ToLower()%>2= new <%= r.OtherEntity %> 
+                 {
+                  <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+            <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+                  <% } // foreach Properties   %>};         
+        <% } else { %>
+        //One to One
+        var <%= r.OtherEntity.ToLower()%> = new <%= r.OtherEntity %> 
+        {
+        <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+        <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+        <% }  // foreach Properties   %>};
+        <% } // Else %>
+
+        <% } // foreach Relationship %>
+         
+        return new <%=Entity.ClassName %>
+                {
+                    
+                    <% foreach(var p in Entity.Properties) { %>
+                    <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %>
+                    <% } // foreach %>
+                    
+                     <% foreach(var r in Entity.Relationships) { %>
+                     <% if(r.ThisCardinality == Cardinality.Many) { %>
+                     // One to Many
+                     <%= r.ThisPropertyName %> = new List<<%= r.OtherEntity%>>{<%= r.OtherEntity.ToLower()%>1,<%= r.OtherEntity.ToLower()%>2},
+                     <% } else { %>
+                     //One to One
+                     <%= r.ThisPropertyName%> = <%= r.OtherEntity.ToLower()%>,
+                     <% } // Else %>
+                     <% } // foreach Relationship %>
+                     
+                };
+         
+       }
+       public <%=Entity.ClassName%> Save<%=Entity.ClassName%>(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+       {
+         return null;
+       }
+       public List< <%=Entity.ClassName %>> Query(string query)
+       {
+          var resultList = new List<<%=Entity.ClassName %>>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new <%=Entity.ClassName %>
+                {
+                    
+                   <% foreach(var p in Entity.Properties ) { %> 
+                  <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>"+i,<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>i+12345,<% } %> 
+                  <% } // foreach Properties   %>
+                });
+            }
+            return resultList;
+       }
+    
+      public Task<<%=Entity.ClassName%>> Add<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+         return null;
+      }
+      public async Task<List<<%=Entity.ClassName %>>> GetAll<%=Entity.ClassName%>Async()
+      {
+            var resultList = new List<<%=Entity.ClassName %>>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new <%=Entity.ClassName %>
+                {
+                    
+                   <% foreach(var p in Entity.Properties ) { %> 
+                  <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>"+i,<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>i+12345,<% } %> 
+                  <% } // foreach Properties   %>
+                });
+            }
+            return resultList;
+      }
+      public async Task<<%=Entity.ClassName%>> Find<%=Entity.ClassName%>Async(long id)
+      {
+         return new <%=Entity.ClassName %>
+                {
+                    
+                    <% foreach(var p in Entity.Properties) { %>
+                    <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else { %> 12345,<% } %>
+                    <% } // foreach %>
+                };
+      }
+      public async Task<<%=Entity.ClassName%>> Update<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+        return null;
+      }
+      public async Task Remove<%=Entity.ClassName%>Async(long id)
+      {
+        
+      }
+       
+      public async Task<<%=Entity.ClassName%>> Get<%=Entity.ClassName%>WithChildrenAsync(long id)
+      {
+        <% foreach(var r in Entity.Relationships) { %>
+        <% if(r.ThisCardinality == Cardinality.Many) { %>
+        // One to Many
+        var <%= r.OtherEntity.ToLower()%>1= new <%= r.OtherEntity %> 
+                 {
+                  <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+            <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+                  <% } // foreach Properties   %>};
+        var <%= r.OtherEntity.ToLower()%>2= new <%= r.OtherEntity %> 
+                 {
+                  <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+            <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+                  <% } // foreach Properties   %>};         
+        <% } else { %>
+        //One to One
+        var <%= r.OtherEntity.ToLower()%> = new <%= r.OtherEntity %> 
+        {
+        <% foreach(var p in GetForeignEntity(r.OtherEntity).Properties ) { %> 
+        <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %> 
+        <% }  // foreach Properties   %>};
+        <% } // Else %>
+
+        <% } // foreach Relationship %>
+         
+        return new <%=Entity.ClassName %>
+                {
+                    
+                    <% foreach(var p in Entity.Properties) { %>
+                    <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>",<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>12345,<% } %>
+                    <% } // foreach %>
+                    
+                     <% foreach(var r in Entity.Relationships) { %>
+                     <% if(r.ThisCardinality == Cardinality.Many) { %>
+                     // One to Many
+                     <%= r.ThisPropertyName %> = new List<<%= r.OtherEntity%>>{<%= r.OtherEntity.ToLower()%>1,<%= r.OtherEntity.ToLower()%>2},
+                     <% } else { %>
+                     //One to One
+                     <%= r.ThisPropertyName%> = <%= r.OtherEntity.ToLower()%>,
+                     <% } // Else %>
+                     <% } // foreach Relationship %>
+                     
+                };
+         
+      }
+      public async Task<<%=Entity.ClassName%>> Save<%=Entity.ClassName%>Async(<%=Entity.ClassName%> <%=Entity.ClassName.ToLower()%>)
+      {
+        return null;
+      }
+      public async Task<List<<%=Entity.ClassName%>>> QueryAsync(string query)
+      {
+         var resultList = new List<<%=Entity.ClassName %>>();
+            for (int i = 0; i < 10; i++)
+            {
+                resultList.Add(new <%=Entity.ClassName %>
+                {
+                    
+                   <% foreach(var p in Entity.Properties ) { %> 
+                  <%= p.PropertyName.ToSafeName()%> = <% if(p.SystemType == typeof(System.String)){ %> "<%= p.PropertyName.ToSafeName()%>"+i,<% } else if(p.SystemType == typeof(System.DateTime)) { %> DateTime.Now,<% } else{ %>i+12345,<% } %> 
+                  <% } // foreach Properties   %>
+                });
+            }
+            return resultList;
+      }
+      public IDbConnection Custom { get { return null;}  }
+    }
+    
+#endregion    
+    
+    
+    
+    
+    
+    
+}
+<script runat="template">
+
+                   
+                    
+                    
+public Property GetPrimeryKey()
+{
+           foreach(var p in Entity.Properties)
+           {
+               if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive))
+               {
+                   return p;
+                   break;
+               }
+           }
+           return null;
+ }
+       
+       
+ public Property GetForeignPropertyM(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                   foreach(var property in Entity.Properties)
+                   {
+                       if(property.PropertyName==this.GetPrimeryKey().PropertyName)
+                       {
+                           return property;
+                           
+                       }
+                   }
+               }
+           }
+           
+           
+   return null;          
+}
+
+public Property GetForeignPropertyO(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                   foreach(var property in entity.Properties)
+                   {
+                    
+                       if((bool)property.IsPrimaryKey)
+                       {
+                           return property;
+                           break;
+                       }
+                   }
+               }
+           }
+           
+           
+   return null;          
+}
+
+public Entity GetForeignEntity(string OtherEntityName)
+{
+           foreach(var entity in this.EntityContext.Entities)
+           {
+               if(OtherEntityName==entity.ClassName)
+               {
+                 return entity;
+               }
+           }
+      
+   return null;          
+}
+
+</script>

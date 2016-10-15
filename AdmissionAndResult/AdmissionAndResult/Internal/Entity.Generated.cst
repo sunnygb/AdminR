@@ -1,0 +1,81 @@
+﻿<%@ Template Language="C#" TargetLanguage="C#" Debug="True" Encoding="UTF-8" %>
+
+<%@ Assembly Src="Model.cs" %>
+<%@ Assembly Src="Extensions.cs" %>
+
+<%@ Import Namespace="System.Collections.Generic" %>
+<%@ Import Namespace="System.Linq" %>
+<%@ Import Namespace="System.Text" %>
+<%@ Import Namespace="System.Text.RegularExpressions" %>
+
+<%@ Import Namespace="SchemaMapper" %>
+
+<%@ Property Name="Entity"
+             Type="SchemaMapper.Entity"  %>
+
+<%@ Property Name="EntityNamespace"
+             Type="System.String"  %>
+             
+using System;
+using System.Collections.Generic;
+using System.Text;
+using ServiceStack.DataAnnotations;
+using <%= EntityNamespace %>.Wrapper;
+namespace <%= EntityNamespace %>
+{
+
+
+    [Alias("<%= Entity.TableName %>")]
+    public partial class <%= Entity.ClassName.ToSafeName() %>
+    {
+        
+        public <%= Entity.ClassName.ToSafeName() %>()
+        {
+            <% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>
+            <%= r.ThisPropertyName.ToSafeName() %> = new List<<%= r.OtherEntity.ToSafeName() %>>();
+            <% } // foreach %>
+        }
+        
+       <%-- public <%= Entity.ClassName.ToSafeName() %>(<%= Entity.ClassName.ToSafeName() %>W <%= Entity.ClassName.ToSafeName().ToLower()%>w)
+        {
+           <% foreach(var p in Entity.Properties) { %>
+           this.<%= p.PropertyName.ToSafeName()%> = <%= Entity.ClassName.ToSafeName().ToLower()%>w.<%= p.PropertyName.ToSafeName()%>;
+           <% } // foreach %>
+           
+           <% foreach(var r in Entity.Relationships.Where(e => e.ThisCardinality == Cardinality.Many)) { %>
+           <%= r.ThisPropertyName.ToSafeName() %> = new List<<%= r.OtherEntity.ToSafeName() %>>();
+           <% } // foreach %>
+           
+        }--%>
+
+<% foreach(var p in Entity.Properties) { %>
+<%if((bool)p.IsPrimaryKey){%>
+        [PrimaryKey]<%}%>
+        [Alias("<%= p.ColumnName%>")]
+        public <%= p.SystemType%> <%= p.PropertyName.ToSafeName() %> { get; set; }
+<% } // foreach %>
+
+<% foreach(var r in Entity.Relationships) { %>
+<% if(r.ThisCardinality == Cardinality.Many) { %>
+        [Ignore]
+        public virtual List<<%= r.OtherEntity.ToSafeName() %>> <%= r.ThisPropertyName.ToSafeName() %> { get; set; }
+<% } else { %>
+        [Ignore]
+        public virtual <%= r.OtherEntity.ToSafeName() %> <%= r.ThisPropertyName.ToSafeName() %> { get; set; }
+<% } %>
+<% } // foreach %>
+         [Ignore]
+         public bool IsNew
+         {
+                get
+                {
+         
+                  return this.<% foreach(var p in Entity.Properties){%><% if((bool)p.IsPrimaryKey && (p.SystemType.IsPrimitive)){%><%= p.PropertyName %><%}%><%}%> == default(int);
+         
+                }
+                
+          }
+          [Ignore]
+          public bool IsDeleted { get; set; }
+    }
+}
