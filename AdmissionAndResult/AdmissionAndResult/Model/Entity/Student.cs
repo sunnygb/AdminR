@@ -71,7 +71,7 @@ namespace ClinicalReporting.Model
         [Ignore]
         public virtual Qualification Qualification { get; set; }
         [Ignore]
-        public virtual SelectedStudent SelectedSelectedStudent { get; set; }
+        public virtual SelectedStudent SelectedStudent { get; set; }
          [Ignore]
          public bool IsNew
          {

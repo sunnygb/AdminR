@@ -1,4 +1,5 @@
-﻿using AdmissionAndResult.Model;
+﻿
+using ClinicalReporting.Model;
 using GalaSoft.MvvmLight;
 using System;
 
